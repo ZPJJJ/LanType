@@ -98,8 +98,8 @@ android {
         // 按发布批次定号：兼容修复升 PATCH，兼容功能升 MINOR 并归零 PATCH。
         // 不兼容变更升 MAJOR；日常编辑不逐次升号。完整规则见 docs/packaging.md。
         // versionCode 是独立递增的交付序号；同批普通版与内置版共用。
-        versionCode = 3
-        versionName = "1.1.1"
+        versionCode = 4
+        versionName = "1.1.2"
 
 
         // Isolated Compose rendering on a local x86 emulator; ordinary device tests keep the full app.
@@ -210,9 +210,10 @@ android {
             // offline engines. These unused optional engines are not distributed.
             excludes.addAll(listOf("**/libCyAzooKey.so", "**/libcytranslate.so",
                 "**/libhandwriting_jni.so", "**/libcylm.so"))
-            // tasks-native.gradle.kts extracts this same 1.28.0 runtime for C++ consumers.
-            // The Java OCR binding contributes an identical copy plus onnxruntime4j_jni.
-            pickFirsts.add("**/libonnxruntime.so")
+            // Each mode has exactly one ORT source: the full local AAR, or the
+            // source-native IMPORTED target paired with the companion AAR.
+            // Preserve the accepted ELF bytes for the final APK hash gate.
+            keepDebugSymbols.add("**/libonnxruntime.so")
             // Project JNI inputs precede dependency AAR JNI inputs. The final APK
             // verifier must also prove these bytes equal camerax-rebuilt.lock.json.
             pickFirsts.add("**/libimage_processing_util_jni.so")
@@ -247,7 +248,8 @@ android {
         listOf("<dir>rime_japanese", "<dir>azookey", "<dir>rime_letters").forEach { androidResources.ignoreAssetsPatterns.add(it) }
         packaging.jniLibs.excludes.add("**/libCyAzooKey.so")
     }
-    if (!useUpstreamNative) ndkVersion = "29.0.14206865"
+    // Pin packaging/strip tools as well as source builds; avoid an implicit AGP NDK download.
+    ndkVersion = "29.0.14206865"
 
     // F-Droid 一致性验证：不在 APK 中写入依赖元数据（Dependency metadata 签名块）。
     dependenciesInfo {
@@ -356,7 +358,12 @@ dependencies {
     // ZXing for QR code generation
     implementation("com.google.zxing:core:3.5.4")
     // Bundled OCR works without Play Services or a first-use model download.
-    implementation("com.microsoft.onnxruntime:onnxruntime-android:1.28.0")
+    // Prepare and verify the accepted replacement before invoking Gradle.
+    // Both AARs retain the official Java API and unchanged ARM64 JNI bridge.
+    val ortRuntimeAar = if (useUpstreamNative)
+        "onnxruntime-android-1.28.0-lantype-r1.aar"
+    else "onnxruntime-android-1.28.0-lantype-r1-cmake.aar"
+    implementation(files(rootProject.file("vendor/ort-runtime/$ortRuntimeAar")))
     implementation("org.opencv:opencv:4.12.0")
     implementation("androidx.camera:camera-camera2:1.6.2")
     implementation("androidx.camera:camera-lifecycle:1.6.2")

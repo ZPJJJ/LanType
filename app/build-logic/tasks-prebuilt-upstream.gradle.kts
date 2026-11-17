@@ -19,6 +19,11 @@ val verifyLanTypeCameraNativeFiles by tasks.registering(Exec::class) {
     workingDir(rootProject.projectDir)
     commandLine("python3", "scripts/build-camerax-native.py", "--verify-only")
 }
+val verifyLanTypeOrtRuntime by tasks.registering(Exec::class) {
+    workingDir(rootProject.projectDir)
+    commandLine("python3", "scripts/prepare-ort-runtime.py", "--accepted-lock",
+        "docs/licensing/ort-runtime.lock.json", "--verify-only")
+}
 val prepareLanTypeApprovedNativeLibraries by tasks.registering(Sync::class) {
     dependsOn(verifyLanTypeNativeFiles, verifyLanTypeCameraNativeFiles)
     from(File(upstreamRoot, "jniLibs")) { include(approvedNativePaths) }
@@ -54,4 +59,4 @@ val prepareLanTypeRuntimeLibraries by tasks.registering(Sync::class) {
     into(layout.buildDirectory.dir("generated/lantype-runtime-jniLibs"))
 }
 dependencies.add("implementation", files(File(upstreamRoot, "java/sherpa-onnx-1.13.8-classes.jar")))
-tasks.named("preBuild").configure { dependsOn(prepareLanTypeAssets, prepareLanTypeApprovedNativeLibraries, prepareLanTypeRuntimeLibraries) }
+tasks.named("preBuild").configure { dependsOn(prepareLanTypeAssets, prepareLanTypeApprovedNativeLibraries, prepareLanTypeRuntimeLibraries, verifyLanTypeOrtRuntime) }

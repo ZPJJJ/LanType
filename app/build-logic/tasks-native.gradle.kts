@@ -2,8 +2,14 @@ import org.gradle.api.tasks.PathSensitivity
 
 // Source-native mode uses only locked, explicitly prepared local build inputs.
 // App resources always come from tools/lantype_resources; no old dictionary task runs.
-val verifyLanTypeNativeBuildInputs by tasks.registering {
-    doLast {
+val verifyLanTypeNativeBuildInputs by tasks.registering(Exec::class) {
+    workingDir(rootProject.projectDir)
+    commandLine("python3", "scripts/prepare-ort-runtime.py", "--accepted-lock",
+        "docs/licensing/ort-runtime.lock.json", "--verify-native-input",
+        "app/src/main/jni/onnxruntime/lib/arm64-v8a/libonnxruntime.so")
+    inputs.file(rootProject.file("docs/licensing/ort-runtime.lock.json"))
+    inputs.file(file("src/main/jni/onnxruntime/lib/arm64-v8a/libonnxruntime.so"))
+    doFirst {
         val required = listOf(
             "src/main/jni/librime/CMakeLists.txt",
             "src/main/jni/boost/CMakeLists.txt",
@@ -36,6 +42,13 @@ val syncT9Plugin by tasks.registering {
 //    改动（尤其 librime/src 核心改动）不会进 APK。
 //    声明后：源码一变任务必然执行，ninja 按依赖增量重编，仍然很快。
 tasks.configureEach {
+    if (name.startsWith("buildCMake") || name.startsWith("configureCMake")) {
+        dependsOn(verifyLanTypeNativeBuildInputs)
+        inputs.file(rootProject.file("docs/licensing/ort-runtime.lock.json"))
+            .withPathSensitivity(PathSensitivity.RELATIVE)
+        inputs.file("src/main/jni/onnxruntime/lib/arm64-v8a/libonnxruntime.so")
+            .withPathSensitivity(PathSensitivity.RELATIVE)
+    }
     if (name.startsWith("buildCMake")) {
         dependsOn(syncT9Plugin)
         inputs.dir("src/main/jni/librime/src")

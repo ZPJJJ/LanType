@@ -12,6 +12,7 @@ import json
 import os
 import re
 import subprocess
+import sys
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -66,7 +67,7 @@ def main():
     runtime = parser.add_mutually_exclusive_group(required=True)
     runtime.add_argument('--runtime-output', type=Path)
     runtime.add_argument('--source-only', action='store_true',
-                         help='Package application source only; provide the unchanged runtime and native source archives separately.')
+                         help='Package application source only; provide the pinned base runtime, ORT component and native source archives separately.')
     parser.add_argument('--dry-run', action='store_true')
     args = parser.parse_args()
     public = load_module('public_inventory', 'check-public-source.py')
@@ -101,6 +102,15 @@ def main():
             raise SystemExit('Rebuilt CameraX dependency differs from its lock: ' + entry['path'])
         runtime_files.append(entry['path'])
     runtime_files.append('docs/licensing/camerax-rebuilt.lock.json')
+    subprocess.run([sys.executable, str(ROOT / 'scripts/prepare-ort-runtime.py'),
+                    '--accepted-lock', str(ROOT / 'docs/licensing/ort-runtime.lock.json'),
+                    '--verify-only'], cwd=ROOT, check=True)
+    runtime_files += [
+        'docs/licensing/ort-runtime.lock.json',
+        'vendor/ort-runtime/onnxruntime-android-1.28.0-lantype-r1.aar',
+        'vendor/ort-runtime/onnxruntime-android-1.28.0-lantype-r1-cmake.aar',
+        'vendor/ort-runtime/arm64-v8a/libonnxruntime.so',
+    ]
     runtime_files = [path for path in runtime_files if (ROOT / path).is_file()]
     if args.dry_run:
         print(json.dumps({'sourceFiles': len(source_files), 'runtimeFiles': len(set(runtime_files)),
