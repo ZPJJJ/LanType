@@ -90,10 +90,10 @@ Google Play 定价规则：https://support.google.com/googleplay/android-develop
 Google Play 当前需关注：
 
 - 开发者注册一次性 25 美元，并完成身份和设备验证；不要自动替用户购买或提交身份材料。
-- 2023-11-13 后创建的个人账户，生产发布前通常需至少 12 人连续加入封闭测试 14 天，之后仍要申请生产访问。
+- 2023-11-13 后创建的个人开发者账户，须有至少 12 名测试者连续加入封闭测试至少 14 天，之后才能申请生产访问（production access）；满足人数和时长条件不等于获准生产发布。
 - 自 2026-08-31 起，新手机应用和更新需 target API 36；清单中的最终值必须在构建后检查。
 - 键盘不使用短信读取作为核心功能；本版已将短信验证码路径调整为手动复制粘贴。还需按实际包填写权限、数据安全和隐私政策，而非照抄“零数据”口号。
-- 原生库的 16 KB 页面兼容性、发行 AAB 和商店体积限制需在上架构建环节另行验证；独立 APK 可用不等于 Play 已可接收。
+- 截至 2026-11-18（中国标准时间）核对，Google 官方指南要求 Google Play 上面向 Android 15 / API 35 及以上的应用支持 64 位设备的 16 KB 内存页，并注明自 2027-02-01 起，不支持的应用更新将无法发布。该日期描述更新限制，不据此推断新应用获得延期。原生库的 16 KiB 兼容性、发行 AAB 和商店体积限制仍须在上架构建环节验证；静态对齐或独立 APK 可用不等于 16 KiB 环境运行通过或 Play 已可接收。
 
 官方依据：
 
@@ -101,6 +101,7 @@ Google Play 当前需关注：
 - https://support.google.com/googleplay/android-developer/answer/14151465
 - https://support.google.com/googleplay/android-developer/answer/11926878
 - https://support.google.com/googleplay/android-developer/answer/10208820
+- https://developer.android.com/guide/practices/page-sizes
 
 国内工信部通知以境内从事互联网信息服务的 APP 主办者为对象。应以实际发行方式、销售网站和渠道要求确认适用性，不能仅因本 APK 无 INTERNET 权限就宣称免除所有备案、隐私或经营义务。不要把纯离线键盘和承载在线销售的网站混为一项服务。
 
