@@ -36,10 +36,54 @@ EXTRA_MODELS = {
     "speech/silero_vad.onnx": (643854, "9e2449e1087496d8d4caba907f23e0bd3f78d91fa552479bb9c23ac09cbb1fd6", "https://github.com/k2-fsa/sherpa-onnx/releases/download/asr-models/silero_vad.onnx", "MIT", "sha256:9e2449e1087496d8d4caba907f23e0bd3f78d91fa552479bb9c23ac09cbb1fd6"),
 }
 TRANSFORM = "tools/lantype_resources/prepare_resources.py"
+ORT_RUNTIME_NOTICE_PREFIX = "licenses/ort-runtime-r1/"
+ORT_RUNTIME_NOTICE_PATHS = frozenset(ORT_RUNTIME_NOTICE_PREFIX + path for path in (
+    "ndk-r29/NOTICE",
+    "ndk-r29/NOTICE.toolchain",
+    "ndk-r29/toolchains/llvm/prebuilt/linux-x86_64/NOTICE",
+    "dawn/ort-dawn/LICENSE",
+    "dawn/ort-dawn/third_party/renderdoc/LICENSE.md",
+    "dawn/dawn-spirv-headers/LICENSE",
+    "dawn/dawn-spirv-tools/LICENSE",
+    "dawn/dawn-vulkan-headers/LICENSE.md",
+    "dawn/dawn-vulkan-headers/LICENSES/Apache-2.0.txt",
+    "dawn/dawn-vulkan-headers/LICENSES/MIT.txt",
+    "dawn/dawn-vulkan-utility-libraries/LICENSE.md",
+    "dawn/dawn-vulkan-utility-libraries/LICENSES/Apache-2.0.txt",
+    "dawn/dawn-jinja2/LICENSE.rst",
+    "dawn/dawn-jinja2/README.chromium",
+    "dawn/dawn-markupsafe/LICENSE",
+    "dawn/dawn-markupsafe/README.chromium",
+    "PATCH-ATTRIBUTION.txt",
+))
 
 
 def digest(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
+
+
+def verify_local_runtime_notices() -> int:
+    """Preserve the committed notices; regeneration never downloads or rewrites them."""
+    lock = json.loads((ROOT / "docs/licensing/resources.lock.json").read_text())
+    entries = [entry for entry in lock["resources"] if entry["path"].startswith(ORT_RUNTIME_NOTICE_PREFIX)]
+    if len(entries) != len(ORT_RUNTIME_NOTICE_PATHS) or {entry["path"] for entry in entries} != ORT_RUNTIME_NOTICE_PATHS:
+        raise ValueError("Expected the exact 17 committed ORT runtime notice entries")
+    for directory in (ASSETS, ASSETS / "licenses", ASSETS / ORT_RUNTIME_NOTICE_PREFIX):
+        if directory.is_symlink() or not directory.is_dir():
+            raise ValueError(f"Missing or symlink notice directory: {directory}")
+    actual = set()
+    for path in (ASSETS / ORT_RUNTIME_NOTICE_PREFIX).rglob("*"):
+        if path.is_symlink() or not (path.is_dir() or path.is_file()):
+            raise ValueError(f"Invalid notice file type: {path}")
+        if path.is_file():
+            actual.add(path.relative_to(ASSETS).as_posix())
+    if actual != ORT_RUNTIME_NOTICE_PATHS:
+        raise ValueError("Missing or unreviewed file in the committed ORT runtime notices")
+    for entry in entries:
+        data = (ASSETS / entry["path"]).read_bytes()
+        if len(data) != entry["size"] or digest(data) != entry["sha256"]:
+            raise ValueError(f"Committed ORT runtime notice differs from the lock: {entry['path']}")
+    return len(entries)
 
 
 def source(name: str) -> bytes:
@@ -371,6 +415,7 @@ def main() -> None:
     ap.add_argument("--model-cache", type=Path)
     ap.add_argument("--skip-models", action="store_true", help="Regenerate small data only; does not make a complete APK")
     args = ap.parse_args()
+    verify_local_runtime_notices()
     result = {**english(), **chinese()}
     original_associations()
     original_small_mappings()
@@ -384,6 +429,7 @@ def main() -> None:
     (HERE / "generation-summary.json").write_text(json.dumps(result, indent=2) + "\n")
     from finalize_resources import deployment_manifest
     result["deploymentEntries"] = deployment_manifest()
+    result["preservedRuntimeNotices"] = verify_local_runtime_notices()
     print(json.dumps(result))
 
 

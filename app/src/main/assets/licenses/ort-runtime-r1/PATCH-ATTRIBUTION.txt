@@ -1,0 +1,46 @@
+LanType ONNX Runtime 1.28.0-r1 — 来源与修改说明 / source attribution
+
+此目录提供修补运行库所需的补充通知，所有上游许可正文均原样保留。
+应用的 GPL 许可不替代下列组件各自的原始许可。本说明记录来源和修改，
+不声明本构建由 Microsoft、Google、Android NDK 或 PyTorch 官方发布。
+
+ONNX Runtime 1.28.0
+  Source: https://github.com/microsoft/onnxruntime
+  Revision: da9b5e364c465de65c49d91e696cd6485270757f
+  The MIT licence and original third-party notices remain in:
+    licenses/native/runtime-onnxruntime/LICENSE.txt
+    licenses/native/runtime-onnxruntime/ThirdPartyNotices.txt
+
+cpuinfo ARM/Linux L2 initialization backport
+  Base: https://github.com/pytorch/cpuinfo/tree/4628dc060ce4e82345dc166bbac875609db4ff69
+  Proposal: https://github.com/pytorch/cpuinfo/pull/457
+  Production commits: 956614a1e93e1aca95b1cc03484647a187b199b4
+                      bd8f30173a7d7f08842fdaf838fc7c02a86b92ea
+  Original patch authors: Soma Aishwarya; Qubitium.
+  LanType adapted hunk offsets and unchanged L3 context to the fixed baseline.
+  The changes synchronize L2 counting with sysfs-derived sizes and guard both
+  L2 array population sites. This is a project backport of the proposal;
+  it is not a statement that the proposal has become an upstream release.
+  cpuinfo retains its BSD-2-Clause terms:
+    licenses/native/ort-dep-pytorch_cpuinfo/LICENSE.txt
+  Project patch: patches/onnxruntime/cpuinfo-4628dc0-pr457-l2-backport.patch
+  Patch SHA-256: 6281246ef5bafdae6f64a9b1c4bbd64ddcd6b0b65a8150c9bd0343e3cfdf998b
+
+Android NDK r29 (29.0.14206865)
+  ndk-r29/ contains the recorded NDK NOTICE, NOTICE.toolchain and LLVM NOTICE.
+  The patched runtime uses the r29 static C++ runtime; the older source record
+  for the unchanged libc++_shared.so does not identify these r29 static inputs.
+  Official release: https://github.com/android/ndk/releases/tag/r29
+  Each included toolchain/runtime component keeps its own stated terms.
+
+Dawn / WebGPU source and build dependencies
+  dawn/ contains all 13 collected notices for Dawn (including RenderDoc),
+  SPIRV-Headers, SPIRV-Tools, Vulkan-Headers, Vulkan-Utility-Libraries,
+  Jinja2 and MarkupSafe. Component notices retain their original terms.
+  Exact revisions and file hashes: docs/licensing/native-sources-webgpu.lock.json
+  Public source supplement:
+  https://github.com/ZPJJJ/LanType/releases/download/v1.1.1-rc1/LanType-native-source-webgpu-supplement-v1.zip
+
+完整来源、构建步骤及应用组合源码见同版源码中的
+  docs/licensing/ORT-RUNTIME-1.28.0-r1.md
+  docs/licensing/resources.lock.json

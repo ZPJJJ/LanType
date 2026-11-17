@@ -10,7 +10,8 @@ import gzip
 import hashlib
 import json
 from pathlib import Path
-from prepare_resources import ASSETS, ROOT, HERE, MODEL_ID, MODEL_REV, EXTRA_MODELS
+from prepare_resources import (ASSETS, ROOT, HERE, MODEL_ID, MODEL_REV, EXTRA_MODELS,
+                               ORT_RUNTIME_NOTICE_PATHS, verify_local_runtime_notices)
 
 UPSTREAM = "6f97a555ced063c0bcad73c600fe420f5e4b2536"
 UPSTREAM_URL = "https://github.com/Cyletix/CyIME/tree/" + UPSTREAM
@@ -128,6 +129,10 @@ def descriptor(path: str):
 
 
 def write_lock():
+    verify_local_runtime_notices()
+    current_lock = json.loads((ROOT / "docs/licensing/resources.lock.json").read_text())
+    fixed_notices = {entry["path"]:entry for entry in current_lock["resources"]
+                     if entry["path"] in ORT_RUNTIME_NOTICE_PATHS}
     sources = json.loads((HERE / "sources.lock.json").read_text())
     native_path = ROOT / "docs/licensing/native-license-files.json"
     native = {x["path"]:x for x in json.loads(native_path.read_text())} if native_path.exists() else {}
@@ -140,6 +145,8 @@ def write_lock():
                "sourceEncoding":"gzip" if path.endswith(".gz") else "identity", **descriptor(path)}
         if path in native:
             row.update({k:v for k,v in native[path].items() if k not in {"path","sha256","size"}})
+        if path in fixed_notices:
+            row = dict(fixed_notices[path])
         if path.endswith(".gz"):
             plain=gzip.decompress(data);row.update(decodedSha256=sha(plain),decodedSize=len(plain))
         resources.append(row)

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Restore only 399 current-lock inputs from the fixed, previously published ZIP.
+"""Restore 399 base inputs from the fixed ZIP and verify 17 Git-provided notices.
 
 Existing valid files are retained; conflicts and symlink paths are rejected.
 Downloads require --download. No SDK, compiler, Gradle or native code is run.
@@ -33,6 +33,7 @@ def module(name, filename):
 transfer = module("ort_transfer", "restore-ort-runtime.py")
 runtime = transfer.runtime
 resources = module("commercial_resources", "verify-commercial-resources.py")
+resource_builder = module("resource_builder", "../tools/lantype_resources/prepare_resources.py")
 ROOT = SCRIPTS.parent
 PREFIX = "LanType-1.1.0/"
 URL = "https://github.com/ZPJJJ/LanType/releases/download/v1.1.0-rc1/LanType-1.1.0-runtime-dependencies.zip"
@@ -106,7 +107,15 @@ def load_inputs():
         locks.append(json.loads(data, object_pairs_hook=runtime.unique_object))
         hashes[filename] = hashlib.sha256(data).hexdigest()
     resource_lock, native_lock, camera_lock = locks
-    groups = [("assets", resource_lock["resources"], 379), ("raw", resource_lock["rawResources"], 11),
+    notice_paths = resource_builder.ORT_RUNTIME_NOTICE_PATHS
+    notices = [entry for entry in resource_lock["resources"] if entry["path"] in notice_paths]
+    runtime.require(len(notices) == 17 and {entry["path"] for entry in notices} == notice_paths,
+                    "Expected the exact 17 Git-provided ORT runtime notices")
+    git_inputs = {"app/src/main/assets/" + entry["path"]:
+                  runtime.identity({"bytes": entry["size"], "sha256": entry["sha256"]}, entry["path"])
+                  for entry in notices}
+    base_assets = [entry for entry in resource_lock["resources"] if entry["path"] not in notice_paths]
+    groups = [("assets", base_assets, 379), ("raw", resource_lock["rawResources"], 11),
               ("native", native_lock["files"], 7), ("camera", camera_lock["outputs"], 2)]
     for kind, entries, count in groups:
         runtime.require(len(entries) == count, f"Unexpected {kind} lock count")
@@ -127,7 +136,7 @@ def load_inputs():
             runtime.require(relative not in records, "Duplicate locked destination: " + relative)
             records[relative] = {**runtime.identity({"bytes": entry["size"], "sha256": entry["sha256"]}, relative), "group": kind}
     runtime.require(len(records) == 399, "Expected exactly 399 base runtime inputs")
-    return records, hashes
+    return records, hashes, git_inputs
 
 
 class LimitedReader:
@@ -214,11 +223,17 @@ def main():
     args = parser.parse_args()
     if args.verify_only and (args.archive or args.download):
         parser.error("--verify-only cannot be combined with --archive or --download")
-    records, hashes = load_inputs()
+    records, hashes, git_inputs = load_inputs()
+    for name, expected in git_inputs.items():
+        runtime.require(present(ROOT / name, expected), "Missing Git-provided notice; restore from source: " + name)
     result = restore(ROOT, records, args.archive, args.download, args.verify_only)
+    for name, expected in git_inputs.items():
+        runtime.require(present(ROOT / name, expected), "Git-provided notice disappeared: " + name)
     runtime.require(load_inputs()[1] == hashes, "Source locks changed during verification")
     result.update({"schemaVersion": 1, "kind": "lantype-base-runtime-receipt", "ok": True,
-                   "lockSha256": hashes, "nativeCodeExecuted": False, "runtimeAcceptancePerformed": False})
+                   "lockSha256": hashes, "nativeCodeExecuted": False, "runtimeAcceptancePerformed": False,
+                   "gitProvidedNotices": {"verifiedFiles": len(git_inputs), "restoredFiles": 0,
+                       "files": [{"path": name, **expected} for name, expected in sorted(git_inputs.items())]}})
     data = (json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True) + "\n").encode("utf-8")
     if args.receipt:
         runtime.require(not args.receipt.exists() and not args.receipt.is_symlink(), "Receipt already exists")
