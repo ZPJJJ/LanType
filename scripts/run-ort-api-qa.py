@@ -37,6 +37,13 @@ IMAGE = "system-images;android-35;google_apis;x86_64"
 NDK = "29.0.14206865"
 MIB = 1024**2
 WORK_RESERVE = 256 * MIB
+# Ubuntu 24.04 libsndfile1's non-libc dependency closure, plus PulseAudio.
+# https://packages.ubuntu.com/noble/libsndfile1 (FLAC/Vorbis also require libogg0).
+# The hosted runner's libc6 stays in place; these are downloaded/extracted only.
+HOST_LOADER_PACKAGES = (
+    "libpulse0", "libasyncns0", "libsndfile1", "libflac12t64", "libmp3lame0",
+    "libmpg123-0t64", "libogg0", "libopus0", "libvorbis0a", "libvorbisenc2",
+)
 LIMITATIONS = [
     "Only ordinary loading, C API 28, reported provider names and environment lifecycle are checked.",
     "Provider inference, models, keyboard input and product integration are not tested.",
@@ -631,9 +638,34 @@ class Driver:
         self.env["LD_LIBRARY_PATH"] = os.pathsep.join(filter(None, (str(loader_path), self.env.get("LD_LIBRARY_PATH", ""))))
         _, code = self.run("emulator-loader-preflight", [self.sdk / "emulator/emulator", "-version"], check=False)
         if code:
-            self.run("emulator-loader-download", ["apt-get", "download", "libpulse0", "libasyncns0"], cwd=loader)
+            self.run("emulator-loader-download", ["apt-get", "download", *HOST_LOADER_PACKAGES], cwd=loader)
+            packages = []
             for deb in sorted(loader.glob("*.deb")):
+                metadata, _ = self.run("emulator-loader-package-metadata", ["dpkg-deb", "--field", deb])
+                fields = dict(re.findall(r"^(Package|Version|Architecture): ([^\n]+)$", metadata, re.M))
+                require(fields.get("Package") in HOST_LOADER_PACKAGES and fields.get("Architecture") == "amd64"
+                        and fields.get("Version"), "Unexpected host-loader package: " + deb.name)
+                packages.append({"file": deb.name, "bytes": deb.stat().st_size, "sha256": digest(deb), **fields})
                 self.run("emulator-loader-unpack", ["dpkg-deb", "-x", deb, loader])
+            require(len(packages) == len(HOST_LOADER_PACKAGES)
+                    and {row["Package"] for row in packages} == set(HOST_LOADER_PACKAGES),
+                    "Host-loader package closure is incomplete")
+            save(self.evidence / "host-loader-packages.json", {"requestedPackages": HOST_LOADER_PACKAGES,
+                 "archives": packages, "globallyInstalled": False, "extractionRoot": str(loader)})
+        # ldd enumerates the complete unresolved dependency set instead of only
+        # the first loader error. Include actual SDK library directories for
+        # this diagnostic; the emulator launcher keeps its own normal setup.
+        bundled = self.sdk / "emulator/lib64"
+        diagnostic_dirs = [bundled, *sorted(path for path in bundled.rglob("*") if path.is_dir())]
+        diagnostic_path = os.pathsep.join(dict.fromkeys(
+            [str(path) for path in diagnostic_dirs if path.is_dir()] + self.env["LD_LIBRARY_PATH"].split(os.pathsep)))
+        dependencies, ldd_code = self.run("emulator-loader-dependencies", ["env", "LD_LIBRARY_PATH=" + diagnostic_path,
+            "ldd", self.sdk / "emulator/qemu/linux-x86_64/qemu-system-x86_64"], check=False)
+        save(self.evidence / "host-loader-dependencies.json", {"lddExitCode": ldd_code,
+             "librarySearchPath": diagnostic_path,
+             "unresolved": sorted(set(re.findall(r"^\s*(\S+)\s+=>\s+not found\s*$", dependencies, re.M))),
+             "scope": "Host emulator linkage diagnostic; emulator -version and KVM remain the readiness gates."})
+        if code:
             self.run("emulator-version", [self.sdk / "emulator/emulator", "-version"])
         self.run("kvm-accel-check", [self.sdk / "emulator/emulator", "-accel-check"])
         self.run("sdk-image-install", [overlay / "bin/sdkmanager", "--sdk_root=" + str(sdk), IMAGE], timeout=660)
