@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="editor_a" type="id" />
+    <item name="editor_b" type="id" />
+    <item name="editor_password" type="id" />
+    <item name="editor_email" type="id" />
+    <item name="editor_number" type="id" />
+    <item name="editor_status" type="id" />
+</resources>
