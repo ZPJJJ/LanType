@@ -8,6 +8,10 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 MAX_GIT_BLOB = 100 * 1024 * 1024
+ALLOWED_WORKFLOWS = {
+    ".github/workflows/offline-ci.yml",
+    ".github/workflows/android-device-qa.yml",
+}
 DENIED_PARTS = {".gradle", ".cxx", "node_modules", "private-signing", "recovery", "deliverables"}
 DENIED_SUFFIXES = {".jks", ".keystore", ".p12", ".pfx", ".key", ".pem", ".apk", ".aab", ".so", ".onnx", ".tflite", ".hprof", ".xipk"}
 DENIED_PREFIXES = ("vendor/", "toolchain/", "scripts/packager/", "tools/ime_lab/fixtures/",
@@ -47,8 +51,8 @@ def inspect(paths):
             data = path.read_bytes()
             if any(pattern.search(data) for pattern in SECRET_PATTERNS):
                 findings.append((relative, "possible private key or access token; value suppressed"))
-        if relative.startswith(".github/workflows/") and path.name != "offline-ci.yml":
-            findings.append((relative, "upstream workflow must not be enabled in LanType"))
+        if relative.startswith(".github/workflows/") and relative not in ALLOWED_WORKFLOWS:
+            findings.append((relative, "workflow has not been reviewed for LanType"))
     return findings
 
 
