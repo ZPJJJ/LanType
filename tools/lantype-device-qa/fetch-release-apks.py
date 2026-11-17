@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fetch the two fixed, signed QA APKs; never forward API credentials on redirects."""
+"""Fetch the two fixed, signed QA APKs from public releases without credentials."""
 from __future__ import annotations
 
 import argparse
@@ -7,7 +7,6 @@ from datetime import datetime, timezone
 import hashlib
 import http.client
 import json
-import os
 from pathlib import Path
 import sys
 import urllib.error
@@ -15,15 +14,15 @@ import urllib.parse
 import urllib.request
 
 
-# Test the draft first: a read-only token may not see it. Do not silently publish
-# the release, change permissions, or substitute an unsigned build on failure.
+# Fetch the new public candidate first. If it is not published or does not match,
+# stop before a VM starts; never substitute another APK or change permissions.
 APKS = (
     {
         "role": "new",
         "name": "LanType-1.1.1-offline-arm64-v8a.apk",
-        "url": "https://api.github.com/repos/ZPJJJ/LanType/releases/assets/759263281",
-        "releaseId": 448699588,
-        "assetId": 759263281,
+        "url": "https://github.com/ZPJJJ/LanType/releases/download/v1.1.1-rc1/"
+               "LanType-1.1.1-offline-arm64-v8a.apk",
+        "releaseTag": "v1.1.1-rc1",
         "size": 179987242,
         "sha256": "b841c42366df2db7ef16736ee93a65723e6495aae91dab2e27093db06a40e497",
     },
@@ -49,7 +48,7 @@ class NoRedirect(urllib.request.HTTPRedirectHandler):
         return None
 
 
-def request_headers(url: str, token: str) -> dict[str, str]:
+def request_headers(url: str) -> dict[str, str]:
     try:
         parsed = urllib.parse.urlsplit(url)
         host, port = parsed.hostname or "", parsed.port
@@ -57,23 +56,18 @@ def request_headers(url: str, token: str) -> dict[str, str]:
         raise DownloadError("Refused a malformed download destination") from None
     if (parsed.scheme != "https" or parsed.username or parsed.password
             or port not in (None, 443)
-            or not (host in {"github.com", "api.github.com"}
+            or not (host == "github.com"
                     or host.endswith(".githubusercontent.com"))):
         raise DownloadError("Refused a non-GitHub HTTPS download destination")
-    headers = {"Accept": "application/octet-stream", "User-Agent": "LanType-device-QA"}
-    # A new header dictionary is created for EVERY hop. urllib's normal redirect
-    # handling can carry custom Authorization headers to another origin.
-    if host == "api.github.com":
-        headers["X-GitHub-Api-Version"] = "2026-03-10"
-        if token:
-            headers["Authorization"] = "Bearer " + token
-    return headers
+    # Every hop gets a fresh, credential-free request. Do not inherit response
+    # headers or use GH_TOKEN/GITHUB_TOKEN, even if present in the environment.
+    return {"Accept": "application/octet-stream", "User-Agent": "LanType-device-QA"}
 
 
-def open_binary(url: str, token: str):
+def open_binary(url: str):
     opener = urllib.request.build_opener(NoRedirect())
     for _ in range(6):
-        request = urllib.request.Request(url, headers=request_headers(url, token))
+        request = urllib.request.Request(url, headers=request_headers(url))
         try:
             return opener.open(request, timeout=60)
         except urllib.error.HTTPError as error:
@@ -83,10 +77,10 @@ def open_binary(url: str, token: str):
             if status in REDIRECTS and location:
                 url = urllib.parse.urljoin(url, location)
                 continue
-            if urllib.parse.urlsplit(url).hostname == "api.github.com" and status in (401, 403, 404):
+            if status in (401, 403, 404):
                 raise DownloadError(
-                    f"GitHub API HTTP {status}: the fixed draft asset is not accessible with this token. "
-                    "contents:read does not guarantee draft visibility; permissions remain unchanged."
+                    f"Public release download HTTP {status}: the fixed APK is not publicly accessible. "
+                    "This download prerequisite failed before VM or product execution."
                 ) from None
             raise DownloadError(f"Download server returned HTTP {status}") from None
         except (urllib.error.URLError, http.client.HTTPException, TimeoutError, OSError) as error:
@@ -100,7 +94,7 @@ def file_sha256(path: Path) -> str:
         return hashlib.file_digest(stream, "sha256").hexdigest()
 
 
-def fetch(apk: dict, output: Path, token: str) -> dict:
+def fetch(apk: dict, output: Path) -> dict:
     destination = output / apk["name"]
     cached = destination.exists()
     if cached:
@@ -111,7 +105,7 @@ def fetch(apk: dict, output: Path, token: str) -> dict:
         digest = hashlib.sha256()
         size = 0
         try:
-            with open_binary(apk["url"], token) as response, temporary.open("wb") as target:
+            with open_binary(apk["url"]) as response, temporary.open("wb") as target:
                 while chunk := response.read(1024 * 1024):
                     size += len(chunk)
                     if size > apk["size"]:
@@ -138,10 +132,9 @@ def main() -> int:
     args.receipt.parent.mkdir(parents=True, exist_ok=True)
     receipt = {"schemaVersion": 1, "checkedAtUtc": datetime.now(timezone.utc).isoformat(),
                "status": "running", "downloads": []}
-    token = (os.environ.get("GH_TOKEN") or os.environ.get("GITHUB_TOKEN") or "").strip()
     try:
         for apk in APKS:
-            receipt["downloads"].append(fetch(apk, args.output, token))
+            receipt["downloads"].append(fetch(apk, args.output))
             print(f"Verified {apk['name']}: {apk['size']} bytes, SHA-256 {apk['sha256']}")
         receipt["status"] = "passed"
         return 0

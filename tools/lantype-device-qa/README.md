@@ -16,6 +16,18 @@ Use UI hierarchy bounds for taps. Type through the real LanType keyboard, then i
 
 Test evidence must identify device serial, Android version, ABI, native bridge if any, installed APK hash and each observed result. An x86 emulator with ARM translation does not establish physical ARM64 latency, battery usage or 16 KiB device compatibility.
 
+## Fixed public release downloads
+
+`fetch-release-apks.py` downloads the signed `v1.1.1-rc1` APK first, then the signed `v1.1.0-rc1` APK, from fixed public GitHub release URLs. The new candidate must be published before this preflight can succeed. It uses no API token or other download credentials and accepts only HTTPS redirects to the approved GitHub download hosts. Both APKs must match their fixed byte counts and SHA-256 hashes before the workflow starts a VM.
+
+```sh
+python3 tools/lantype-device-qa/fetch-release-apks.py \
+  --output /path/to/disposable-qa-output/apks \
+  --receipt /path/to/disposable-qa-output/evidence/release-apks.json
+```
+
+An unavailable release, HTTP 403/404, interrupted download or hash mismatch is a blocked download prerequisite, not an observed product failure. The previous draft-asset attempt returned HTTP 403 with `contents: read`; no VM or product was started. This public-download workflow keeps the same read-only repository permission and does not request a more privileged token.
+
 ## Signed APK upgrade smoke
 
 On a **fresh disposable emulator**, with the SDK tools available, run:

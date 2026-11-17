@@ -46,10 +46,8 @@ jobs:
           if free < 8 * 1024**3:
               raise SystemExit('Insufficient free disk for this device QA run')
           PY
-      - name: Fetch and verify fixed signed release APKs before starting a VM
+      - name: Download and verify fixed public release APKs without credentials
         timeout-minutes: 6
-        env:
-          GH_TOKEN: ${{ github.token }}
         run: >-
           python3 tools/lantype-device-qa/fetch-release-apks.py
           --output "$QA_ROOT/apks"
