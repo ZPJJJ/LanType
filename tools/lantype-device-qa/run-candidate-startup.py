@@ -28,6 +28,19 @@ CANDIDATE_BYTES = 179987242
 CERT_SHA256 = "c03b15a19d2ed8899fee6b71f7be09ea5b54c7db9895d7d87b20a9759d8e090b"
 
 
+def require_release_certificate(signature):
+    """Accept the observed SDK 36/37 labels, never an extra or missing signer."""
+    signer_counts = re.findall(r"^Number of signers: (\d+)\s*$", signature, re.M)
+    certificate_lines = [line.strip() for line in signature.splitlines()
+                         if "certificate SHA-256 digest:" in line]
+    match = re.fullmatch(
+        r"(?:Signer #1|V3\.0 Signer:) certificate SHA-256 digest: ([0-9a-fA-F]{64})",
+        certificate_lines[0]) if len(certificate_lines) == 1 else None
+    if signer_counts != ["1"] or match is None or match[1].lower() != CERT_SHA256:
+        raise CORE.SmokeFailure("Candidate signer does not match the established single release certificate")
+    return match[1].lower()
+
+
 class CandidateStartup(CORE.Smoke):
     def __init__(self, args):
         self.startup_deadline = None
@@ -92,11 +105,8 @@ class CandidateStartup(CORE.Smoke):
         signer = shutil.which("apksigner") or str(Path(self.aapt).with_name("apksigner"))
         signature = self.command([signer, "verify", "--verbose", "--print-certs", candidate["path"]])
         (self.output / "candidate-signature.txt").write_text(signature)
-        certificates = re.findall(
-            r"^Signer #\d+ certificate SHA-256 digest: ([0-9a-fA-F]{64})\s*$", signature, re.M)
-        if [value.lower() for value in certificates] != [CERT_SHA256]:
-            raise CORE.SmokeFailure("Candidate signer does not match the established release certificate")
-        candidate.update(certificate_sha256=CERT_SHA256, signature_evidence="candidate-signature.txt")
+        certificate = require_release_certificate(signature)
+        candidate.update(certificate_sha256=certificate, signature_evidence="candidate-signature.txt")
         host = self.apk(self.args.host_apk)
         if host["package"] != "app.lantype.testhost":
             raise CORE.SmokeFailure("Expected the separate synthetic editor host")
