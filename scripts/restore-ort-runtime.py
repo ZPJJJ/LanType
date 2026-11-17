@@ -7,6 +7,7 @@ Extra README/license/evidence members are checked but never extracted.
 import argparse
 import importlib.util
 import json
+import os
 from pathlib import Path
 import re
 import shutil
@@ -23,6 +24,31 @@ SPEC.loader.exec_module(runtime)
 LOCK = runtime.ROOT / "docs/licensing/ort-runtime.lock.json"
 CACHE = runtime.ROOT / ".gradle/ort-runtime-archives"
 RELEASE_PATH = r"/ZPJJJ/LanType/releases/download/[A-Za-z0-9][A-Za-z0-9._-]*/[A-Za-z0-9][A-Za-z0-9._-]*\.zip"
+
+
+def storage_reserve(bounded_root, directory, archive=None):
+    """Use a smaller reserve only inside an explicitly bounded, separate CI mount."""
+    if bounded_root is None:
+        return 5 * runtime.GIB
+    root = bounded_root.absolute()
+    runtime.require(root.is_dir() and not root.is_symlink() and root.resolve() == root,
+                    "Bounded work root must be an existing, non-symlink absolute directory")
+    runtime.require(os.path.ismount(root) and root.stat().st_dev != root.parent.stat().st_dev,
+                    "Bounded work root must be a separate mounted filesystem")
+    runtime.require(0 < shutil.disk_usage(root).total <= 4608 * 1024 * 1024,
+                    "Bounded work filesystem exceeds the 4.5 GiB limit")
+    for label, path in (("source checkout", runtime.ROOT), ("download cache", CACHE),
+                        ("output directory", directory), ("input archive", archive)):
+        if path is None:
+            continue
+        resolved = path.absolute().resolve()
+        runtime.require(resolved.is_relative_to(root), f"The {label} is outside the bounded work root")
+        ancestor = resolved
+        while not ancestor.exists():
+            ancestor = ancestor.parent
+        runtime.require(ancestor.stat().st_dev == root.stat().st_dev,
+                        f"The {label} uses another filesystem inside the bounded work root")
+    return 256 * 1024 * 1024
 
 
 def distribution(lock):
@@ -65,7 +91,7 @@ def check_archive(path, expected):
     runtime.match(runtime.file_identity(path), expected, "component archive")
 
 
-def obtain(url, expected, archive, download):
+def obtain(url, expected, archive, download, reserve_bytes):
     if archive is not None:
         check_archive(archive, expected)
         return archive
@@ -75,8 +101,8 @@ def obtain(url, expected, archive, download):
         return path
     runtime.require(download, "No cached runtime ZIP; provide --archive FILE or explicitly allow --download")
     CACHE.mkdir(parents=True, exist_ok=True)
-    runtime.require(shutil.disk_usage(CACHE).free >= expected["bytes"] + 5 * runtime.GIB,
-                    "Insufficient space for the download and a 5 GiB reserve")
+    runtime.require(shutil.disk_usage(CACHE).free >= expected["bytes"] + reserve_bytes,
+                    f"Insufficient space for the download and the {reserve_bytes}-byte reserve")
     temporary = None
     try:
         with tempfile.NamedTemporaryFile(prefix="ort-", suffix=".tmp", dir=CACHE, delete=False) as output:
@@ -97,13 +123,14 @@ def obtain(url, expected, archive, download):
             temporary.unlink()
 
 
-def restore(lock, directory, archive=None, download=False):
+def restore(lock, directory, archive=None, download=False, bounded_root=None):
+    reserve_bytes = storage_reserve(bounded_root, directory, archive)
     if directory.exists() or directory.is_symlink():
         return {"alreadyPresent": True, **runtime.verify_bundle(directory, lock)}
     url, root, expected = distribution(lock)
     output_bytes = sum(runtime.identity(value, name)["bytes"] for name, value in lock["outputs"].items())
     runtime.require(output_bytes + expected["bytes"] < 5 * runtime.GIB, "Restoration exceeds the 5 GiB temporary-data budget")
-    archive = obtain(url, expected, archive, download)
+    archive = obtain(url, expected, archive, download, reserve_bytes)
     with zipfile.ZipFile(archive) as source:
         index = runtime.archive_index(source)
         runtime.require(all(name.startswith(root + "/") for name in index), "ZIP member outside the locked root")
@@ -113,8 +140,8 @@ def restore(lock, directory, archive=None, download=False):
                             and member.file_size == lock["outputs"][name]["bytes"],
                             f"Missing or incorrectly sized runtime ZIP member: {relative}")
         directory.parent.mkdir(parents=True, exist_ok=True)
-        runtime.require(shutil.disk_usage(directory.parent).free >= output_bytes + 5 * runtime.GIB,
-                        "Insufficient space for restored outputs and a 5 GiB reserve")
+        runtime.require(shutil.disk_usage(directory.parent).free >= output_bytes + reserve_bytes,
+                        f"Insufficient space for restored outputs and the {reserve_bytes}-byte reserve")
         staging = Path(tempfile.mkdtemp(prefix=".ort-restore-", dir=directory.parent))
         try:
             for name, relative in runtime.OUTPUTS.items():
@@ -139,11 +166,15 @@ def main():
     inputs.add_argument("--archive", type=Path, help="Local pinned runtime ZIP; no network access")
     inputs.add_argument("--download", action="store_true", help="Explicitly allow downloading the pinned public release ZIP")
     parser.add_argument("--output-dir", type=Path, default=runtime.DEFAULT_OUTPUT, help="Default: vendor/ort-runtime")
+    parser.add_argument("--bounded-work-root", type=Path,
+                        help="Explicit CI mount, at most 4.5 GiB, containing checkout, cache and outputs; reserves 256 MiB")
     args = parser.parse_args()
     lock, digest = runtime.load_lock(args.lock, accepted=True)
-    result = restore(lock, args.output_dir, args.archive, args.download)
+    result = restore(lock, args.output_dir, args.archive, args.download, args.bounded_work_root)
     print(json.dumps({"ok": True, "kind": "lantype-ort-runtime-restore-receipt", "lockSha256": digest,
                       "outputDirectory": str(args.output_dir.resolve()), "nativeCodeExecuted": False,
+                      "boundedWorkRoot": str(args.bounded_work_root.absolute()) if args.bounded_work_root else None,
+                      "storageReserveBytes": 256 * 1024 * 1024 if args.bounded_work_root else 5 * runtime.GIB,
                       "runtimeAcceptancePerformed": False, **result}, indent=2, sort_keys=True))
 
 
