@@ -1,0 +1,189 @@
+{
+  "schemaVersion": 1,
+  "kind": "independent-source-supplement-byte-review",
+  "reviewStatus": "passed",
+  "publicationStatus": "prepared",
+  "run": {
+    "id": 44120869197,
+    "jobId": 134171555627,
+    "url": "https://github.com/ZPJJJ/LanType/actions/runs/44120869197",
+    "headSha": "3bffe90fcb50ffd1a327d6d0603ad5be5c546b74",
+    "conclusion": "success"
+  },
+  "artifact": {
+    "id": 14346085491,
+    "url": "https://github.com/ZPJJJ/LanType/actions/runs/44120869197/artifacts/14346085491",
+    "bytes": 105598727,
+    "serverSha256": "8450148eec8e9da5a70009610a8311d71efc8b4b346a87a22b84991d5414a0e6",
+    "downloadSha256": "8450148eec8e9da5a70009610a8311d71efc8b4b346a87a22b84991d5414a0e6",
+    "serverHashMatched": true,
+    "outerArchiveRemovedAfterVerifiedExtraction": true,
+    "originalMembers": [
+      {
+        "path": "LanType-native-source-webgpu-supplement-v1.zip",
+        "bytes": 105554498,
+        "sha256": "6eabae67a60bdb0f3eaab9858f58b1f712edb9f85bb4c5cf75d800e7f530691d",
+        "crc32": "f98426fc"
+      },
+      {
+        "path": "collection-receipt.json",
+        "bytes": 4995,
+        "sha256": "f60c6d55f466940dacadd4eb44b1a6b4455492bbef0f27dcfe8e154b23cc3a66",
+        "crc32": "c603131a"
+      },
+      {
+        "path": "native-sources-webgpu.lock.json",
+        "bytes": 38481,
+        "sha256": "abd883e576243dc56d669f87b1fb7eb1ac2e79b8849d1d62abad1ca3a7dfe02d",
+        "crc32": "cf1d4a7e"
+      },
+      {
+        "path": "SUPPLEMENT-SHA256SUMS.txt",
+        "bytes": 113,
+        "sha256": "a964a227dde964c241b946316a6328cdc29e1e0f5b959209acacbc6f653d0228",
+        "crc32": "65e57f0a"
+      }
+    ]
+  },
+  "supplement": {
+    "file": "LanType-native-source-webgpu-supplement-v1.zip",
+    "bytes": 105554498,
+    "sha256": "6eabae67a60bdb0f3eaab9858f58b1f712edb9f85bb4c5cf75d800e7f530691d",
+    "includedFiles": 50,
+    "hardLinkedOriginalInnerZip": true,
+    "originalBytesPreserved": true
+  },
+  "lock": {
+    "repositoryPath": "docs/licensing/native-sources-webgpu.lock.json",
+    "bytes": 38481,
+    "sha256": "abd883e576243dc56d669f87b1fb7eb1ac2e79b8849d1d62abad1ca3a7dfe02d",
+    "matchesCollectedRawBytes": true,
+    "collectionStatusUnchanged": "collected-awaiting-review",
+    "reviewRequiredUnchanged": true
+  },
+  "independentReview": {
+    "status": "passed-independent-byte-review",
+    "planSha256": "a5830774a9e07acac9d1032a2691c33c18c99986dfbedd8a8ffeedc4e2d973ee",
+    "supplementBytes": 105554498,
+    "supplementSha256": "6eabae67a60bdb0f3eaab9858f58b1f712edb9f85bb4c5cf75d800e7f530691d",
+    "includedFiles": 50,
+    "archiveCount": 7,
+    "archives": [
+      {
+        "id": "ort-dawn",
+        "archiveFilename": "ort-dawn-ec7b457e5bb1.zip",
+        "bytes": 94578448,
+        "sha256": "4046fc60d9956fd9621ae6ce9148fb81a36b9b54e69952e735c4315909dc56dd",
+        "licenseCopies": 2,
+        "archiveShaMatched": true,
+        "licenseOriginalMemberBytesMatched": true
+      },
+      {
+        "id": "dawn-spirv-headers",
+        "archiveFilename": "dawn-spirv-headers-f31ca173eff8.zip",
+        "bytes": 657699,
+        "sha256": "e845e53397782bf114aecd0d4802ae00da2a31f9a0b0817968086e2e46b18cb3",
+        "licenseCopies": 1,
+        "archiveShaMatched": true,
+        "licenseOriginalMemberBytesMatched": true
+      },
+      {
+        "id": "dawn-spirv-tools",
+        "archiveFilename": "dawn-spirv-tools-cb38b2342bee.zip",
+        "bytes": 5014046,
+        "sha256": "c317ab840dec2b086a7f46699d1e140a35c7b86854f1a85708d89ac896ba9b56",
+        "licenseCopies": 1,
+        "archiveShaMatched": true,
+        "licenseOriginalMemberBytesMatched": true
+      },
+      {
+        "id": "dawn-vulkan-headers",
+        "archiveFilename": "dawn-vulkan-headers-49f1a381e2ae.zip",
+        "bytes": 3104128,
+        "sha256": "45e53280154470d23f4bb1a8eadae7e4a2814523e494e6400bc20756849f1999",
+        "licenseCopies": 3,
+        "archiveShaMatched": true,
+        "licenseOriginalMemberBytesMatched": true
+      },
+      {
+        "id": "dawn-vulkan-utility-libraries",
+        "archiveFilename": "dawn-vulkan-utility-libraries-50af38b6cd43.zip",
+        "bytes": 1556866,
+        "sha256": "55800f0c8e52105c6fdfd68c394025f20b4dc6b1f0157234cab6bec6bcc770ce",
+        "licenseCopies": 2,
+        "archiveShaMatched": true,
+        "licenseOriginalMemberBytesMatched": true
+      },
+      {
+        "id": "dawn-jinja2",
+        "archiveFilename": "dawn-jinja2-c3027d884967.tar.gz",
+        "bytes": 124232,
+        "sha256": "f1f6a0c587f2f84b33bbd9e071127d5ce19133ef55cc5dbd2d61d8733bd73d6d",
+        "licenseCopies": 2,
+        "archiveShaMatched": true,
+        "licenseOriginalMemberBytesMatched": true
+      },
+      {
+        "id": "dawn-markupsafe",
+        "archiveFilename": "dawn-markupsafe-4256084ae141.tar.gz",
+        "bytes": 10302,
+        "sha256": "314cff55e0e66ef36f333622a9e47d90cbb836b10e80b18f09944e9d8071c335",
+        "licenseCopies": 2,
+        "archiveShaMatched": true,
+        "licenseOriginalMemberBytesMatched": true
+      }
+    ],
+    "licenseCopyCount": 13,
+    "originalEvidenceFiles": 23,
+    "originalEvidenceBytes": 252077,
+    "reviewedPlanAndBaseLockBytesMatched": true,
+    "includedCollectorBytesMatched": true,
+    "collectionLockRawBytesMatched": true,
+    "collectionLockStatusUnchanged": "collected-awaiting-review",
+    "ortPatchReferencesPreserved": 7,
+    "reusedSourceReferencesPreserved": 2,
+    "sourceArchiveFilesExtractedToDisk": false,
+    "upstreamCodeExecuted": false,
+    "nativeRebuilt": false,
+    "apkModified": false
+  },
+  "independentVerifyCommand": {
+    "command": "python3 scripts/collect-dawn-source-supplement.py --verify LanType-native-source-webgpu-supplement-v1.zip --expected-zip-sha256 6eabae67a60bdb0f3eaab9858f58b1f712edb9f85bb4c5cf75d800e7f530691d",
+    "exitCode": 0,
+    "result": {
+      "status": "verified-against-supplied-zip-sha256",
+      "file": "LanType-native-source-webgpu-supplement-v1.zip",
+      "bytes": 105554498,
+      "sha256": "6eabae67a60bdb0f3eaab9858f58b1f712edb9f85bb4c5cf75d800e7f530691d",
+      "includedFiles": 50
+    }
+  },
+  "originalCollectorReceipt": {
+    "status": "collected-awaiting-review",
+    "archiveCount": 7,
+    "totalSourceArchiveBytes": 105045721,
+    "sha256": "f60c6d55f466940dacadd4eb44b1a6b4455492bbef0f27dcfe8e154b23cc3a66"
+  },
+  "storageBudget": {
+    "budgetBytes": 5368709120,
+    "beforeBytes": 4821143552,
+    "estimatedPeakBytes": 5032340366,
+    "afterAllocatedBytes": 4926767104,
+    "headroomBytes": 441942016,
+    "physicalFreeBytes": 19929264128,
+    "countedRoots": [
+      "toolchain/android-sdk/emulator",
+      "toolchain/android-sdk/system-images",
+      "work/android-qa",
+      "work/native-source-supplement-44120869197"
+    ],
+    "hardLinksCountedOnce": true
+  },
+  "scopeLimits": [
+    "Seven new source archives and thirteen license/notice copies are verified against the frozen plan; this is a source-only supplement.",
+    "Original seventy-source parts, APKs, tags, signatures and runtime ZIPs are not replaced.",
+    "Collected source lock remains collected-awaiting-review exactly as produced; this receipt records byte verification separately.",
+    "No upstream code executed, patches applied, native compilation, APK modification or runtime acceptance is implied.",
+    "The original vendor build configuration and byte-identical native reproduction remain unestablished."
+  ]
+}

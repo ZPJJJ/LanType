@@ -984,9 +984,9 @@
   "correspondenceStatus": {
     "applicationSources": "included",
     "gplNativeSourceTrees": "included at exact pinned commits with actual archives and patches",
-    "permissiveNativeSourceTrees": "base direct-component archives retained; Dawn/WebGPU recursive source supplement is pending verification",
+    "permissiveNativeSourceTrees": "base direct-component archives retained; the reviewed seven-archive Dawn/WebGPU supplement is separately published, see docs/licensing/dawn-source-publication.json",
     "remainingPinEvidenceGap": [
-      "Dawn/WebGPU and its required nested source archives were omitted from the original 70-file base set; collection and verification are in progress."
+      "The original vendor CMakeCache and complete native build command remain unavailable; source scope inferred from fixed ORT Android configuration and the observed provider ELF is documented in dawn-source-plan.json."
     ],
     "allNativeComponentsRecompiled": false,
     "fullBinaryIdenticalReproductionEstablished": false,
@@ -996,6 +996,14 @@
       "libyuvCommit": "741c38751c436f60c583110f617340b7f3322d94",
       "originalGoogleLibyuvPinClaimed": false,
       "description": "The two JNI libraries are rebuilt from CameraX 1.6.2 exact module sources with an explicitly selected pinned libyuv; the original opaque AAR native libraries are replaced."
+    },
+    "dawnSourceSupplement": {
+      "lock": "docs/licensing/native-sources-webgpu.lock.json",
+      "publicationReceipt": "docs/licensing/dawn-source-publication.json",
+      "status": "known-omission-corrected-reviewed-and-published",
+      "archiveCount": 7,
+      "supplementSha256": "6eabae67a60bdb0f3eaab9858f58b1f712edb9f85bb4c5cf75d800e7f530691d",
+      "supplementUrl": "https://github.com/ZPJJJ/LanType/releases/download/v1.1.1-rc1/LanType-native-source-webgpu-supplement-v1.zip"
     }
   }
 }

@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "status": "reviewed-and-published-verified",
+  "reviewedAt": "2026-11-17T16:12:24.034751+00:00",
+  "reviewScope": "The seven newly collected fixed source archives, thirteen original license/notice copies and twenty-three source-text evidence files; corrective supplement for the observed ORT Dawn/WebGPU omission.",
+  "release": {
+    "id": 448699588,
+    "url": "https://github.com/ZPJJJ/LanType/releases/tag/v1.1.1-rc1",
+    "tag": "v1.1.1-rc1",
+    "prerelease": true,
+    "assetId": 759718489,
+    "assetUrl": "https://github.com/ZPJJJ/LanType/releases/download/v1.1.1-rc1/LanType-native-source-webgpu-supplement-v1.zip",
+    "file": "LanType-native-source-webgpu-supplement-v1.zip",
+    "bytes": 105554498,
+    "sha256": "6eabae67a60bdb0f3eaab9858f58b1f712edb9f85bb4c5cf75d800e7f530691d",
+    "serverDigestMatched": true
+  },
+  "appliesToVersions": [
+    "1.1.0",
+    "1.1.1"
+  ],
+  "independentByteReview": {
+    "path": "docs/licensing/dawn-source-collection-receipt.json",
+    "sha256": "b2da016c9bca24e4f40707d7dced72a33a9f26591bc5c7ab1308671edb859901",
+    "status": "passed"
+  },
+  "rawCollectionLock": {
+    "path": "docs/licensing/native-sources-webgpu.lock.json",
+    "sha256": "abd883e576243dc56d669f87b1fb7eb1ac2e79b8849d1d62abad1ca3a7dfe02d",
+    "historicalStatusPreserved": "collected-awaiting-review"
+  },
+  "checks": {
+    "archives": 7,
+    "licenseOrNoticeCopies": 13,
+    "sourceTextEvidenceFiles": 23,
+    "dawnUpstreamSha1Matched": true,
+    "publisherWholeZipHashAndSizeMatched": true,
+    "oldApkTagAndSourceArchivesUnchanged": true
+  },
+  "knownOmissionDisposition": "Dawn/WebGPU source-archive coverage omission corrected by this separately published package; old seventy-source parts remain required.",
+  "limits": [
+    "Original vendor CMakeCache and exact original build command remain unavailable.",
+    "This review is not a binary-identical rebuild or an exhaustive assertion about unknown provider configurations.",
+    "No source execution, ORT patch application, native rebuild, APK fix or device runtime acceptance is implied.",
+    "Collection-time awaiting-review records are retained as historical originals; this later receipt records publisher review and publication."
+  ]
+}
