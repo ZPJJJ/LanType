@@ -1,0 +1,149 @@
+{
+  "recordedAt": "2026-11-17T14:33:30.721545+00:00",
+  "result": "PARTIAL_ENVIRONMENT_BLOCKED",
+  "conclusion": "The unchanged signed 1.1.0 ARM64 APK and independent editor host installed successfully. Functional product startup, Rime deployment, Chinese/English input and the 1.1.1 upgrade were not established in this local TCG environment. System watchdogs and system-app ANRs prevent reliable attribution; no product defect is inferred from them.",
+  "environment": {
+    "serial": "emulator-5554",
+    "user": 0,
+    "api": 30,
+    "systemImage": "Google APIs x86_64 revision16",
+    "nativeBridge": "libndk_translation.so",
+    "guestAbi64": [
+      "x86_64",
+      "arm64-v8a"
+    ],
+    "hardwareAcceleration": false,
+    "finalVcpus": 4,
+    "finalRamMiB": 3072,
+    "physicalArm64Device": false,
+    "officialImageReceipt": "system-image-download-receipt.json",
+    "emulatorReceipt": "emulator-download-receipt.json"
+  },
+  "apkIdentities": [
+    {
+      "version": "1.1.0",
+      "size": 179983146,
+      "sha256": "03e379a9b77fbddba9886e28bfa9fc78e447dc4843917117faf625b4339d18c6",
+      "fileName": "LanType-1.1.0-offline-arm64-v8a.apk"
+    },
+    {
+      "version": "1.1.1",
+      "size": 179987242,
+      "sha256": "b841c42366df2db7ef16736ee93a65723e6495aae91dab2e27093db06a40e497",
+      "fileName": "LanType-1.1.1-offline-arm64-v8a.apk"
+    }
+  ],
+  "offlineBeforeFirstProductIntent": {
+    "airplaneMode": "1",
+    "wifiOn": "0",
+    "mobileData": "0",
+    "oldApkInternetPermission": false,
+    "evidence": [
+      "control/outputs/qc-041-flight.stdout",
+      "control/outputs/qc-042-wifi.stdout",
+      "control/outputs/qc-043-data.stdout",
+      "published-apk-badging.txt"
+    ]
+  },
+  "oldReleaseInstall": {
+    "status": "PASS",
+    "exitCode": 0,
+    "output": "Performing Streamed Install\nSuccess",
+    "startedAt": "2026-11-17T14:08:40.640605+00:00",
+    "completedAt": "2026-11-17T14:17:11.886394+00:00",
+    "elapsedSeconds": 511.246,
+    "durationIsPerformanceBenchmark": false,
+    "streaming": true,
+    "incremental": false,
+    "versionCode": 2,
+    "versionName": "1.1.0",
+    "primaryCpuAbi": "arm64-v8a",
+    "debuggable": false,
+    "packageEvidence": "control/outputs/qc-046-package-old.stdout"
+  },
+  "editorHostInstall": {
+    "status": "PASS",
+    "exitCode": 0,
+    "output": "Performing Streamed Install\nSuccess",
+    "completedAt": "2026-11-17T14:17:39.659686+00:00"
+  },
+  "startupObservations": {
+    "firstAmStartWait": "Timed out at 180 seconds; guest completion unknown",
+    "firstScreen": "Pixel Launcher ANR, not the product UI",
+    "nextScreen": "System UI ANR",
+    "additionalSystemLog": "com.google.android.gms ANR",
+    "productProcessStartsObserved": [
+      5882,
+      7484
+    ],
+    "stableProductPidEstablished": false,
+    "postInitialIntentCrashBufferBytes": 0,
+    "finalScreen": "White content window with system bars; no rendered product controls proved",
+    "finalUiDump": "ERROR: null root node returned by UiTestAutomationBridge.",
+    "finalProbeSeconds": 69.155
+  },
+  "flows": {
+    "firstInteractiveProductUi": "NOT_ESTABLISHED",
+    "rimeFirstDeployment": "NOT_VERIFIED",
+    "chineseCandidateCommit": "NOT_RUN",
+    "americanEnglishTyping": "NOT_RUN",
+    "visibleUpgradeFixture": "NOT_CREATED",
+    "sameSignature111Upgrade": "NOT_RUN_NEW_APK_NOT_INSTALLED",
+    "toolCabinConversionMaskPasswordEditorBoundary": "NOT_RUN",
+    "toolCabinClipboardAcrossActualProcessRestart": "NOT_RUN",
+    "ordinaryClipboardPositiveControl": "NOT_RUN"
+  },
+  "environmentFailures": {
+    "earlier2CpuAttempt": "Repeated SystemServer watchdog while android.fg waited in UserDataPreparer.prepareUserData/onBeforeUnlockUser; not a proven OOM.",
+    "boundedMitigation": "One retry with same userdata, 4 vCPUs and 3GiB; reached RUNNING_UNLOCKED, but system-app ANRs remained.",
+    "evidence": [
+      "tcg-watchdog-mitigation.json",
+      "control/outputs/qa-031-system-crash.stdout",
+      "control/outputs/qa-033-system-full.stdout",
+      "control/outputs/qc-040-user-state-2.stdout",
+      "ui/qc-051b-system-anr-ui.xml",
+      "ui/qc-059-after-system-dialog.xml",
+      "control/outputs/qc-058-launch-events.stdout"
+    ]
+  },
+  "shutdown": {
+    "status": "stopped",
+    "stoppedAt": "2026-11-17T14:30:26.909171+00:00",
+    "request": {
+      "method": "adb emu kill",
+      "exitCode": 0
+    },
+    "emulatorExitCode": -11,
+    "signalFallback": null,
+    "note": "adb emu kill returned zero; the emulator returned -11 during teardown. This is recorded as host emulator termination, not a product crash.",
+    "locks": {
+      "multiinstance.lock": "released",
+      "hardware-qemu.ini.lock": "not-present"
+    },
+    "userdataPreserved": true,
+    "uninstallOrPmClearUsed": false,
+    "finalRecordedAllocatedBytes": 4645011456,
+    "budgetBytes": 5368709120
+  },
+  "visualEvidence": [
+    "ui/qc-051a-first-frame.png",
+    "ui/qc-060-after-system-dialog.png",
+    "ui/qc-064-final-screen.png"
+  ],
+  "interactionEvidence": "ui-actions.jsonl",
+  "limitations": [
+    "No physical ARM64 device execution",
+    "No Chinese/English input success is claimed",
+    "No successful upgrade or clipboard privacy runtime result is claimed",
+    "No latency, inference speed, battery or Android16 behavior claim",
+    "The hosted KVM run is a separate validation environment and must have separate evidence"
+  ],
+  "evidenceArchive": {
+    "fileName": "LanType-1.1.1-local-tcg-attempt-evidence.zip",
+    "size": 79707,
+    "sha256": "a73227de350c87acf18180c1e84e50f965db2f73de7697c7d1e229fe416dc785",
+    "members": 29,
+    "distributionStatusAtDocumentation": "Prepared as a separate release attachment; this receipt does not assert that upload or publication has completed."
+  },
+  "evidencePathBase": "Evidence paths in this receipt are member paths relative to evidenceArchive.fileName, not required absolute paths on the reader host. Broad original logs are retained separately and are not all included in the curated archive."
+}
