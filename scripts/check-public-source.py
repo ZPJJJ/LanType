@@ -15,6 +15,8 @@ ALLOWED_WORKFLOWS = {
     # Neither publishes a release, signs an APK, nor receives private keys.
     ".github/workflows/native-source-supplement.yml",
     ".github/workflows/native-ort-build.yml",
+    # Uses a disposable test certificate; never receives the product signing key.
+    ".github/workflows/ort-api-qa.yml",
 }
 DENIED_PARTS = {".gradle", ".cxx", "node_modules", "private-signing", "recovery", "deliverables"}
 DENIED_SUFFIXES = {".jks", ".keystore", ".p12", ".pfx", ".key", ".pem", ".apk", ".aab", ".so", ".onnx", ".tflite", ".hprof", ".xipk"}

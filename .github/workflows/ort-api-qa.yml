@@ -1,0 +1,167 @@
+name: LanType positive ORT Android API QA
+
+on:
+  workflow_dispatch:
+    inputs:
+      candidate_run_id:
+        description: Completed native-ort-build run ID in ZPJJJ/LanType
+        required: true
+        type: string
+      candidate_head:
+        description: Exact 40-character source commit of that native build
+        required: true
+        type: string
+      candidate_artifact_id:
+        description: Immutable lantype-ort-candidate artifact ID from that run
+        required: true
+        type: string
+      candidate_manifest_sha256:
+        description: Independently recorded SHA-256 of candidate-manifest.json
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: lantype-ort-positive-api-qa
+  cancel-in-progress: false
+
+jobs:
+  positive-api:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    defaults:
+      run:
+        shell: bash
+    env:
+      QA_ROOT: ${{ runner.temp }}/lantype-ort-api-work
+      QA_VOLUME: ${{ runner.temp }}/lantype-ort-api-volume.img
+      QA_RECEIPTS: ${{ runner.temp }}/lantype-ort-api-receipts
+      CANDIDATE_RUN_ID: ${{ inputs.candidate_run_id }}
+      CANDIDATE_HEAD: ${{ inputs.candidate_head }}
+      CANDIDATE_ARTIFACT_ID: ${{ inputs.candidate_artifact_id }}
+      CANDIDATE_MANIFEST_SHA256: ${{ inputs.candidate_manifest_sha256 }}
+      ANDROID_SERIAL: emulator-5554
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Reserve bounded work storage and reuse installed tools
+        run: |
+          set -euo pipefail
+          test "$GITHUB_REPOSITORY" = ZPJJJ/LanType
+          test ! -e "$QA_ROOT"
+          test ! -e "$QA_VOLUME"
+          mkdir -p "$QA_RECEIPTS"
+          python3 scripts/storage_guard.py > "$QA_RECEIPTS/storage-preflight.txt"
+          test -x "$ANDROID_HOME/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android28-clang"
+          test -x "$ANDROID_HOME/build-tools/36.0.0/aapt2"
+          test -f "$ANDROID_HOME/platforms/android-36/android.jar"
+          test -x "$ANDROID_HOME/emulator/emulator"
+          test -x "$JAVA_HOME_21_X64/bin/javac"
+          printf 'ORT_QA_HOST_SDK=%s\nJAVA_HOME=%s\n' "$ANDROID_HOME" "$JAVA_HOME_21_X64" >> "$GITHUB_ENV"
+          # 4.5 GiB filesystem capacity plus a 512 MiB measured overhead allowance.
+          # The overhead gate is a checkpoint assertion, not a whole-job hard quota.
+          fallocate -l 4608M "$QA_VOLUME"
+          mkfs.ext4 -q -F -m 0 "$QA_VOLUME"
+          mkdir "$QA_ROOT"
+          sudo mount -o loop,nodev,nosuid "$QA_VOLUME" "$QA_ROOT"
+          sudo chown "$(id -u):$(id -g)" "$QA_ROOT"
+          mkdir -p "$QA_ROOT"/{evidence,build,candidate,tmp,cache,android-user,avd,sdk}
+          fallocate -l 8M "$QA_ROOT/evidence-reserve.bin"
+          printf 'TMPDIR=%s\nXDG_CACHE_HOME=%s\nANDROID_USER_HOME=%s\nANDROID_AVD_HOME=%s\nANDROID_EMULATOR_HOME=%s\nJAVA_TOOL_OPTIONS=-Djava.io.tmpdir=%s\n' \
+            "$QA_ROOT/tmp" "$QA_ROOT/cache" "$QA_ROOT/android-user" "$QA_ROOT/avd" "$QA_ROOT/android-user" "$QA_ROOT/tmp" >> "$GITHUB_ENV"
+          python3 scripts/run-ort-api-qa.py --stage budget --checkpoint initialized
+
+      - name: Bind the candidate to its completed native workflow and immutable artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/run-ort-api-qa.py --stage identity
+
+      - name: Download only the validated candidate from this repository
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          repository: ZPJJJ/LanType
+          github-token: ${{ github.token }}
+          run-id: ${{ inputs.candidate_run_id }}
+          artifact-ids: ${{ inputs.candidate_artifact_id }}
+          merge-multiple: true
+          digest-mismatch: error
+          path: ${{ env.QA_ROOT }}/candidate
+
+      - name: Verify manifest and ELF, then build the permission-free JNI test APK
+        timeout-minutes: 4
+        run: python3 scripts/run-ort-api-qa.py --stage build
+
+      - name: Require the hosted runner KVM device
+        run: |
+          set -euo pipefail
+          test -c /dev/kvm
+          stat /dev/kvm > "$QA_ROOT/evidence/kvm-before.txt"
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+          sudo udevadm settle --timeout=10
+          if [[ ! -r /dev/kvm || ! -w /dev/kvm ]]; then sudo chmod a+rw /dev/kvm; fi
+          test -r /dev/kvm
+          test -w /dev/kvm
+          stat /dev/kvm > "$QA_ROOT/evidence/kvm-after.txt"
+          lscpu > "$QA_ROOT/evidence/runner-cpu.txt"
+
+      - name: Prepare the official API 35 image inside the bounded volume
+        timeout-minutes: 12
+        # No NDK, build-tools or complete SDK copy/download. Existing licenses and
+        # tool libraries are reused; only the official comparison image is added.
+        run: python3 scripts/run-ort-api-qa.py --stage image
+
+      - name: Run the unchanged positive C probe through Android instrumentation JNI
+        timeout-minutes: 11
+        # An ARM64 APK uses Android's normal JNI/native bridge path. This does not
+        # assume that adb shell can execute an ARM64 ELF on an x86_64 guest.
+        run: python3 scripts/run-ort-api-qa.py --stage run
+
+      - name: Retain actual guest diagnostics and stop only the owned emulator
+        if: always()
+        timeout-minutes: 3
+        run: python3 scripts/run-ort-api-qa.py --stage collect
+
+      - name: Record the final storage checkpoint
+        if: always()
+        run: python3 scripts/run-ort-api-qa.py --stage budget --checkpoint before-evidence-upload
+
+      - name: Publish positive API evidence, including failures
+        id: evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: lantype-ort-positive-api-${{ github.run_id }}-${{ github.run_attempt }}
+          retention-days: 7
+          if-no-files-found: warn
+          compression-level: 6
+          path: |
+            ${{ env.QA_ROOT }}/evidence/
+            ${{ env.QA_RECEIPTS }}/
+
+      - name: Explain the result scope
+        if: always()
+        run: |
+          {
+            echo '## Positive Android ORT API check'
+            echo 'This disposable test APK checks only dlopen, C API 28, reported providers and CreateEnv/ReleaseEnv.'
+            echo 'It does not sign or publish LanType, integrate the replacement library, run inference, or establish physical ARM64/16 KiB/input acceptance.'
+            if [[ -f "$QA_ROOT/evidence/result.json" ]]; then
+              echo '```json'
+              cat "$QA_ROOT/evidence/result.json"
+              echo '```'
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Release the owned volume after successful evidence upload
+        if: ${{ always() && steps.evidence.outcome == 'success' }}
+        run: |
+          if mountpoint -q "$QA_ROOT"; then sudo umount "$QA_ROOT"; fi
+          if [[ -f "$QA_VOLUME" ]] && ! mountpoint -q "$QA_ROOT"; then rm -- "$QA_VOLUME"; fi

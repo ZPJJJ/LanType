@@ -110,6 +110,14 @@ python3 scripts/verify-ort-abi.py \
 
 静态验收后才进行单独的普通 Android 初始化、`GetApi(28)`/版本、可用 provider 及真实模型功能验证。无真实 ARM64/16 KiB 设备证据时照实标记。构建器的 `verify` 不执行设备程序，不自动用候选库覆盖已发布 APK。
 
+### 独立 Android API 检查
+
+`.github/workflows/ort-api-qa.yml` 接受本仓库已成功完成的原生构建 run ID、完整提交、不可变 artifact ID 和独立记录的 `candidate-manifest.json` SHA-256。它先核对运行/制品/完整文件身份，再把现有 `ort-api-smoke.c` 原样编入临时 ARM64 JNI 测试 APK。测试通过 Android instrumentation 的正常 JNI 装载路径运行，不依赖 x86_64 guest 直接执行 ARM64 shell 程序。
+
+测试包没有 Android 权限，使用一次性测试证书；产品签名密钥不进入工作流。guest 在启动测试前关闭无线连接。通过条件要求 C 主函数正常返回、唯一成功的 API 28 摘要，以及安装后实际 ORT/JNI 库的 SHA-256 与候选一致。原始 stdout/stderr、运行身份和 logcat 会作为独立制品保留；证据上传成功后才清理该任务卷。
+
+这个检查覆盖动态装载、ORT 版本/API、报告的 provider 与环境创建/释放，不覆盖模型推理、产品首启、中文/英文输入、升级或物理设备。其 SDK 镜像、AVD 和输出使用独立的 4608 MiB 工作卷，另有 512 MiB 卷外检查点；镜像/运行实际是否能在额度内完成，以首次执行结果为准。
+
 ## 入口验证与来源
 
 轻量验证只使用小型合成 ZIP/tar、hash 与参数/预算检查：
