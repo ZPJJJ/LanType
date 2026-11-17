@@ -24,6 +24,9 @@ jobs:
         shell: bash
     env:
       ANDROID_SERIAL: emulator-5554
+      # API 30's observed ARM-translation startup crash remains separate evidence.
+      # API 35 is a comparison target; the actual ARM ABI/bridge gates still apply.
+      QA_API_LEVEL: '35'
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
@@ -83,13 +86,13 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends libpulse0
           dpkg-query -W libpulse0 > "$QA_ROOT/evidence/emulator-host-libs.txt"
-      - name: Install official SDK emulator and API 30 Google APIs x86_64 image
+      - name: Install official SDK emulator and comparison Google APIs image
         timeout-minutes: 8
         run: |
-          sdkmanager 'platform-tools' 'emulator' 'system-images;android-30;google_apis;x86_64' 'platforms;android-36' 'build-tools;36.0.0'
+          sdkmanager 'platform-tools' 'emulator' "system-images;android-${QA_API_LEVEL};google_apis;x86_64" 'platforms;android-36' 'build-tools;36.0.0'
           "$ANDROID_HOME/emulator/emulator" -version > "$QA_ROOT/evidence/emulator-version.txt" 2>&1
           "$ANDROID_HOME/emulator/emulator" -accel-check 2>&1 | tee "$QA_ROOT/evidence/accel-check.txt"
-          cp "$ANDROID_HOME/system-images/android-30/google_apis/x86_64/source.properties" "$QA_ROOT/evidence/system-image.txt"
+          cp "$ANDROID_HOME/system-images/android-${QA_API_LEVEL}/google_apis/x86_64/source.properties" "$QA_ROOT/evidence/system-image.txt"
       - name: Build the disposable native editor host without Gradle
         timeout-minutes: 3
         run: >-
@@ -99,8 +102,8 @@ jobs:
       - name: Start a fresh accelerated guest and require an unlocked Android user
         timeout-minutes: 8
         run: |
-          printf 'no\n' | avdmanager create avd --force --name lantype-api30 --package 'system-images;android-30;google_apis;x86_64' --device pixel_2
-          "$ANDROID_HOME/emulator/emulator" -avd lantype-api30 -port 5554 \
+          printf 'no\n' | avdmanager create avd --force --name "lantype-api${QA_API_LEVEL}" --package "system-images;android-${QA_API_LEVEL};google_apis;x86_64" --device pixel_2
+          "$ANDROID_HOME/emulator/emulator" -avd "lantype-api${QA_API_LEVEL}" -port 5554 \
             -accel on -cores 4 -memory 3072 -gpu swiftshader \
             -no-window -no-audio -no-boot-anim -no-snapshot -wipe-data \
             > "$QA_ROOT/evidence/emulator.log" 2>&1 &
