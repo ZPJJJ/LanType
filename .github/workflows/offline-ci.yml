@@ -2,6 +2,8 @@ name: LanType offline build
 
 on:
   push:
+    tags-ignore:
+      - '**'
   pull_request:
   workflow_dispatch:
 
@@ -16,47 +18,133 @@ jobs:
   build-and-test:
     runs-on: ubuntu-24.04
     timeout-minutes: 60
+    defaults:
+      run:
+        shell: bash
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-      - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
         with:
-          distribution: temurin
-          java-version: '21'
-      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
-        with:
-          python-version: '3.12'
-      - uses: android-actions/setup-android@be39fa834029ff78f1a44aa3bb0819b8fc2bd8fd # v4
-      - name: Install fixed Android tools
-        run: sdkmanager 'platforms;android-36' 'build-tools;36.0.0' 'ndk;27.2.12479018' 'cmake;3.22.1'
+          persist-credentials: false
+      - name: Reserve the bounded offline build work volume
+        id: volume
+        run: |
+          set -euo pipefail
+          # runner.temp cannot be referenced in a job-level env expression.
+          export LANTYPE_OFFLINE_WORK_ROOT="$RUNNER_TEMP/lantype-offline-work"
+          export LANTYPE_OFFLINE_VOLUME="$RUNNER_TEMP/lantype-offline-volume.img"
+          export LANTYPE_OFFLINE_RECEIPTS="$RUNNER_TEMP/lantype-offline-receipts"
+          export LANTYPE_OFFLINE_HOST_SDK="$ANDROID_HOME"
+          printf 'LANTYPE_OFFLINE_WORK_ROOT=%s\nLANTYPE_OFFLINE_VOLUME=%s\nLANTYPE_OFFLINE_RECEIPTS=%s\nLANTYPE_OFFLINE_HOST_SDK=%s\n' \
+            "$LANTYPE_OFFLINE_WORK_ROOT" "$LANTYPE_OFFLINE_VOLUME" "$LANTYPE_OFFLINE_RECEIPTS" "$LANTYPE_OFFLINE_HOST_SDK" >> "$GITHUB_ENV"
+          test ! -e "$LANTYPE_OFFLINE_WORK_ROOT"
+          test ! -e "$LANTYPE_OFFLINE_VOLUME"
+          test ! -e "$LANTYPE_OFFLINE_RECEIPTS"
+          mkdir "$LANTYPE_OFFLINE_RECEIPTS"
+          # Keep the existing real-host 20 GiB floor plus 5 GiB headroom gate.
+          python3 scripts/storage_guard.py > "$LANTYPE_OFFLINE_RECEIPTS/storage-preflight.txt"
+          python3 -c 'import sys; assert sys.version_info[:2] == (3, 12), "Preinstalled Python 3.12 is required"'
+          test -x "$JAVA_HOME_21_X64/bin/javac"
+          export JAVA_HOME="$JAVA_HOME_21_X64"
+          printf 'JAVA_HOME=%s\n' "$JAVA_HOME" >> "$GITHUB_ENV"
+          fallocate -l 4608M "$LANTYPE_OFFLINE_VOLUME"
+          mkfs.ext4 -q -F -m 0 "$LANTYPE_OFFLINE_VOLUME"
+          mkdir "$LANTYPE_OFFLINE_WORK_ROOT"
+          sudo mount -o loop,nodev,nosuid "$LANTYPE_OFFLINE_VOLUME" "$LANTYPE_OFFLINE_WORK_ROOT"
+          sudo chown "$(id -u):$(id -g)" "$LANTYPE_OFFLINE_WORK_ROOT"
+          mkdir -p "$LANTYPE_OFFLINE_WORK_ROOT"/{evidence,sdk,tmp,cache,gradle-user,java-user,android-user}
+          fallocate -l 8M "$LANTYPE_OFFLINE_WORK_ROOT/evidence-reserve.bin"
+          # The wrapper separately sets Java's user.home cache location. The
+          # runner's HOME, original checkout and preinstalled SDK remain inputs.
+          printf 'TMPDIR=%s\nTMP=%s\nTEMP=%s\nXDG_CACHE_HOME=%s\n' \
+            "$LANTYPE_OFFLINE_WORK_ROOT/tmp" "$LANTYPE_OFFLINE_WORK_ROOT/tmp" \
+            "$LANTYPE_OFFLINE_WORK_ROOT/tmp" "$LANTYPE_OFFLINE_WORK_ROOT/cache" >> "$GITHUB_ENV"
+          python3 scripts/run-offline-build-env.py --stage budget --label initialized
+      - name: Copy this checkout and reuse the installed JDK and SDK packages
+        timeout-minutes: 15
+        # No setup-android/global SDK install, emulator, old NDK or CMake build.
+        # Only fixed platform/build-tools packages may be added to this overlay.
+        run: python3 scripts/run-offline-build-env.py --stage prepare
       - name: Check the public source inventory
-        run: python3 scripts/check-public-source.py
+        run: >-
+          python3 scripts/run-offline-build-env.py --stage execute --label public-source --timeout 120 --
+          python3 scripts/check-public-source.py
       - name: Check pinned source verification regressions
-        run: python3 scripts/test-native-source-verification.py
+        run: |
+          python3 scripts/run-offline-build-env.py --stage execute --label source-verification --timeout 120 -- \
+            bash -euo pipefail -c '
+              python3 scripts/test-native-source-verification.py
+              python3 scripts/test-ort-runtime.py
+            '
       - name: Prepare approved runtime data and native dependencies
+        timeout-minutes: 12
         run: |
-          python3 scripts/prepare-upstream.py
-          python3 scripts/build-camerax-native.py --download
-          python3 tools/lantype_resources/prepare_resources.py --download
+          python3 scripts/run-offline-build-env.py --stage execute --label restore-runtime --timeout 660 -- \
+            bash -euo pipefail -c '
+              mkdir -p app/build/reports/lantype-native
+              python3 scripts/restore-base-runtime.py --download --receipt app/build/reports/lantype-native/base-restoration.json
+              python3 scripts/prepare-upstream.py --verify-only
+              python3 scripts/build-camerax-native.py --verify-only
+              python3 scripts/verify-commercial-resources.py
+              python3 scripts/restore-ort-runtime.py --download --bounded-work-root "$LANTYPE_OFFLINE_WORK_ROOT" \
+                > app/build/reports/lantype-native/ort-restoration.json
+            '
       - name: Build offline release variant
-        run: ./gradlew :app:assembleOffline --no-daemon --max-workers=1 -Pkotlin.compiler.execution.strategy=in-process '-Dorg.gradle.jvmargs=-Xmx4096m -Dfile.encoding=UTF-8'
+        timeout-minutes: 31
+        run: >-
+          python3 scripts/run-offline-build-env.py --stage execute --label assemble-offline --timeout 1800 --
+          ./gradlew :app:assembleOffline --no-daemon --max-workers=1 -Pkotlin.compiler.execution.strategy=in-process
+          '-Dorg.gradle.jvmargs=-Xmx4096m -Dfile.encoding=UTF-8'
       - name: Run focused tests and Compose renders
-        env:
-          CYIME_RENDER_OUT: ${{ github.workspace }}/app/build/lantype-ci-renders
-        run: bash scripts/test-targeted.sh
-      - name: Verify final APK data and source-built CameraX JNI replacements
+        timeout-minutes: 31
+        run: >-
+          python3 scripts/run-offline-build-env.py --stage execute --label tests-and-renders --timeout 1800 --
+          bash scripts/test-targeted.sh
+      - name: Verify final APK data and accepted native replacements
+        timeout-minutes: 4
         run: |
-          for apk in app/build/outputs/apk/offline/*.apk; do
-            python3 scripts/build-camerax-native.py --verify-apk "$apk"
-            python3 scripts/verify-commercial-resources.py --apk "$apk"
-          done
+          python3 scripts/run-offline-build-env.py --stage execute --label verify-apk --timeout 210 -- \
+            bash -euo pipefail -c '
+              shopt -s nullglob
+              apks=(app/build/outputs/apk/offline/*.apk)
+              test "${#apks[@]}" -gt 0
+              for apk in "${apks[@]}"; do
+                python3 scripts/prepare-ort-runtime.py --accepted-lock docs/licensing/ort-runtime.lock.json \
+                  --verify-apk "$apk" --receipt "$apk.native.json"
+                python3 scripts/build-camerax-native.py --verify-apk "$apk"
+                python3 scripts/verify-commercial-resources.py --apk "$apk"
+              done
+            '
+      - name: Preserve final allocation and command diagnostics
+        id: collect
+        if: always() && steps.volume.outcome == 'success'
+        timeout-minutes: 3
+        run: python3 scripts/run-offline-build-env.py --stage collect
       - name: Preserve unsigned build and test evidence
-        if: always()
+        id: evidence
+        if: always() && env.LANTYPE_OFFLINE_RECEIPTS != ''
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: lantype-unsigned-offline-validation
           if-no-files-found: warn
+          compression-level: 0
           path: |
-            app/build/outputs/apk/offline/*.apk
-            app/build/test-results/testDebugUnitTest/*.xml
-            app/build/reports/tests/testDebugUnitTest/
-            app/build/lantype-ci-renders/*.png
+            ${{ env.LANTYPE_OFFLINE_RECEIPTS }}/
+            ${{ env.LANTYPE_OFFLINE_WORK_ROOT }}/evidence/
+            ${{ env.LANTYPE_OFFLINE_WORK_ROOT }}/source/app/build/outputs/apk/offline/*.apk
+            ${{ env.LANTYPE_OFFLINE_WORK_ROOT }}/source/app/build/outputs/apk/offline/*.native.json
+            ${{ env.LANTYPE_OFFLINE_WORK_ROOT }}/source/app/build/reports/lantype-native/
+            docs/licensing/ort-runtime.lock.json
+            ${{ env.LANTYPE_OFFLINE_WORK_ROOT }}/source/app/build/test-results/testDebugUnitTest/*.xml
+            ${{ env.LANTYPE_OFFLINE_WORK_ROOT }}/source/app/build/reports/tests/testDebugUnitTest/
+            ${{ env.LANTYPE_OFFLINE_WORK_ROOT }}/source/app/build/lantype-ci-renders/*.png
+      - name: Remove this job's volume only after successful evidence upload
+        if: always() && steps.evidence.outcome == 'success' && steps.collect.outcome == 'success'
+        run: |
+          set -euo pipefail
+          test "$LANTYPE_OFFLINE_WORK_ROOT" = "$RUNNER_TEMP/lantype-offline-work"
+          test "$LANTYPE_OFFLINE_VOLUME" = "$RUNNER_TEMP/lantype-offline-volume.img"
+          if mountpoint -q "$LANTYPE_OFFLINE_WORK_ROOT"; then sudo umount "$LANTYPE_OFFLINE_WORK_ROOT"; fi
+          rmdir "$LANTYPE_OFFLINE_WORK_ROOT"
+          rm -- "$LANTYPE_OFFLINE_VOLUME"
