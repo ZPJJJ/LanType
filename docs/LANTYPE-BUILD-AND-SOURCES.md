@@ -1,209 +1,213 @@
-# LanType 1.1.1 构建、资源与对应源码
+# LanType 1.1.2 构建、资源与对应源码（工作稿）
 
-本文件说明 1.1.1 兼容修复批次的构建与交付方式。实际构建、测试、APK 指纹和未验收范围见 [1.1.1 验证报告](validation-1.1.1/VALIDATION.md)；本说明不预先声明安装包或设备验收通过。`docs/validation-1.1.0/` 与 `docs/validation/` 分别保留 1.1.0、1.0.0 的历史材料，不能代替本批验证。
+本文件描述 `1.1.2 / versionCode 4` 的构建与发行准备。**当前没有本批已验收的 APK 或已公开的新 ORT component ZIP；不能据本文宣布首启问题已修好或稳定收费版已经可用。** 已完成的原生构建、环境准备失败、待补发行身份及设备验收分别记录在 [1.1.2 验证工作稿](development/lantype-1.1.2-validation.md)。
 
-**2026-11-18 来源范围更正：** 实际 ORT 共享库包含 Dawn/WebGPU，原 70 份基础原生源码归档没有包含这部分嵌套来源。7 份固定源档的独立补充包已完成核验并公开发布；原三份源码包必须与补充一起使用。APK、旧归档和 tag 不变；下载、摘要及独立校验方法见 [Dawn 源码补充说明](licensing/DAWN-SOURCE-SUPPLEMENT.md)。完整供应商构建配置与原生逐字节复现仍未建立。
+已有 [1.1.1 变更记录](CHANGELOG-1.1.1.zh-CN.md)、[1.1.1 验证记录](validation-1.1.1/VALIDATION.md)、旧 APK、源码 ZIP、附件和标签保留原样。本批变更见 [1.1.2 变更工作稿](CHANGELOG-1.1.2.zh-CN.md)，旧测试结果不作为本批通过记录。
 
-本批修复工具舱复制内容进入普通剪贴板历史的隐私边界、连续录音期间 Whisper 中英语言切换，以及遗留词库恢复中冲突或搬移失败数据被删除的问题。后者保留旧路径中的数据，不自动合并或启用两份数据库；完整范围见 [1.1.1 变更记录](CHANGELOG-1.1.1.zh-CN.md)。SDK、JDK、发行签名、模型、词库、原生库及其运行资源锁沿用 1.1.0。
+## 当前构建和验收状态
 
-## 版本与构建方式
+[原生构建 run 44164186969](https://github.com/ZPJJJ/LanType/actions/runs/44164186969) 已成功生成带 cpuinfo 生产补丁的 ARM64 ORT 候选。实际 `libonnxruntime.so` 为 **29,568,744 字节**，SHA-256：
 
-| 项目 | 本版固定值 |
+```text
+ae250081faa6cd742f6edade2a23bf29a96ba690fa19a01e3bd192548cf89f1e
+```
+
+静态 ABI 检查及 AAR 成员比较的身份和范围见 [ORT 1.28.0-r1 组件说明](licensing/ORT-RUNTIME-1.28.0-r1.md)。这些结果不等于 Android 正常初始化、模型推理或输入法功能通过。
+
+[普通 API QA 第五次运行 44177101937](https://github.com/ZPJJJ/LanType/actions/runs/44177101937) 已通过宿主音频加载依赖和 KVM 检查，随后官方 API 35 镜像解包触及工作卷的 256 MiB 保留线；**没有进入候选的原生 API 正向检查**。流式校验、分段读取和稀疏解包入口已准备并完成静态审阅，尚未执行。模拟器启动还需超出现有 5 GiB 总预算的空间，[云端 QA 存储提案](qa/ANDROID-QA-STORAGE-PROPOSAL.md) 尚未启用。新组件 ZIP、accepted 锁、整包 CI、签名 APK 和产品设备验证仍待完成。
+
+## 运行离线与开发联网
+
+发行目标仍为中文及美式英文离线输入法。`offline` 变体不申请 `INTERNET` 权限；最终 APK 还须重新读取 manifest 核对。随包模型、词库和初始化数据由设备本地读取，运行时不依赖服务器或联网激活。
+
+开发阶段取得 Gradle、Maven、Android SDK、固定源码和发行构建输入可以联网。`--download` 仅是开发准备命令的显式授权，不表示手机输入法需要联网。没有预先准备完整开发缓存时，不承诺整个编译过程也能断网完成。配置与权限入口见 [应用构建脚本](../app/build.gradle.kts) 和 [offline manifest](../app/src/offline/AndroidManifest.xml)。
+
+## 版本与工具链
+
+| 项目 | 本批配置 |
 |---|---|
 | 应用 ID | `app.lantype.keyboard` |
-| versionName / versionCode | `1.1.1` / `3` |
-| 支持 ABI | `arm64-v8a` |
-| 最低 Android | API 28 / Android 9 |
-| compileSdk / targetSdk | 36 / 36 |
-| 本轮 JDK | 21.0.13 |
+| versionName / versionCode | `1.1.2` / `4` |
+| ABI / 最低 Android | `arm64-v8a` / API 28 |
+| compileSdk / targetSdk / Build Tools | `36` / `36` / `36.0.0` |
+| JDK / Python | 21 / 3.12 |
 | Gradle / Android Gradle Plugin | 9.5.0 / 9.1.0 |
-| Android Build Tools | 36.0.0 |
+| 默认预编译模式与可选 Rime/JNI 源码模式的 NDK | 两种模式都固定 `29.0.14206865` |
+| 可选 Rime/JNI 源码构建的 CMake | `3.22.1` |
+| 独立 ORT 原生构建 | NDK `29.0.14206865`、CMake `3.31.6`、ARM64/API 28 |
 | 发行变体 | `offline`，保留 R8 |
-| Rime JNI 源码模式的 NDK / CMake | 29.0.14206865 / 3.22.1 |
-| CameraX 首次源码构建 NDK / CMake | 27.2.12479018 / 3.22.1 |
 
-应用 Java/Kotlin、Compose、插件宿主和资源从本项目重新编译。常规构建复用经过 SHA-256 锁定的 ARM64 原生二进制；不复用上游 DEX。源码 namespace 保留 `com.kingzcheung.xime`，与 JNI 类名契约一致。包名、产品资源和发行签名由 LanType 独立管理。
+应用 Java/Kotlin、Compose、插件宿主和资源从当前源码重新编译，不复用上游 DEX。默认模式使用锁定原生输入；本批默认 APK 的合同是 **恰好 12 个原生库，仅主 ORT 换成 accepted 锁中的新 ELF，其余 11 个库逐文件保持旧版身份**。源码 namespace 保留 JNI 所需的 `com.kingzcheung.xime`；应用 ID、品牌和官方签名由 LanType 管理。
 
-应用运行时没有 `INTERNET` 权限。初始化语音资源只读取安装包，本地恢复也不下载。开发阶段取得 Gradle、Maven、SDK、源代码和模型构建输入需要网络；与手机运行时权限无关。
+上述配置以 [app/build.gradle.kts](../app/build.gradle.kts)、[版本目录](../gradle/libs.versions.toml) 和 [ORT 构建器](../scripts/build-ort-native.py) 为准。独立重建旧 CameraX 组件仍有其历史 NDK 27.2/CMake 3.22.1 合同；默认整包流程直接校验已发布的两份 CameraX 输出，不重新下载旧工具链。
 
-## 发行物与复用依赖
+## 发行材料的组合
 
-- 本批安装包：`LanType-1.1.1-offline-arm64-v8a.apk`。以本批 Release 的实际附件、签名校验和 SHA-256 为准。
-- 本批应用源码：`LanType-1.1.1-source-release.zip`，解压根目录为 `LanType-1.1.1/`，包含经审阅的应用源码、构建脚本、许可证、测试、受许可的生成源与小资源。
-- 运行依赖：复用已发布的 `LanType-1.1.0-runtime-dependencies.zip`，内容与本批资源及原生锁一致，不重新命名为 1.1.1 内容。
-- 基础原生源码：复用已发布的三个 `LanType-1.1.0-native-source-part-*-of-3.zip`，合计 70 份实际固定版本源码归档。三个文件都是普通独立 ZIP，应分别解压到同一目录。Dawn/WebGPU 的独立补充源包还需一并提供和校验，不能由这 70 份的数量推导完整覆盖。
+本批应提供以下互相可追溯的材料；尚未发布的项目不填写臆造的 URL、大小或摘要。
 
-Git 不存放 ONNX 模型、预编译 `.so`、大第三方树、APK、签名私钥、口令、私人测试照片或历史插件二进制。大文件在配套附件中提供，或由显式开发准备命令校验下载。
+| 材料 | 当前用途和状态 |
+|---|---|
+| 本批应用源码 | 计划交付 `LanType-1.1.2-source-release.zip`；尚待最终源码清单和实际打包回执 |
+| 已公开 `LanType-1.1.0-runtime-dependencies.zip` | 只恢复当前合同继续复用的 **399 个旧输入**，不覆盖新源码或控制文件 |
+| 新 ORT component ZIP | 尚未发布；真实外层 ZIP 身份和公开资产 URL 待写入 `docs/licensing/ort-runtime.lock.json`，不得使用假锁或 latest 下载 |
+| 三份基础原生源码 ZIP | 已公开，共 70 份固定源档，分别解压；需要与 Dawn 补充、项目补丁和当前构建器一起提供 |
+| Dawn/WebGPU 源码补充 ZIP | 已公开，补充 7 份源档及原始通知；见 [来源补充说明](licensing/DAWN-SOURCE-SUPPLEMENT.md) |
+| 本批 Git 内 17 份新增通知 | NDK 29 三份、Dawn 原始许可/通知 13 份、项目补丁归属一份；已在提交 `1e7daacdaeac91983a436e1a2614ede02f725125` 公开，396 assets / 11 raw 检查通过；最终新 APK 随包核验仍待构建 |
 
-### 固定下载地址与 SHA-256
+基础 ZIP 的 399 项为 **379 个 assets、11 个 raw 资源、7 个旧 vendor 输入（6 个原生库及 Sherpa Java JAR）、2 个 CameraX 原生库**。本批新增 17 份通知由 Git 提供，不存在于旧 ZIP；最终资源合同对应 396 个 assets 与 11 个 raw 资源。旧 379 项的内容身份保留，新通知的路径和摘要另行进入当前资源锁。
 
-下列文件名、大小和摘要与 [已发布的 v1.1.0-rc1 API 清单](https://api.github.com/repos/ZPJJJ/LanType/releases/tags/v1.1.0-rc1) 一致，也与本地旧发行校验回执一致。本批 Release 复用这些固定地址和原摘要；应用源码仍必须使用本批的 1.1.1 文件。
+[restore-base-runtime.py](../scripts/restore-base-runtime.py) 只恢复旧集合并校验当前合同；旧 ZIP 内的根 LICENSE、清单及三份旧锁不覆盖本批文件。不要将旧 runtime 根目录整体复制到新源码目录。新增通知也不能靠重新恢复旧 ZIP 补齐。
 
-| 复用附件 | 大小（字节） |
-|---|---:|
-| [LanType-1.1.0-runtime-dependencies.zip](https://github.com/ZPJJJ/LanType/releases/download/v1.1.0-rc1/LanType-1.1.0-runtime-dependencies.zip) | 139,297,354 |
-| [LanType-1.1.0-native-source-part-1-of-3.zip](https://github.com/ZPJJJ/LanType/releases/download/v1.1.0-rc1/LanType-1.1.0-native-source-part-1-of-3.zip) | 339,827,618 |
-| [LanType-1.1.0-native-source-part-2-of-3.zip](https://github.com/ZPJJJ/LanType/releases/download/v1.1.0-rc1/LanType-1.1.0-native-source-part-2-of-3.zip) | 339,828,069 |
-| [LanType-1.1.0-native-source-part-3-of-3.zip](https://github.com/ZPJJJ/LanType/releases/download/v1.1.0-rc1/LanType-1.1.0-native-source-part-3-of-3.zip) | 339,828,348 |
+### 已公开复用附件的固定身份
 
-下载后在四个 ZIP 所在目录校验：
+| 附件 | 字节数 | SHA-256 |
+|---|---:|---|
+| [旧运行输入 ZIP](https://github.com/ZPJJJ/LanType/releases/download/v1.1.0-rc1/LanType-1.1.0-runtime-dependencies.zip) | 139,297,354 | `42a0e57c002662e2a502719a7f002b061fd49605d92a87cab221bf6d9aa922bc` |
+| [基础源码 1 / 3](https://github.com/ZPJJJ/LanType/releases/download/v1.1.0-rc1/LanType-1.1.0-native-source-part-1-of-3.zip) | 339,827,618 | `00223f5255a7b6b1d9f32ea52402fd2693cc879c530e59a60d8e80fa11882b57` |
+| [基础源码 2 / 3](https://github.com/ZPJJJ/LanType/releases/download/v1.1.0-rc1/LanType-1.1.0-native-source-part-2-of-3.zip) | 339,828,069 | `1ef3f166b8992957e5518b451de50def7db42d1443a1dc32811c3a7fc46c9eec` |
+| [基础源码 3 / 3](https://github.com/ZPJJJ/LanType/releases/download/v1.1.0-rc1/LanType-1.1.0-native-source-part-3-of-3.zip) | 339,828,348 | `7f3b2a772532ba5ff65086efd289ac214577d498974d2253a6e4078547b8b4f7` |
+| [Dawn/WebGPU 补充](https://github.com/ZPJJJ/LanType/releases/download/v1.1.1-rc1/LanType-native-source-webgpu-supplement-v1.zip) | 105,554,498 | `6eabae67a60bdb0f3eaab9858f58b1f712edb9f85bb4c5cf75d800e7f530691d` |
 
-```sh
-sha256sum --check <<'SHA256'
-42a0e57c002662e2a502719a7f002b061fd49605d92a87cab221bf6d9aa922bc  LanType-1.1.0-runtime-dependencies.zip
-00223f5255a7b6b1d9f32ea52402fd2693cc879c530e59a60d8e80fa11882b57  LanType-1.1.0-native-source-part-1-of-3.zip
-1ef3f166b8992957e5518b451de50def7db42d1443a1dc32811c3a7fc46c9eec  LanType-1.1.0-native-source-part-2-of-3.zip
-7f3b2a772532ba5ff65086efd289ac214577d498974d2253a6e4078547b8b4f7  LanType-1.1.0-native-source-part-3-of-3.zip
-SHA256
-```
+公开身份与来源范围见 [Dawn 发布回执](licensing/dawn-source-publication.json) 和 [ORT 组件说明的来源索引](licensing/ORT-RUNTIME-1.28.0-r1.md)。上表没有新 ORT component ZIP；候选 ELF 或 AAR 的摘要不能当作尚未生成的外层 ZIP 摘要。
 
-### 将旧依赖放进新源码目录
+## 默认整包构建
 
-先按本批发行摘要校验 `LanType-1.1.1-source-release.zip`，再解压到一个新的工作目录。旧 runtime ZIP 的根目录仍叫 `LanType-1.1.0/`，不能把它误当作本批源码根目录。以下命令只将其中的 `app/` 运行资源和 `vendor/` 原生依赖放到新源码的对应路径：
+准备 Linux、JDK 21、Python 3.12、SDK Platform 36、Build Tools 36.0.0 和 NDK 29.0.14206865。`JAVA_HOME`、`ANDROID_HOME` 指向真实工具目录；本机 SDK 路径、代理、发行私钥和口令不得提交。
 
-```sh
-unzip LanType-1.1.1-source-release.zip -d build-work
-unzip LanType-1.1.0-runtime-dependencies.zip -d runtime-stage
-cp -a runtime-stage/LanType-1.1.0/app/. build-work/LanType-1.1.1/app/
-mkdir -p build-work/LanType-1.1.1/vendor
-cp -a runtime-stage/LanType-1.1.0/vendor/. build-work/LanType-1.1.1/vendor/
-```
+在当前源码根目录先恢复旧输入，并为回执选择一个尚不存在的文件：
 
-保留新源码中的根目录 `LICENSE`、`NOTICE`（如有）、`docs/licensing/` 锁文件、构建脚本与说明；不要把旧 runtime 根目录整体覆盖到新源码根目录。`app/` 中的随包许可及资源与本批锁定内容相同，补齐后仍用当前源码的校验脚本检查。旧发行的 source ZIP 或 CI 补丁不需要叠加到 1.1.1 源码。
-
-三个原生源码 ZIP 内没有 `LanType-1.1.0/` 前缀，分别解压到一个单独的源码附件目录：
-
-```sh
-unzip -n LanType-1.1.0-native-source-part-1-of-3.zip -d native-source
-unzip -n LanType-1.1.0-native-source-part-2-of-3.zip -d native-source
-unzip -n LanType-1.1.0-native-source-part-3-of-3.zip -d native-source
-```
-
-合并后是 `native-source/archives/` 下的 70 份源档，以及根目录的 `native-sources.lock.json`、`README.md`、`GPL-LICENSE.txt`、`SOURCE-SHA256SUMS.txt` 和 `PARTS-README.txt`。三包的根说明重复且字节相同，`unzip -n` 保留第一份即可；源档分别为 23、23、24 份，没有重复。不要用 `cat` 拼接这些 ZIP。后续 `--archive-dir` 指向该 `archives/` 目录。
-
-原生源码附件内的锁文件是旧发行快照；当前应用源码锁为六项源档补充了 Gitiles 获取元数据，70 项归档的文件名、大小和 SHA-256 均未改变。恢复与校验始终使用当前应用源码里的脚本和 `docs/licensing/native-sources.lock.json`，不要用附件中的旧锁覆盖它。
-
-## 常规构建
-
-在 Linux 上安装 JDK 21、Python 3.12、Android SDK Platform 36 和 Build Tools 36.0.0。设置 `JAVA_HOME`、`ANDROID_HOME`，或在本地 `local.properties` 中设置 SDK 路径。SDK 路径和代理配置不要提交。
-
-从公开源代码准备依赖：
-
-```sh
-python3 scripts/prepare-upstream.py
-python3 scripts/build-camerax-native.py --download
-python3 tools/lantype_resources/prepare_resources.py --download
-python3 scripts/verify-commercial-resources.py
-./gradlew :app:assembleOffline --no-daemon --max-workers=1 \
-  -Pkotlin.compiler.execution.strategy=in-process \
-  '-Dorg.gradle.jvmargs=-Xmx4096m -Dfile.encoding=UTF-8'
-```
-
-已经按上节补齐运行依赖时，可以在 `build-work/LanType-1.1.1/` 中先执行以下本地校验，再运行同一条 Gradle 构建命令，不必重新生成或下载这些已锁定资源：
-
-```sh
+```bash
+mkdir -p app/build/reports/lantype-native
+python3 scripts/restore-base-runtime.py --download \
+  --receipt app/build/reports/lantype-native/base-restoration.json
 python3 scripts/prepare-upstream.py --verify-only
 python3 scripts/build-camerax-native.py --verify-only
 python3 scripts/verify-commercial-resources.py
 ```
 
-这些本地校验不替代 Gradle/Maven/SDK 准备；开发机器缺少构建依赖时，Gradle 仍需要获取相应公开组件。
+已有已校验旧 ZIP 时，把第一条恢复命令的 `--download` 改为 `--archive /absolute/path/LanType-1.1.0-runtime-dependencies.zip`。已有全部本地输入时，可单独执行 `restore-base-runtime.py --verify-only`。当前 Git 提供的新增通知也必须存在，资源检查通过后才能进入打包。
 
-`prepare-upstream.py` 只提取 `native-prebuilt.lock.json` 列出的 6 个原生库和 Sherpa Java API JAR。它不会提取上游 APK 的 assets、词库、语音模型、手写数据或 DEX。即使本地旧 vendor 目录还有其他库，Gradle 也只同步锁中批准的 JNI 文件。
+**以下 ORT 步骤须等真实组件附件和 accepted 锁完成后再使用。当前工作稿不提供一个可以绕过此条件的候选下载地址。**
 
-Gradle `preBuild` 强制执行资源白名单和原生哈希检查。资源只来自 `app/src/main/assets` 的审核集合，旧上游 `prepareChineseDictionaries`、九键语料下载、SenseVoice、日语和翻译资源任务不挂到本版构建。源码模式也使用同一资源入口。
+```bash
+python3 scripts/restore-ort-runtime.py --download \
+  > app/build/reports/lantype-native/ort-restoration.json
+python3 scripts/prepare-ort-runtime.py \
+  --accepted-lock docs/licensing/ort-runtime.lock.json --verify-only
+./gradlew :app:assembleOffline --no-daemon --max-workers=1 \
+  -Pkotlin.compiler.execution.strategy=in-process \
+  '-Dorg.gradle.jvmargs=-Xmx4096m -Dfile.encoding=UTF-8'
+```
 
-依赖版本在 `gradle/libs.versions.toml` 与构建脚本中固定；Gradle 发行包有 SHA-256，Maven 实物校验记录在 `gradle/verification-metadata.xml`。改变依赖时应先核对官方来源，再更新校验表。CI 不会自动放宽验证或修改这份表。
+[ORT 恢复器](../scripts/restore-ort-runtime.py) 只按外部 accepted 锁恢复三份输出：full AAR、companion AAR 和 ARM64 主 ELF。full AAR 保留官方 Java classes 与 JNI bridge；companion 仅省去主 ELF，供已经从 CMake 输入主库的源码模式使用。替换和逐成员比较规则见 [prepare-ort-runtime.py](../scripts/prepare-ort-runtime.py)，不是修改 AAR 文件名后就视为验证通过。
 
-## 商业版资源来源
+默认构建的 `preBuild` 继续核验资源、旧原生输入、CameraX 和 accepted ORT。构建逻辑只同步批准的 JNI 文件；即使 vendor 中残留其他旧库也不能成为获准输入。依赖版本和 Maven 内容校验表保持固定，CI 不自动放宽校验。
 
-逐文件原始网址、修订、许可、变换、大小和 SHA-256 在 `docs/licensing/resources.lock.json`；被移除内容的拒绝哈希在 `excluded-resources.json`。`tools/lantype_resources/sources.lock.json` 锁定可编辑生成源，生成脚本保留变换过程。
+## 对应源码与独立 ORT 构建
 
-本版从 SCOWL 重建美式英文词表、Trie、滑行输入与相关字典；中文基础数据采用经记录的 AOSP、CC-CEDICT 及各输入方案许可来源。手写采用 Make Me a Hanzi 数据和本项目原创拉丁模板；语音使用随包 Whisper base INT8；OCR 和 VAD 采用各自明确许可的资源。原创联想是小型人工规则表，不宣传为大型统计语料模型。
+对应来源材料由 **本批应用源码和构建器、三份基础源码 ZIP、Dawn 补充、cpuinfo 生产补丁、实际 NDK 29 来源与通知记录**共同构成。只提供三份旧基础源码包不包含已知 Dawn 嵌套来源；只提供新 ELF 或补丁也不构成完整来源说明。
 
-本版不恢复旧 SenseVoice、OCHWPro、MathWriting、Google 高频英文词表、LCCC、旧大九键统计语料、azooKey 或没有随包模型的 slimt 能力。具体许可边界以资源锁、离线许可证原文和商业说明为准，不能将所有第三方内容统称为 GPL。
+三个基础 ZIP 是独立包，分别解压到同一外部归档目录，不能用 `cat` 拼接，也不能用其中的历史锁覆盖当前源码锁：
 
-AAPT 会对源文件 `.gz` 自动解压并移除后缀。本版运行资源使用与 `AssetManager` 访问一致的显式文件名；手写 `.lth`、原创联想 `.tsv` 与 `.completions` 不再靠不明确的压缩后缀行为。`CommercialAssetPackagingTest` 验证真实测试 APK 中的资产访问。
-
-## 对应原生源码与选用的源码重建
-
-`docs/licensing/native-sources.lock.json` 记录实际下载归档、原始提交、哈希和安装位置，包括：
-
-- 固定 CyIME 提交的 JNI 包装层、CMake、Gradle/build-logic 与补丁原文；归档已排除其全部旧应用 assets。
-- librime、Lua、octagram、predict、Snappy、glog、LevelDB、marisa、OpenCC、yaml-cpp 与递归依赖；Boost 1.89.0。
-- Sherpa-ONNX 1.13.8 和其静态依赖，包括 kaldi、OpenFst、Piper、eSpeak NG、KissFFT、Eigen 等。
-- ONNX Runtime 1.28.0；Sherpa 静态库使用的另一份 ONNX Runtime 1.28.2；相应 Android CPU/NNAPI 依赖源。
-- OpenCV 4.12.0、Sora editor 0.24.6、实际 Android C++ 运行时源码与相关原生依赖。
-
-本版不能把整个 Sherpa JNI 称作 Apache-only：其静态依赖还包含 eSpeak NG 的 GPL 条款。Sora 按 LGPL-2.1-or-later 提供，octagram 保留 GPL。实际许可证原文随应用的 `licenses/native/` 等目录离线提供，作者声明保留在完整源码归档中。
-
-先校验实际源码附件，再恢复 JNI 构建输入：
-
-```sh
+```bash
+unzip -n LanType-1.1.0-native-source-part-1-of-3.zip -d native-source
+unzip -n LanType-1.1.0-native-source-part-2-of-3.zip -d native-source
+unzip -n LanType-1.1.0-native-source-part-3-of-3.zip -d native-source
 python3 scripts/restore-native-sources.py \
   --archive-dir /absolute/path/native-source/archives --all --verify-only
+python3 scripts/collect-dawn-source-supplement.py \
+  --verify /absolute/path/LanType-native-source-webgpu-supplement-v1.zip \
+  --expected-zip-sha256 6eabae67a60bdb0f3eaab9858f58b1f712edb9f85bb4c5cf75d800e7f530691d
+```
+
+验证全部归档与展开全部源码是不同操作。按实际任务分阶段准备，遵守空间门禁和同一时刻只运行一个重型任务；不要在同一受限 ORT 卷内额外展开全部 70 份来源。构建器只选用本次所需的固定集合。
+
+[build-ort-native.py](../scripts/build-ort-native.py) 和 [原生 workflow](../.github/workflows/native-ort-build.yml) 是本次 ORT 的生产构建入口。固定 ORT 提交 `da9b5e364c465de65c49d91e696cd6485270757f`，在 cpuinfo `4628dc060ce4e82345dc166bbac875609db4ff69` 上应用 [项目生产补丁](../patches/onnxruntime/cpuinfo-4628dc0-pr457-l2-backport.patch)，并按顺序应用固定 ORT 已有的七个 Dawn 补丁。输入、补丁前后文件、工具链和输出身份均进入回执；补丁归属与具体变更见组件说明。
+
+以下示例要求 `ORT_WORK_ROOT` 已是**空的、独占、实际挂载且容量不超过 4608 MiB** 的工作文件系统；其余变量指向预装工具和已核验归档。构建器会拒绝普通未挂载目录、错误版本或不足的空间。`--download` 只用于 prepare；即使基础源档已在本地，首次准备仍需要取得固定的宿主 protoc 工具。
+
+```bash
+python3 scripts/build-ort-native.py --stage prepare \
+  --work-root "$ORT_WORK_ROOT" --sdk "$ANDROID_HOME" \
+  --ndk "$ANDROID_HOME/ndk/29.0.14206865" --cmake "$ORT_CMAKE_BIN" \
+  --archive-dir "$NATIVE_SOURCE_ARCHIVES" --dawn-supplement "$DAWN_SUPPLEMENT_ZIP" \
+  --download
+for stage in configure build verify; do
+  python3 scripts/build-ort-native.py --stage "$stage" \
+    --work-root "$ORT_WORK_ROOT" --sdk "$ANDROID_HOME" \
+    --ndk "$ANDROID_HOME/ndk/29.0.14206865" --cmake "$ORT_CMAKE_BIN"
+done
+```
+
+输出是 `build/Release/libonnxruntime.so`，实际来源与命令分别在工作卷 `receipts/`、`logs/` 和 `src/` 中。该入口构建原生候选，**不会自行接受新库、改写运行锁、集成应用或签名发布**。本次成功 run 的候选也还需要普通 Android API 与应用层验证。
+
+### 可选 Rime/JNI 源码模式
+
+在基础输入和 accepted ORT 已准备完成后，当前 [prepare-native-build.py](../scripts/prepare-native-build.py) 从该 accepted 组件取得精确 ORT 主库并准备固定头文件；不再另取一份未替换的官方主库。
+
+```bash
 python3 scripts/restore-native-sources.py \
   --archive-dir /absolute/path/native-source/archives
-python3 scripts/prepare-native-build.py --download
+python3 scripts/prepare-native-build.py
 ./gradlew :app:assembleOffline -Plantype.nativeFromSource=true \
   --no-daemon --max-workers=1 -Pkotlin.compiler.execution.strategy=in-process \
   '-Dorg.gradle.jvmargs=-Xmx4096m -Dfile.encoding=UTF-8'
 ```
 
-也可显式 `restore-native-sources.py --download` 取得相同的已锁定源码；`--all` 恢复额外上游 runtime/dependency 源树。脚本保留现有非空源码目录，不覆盖开发者修改；原始源资产子模块不会恢复到应用。
+该模式重建 Rime/JNI 包装层，仍复用锁定的 Sherpa 等输入；独立 ORT 重建使用上节入口。**Sherpa JNI 内静态链接的另一份 ORT 没有在本批替换或重编。** 切换 `nativeFromSource` 不能表述为一次重编全部第三方库。自行重编 Rime 会产生自己的 ELF 身份，需要独立记录；本批默认发行 APK 的“其他 11 库不变”门禁不等于接纳任意源码重编结果。
 
-`-Plantype.nativeFromSource=true` 重建本项目 Rime/JNI 包装层，同时仍使用已锁定 Sherpa 原生库和官方 ORT AAR。独立重建 Sherpa、ORT、OpenCV 等上游项目应使用归档内相应构建脚本和工具版本；该选项不是“一次重新编译所有第三方原生库”的承诺。Sherpa 官方 Android 静态构建使用 NDK 27.0.11718014，与 Rime 的 NDK 29 配置不同。
+基础源码中的旧 LLVM 来源条目针对旧 `libc++_shared.so`，不能用来证明 NDK 29 静态 C++ 输入的精确来源。新 NDK 的实际静态 archive 摘要、随包通知和来源边界见 [ORT 组件说明](licensing/ORT-RUNTIME-1.28.0-r1.md)。原供应商完整参数及所有旧库的逐字节复现仍未建立。
 
-CameraX 1.6.2 与 Graphics 1.0.1 的精确发布模块、Java/Kotlin sources JAR 和 libyuv prefab 包装层源码也已归档。Google CameraX 发布包的独立 libyuv 提交未能唯一确认，因此本批沿用 1.1.0 从源码重编的两个 JNI 库：保持 CameraX 1.6.2 实现和导出接口，明确选用 AOSP libyuv `741c38751c436f60c583110f617340b7f3322d94`，使用 NDK 27.2.12479018、CMake 3.22.1、ARM64/API28 和静态 C++，不启用 JPEG。真实输出在 `camerax-rebuilt.lock.json` 锁定；最终 APK 必须逐文件匹配，不能只依赖 Gradle pickFirst 顺序。
+## 资源、许可与来源范围
 
-从 Git 的小文件源码首次构建该组件，需要另外安装 `ndk;27.2.12479018` 和 `cmake;3.22.1`，然后运行 `python3 scripts/build-camerax-native.py --download`。运行资源附件已包含经过验证的两库时，可用 `--verify-only`，不需要重新取得 NDK。这两库的 8+1 个 JNI 导出名、SONAME、系统库依赖和 16 KB LOAD 对齐已与原接口合同核对；没有把选用的 libyuv 说成 Google 旧包的内部版本。
+逐文件资源网址、修订、许可、变换、大小和 SHA-256 由 [resources.lock.json](licensing/resources.lock.json) 管理，拒绝的旧资源身份在 [excluded-resources.json](licensing/excluded-resources.json)。本批原有中文/美式英文词库、手写、Whisper、OCR 与 VAD 输入延续既有合同，新增的是上述通知；不重新引入已排除的旧模型和语料。
 
-1.1.0 的记录已验证这套固定源码档的哈希、实际解包、ORT 头文件/共享库准备及 Rime/Lua/octagram 补丁适用性；1.1.1 复用相同输入。**未建立全部上游原生二进制的逐字节重现，也未执行全部第三方库源码重编。** 本批实际执行步骤和限制以 1.1.1 验证报告为准。
+应用采用既定 GPL 源码发行方案；第三方组件、字体、数据和模型保留各自条款。Sherpa 的静态依赖包含 eSpeak NG，不能将整个 Sherpa JNI 简称为 Apache-only。ORT、cpuinfo、Dawn 和 NDK 通知不能用一份顶层 GPL 替换。具体原文、作者和来源以应用随包许可、来源锁及组件说明为准。
 
-## 测试与图像证据
+17 份新增通知位于 Git，并由本批资源校验覆盖。旧 ZIP 只能恢复其原有内容；当前源码中的许可文本、补丁归属和锁文件必须作为新版本材料一并提供。来源补齐、编译成功和静态对齐均不能替代运行验收。
 
-```sh
+## 测试、最终 APK 与签名
+
+保留现有完整定向测试和 Compose 渲染入口：
+
+```bash
 bash scripts/test-targeted.sh
 ```
 
-脚本设置 `CYIME_RENDER_OUT`，默认为 `app/build/lantype-test-renders`；需要保留发行图像时可显式设置输出路径。默认选择集包含本批 Whisper 语言切换、录音会话、遗留目录迁移和工具舱剪贴板隐私回归。也可以传入类名，只运行与改动相关的测试。`scripts/test-runtime.init.gradle` 从 Maven 解析同版本 Mockito agent，在测试 JVM 启动时使用 premain；这是为不允许动态 self-attach 的环境提供支持，不替换 Mockito 实现、不关闭断言。代理参数只传给开发测试 JVM。
+`CYIME_RENDER_OUT` 默认指向 `app/build/lantype-test-renders`。本批通过数、失败数和实际图像须从新运行的 XML、日志和 PNG 登记；1.1.1 的 187 个通过用例不能直接复用为 1.1.2 的结果。
 
-Robolectric 的 Compose 图像、真实 Android `EditText`/`InputConnection` 测试与资源访问测试分别验证不同层面，不能代替 ARM64 手机的输入法启用、首次部署、16 KB 系统运行及语音/手写/OCR体验验收。截图采集不完整的诊断图不用于对外展示。
+默认预编译 APK 的最终内容检查：
 
-## 签名、APK 核对与源码打包
+```bash
+python3 scripts/prepare-ort-runtime.py \
+  --accepted-lock docs/licensing/ort-runtime.lock.json \
+  --verify-apk /absolute/path/final.apk --receipt /absolute/path/final.apk.native.json
+python3 scripts/build-camerax-native.py --verify-apk /absolute/path/final.apk
+python3 scripts/verify-commercial-resources.py \
+  --apk /absolute/path/final.apk --json /absolute/path/final.apk.assets.json
+```
 
-发行私钥不在 Git 或公开附件中。开发者可构建 unsigned APK，再用自己的密钥签名；安装官方升级包必须保持原签名。正式签名前执行 `zipalign -P 16`，签名开启 v1/v2/v3，随后 `apksigner verify --verbose --print-certs` 验证。
+首项强制恰好 12 个 ELF、新主 ORT 精确身份及其余 11 库不变；CameraX 与资源继续独立核验。签名后还须读取真实包名、版本、权限、ABI、调试/备份标志、ZIP 与 ELF 对齐和证书指纹。`checkedAgainstSourceVersion` 只是检查器的源码版本，不能代替 APK manifest 中的版本。
 
-最终应从已签名 APK 读取包名、版本、SDK、权限、可调试标志、备份标志、ABI、全部原生 ELF LOAD 段对齐、ZIP 对齐和证书指纹。无设备时如实记录 `adb devices` 为空，不能写已真机验收。
+发行私钥不进入 Git、公开附件或 unsigned CI。官方升级包须保持原签名；源码使用者可用自己的签名。新签名 APK 尚未形成实际身份回执，不在本文填写预期大小或假 SHA。
 
-资源与公共源码检查：
+产品验证按 [设备 workflow](../.github/workflows/android-device-qa.yml) 的显式候选锁分别记录：fresh candidate 的实际功能与同一候选重装数据保留，以及安装未初始化的固定旧 1.1.1 后直接 `install -r` 替换。后者没有已初始化旧用户数据，不能记作旧用户数据迁移通过。真实 ARM64 手机与 16 KiB 系统验收仍待完成。
 
-```sh
-python3 scripts/verify-commercial-resources.py --apk /path/to/final.apk --json /path/to/final-apk-assets.json
+## 源码打包和 CI 的边界
+
+最终输入准备齐全、Git 清单审阅完成后，才生成新应用源码 ZIP：
+
+```bash
 python3 scripts/check-public-source.py
 python3 scripts/verify-commercial-resources.py --git-index
-```
-
-`--apk` 流式扫描 ZIP 全部条目并拒绝旧资源内容哈希，普通资源精确比对白名单；生成资产只允许明确路径、源文件精确内容或限定二进制格式。内置 clipboard 插件必须只含与公开源码相符的 `manifest.yaml` 和 `main.lua`，历史市场 `.xipk` 不进入 APK。
-
-校验回执的 `checkedAgainstSourceVersion` 表示校验使用的源码版本，不是从受检 APK 或 ZIP 中读出的版本。实际 APK 的 `versionName`/`versionCode` 仍须从其 Android manifest 单独核对，避免把沿用的旧附件误标成新包。
-
-源代码先经人工审阅并加入 Git 跟踪清单，再打包：
-
-```sh
 python3 scripts/package-source.py \
-  --source-output /path/to/LanType-1.1.1-source-release.zip \
-  --source-only
-python3 scripts/verify-commercial-resources.py --source-zip /path/to/LanType-1.1.1-source-release.zip
-python3 scripts/verify-commercial-resources.py --source-zip /path/to/LanType-1.1.0-runtime-dependencies.zip
+  --source-output /absolute/path/LanType-1.1.2-source-release.zip --source-only
+python3 scripts/verify-commercial-resources.py \
+  --source-zip /absolute/path/LanType-1.1.2-source-release.zip
 ```
 
-`--source-only` 本批只产出新应用源码 ZIP，仍核对本地资源和原生输入；依赖大文件应先按本说明准备。Release 清单同时列出上节四个复用附件的固定链接、大小与原 SHA-256，不重复生成约 1 GB 的基础原生源码附件。新应用源码、复用依赖及后续 Dawn/WebGPU 补充来源应作为一套材料提供；冻结的已发布源码 ZIP 不重打，补正以新附件和说明提供。
+`--source-only` 仍核验本地运行输入和 accepted ORT。源码 ZIP 使用经审阅的 Git 文件清单；发行清单同时链接旧基础运行 ZIP、三份基础源码 ZIP、Dawn 补充和新 ORT component ZIP。旧基础 ZIP 本来没有新增 17 份通知，不能把它单独当作一套完整 1.1.2 运行材料。所有新附件的实际大小、SHA、公开资产身份与源码提交由发行者在打包和发布后登记；冻结的旧附件不重写。
 
-每个新附件有 SHA-256/大小回执。应用源码 ZIP 使用经审阅的 `git ls-files`；复用的 runtime ZIP 按资源和 native 锁生成，native ZIP 按源档锁生成。它们都不会递归打包整个工作区。只有运行资源或原生源档锁发生变化时，才需要另行生成并校验相应新附件。
+[offline-ci.yml](../.github/workflows/offline-ci.yml) 只有 `contents: read`，构建 unsigned APK，不接收正式签名材料或发布 Release。它复制含 `.git` 的源码到 4608 MiB 工作卷，重用预装 JDK/SDK/NDK，将 Gradle、Java 缓存和所有新增构建文件放入卷内；以 256 MiB 空间保留量和命令超时停止自己的进程组。卷外 512 MiB 使用分配块计量检查点，**不是整个 job 的连续硬配额**。实际 stdout/stderr、观测峰值、APK、测试与图像先上传，成功后才清理自有卷。
 
-## CI 的范围
-
-`.github/workflows/offline-ci.yml` 将 Actions 固定到核对过的提交，只有 `contents: read` 权限。它准备已批准资源、构建 unsigned offline APK、运行定向测试并保存图像/报告，不接收发行私钥、不自动发布。旧 CyIME 的发布、同步和夜间工作流不会在新仓库启用。
-
-固定输入和完整源码提高可重建性，但本版没有宣称独立机器得到逐字节相同 APK。公开源仓库、配套附件、实际构建记录与后续真机验收状态应同时维护。
+完整来源和固定输入提高可重建性；本批仍未宣称独立机器能生成逐字节相同 APK。商业发行继续遵循 [商用方案](COMMERCIAL-PLAN.zh-CN.md)，目前保留免费预发布/开发候选状态；普通 API、新包功能、真实 ARM64 与 16 KiB 验收以及对应来源和渠道准备完成前，不宣布稳定收费首发。

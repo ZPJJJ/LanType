@@ -4,17 +4,26 @@
 
 LanType 基于 [CyIME 1.15.94](https://github.com/Cyletix/CyIME/tree/6f97a555ced063c0bcad73c600fe420f5e4b2536) 和 Rime 开发，保留上游版权和各组件许可，是独立发行版。普通输入、随包语音、单字手写、图片识字及工具舱在手机上运行。应用不申请 `INTERNET` 权限，开发电脑仍可下载公开 SDK、构建依赖和经过校验的资源。
 
-版本：**1.1.1**，应用 ID：`app.lantype.keyboard`。支持 **Android 9 及以上、ARM64**。本批修复工具舱复制隐私、中英语音会话切换和遗留词库恢复；实际构建、测试与设备验证范围见 [1.1.1 验证记录](docs/validation-1.1.1/VALIDATION.md)。[1.1.0 验收记录](docs/validation-1.1.0/VALIDATION.md) 保留资源替换批次的历史证据。
+当前开发分支目标：**1.1.2 / versionCode 4**，应用 ID：`app.lantype.keyboard`。支持目标为 **Android 9 及以上、ARM64**。本批接入独立重建的 ORT 原生候选，并补齐构建和许可材料；当前没有已验收的 1.1.2 APK。实际进度见 [1.1.2 验证记录](docs/development/lantype-1.1.2-validation.md)。已发布的 [1.1.1 验证记录](docs/validation-1.1.1/VALIDATION.md) 和 [1.1.0 验收记录](docs/validation-1.1.0/VALIDATION.md) 保留历史证据。
 
-**发行状态：预发布，已有启动阻塞，尚不具备稳定收费发行条件。** 本版源码 CI 的 187 个 JUnit 用例通过；实际签名 **1.1.1** 在 Android 15 的 ARM64 转译模拟器上完成身份、断网和安装检查，但首次启动在 ONNX Runtime 动态库初始化阶段发生原生崩溃。旧版 1.1.0 的 Android 11/15 对照也失败。中文/英文输入、升级及物理 ARM64 验收尚未完成，不能从单测通过推导运行通过。最新结果、原始证据与商用门槛见 [发布后验证补充](docs/validation-1.1.1/POST-RELEASE.md)。
+**发行状态：开发候选，已有旧版启动阻塞，尚不具备稳定收费发行条件。** 已发布 **1.1.1** 的源码 CI 有 187 个 JUnit 用例通过；该签名 APK 在 Android 15 的 ARM64 转译模拟器上完成身份、断网和安装检查，但首次启动在 ONNX Runtime 动态库初始化阶段发生原生崩溃。旧版 1.1.0 的 Android 11/15 对照也失败。旧版结果、原始证据与商用门槛见 [发布后验证补充](docs/validation-1.1.1/POST-RELEASE.md)。新候选的输入、升级、模型与物理 ARM64 验收仍待实际执行。
 
-## 1.1.1 修复
+## 1.1.2 当前进度
+
+- [独立 ORT 构建](https://github.com/ZPJJJ/LanType/actions/runs/44164186969) 已成功，10 项静态 ABI 检查通过；新库仍是待 Android 运行验证的候选。
+- 默认预编译与可选源码模式的接入代码已准备，NDK 统一固定为 29；最终包要求保留其余 11 个原生库的字节身份。
+- 17 份 NDK、Dawn 和补丁通知已提交，完整资源检查覆盖 396 个 assets 和 11 个 raw；原有 379 条资产记录保持不变。
+- [第五次 API 环境准备](https://github.com/ZPJJJ/LanType/actions/runs/44177101937) 已通过工具、音频加载依赖和 KVM 检查，但官方镜像解包触及现有磁盘预算。镜像流式校验与稀疏解包入口已准备；模拟器启动要求与 5 GiB 总预算存在冲突，[云端 QA 存储提案](docs/qa/ANDROID-QA-STORAGE-PROPOSAL.md) 尚未启用。
+
+新组件、accepted 锁、1.1.2 整包和签名发行尚待完成。详见 [本批变更](docs/CHANGELOG-1.1.2.zh-CN.md) 和 [组件来源](docs/licensing/ORT-RUNTIME-1.28.0-r1.md)。
+
+## 已发布 1.1.1 的修复
 
 - 工具舱的复制与剪切在首次写入系统剪贴板时附带私密标记，延迟回调、补读或输入法进程重启后仍排除自动历史。
 - Whisper 连续语音从中文切到美式英文或反向切换时，结束上一段并使用对应语言的新识别会话，保留连续采集和已完成文字。
 - 恢复旧目录结构的词库遇到同名目标或搬移失败时保留原文件，仅删除已经搬空的目录；不混合两份数据库。
 
-安装包沿用原发行签名和包名，可直接覆盖升级。详见 [本版变更](docs/CHANGELOG-1.1.1.zh-CN.md) 与 [安装说明](docs/INSTALLATION.zh-CN.md)。
+1.1.1 安装包沿用原发行签名和包名；其启动阻塞仍按上述记录处理。详见 [1.1.1 变更](docs/CHANGELOG-1.1.1.zh-CN.md) 与 [安装说明](docs/INSTALLATION.zh-CN.md)。
 
 ## 新增：工具舱
 
@@ -67,14 +76,16 @@ LanType 基于 [CyIME 1.15.94](https://github.com/Cyletix/CyIME/tree/6f97a555ced
 
 ## 开发构建
 
-开发需要 JDK 21、Android SDK 36、Build Tools 36 和项目 Gradle wrapper。从新检出源码构建相机 JNI 还需要 NDK `27.2.12479018` 和 CMake `3.22.1`；也可恢复同版本构建资源附件中的已校验产物。初次准备可能需要访问公开依赖站点；手机运行不联网。
+开发需要 JDK 21、Android SDK 36、Build Tools 36、NDK `29.0.14206865` 和项目 Gradle wrapper。默认构建从已公开的固定基础 ZIP 恢复并验证现有原生库、相机 JNI 和模型资源。初次准备可能需要访问公开依赖站点；手机运行不联网。
 
 ```sh
-python3 scripts/prepare-upstream.py
-python3 scripts/build-camerax-native.py --download
-python3 tools/lantype_resources/prepare_resources.py --download
-./gradlew :app:assembleOffline
+python3 scripts/restore-base-runtime.py --download
+python3 scripts/prepare-upstream.py --verify-only
+python3 scripts/build-camerax-native.py --verify-only
+python3 scripts/verify-commercial-resources.py
 ```
+
+**当前开发分支还缺已验收的 ORT 组件发行和 `docs/licensing/ort-runtime.lock.json`，不能仅执行上述准备就生成合格的 1.1.2 安装包。** 真实 Android API 验证完成后，再按 [完整构建流程](docs/LANTYPE-BUILD-AND-SOURCES.md) 恢复被锁定的新组件并执行 `:app:assembleOffline`。构建入口主动拒绝缺失或未接受的运行锁。
 
 应用代码自行编译；Rime 等引擎复用经固定 SHA-256 校验的上游原生库和 Sherpa Java 绑定。CameraX 的两个 JNI 库使用固定的公开模块源码与 libyuv 源码重新构建，最终 APK 必须通过替换产物的字节校验。原生提取脚本不恢复上游 APK 的旧词库或模型。所需大文件不直接塞入 Git 历史，发行资源归档和固定来源用于恢复它们。
 
