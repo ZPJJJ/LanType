@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "createdAtUtc": "2026-11-17T06:43:15.568665+00:00",
+  "failedRun": "https://github.com/ZPJJJ/LanType/actions/runs/44032715483",
+  "failedHead": "d6c8bb0f7c3da44af6509d6298a8c19ee19447b0",
+  "diagnosis": "Three absent transitive Maven POM/module checksum pins encountered by an empty CI dependency cache. No artifact-content drift was found.",
+  "verificationModeChanged": false,
+  "existingPinsPreserved": 1216,
+  "addedPins": 3,
+  "artifacts": [
+    {
+      "group": "com.google.guava",
+      "name": "guava-parent",
+      "version": "33.3.1-jre",
+      "artifact": "guava-parent-33.3.1-jre.pom",
+      "url": "https://repo.maven.apache.org/maven2/com/google/guava/guava-parent/33.3.1-jre/guava-parent-33.3.1-jre.pom",
+      "size": 20206,
+      "sha256": "55441db27e8869dfefe053059bdf478bdc7e95585642bf391f0023345fd56287",
+      "publishedSha256": null,
+      "cachedSha256": "55441db27e8869dfefe053059bdf478bdc7e95585642bf391f0023345fd56287",
+      "cacheMatchesOfficial": true,
+      "publishedSha1": "94729a0ed1dc35f623edd13afa6c1c2fe9a15d7c",
+      "publishedChecksumUrl": "https://repo.maven.apache.org/maven2/com/google/guava/guava-parent/33.3.1-jre/guava-parent-33.3.1-jre.pom.sha1",
+      "diagnosis": "missing checksum pin; official bytes equal the existing local build cache"
+    },
+    {
+      "group": "org.junit",
+      "name": "junit-bom",
+      "version": "5.11.0-M2",
+      "artifact": "junit-bom-5.11.0-M2.module",
+      "url": "https://repo.maven.apache.org/maven2/org/junit/junit-bom/5.11.0-M2/junit-bom-5.11.0-M2.module",
+      "size": 7104,
+      "sha256": "86477abcf490d6ca059aa9973cb108d22a506f49d1a5569bb32cc6cbf43c2cce",
+      "publishedSha256": "86477abcf490d6ca059aa9973cb108d22a506f49d1a5569bb32cc6cbf43c2cce",
+      "cachedSha256": "86477abcf490d6ca059aa9973cb108d22a506f49d1a5569bb32cc6cbf43c2cce",
+      "cacheMatchesOfficial": true,
+      "publishedChecksumUrl": "https://repo.maven.apache.org/maven2/org/junit/junit-bom/5.11.0-M2/junit-bom-5.11.0-M2.module.sha256",
+      "diagnosis": "missing checksum pin; official bytes equal the existing local build cache"
+    },
+    {
+      "group": "org.jetbrains.kotlinx",
+      "name": "kotlinx-coroutines-bom",
+      "version": "1.8.0",
+      "artifact": "kotlinx-coroutines-bom-1.8.0.pom",
+      "url": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-bom/1.8.0/kotlinx-coroutines-bom-1.8.0.pom",
+      "size": 4291,
+      "sha256": "1239e9dbe1397cd5971342956b2511bc3ace7b641842e4372a088dcfa8b9ad55",
+      "publishedSha256": "1239e9dbe1397cd5971342956b2511bc3ace7b641842e4372a088dcfa8b9ad55",
+      "cachedSha256": "1239e9dbe1397cd5971342956b2511bc3ace7b641842e4372a088dcfa8b9ad55",
+      "cacheMatchesOfficial": true,
+      "publishedChecksumUrl": "https://repo.maven.apache.org/maven2/org/jetbrains/kotlinx/kotlinx-coroutines-bom/1.8.0/kotlinx-coroutines-bom-1.8.0.pom.sha256",
+      "diagnosis": "missing checksum pin; official bytes equal the existing local build cache"
+    }
+  ],
+  "apkRebuilt": false,
+  "existingReleaseAssetsChanged": false,
+  "remoteCiRerun": false
+}
