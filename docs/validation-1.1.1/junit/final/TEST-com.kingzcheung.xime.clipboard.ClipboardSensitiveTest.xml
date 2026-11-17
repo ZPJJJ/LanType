@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.kingzcheung.xime.clipboard.ClipboardSensitiveTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-11-17T13:30:28.807Z" hostname="66ec0b799489" time="5.739">
+  <properties/>
+  <testcase name="keptPasswordIsHiddenFromSearch" classname="com.kingzcheung.xime.clipboard.ClipboardSensitiveTest" time="5.379"/>
+  <testcase name="aFixedPasswordStaysHiddenWhenCopiedAgainOrdinarily" classname="com.kingzcheung.xime.clipboard.ClipboardSensitiveTest" time="0.083"/>
+  <testcase name="keptPasswordsShowAsDotsOnTheCandidateBarAndPasteTheirText" classname="com.kingzcheung.xime.clipboard.ClipboardSensitiveTest" time="0.066"/>
+  <testcase name="switchOnKeepsPasswordsHiddenButIncognitoStillWins" classname="com.kingzcheung.xime.clipboard.ClipboardSensitiveTest" time="0.04"/>
+  <testcase name="passwordsGoAfterAnHourButFixedOnesStay" classname="com.kingzcheung.xime.clipboard.ClipboardSensitiveTest" time="0.065"/>
+  <testcase name="keptPasswordIsPastedPrivately" classname="com.kingzcheung.xime.clipboard.ClipboardSensitiveTest" time="0.027"/>
+  <testcase name="latestCopyDecidesWhetherAnUnfixedRecordIsHidden" classname="com.kingzcheung.xime.clipboard.ClipboardSensitiveTest" time="0.05"/>
+  <testcase name="switchOffKeepsPasswordsOutAsBefore" classname="com.kingzcheung.xime.clipboard.ClipboardSensitiveTest" time="0.025"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

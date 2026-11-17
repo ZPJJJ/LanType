@@ -1,0 +1,328 @@
+{
+  "apk": "LanType-1.1.1-offline-arm64-v8a.apk",
+  "libraryCount": 12,
+  "allNativeBytesMatchPreviousSignedRelease": true,
+  "allLoadSegmentsMeet16KiB": true,
+  "devicePageSizeTested": false,
+  "note": "ELF checks plus zipalign; compressed libraries use extractNativeLibs=true. This is not 16 KiB device execution.",
+  "libraries": [
+    {
+      "path": "lib/arm64-v8a/libandroidx.graphics.path.so",
+      "size": 10096,
+      "sha256": "41e9a793c43a0f4fddb19e33f346bace464f30f888ba7b9eaf96294ea115bfb6",
+      "sameBytesAs1_1_0": true,
+      "zipCompression": 8,
+      "loadSegments": [
+        {
+          "offset": 0,
+          "vaddr": 0,
+          "alignment": 16384,
+          "meets16KiB": true
+        },
+        {
+          "offset": 7232,
+          "vaddr": 23616,
+          "alignment": 16384,
+          "meets16KiB": true
+        },
+        {
+          "offset": 8144,
+          "vaddr": 40912,
+          "alignment": 16384,
+          "meets16KiB": true
+        }
+      ]
+    },
+    {
+      "path": "lib/arm64-v8a/libc++_shared.so",
+      "size": 1292904,
+      "sha256": "4397241b4bd20a8e579bfb41d21107857e12985f6a01ca0c2a5f83380d1270b4",
+      "sameBytesAs1_1_0": true,
+      "zipCompression": 8,
+      "loadSegments": [
+        {
+          "offset": 0,
+          "vaddr": 0,
+          "alignment": 16384,
+          "meets16KiB": true
+        },
+        {
+          "offset": 634032,
+          "vaddr": 650416,
+          "alignment": 16384,
+          "meets16KiB": true
+        },
+        {
+          "offset": 1250032,
+          "vaddr": 1282800,
+          "alignment": 16384,
+          "meets16KiB": true
+        },
+        {
+          "offset": 1289792,
+          "vaddr": 1338944,
+          "alignment": 16384,
+          "meets16KiB": true
+        }
+      ]
+    },
+    {
+      "path": "lib/arm64-v8a/libcyime_cpubench.so",
+      "size": 350560,
+      "sha256": "1cf58ff2fd4f995bcdf3d3ed13aba64ce4dfbeefc4064175312d010284c382e1",
+      "sameBytesAs1_1_0": true,
+      "zipCompression": 8,
+      "loadSegments": [
+        {
+          "offset": 0,
+          "vaddr": 0,
+          "alignment": 16384,
+          "meets16KiB": true
+        },
+        {
+          "offset": 328560,
+          "vaddr": 344944,
+          "alignment": 16384,
+          "meets16KiB": true
+        },
+        {
+          "offset": 347536,
+          "vaddr": 380304,
+          "alignment": 16384,
+          "meets16KiB": true
+        }
+      ]
+    },
+    {
+      "path": "lib/arm64-v8a/libimage_processing_util_jni.so",
+      "size": 30048,
+      "sha256": "0f69c4cb30faaa53efea372d7fa4ac765e586183b386c5d178de334162fba3de",
+      "sameBytesAs1_1_0": true,
+      "zipCompression": 8,
+      "loadSegments": [
+        {
+          "offset": 0,
+          "vaddr": 0,
+          "alignment": 16384,
+          "meets16KiB": true
+        },
+        {
+          "offset": 27392,
+          "vaddr": 43776,
+          "alignment": 16384,
+          "meets16KiB": true
+        },
+        {
+          "offset": 28056,
+          "vaddr": 60824,
+          "alignment": 16384,
+          "meets16KiB": true
+        }
+      ]
+    },
+    {
+      "path": "lib/arm64-v8a/libonnx_env.so",
+      "size": 349320,
+      "sha256": "a23971076085f2494d753c21dc1376c9186d35821681e6f095427e796702c864",
+      "sameBytesAs1_1_0": true,
+      "zipCompression": 8,
+      "loadSegments": [
+        {
+          "offset": 0,
+          "vaddr": 0,
+          "alignment": 16384,
+          "meets16KiB": true
+        },
+        {
+          "offset": 327296,
+          "vaddr": 343680,
+          "alignment": 16384,
+          "meets16KiB": true
+        },
+        {
+          "offset": 346296,
+          "vaddr": 379064,
+          "alignment": 16384,
+          "meets16KiB": true
+        }
+      ]
+    },
+    {
+      "path": "lib/arm64-v8a/libonnx_jni.so",
+      "size": 126448,
+      "sha256": "48a147747104bb4f7a274fab23139a31f39d407a10a2e659b1e395388b849fd9",
+      "sameBytesAs1_1_0": true,
+      "zipCompression": 8,
+      "loadSegments": [
+        {
+          "offset": 0,
+          "vaddr": 0,
+          "alignment": 16384,
+          "meets16KiB": true
+        },
+        {
+          "offset": 122544,
+          "vaddr": 138928,
+          "alignment": 16384,
+          "meets16KiB": true
+        },
+        {
+          "offset": 123824,
+          "vaddr": 156592,
+          "alignment": 16384,
+          "meets16KiB": true
+        }
+      ]
+    },
+    {
+      "path": "lib/arm64-v8a/libonnxruntime.so",
+      "size": 28637280,
+      "sha256": "f826d8efb03adf0a84f10e7ba408f9d4cd11b0a2ccd8d08aeb0f7451fb50cacc",
+      "sameBytesAs1_1_0": true,
+      "zipCompression": 8,
+      "loadSegments": [
+        {
+          "offset": 0,
+          "vaddr": 0,
+          "alignment": 16384,
+          "meets16KiB": true
+        },
+        {
+          "offset": 27973984,
+          "vaddr": 27990368,
+          "alignment": 16384,
+          "meets16KiB": true
+        },
+        {
+          "offset": 28626168,
+          "vaddr": 28658936,
+          "alignment": 16384,
+          "meets16KiB": true
+        }
+      ]
+    },
+    {
+      "path": "lib/arm64-v8a/libonnxruntime4j_jni.so",
+      "size": 111648,
+      "sha256": "99db53ca399095cfa17f3f40924b1012a0ff5846c32198e8cef01dd8480f6b45",
+      "sameBytesAs1_1_0": true,
+      "zipCompression": 8,
+      "loadSegments": [
+        {
+          "offset": 0,
+          "vaddr": 0,
+          "alignment": 16384,
+          "meets16KiB": true
+        },
+        {
+          "offset": 80544,
+          "vaddr": 96928,
+          "alignment": 16384,
+          "meets16KiB": true
+        }
+      ]
+    },
+    {
+      "path": "lib/arm64-v8a/libopencv_java4.so",
+      "size": 23465088,
+      "sha256": "144bbc9ad0b0bac4ba58f7d53198aead64379e5314f68200968c703d2c1c14ab",
+      "sameBytesAs1_1_0": true,
+      "zipCompression": 8,
+      "loadSegments": [
+        {
+          "offset": 0,
+          "vaddr": 0,
+          "alignment": 16384,
+          "meets16KiB": true
+        },
+        {
+          "offset": 22731088,
+          "vaddr": 22747472,
+          "alignment": 16384,
+          "meets16KiB": true
+        },
+        {
+          "offset": 23175824,
+          "vaddr": 23208592,
+          "alignment": 16384,
+          "meets16KiB": true
+        }
+      ]
+    },
+    {
+      "path": "lib/arm64-v8a/librime_jni.so",
+      "size": 7458176,
+      "sha256": "b1aa35c250e301119d19473c10b493486e2a80537bcf70501748c294b909d16f",
+      "sameBytesAs1_1_0": true,
+      "zipCompression": 8,
+      "loadSegments": [
+        {
+          "offset": 0,
+          "vaddr": 0,
+          "alignment": 16384,
+          "meets16KiB": true
+        },
+        {
+          "offset": 7280000,
+          "vaddr": 7296384,
+          "alignment": 16384,
+          "meets16KiB": true
+        },
+        {
+          "offset": 7451952,
+          "vaddr": 7484720,
+          "alignment": 16384,
+          "meets16KiB": true
+        }
+      ]
+    },
+    {
+      "path": "lib/arm64-v8a/libsherpa-onnx-jni.so",
+      "size": 24169352,
+      "sha256": "b4a53d915c19cb6d09b1cdc9a8084be54419b647aab9097ffdfb46f30c3c4dd8",
+      "sameBytesAs1_1_0": true,
+      "zipCompression": 8,
+      "loadSegments": [
+        {
+          "offset": 0,
+          "vaddr": 0,
+          "alignment": 16384,
+          "meets16KiB": true
+        },
+        {
+          "offset": 23767520,
+          "vaddr": 23783904,
+          "alignment": 16384,
+          "meets16KiB": true
+        },
+        {
+          "offset": 24162608,
+          "vaddr": 24195376,
+          "alignment": 16384,
+          "meets16KiB": true
+        }
+      ]
+    },
+    {
+      "path": "lib/arm64-v8a/libsurface_util_jni.so",
+      "size": 4896,
+      "sha256": "1b8a49ebdf42e18ef9722a5947751fb0dcc2f362805353ca63a4423d1a14e78a",
+      "sameBytesAs1_1_0": true,
+      "zipCompression": 8,
+      "loadSegments": [
+        {
+          "offset": 0,
+          "vaddr": 0,
+          "alignment": 16384,
+          "meets16KiB": true
+        },
+        {
+          "offset": 2480,
+          "vaddr": 18864,
+          "alignment": 16384,
+          "meets16KiB": true
+        }
+      ]
+    }
+  ]
+}

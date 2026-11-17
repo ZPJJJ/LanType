@@ -1,0 +1,18 @@
+{
+  "pass": true,
+  "apk": "/workspace/scratch/c1efc7ba12ce/deliverables/1.1.1/LanType-1.1.1-offline-arm64-v8a.apk",
+  "sourceBuiltCameraX": [
+    {
+      "path": "lib/arm64-v8a/libimage_processing_util_jni.so",
+      "size": 30048,
+      "sha256": "0f69c4cb30faaa53efea372d7fa4ac765e586183b386c5d178de334162fba3de",
+      "uniqueAcrossAbis": true
+    },
+    {
+      "path": "lib/arm64-v8a/libsurface_util_jni.so",
+      "size": 4896,
+      "sha256": "1b8a49ebdf42e18ef9722a5947751fb0dcc2f362805353ca63a4423d1a14e78a",
+      "uniqueAcrossAbis": true
+    }
+  ]
+}

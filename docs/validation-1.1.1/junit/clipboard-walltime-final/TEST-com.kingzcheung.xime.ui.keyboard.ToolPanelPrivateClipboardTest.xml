@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.kingzcheung.xime.ui.keyboard.ToolPanelPrivateClipboardTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-11-17T13:34:44.411Z" hostname="66ec0b799489" time="7.099">
+  <properties/>
+  <testcase name="cutDraftStaysOutAfterFreshHistoryManagersRereadTheSystemClipboard" classname="com.kingzcheung.xime.ui.keyboard.ToolPanelPrivateClipboardTest" time="6.468"/>
+  <testcase name="emptySelectionDoesNotOverwriteClipboardOrDeleteText" classname="com.kingzcheung.xime.ui.keyboard.ToolPanelPrivateClipboardTest" time="0.078"/>
+  <testcase name="inputConnectionCutCopiesStylesAndDeletesOnlyItsSelectedRange" classname="com.kingzcheung.xime.ui.keyboard.ToolPanelPrivateClipboardTest" time="0.119"/>
+  <testcase name="nativeCopyPublishesBothMarkersBeforeTheFirstListenerAndKeepsStyles" classname="com.kingzcheung.xime.ui.keyboard.ToolPanelPrivateClipboardTest" time="0.118"/>
+  <testcase name="deniedCopyConsumesTheActionWithoutAnUnmarkedFallbackOrDeletingTheCut" classname="com.kingzcheung.xime.ui.keyboard.ToolPanelPrivateClipboardTest" time="0.078"/>
+  <testcase name="reusedFieldReturnsToOrdinaryCopyAndCutWhenItLeavesTheCabin" classname="com.kingzcheung.xime.ui.keyboard.ToolPanelPrivateClipboardTest" time="0.115"/>
+  <testcase name="copiedDraftStaysOutAfterFreshHistoryManagersRereadTheSystemClipboard" classname="com.kingzcheung.xime.ui.keyboard.ToolPanelPrivateClipboardTest" time="0.119"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

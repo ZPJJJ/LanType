@@ -1,0 +1,11 @@
+{
+  "repository": "ZPJJJ/LanType",
+  "localProductCommit": "a83eadd5c0b5d22ffbff248e99b4d9db137b02a6",
+  "remoteProductCommit": "abb0b9369424029f1d7418ca56fc6d38f2872f96",
+  "tree": "eaf49f2c975a33bda75c2d4dfdb9e1cc9cf0c481",
+  "remoteParents": [
+    "94061cfc976c922e53f32391f19974b8781ee231"
+  ],
+  "source": "https://api.github.com/repos/ZPJJJ/LanType/git/commits/abb0b9369424029f1d7418ca56fc6d38f2872f96",
+  "note": "Product source tree identity verified before final documentation/evidence commit; branch publication is a separate operation."
+}

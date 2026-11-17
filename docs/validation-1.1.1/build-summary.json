@@ -1,0 +1,11 @@
+{
+  "task": ":app:assembleOffline",
+  "success": true,
+  "durationSeconds": 248,
+  "tasks": 80,
+  "executed": 24,
+  "upToDate": 56,
+  "r8": true,
+  "offlineDependencyResolution": true,
+  "localProductCommit": "a83eadd5c0b5d22ffbff248e99b4d9db137b02a6"
+}

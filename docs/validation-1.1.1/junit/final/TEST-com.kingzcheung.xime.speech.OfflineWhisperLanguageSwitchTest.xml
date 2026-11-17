@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.kingzcheung.xime.speech.OfflineWhisperLanguageSwitchTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-17T13:30:37.952Z" hostname="66ec0b799489" time="1.605">
+  <properties/>
+  <testcase name="whisperSwitchRestartsInTheNewLanguageEvenWhenTheSelectedModelIsUnchanged" classname="com.kingzcheung.xime.speech.OfflineWhisperLanguageSwitchTest" time="1.415"/>
+  <testcase name="explicitlyUnloadedWhisperCannotContinueInItsPreviousLanguage" classname="com.kingzcheung.xime.speech.OfflineWhisperLanguageSwitchTest" time="0.01"/>
+  <testcase name="serviceCacheReplacesWhisperForAnotherLanguageAndReusesItForTheSameLanguage" classname="com.kingzcheung.xime.speech.OfflineWhisperLanguageSwitchTest" time="0.159"/>
+  <testcase name="failedRemoteStartDoesNotKeepThePreviousWhisperConfigurationReusable" classname="com.kingzcheung.xime.speech.OfflineWhisperLanguageSwitchTest" time="0.012"/>
+  <testcase name="failedBindingDoesNotKeepThePreviousWhisperConfigurationReusable" classname="com.kingzcheung.xime.speech.OfflineWhisperLanguageSwitchTest" time="0.009"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

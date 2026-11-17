@@ -1,0 +1,27 @@
+{
+  "file": "LanType-1.1.1-offline-arm64-v8a.apk",
+  "size": 179987242,
+  "sha256": "b841c42366df2db7ef16736ee93a65723e6495aae91dab2e27093db06a40e497",
+  "unsignedSha256": "58f582cd59e606fc4e80781b8a21fb353a6598195a0a8705a5d4090035333d67",
+  "unchangedOriginalZipEntries": 2161,
+  "localProductCommit": "a83eadd5c0b5d22ffbff248e99b4d9db137b02a6",
+  "correspondingRemoteProductCommit": "abb0b9369424029f1d7418ca56fc6d38f2872f96",
+  "productSourceTree": "eaf49f2c975a33bda75c2d4dfdb9e1cc9cf0c481",
+  "certificateSha256": "c03b15a19d2ed8899fee6b71f7be09ea5b54c7db9895d7d87b20a9759d8e090b",
+  "v1VerifiedAtApi23": true,
+  "applicationMinSdk": 28,
+  "versionName": "1.1.1",
+  "versionCode": 3,
+  "sourceMarkerFoundInDex": "a83eadd",
+  "applicationId": "app.lantype.keyboard",
+  "targetSdk": 36,
+  "minSdk": 28,
+  "abis": [
+    "arm64-v8a"
+  ],
+  "internetPermission": false,
+  "debuggable": false,
+  "allowBackup": false,
+  "extractNativeLibs": true,
+  "v2VerifiedAtApi24To27": true
+}

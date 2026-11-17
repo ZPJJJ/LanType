@@ -1,0 +1,98 @@
+{
+  "uniqueLatestTests": 96,
+  "classCount": 10,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "executionsWithJUnitResults": 103,
+  "batches": [
+    {
+      "directory": "junit/first-serial",
+      "tests": 96,
+      "failures": 2,
+      "cause": "Robolectric clipboard timestamp fixture used uptime rather than Android wall time; both failed before the history-read assertions."
+    },
+    {
+      "directory": "junit/clipboard-walltime-final",
+      "tests": 7,
+      "failures": 0,
+      "change": "Test-only platform timestamp fixture correction; product age policy unchanged."
+    }
+  ],
+  "earlierAttempt": {
+    "junitResult": false,
+    "outcome": "Gradle daemon disappeared during concurrent emulator memory pressure; not counted as a pass."
+  },
+  "classes": [
+    {
+      "class": "com.kingzcheung.xime.clipboard.ClipboardSensitiveTest",
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "com.kingzcheung.xime.clipboard.PrivateClipMemoryTest",
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "com.kingzcheung.xime.clipboard.ToolCabinClipPrivacyTest",
+      "tests": 11,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "com.kingzcheung.xime.rime.LegacyRimeDirectoryMigrationTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "com.kingzcheung.xime.service.InputPrivacyTest",
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "com.kingzcheung.xime.service.ToolCabinEditorTest",
+      "tests": 24,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "com.kingzcheung.xime.service.ToolCabinQueueBoundaryTest",
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "com.kingzcheung.xime.speech.OfflineWhisperLanguageSwitchTest",
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "com.kingzcheung.xime.speech.SpeechRecognitionLanguageSessionTest",
+      "tests": 22,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "class": "com.kingzcheung.xime.ui.keyboard.ToolPanelPrivateClipboardTest",
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ]
+}
