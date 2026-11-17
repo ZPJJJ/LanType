@@ -75,6 +75,14 @@ jobs:
           distribution: temurin
           java-version: '21'
       - uses: android-actions/setup-android@be39fa834029ff78f1a44aa3bb0819b8fc2bd8fd # v4
+      - name: Install the emulator host loader dependency
+        timeout-minutes: 3
+        # Even with -no-audio, the official emulator links libpulse.so.0.
+        # This is a build-runner library; it adds no permission to the app.
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libpulse0
+          dpkg-query -W libpulse0 > "$QA_ROOT/evidence/emulator-host-libs.txt"
       - name: Install official SDK emulator and API 30 Google APIs x86_64 image
         timeout-minutes: 8
         run: |
