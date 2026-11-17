@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "runId": 44103398875,
+  "jobId": 134109156858,
+  "conclusion": "success",
+  "ciHead": "1bcafe8b47e6aed3e713a194a64e63bfb8bb9f28",
+  "ciTree": "4928b462a9464c0a44d621b8f21e3a367dbe465c",
+  "correspondingLocalCiCommit": "28a5a21154980097981f41ea8aabe881de2cf791",
+  "releasedProductLocalCommit": "a83eadd5c0b5d22ffbff248e99b4d9db137b02a6",
+  "releasedProductRemoteCommit": "abb0b9369424029f1d7418ca56fc6d38f2872f96",
+  "reviewedLaterLocalHead": "c8f6f4f8a8a9b6b95b830d87878c849efd1a3619",
+  "reviewedLaterRemoteHead": "6fd9068af31a6f3153c78837a930182f189164a3",
+  "productCodeUnchangedChecks": {
+    "productToCiAppAndPluginCore": true,
+    "laterCommittedChangesOnlyDocsAndQa": true,
+    "uncommittedQaHostIncluded": false
+  },
+  "junit": {
+    "classes": 27,
+    "uniqueTests": 187,
+    "passed": 187,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "separatePythonSourceVerification": {
+    "tests": 12,
+    "passed": 12,
+    "includedInJUnit187": false
+  },
+  "composeRenders": {
+    "pngCount": 20,
+    "visuallyReviewedInThisAudit": false
+  },
+  "ciUnsignedApkStaticChecks": {
+    "approvedAssets": 379,
+    "rawResources": 11,
+    "zipEntries": 2161,
+    "sourceBuiltCameraXLibrariesMatched": 2
+  },
+  "signedReleaseApkZipEntriesReference": 2164,
+  "deviceRuntimeVerifiedByThisRun": false,
+  "upstreamArtifact": {
+    "id": 14338312423,
+    "sizeBytes": 169533371,
+    "sha256": "35d765ad9aa10221b6691503db5fc731a4f09fe9f0077f873470b0d6a97d786d",
+    "downloadHashVerified": true,
+    "originalZipRetained": false,
+    "unsignedApkRetained": false
+  },
+  "evidenceAttachment": {
+    "fileName": "LanType-1.1.1-hosted-source-ci-evidence.zip",
+    "statusAtReceiptCreation": "prepared_pending_upload",
+    "sizeBytes": 1786829,
+    "sha256": "91b8de509c3ed9d778ddd7932b072bf1d39f994fee72f67ab182573a5ce2dbee",
+    "archiveMembers": 84,
+    "artifactEvidenceFiles": 78,
+    "inventoryFile": "inventory.json",
+    "inventorySha256": "748c15216dd878f52db4b24c436e336276fa2ed0e164039cded587fab2241e2a",
+    "hashedPayloadMembers": 83,
+    "publication": {
+      "assetId": 759474044,
+      "url": "https://github.com/ZPJJJ/LanType/releases/download/v1.1.1-rc1/LanType-1.1.1-hosted-source-ci-evidence.zip",
+      "serverSizeAndSha256Matched": true
+    }
+  }
+}
