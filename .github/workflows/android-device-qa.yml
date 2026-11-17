@@ -140,6 +140,14 @@ jobs:
             --host-apk "$QA_ROOT/host/lantype-editor-host.apk" \
             --output "$QA_ROOT/evidence/smoke" \
             2>&1 | tee "$QA_ROOT/evidence/smoke-console.txt"
+      - name: Verify private clipboard copies across a real product process restart
+        timeout-minutes: 5
+        # Separate evidence: a core pass does not imply clipboard-extension pass.
+        run: |
+          python3 -u tools/lantype-device-qa/run-clipboard-smoke.py \
+            --core-report "$QA_ROOT/evidence/smoke/result.json" \
+            --output "$QA_ROOT/evidence/clipboard" \
+            2>&1 | tee "$QA_ROOT/evidence/clipboard-console.txt"
       - name: Preserve final guest diagnostics and stop only this emulator
         if: always()
         timeout-minutes: 2

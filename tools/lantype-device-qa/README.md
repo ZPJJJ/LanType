@@ -42,4 +42,18 @@ ANDROID_SERIAL=emulator-5554 python3 tools/lantype-device-qa/run-device-smoke.py
 
 The driver requires an `emulator-*` serial, `ro.kernel.qemu=1`, current Android user 0 and `RUNNING_UNLOCKED` before changing radio settings or installing anything. It disables guest networking before the first product launch, performs streaming installs without downgrade/clear/uninstall, waits for actual first-run Rime preparation, and uses `adb ime enable/set` for the system provisioning steps. It then taps real accessible keyboard keys for `nihao` → `你好` and US English `color`, explicitly saves the C# template, replaces the APK, and checks input plus the saved template through the visible UI. The upgraded template check first selects Lua, then loads “My template”, so it cannot pass merely by observing the default C# preset.
 
-Every touch uses bounds from a fresh UI XML, accompanied by a screenshot. The script does not treat Compose test tags as Android resource IDs or use `adb input text` as proof of keyboard input. Missing or ambiguous nodes fail with evidence. `result.json` records each observed pass, failure, blocked prerequisite and unrun extension separately; `commands.jsonl` and failure diagnostics retain the execution details. Optional unit conversion is reported separately from required core cases. Private clipboard/process-restart checks are explicitly **not run** in this first core workflow. This verifies ordinary release-to-release data retention, not seeded legacy-directory conflicts, physical-device acceptance or a 16 KiB runtime test.
+Every touch uses bounds from a fresh UI XML, accompanied by a screenshot. The script does not treat Compose test tags as Android resource IDs or use `adb input text` as proof of keyboard input. Missing or ambiguous nodes fail with evidence. `result.json` records each observed pass, failure, blocked prerequisite and unrun extension separately; `commands.jsonl` and failure diagnostics retain the execution details. Optional unit conversion is reported separately from required core cases. The core driver itself records private clipboard/process-restart checks as **not run**; the independent extension below provides separate results for the hosted workflow. This verifies ordinary release-to-release data retention, not seeded legacy-directory conflicts, physical-device acceptance or a 16 KiB runtime test.
+
+## Optional clipboard extension
+
+After the core has passed on the same emulator, the independently invoked extension can use its receipt:
+
+```sh
+ANDROID_SERIAL=emulator-5554 python3 tools/lantype-device-qa/run-clipboard-smoke.py \
+  --core-report /path/to/core-evidence/result.json \
+  --output /path/to/new-clipboard-evidence
+```
+
+The host APK used by core must include **Inspect**. This button reads the clipboard only after an explicit foreground tap and displays metadata/hash for four exact synthetic fixtures. An unknown clipboard produces only a fixed refusal message: no body, hash, label, timestamp or extras are displayed, stored or logged. Inspection never writes a clip. The button does not change the product APK or its data.
+
+The extension has a 270-second command budget (maximum configurable 280), installs/clears nothing, and preserves core's report. It requires a normal-history positive control, explicit cabin copy and observed close, a genuinely new product PID with unchanged `system_server`, unchanged clip timestamp/hash/extras, actual guest age below 30 seconds, and the new process's `privacy=PRIVATE` read trace. A different ordinary copy must subsequently appear as `NORMAL` and in All history. Missing UI/log/metadata evidence or a missed time window is **blocked**, never passed; evidence remains in the separate output directory. It does not enumerate the private database, exercise cut, or establish physical-device/16 KiB acceptance. Run it only after core has passed on the same disposable guest; keep both sets of evidence even if the extension is blocked.

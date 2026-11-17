@@ -1,9 +1,11 @@
 package app.lantype.testhost;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -14,6 +16,10 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import java.util.LinkedHashMap;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /** Disposable native editors for exercising the real, separately installed IME. */
 public final class EditorActivity extends Activity {
@@ -39,8 +45,11 @@ public final class EditorActivity extends Activity {
                 focusEditor();
             } else showEditor(label);
         });
-        addButtons(page, new String[] {"Select all", "Mask sample", "Clipboard"}, label -> {
-            if (label.equals("Select all")) {
+        addButtons(page, new String[] {"Select all", "Mask sample", "Clipboard", "Inspect"}, label -> {
+            if (label.equals("Inspect")) {
+                inspectSyntheticClipboard();
+                return;
+            } else if (label.equals("Select all")) {
                 current.setSelection(0, current.length());
             } else if (label.equals("Mask sample")) {
                 showEditor("Text A");
@@ -123,6 +132,57 @@ public final class EditorActivity extends Activity {
         current.requestFocus();
         current.post(() -> getSystemService(InputMethodManager.class)
             .showSoftInput(current, InputMethodManager.SHOW_IMPLICIT));
+    }
+
+    /** Explicit, foreground, read-only probe. Never writes a clip or stores/logs arbitrary text. */
+    private void inspectSyntheticClipboard() {
+        JSONObject result = new JSONObject();
+        try {
+            ClipboardManager manager = getSystemService(ClipboardManager.class);
+            ClipData clip = manager.getPrimaryClip();
+            CharSequence value = clip != null && clip.getItemCount() == 1
+                ? clip.getItemAt(0).getText() : null;
+            String text = value == null ? null : value.toString();
+            String fixture = null;
+            if ("Debug.Log(\"{{cursor}}\"); // {{date}}".equals(text)) fixture = "csharp";
+            else if ("print(\"{{cursor}}\") -- {{date}}".equals(text)) fixture = "lua";
+            else if ("fixture {{date}}".equals(text)) fixture = "normal_before";
+            else if ("Contact demo@example.test; phone 13800138000".equals(text)) fixture = "normal_after";
+            if (fixture == null) {
+                // No unknown body, hash, label, timestamp or extras reach the UI/evidence.
+                result.put("error", "not_a_recognized_synthetic_fixture");
+            } else {
+                android.content.ClipDescription description = clip.getDescription();
+                android.os.PersistableBundle extras = description.getExtras();
+                byte[] digest = MessageDigest.getInstance("SHA-256").digest(text.getBytes(StandardCharsets.UTF_8));
+                StringBuilder hex = new StringBuilder();
+                for (byte part : digest) hex.append(String.format(java.util.Locale.ROOT, "%02x", part & 0xff));
+                JSONArray mimes = new JSONArray();
+                for (int index = 0; index < description.getMimeTypeCount(); index++)
+                    mimes.put(description.getMimeType(index));
+                result.put("fixture", fixture);
+                result.put("text_sha256", hex.toString());
+                result.put("utf16_length", text.length());
+                result.put("item_count", clip.getItemCount());
+                result.put("timestamp_ms", description.getTimestamp());
+                result.put("label", description.getLabel() == null ? JSONObject.NULL : description.getLabel().toString());
+                result.put("mime_types", mimes);
+                result.put("tool_cabin_private", extras != null && extras.getBoolean("lantype.tool_cabin_private", false));
+                result.put("sensitive", extras != null && extras.getBoolean("android.content.extra.IS_SENSITIVE", false));
+                result.put("observed_at_epoch_ms", System.currentTimeMillis());
+                result.put("observed_at_elapsed_ms", SystemClock.elapsedRealtime());
+            }
+        } catch (Exception error) {
+            result = new JSONObject();
+            try { result.put("error", "clipboard_inspection_unavailable"); }
+            catch (org.json.JSONException ignored) { /* Fixed literal cannot fail. */ }
+        }
+        new AlertDialog.Builder(this)
+            .setTitle("Clipboard fixture metadata")
+            .setMessage(result.toString())
+            .setPositiveButton("Done", (dialog, which) -> focusEditor())
+            .setCancelable(false)
+            .show();
     }
 
     private void updateStatus() {
