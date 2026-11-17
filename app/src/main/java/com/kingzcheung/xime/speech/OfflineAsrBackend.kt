@@ -27,6 +27,7 @@ class OfflineAsrBackend(private val context: Context) : AsrBackend {
     @Volatile private var initialized = false
     @Volatile private var retired = false
     @Volatile private var activeMode: String? = null
+    @Volatile private var activeLanguage: InputLanguage? = null
     private val sessionGeneration = java.util.concurrent.atomic.AtomicLong()
 
     private var resultCallback: ((String) -> Unit)? = null
@@ -109,10 +110,11 @@ class OfflineAsrBackend(private val context: Context) : AsrBackend {
     override fun start(language: InputLanguage): Boolean {
         if (!initialized || retired) return false
         sessionGeneration.incrementAndGet()
+        activeMode = null
+        activeLanguage = null
         return try {
             val modelManager = AsrModelManager(context)
             val selection = modelManager.selectionForLanguage(language)
-            activeMode = selection.mode
             val wholeSentence = SettingsPreferences.isSttWholeSentence(context)
             finishTimeoutMs = if (selection.mode == SpeechModelCatalog.WHISPER) 65000L
                 else if (SpeechModelCatalog.isJapaneseZipformer(selection.mode))
@@ -120,13 +122,18 @@ class OfflineAsrBackend(private val context: Context) : AsrBackend {
                 else if (wholeSentence) WHOLE_SENTENCE_DECODE_TIMEOUT_MS + WHOLE_SESSION_BUDGET_MS + 3000L else 8000L
             // 每次会话开始都重新 startAsr：服务端会重置语音会话并重设回调，
             // 否则 preload 预热时 stop() 清空的 callback 会导致 partial 结果丢失
-            runBlocking {
+            val started = runBlocking {
                 if (!client.ensureBound()) return@runBlocking false
                 client.setKeepModelAlive(SettingsPreferences.isSttKeepEngineAlive(context))
                 client.setSaveTuningAudio(SettingsPreferences.isSttDebugRecord(context))
                 client.setWholeSentenceFinal(wholeSentence)
                 client.startAsr(selection.mode, asrCallback, language)
             }
+            if (started) {
+                activeLanguage = language
+                activeMode = selection.mode
+            }
+            started
         } catch (e: InterruptedException) {
             // 快速取消竞态：stopRecognition/cancelRecognition 会 interrupt 录音线程，
             // 中断正好落在等待 :asr 绑定/模型加载的 runBlocking 上——属正常取消，不算错误，
@@ -148,6 +155,10 @@ class OfflineAsrBackend(private val context: Context) : AsrBackend {
 
     override fun canContinueIn(language: InputLanguage): Boolean {
         val mode = activeMode ?: return false
+        // Whisper fixes its decoder language when its native recognizer is created.
+        // Finish this segment and restart with the new language; the recording worker
+        // keeps the microphone and completed text while the service replaces its model key.
+        if (mode == SpeechModelCatalog.WHISPER && activeLanguage != language) return false
         return SpeechLanguages.supports(mode, language) &&
             AsrModelManager(context).getSelectedModelId(language) == mode
     }
@@ -191,6 +202,8 @@ class OfflineAsrBackend(private val context: Context) : AsrBackend {
     fun releaseModel() {
         retired = true
         initialized = false
+        activeMode = null
+        activeLanguage = null
         try {
             runBlocking { client.releaseAsr() }
         } catch (e: Exception) {
