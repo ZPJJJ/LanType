@@ -27,6 +27,7 @@ import subprocess
 import sys
 import time
 import urllib.request
+import xml.etree.ElementTree as ET
 import zipfile
 
 REPO = Path(__file__).resolve().parents[1]
@@ -668,8 +669,44 @@ class Driver:
         if code:
             self.run("emulator-version", [self.sdk / "emulator/emulator", "-version"])
         self.run("kvm-accel-check", [self.sdk / "emulator/emulator", "-accel-check"])
-        self.run("sdk-image-install", [overlay / "bin/sdkmanager", "--sdk_root=" + str(sdk), IMAGE], timeout=660)
+        # sdkmanager's temporary ZIP plus its inflated image exceeded the work
+        # volume. Stream-verify the same official ZIP, then extract verified
+        # ranges sparsely without keeping a complete archive on disk.
+        self.run("sdk-image-prepare", [sys.executable, REPO / "scripts/prepare-api35-system-image.py",
+            "--work-root", self.root, "--sdk-root", sdk, "--evidence", self.evidence], timeout=660)
         image_root = sdk / "system-images/android-35/google_apis/x86_64"
+        license_file = sdk / "licenses/android-sdk-license"
+        license_sha256 = digest(license_file)
+        # The official local-repository loader discovers source.properties and
+        # writes package.xml through its normal legacy-package migration path.
+        installed, _ = self.run("sdk-image-register", [overlay / "bin/sdkmanager", "--sdk_root=" + str(sdk),
+                               "--list_installed"], timeout=120)
+        package_xml = image_root / "package.xml"
+        require(package_xml.is_file() and not package_xml.is_symlink() and package_xml.stat().st_size <= MIB,
+                "Official SDK local-package registration did not create package.xml")
+        package_document = ET.parse(package_xml)
+        packages = package_document.getroot().findall(".//{*}localPackage")
+        require(len(packages) == 1 and packages[0].get("path") == IMAGE,
+                "SDK registered a different system-image package")
+        package = packages[0]
+        fields = {"revisionMajor": package.findtext("{*}revision/{*}major"),
+                  "revisionMinor": package.findtext("{*}revision/{*}minor", "0"),
+                  "revisionMicro": package.findtext("{*}revision/{*}micro", "0"),
+                  "apiLevel": package.findtext("{*}type-details/{*}api-level"),
+                  "abi": package.findtext("{*}type-details/{*}abi"),
+                  "tag": package.findtext("{*}type-details/{*}tag/{*}id")}
+        require(fields == {"revisionMajor": "9", "revisionMinor": "0", "revisionMicro": "0",
+                           "apiLevel": "35", "abi": "x86_64", "tag": "google_apis"},
+                "SDK local image identity differs from the locked revision: " + json.dumps(fields))
+        require(re.search(r"^\s*" + re.escape(IMAGE) + r"\s*\|\s*9(?:\.0(?:\.0)?)?\s*\|", installed, re.M),
+                "Official sdkmanager does not list the locked image as installed")
+        require(digest(license_file) == license_sha256, "SDK registration changed existing license acceptance")
+        save(self.evidence / "system-image-registration.json", {"schemaVersion": 1, "packageId": IMAGE,
+             **fields, "packageXmlSha256": digest(package_xml), "sdkmanagerListedInstalled": True,
+             "registration": "official sdkmanager local-repository discovery from source.properties",
+             "licenseFileUnchanged": True, "licenseFileSha256": license_sha256,
+             "licenseAcceptedByThisWorkflow": False})
+        shutil.copy2(package_xml, self.evidence / "system-image-package.xml")
         shutil.copy2(image_root / "source.properties", self.evidence / "system-image.properties")
         self.run("create-avd", [overlay / "bin/avdmanager", "create", "avd", "--force", "--name", AVD,
             "--package", IMAGE, "--device", "pixel_2"], input_text="no\n")
@@ -831,7 +868,7 @@ def main():
             {"tools": driver.tools, "identity": driver.identity, "build": driver.build_apk, "image": driver.image,
              "run": driver.run_guest, "collect": driver.collect}[args.stage]()
         return 0
-    except (OSError, ValueError, KeyError, TypeError, subprocess.SubprocessError) as error:
+    except (OSError, ValueError, KeyError, TypeError, subprocess.SubprocessError, ET.ParseError) as error:
         failure = {"schemaVersion": 1, "status": "failed", "stage": args.stage,
                    "error": str(error), "scope": "positive-load-api-environment-only", "limitations": LIMITATIONS}
         if driver is not None:

@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "kind": "lantype-official-android-test-image-lock",
+  "packageId": "system-images;android-35;google_apis;x86_64",
+  "revision": 9,
+  "apiLevel": 35,
+  "extensionLevel": 13,
+  "tag": "google_apis",
+  "abi": "x86_64",
+  "minimumEmulatorRevision": "33.1.24",
+  "repositoryMetadata": {
+    "url": "https://dl.google.com/android/repository/sys-img/google_apis/sys-img2-3.xml",
+    "observedDateUtc": "2026-11-17",
+    "bytes": 240650,
+    "sha256": "f46a7c36aba029eba520189f731901a95c8f423bc446d16c326bf351efd8855e"
+  },
+  "archive": {
+    "url": "https://dl.google.com/android/repository/sys-img/google_apis/x86_64-35_r09.zip",
+    "bytes": 1738815903,
+    "sha1": "0103e6dab21290c4b9d16550a3ce99476f884eef",
+    "sha1Source": "Google repository metadata for this exact revision; the helper also records actual full SHA-256 and binds every second-pass block to the verified first pass"
+  },
+  "sourceProperties": {
+    "bytes": 357,
+    "sha256": "809a6f5103c048607257f03f18e22dd740137e9009c99d4a496de846b6ee3412",
+    "zipCrc32": "0cbf252b",
+    "observation": "Independent 4096-byte HTTP range read; exact compressed member length, deflate output length and ZIP CRC verified"
+  },
+  "license": {
+    "id": "android-sdk-license",
+    "acceptedSha1": "24333f8a63b6825ea9c5514f83c2829b004d1fee",
+    "normalization": "Official TrimStringAdapter.unmarshal followed by SHA-1 of UTF-8 License.getValue(); exact existing license-file line required",
+    "officialToolsBaseCommit": "5252ac68c9e0f60f5f650a923cf156b3457b5215",
+    "acceptNewLicense": false
+  },
+  "scope": "Official disposable API 35 test environment only; no product runtime dependency, no Android acceptance claim"
+}
