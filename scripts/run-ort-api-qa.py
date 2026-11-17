@@ -237,6 +237,13 @@ class Driver:
                     **{key: str(self.root / "tmp") for key in ("TMPDIR", "TMP", "TEMP")}}
         self.env["JAVA_TOOL_OPTIONS"] = (self.env.get("JAVA_TOOL_OPTIONS", "") +
                                           " -Djava.io.tmpdir=" + str(self.root / "tmp")).strip()
+        # Ubuntu's libpulse0 also loads libpulsecommon from its private
+        # pulseaudio subdirectory. Keep both paths in every stage/process,
+        # including the separately started guest and product QA wrapper.
+        loader = self.root / "host-libs/usr/lib/x86_64-linux-gnu"
+        self.env["LD_LIBRARY_PATH"] = os.pathsep.join(dict.fromkeys((
+            str(loader), str(loader / "pulseaudio"),
+            *filter(None, self.env.get("LD_LIBRARY_PATH", "").split(os.pathsep)))))
         for key in ("GH_TOKEN", "GITHUB_TOKEN"):
             self.env.pop(key, None)  # Native/tool subprocesses never need a GitHub token.
         self.counter = 0
