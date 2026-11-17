@@ -69,6 +69,8 @@ class ClipboardManager private constructor(private val context: Context) {
         internal const val SMS_CODE_SUGGESTION_MS = 3 * 60_000L
         /** 别的设备发来的验证码：剪贴板描述里记着几点清掉（System.currentTimeMillis），见 VerificationCodeRelay。 */
         internal const val CODE_EXPIRES_EXTRA = "cyime.code_expires_at"
+        /** Tool-cabin copies stay out of history even after this process and its private memory die. */
+        internal const val TOOL_CABIN_PRIVATE_EXTRA = "lantype.tool_cabin_private"
 
         /** 验证码几点从剪贴板清掉：本机短信 10 分钟；别的设备发来的按它带的时间，最多也是 10 分钟。 */
         internal fun smsCodeExpiresAt(timestamp: Long, expiresAt: Long): Long =
@@ -115,12 +117,12 @@ class ClipboardManager private constructor(private val context: Context) {
         /**
          * What one copy may do in history. A copy the system marks sensitive (password managers) or made
          * while a password field was open is [ClipPrivacy.PRIVATE] (never kept), or [ClipPrivacy.SECRET]
-         * (kept hidden) when the user turned on 「记录密码等敏感内容」. Incognito and clipboard search
-         * always keep a copy out, switch or not.
+         * (kept hidden) when the user turned on 「记录密码等敏感内容」. Incognito, clipboard search and
+         * explicit tool-cabin private metadata always keep a copy out, switch or not.
          */
         internal fun clipPrivacy(markedSensitive: Boolean, passwordField: Boolean, incognito: Boolean,
-            keepSensitive: Boolean): ClipPrivacy = when {
-            incognito -> ClipPrivacy.PRIVATE
+            keepSensitive: Boolean, markedPrivate: Boolean = false): ClipPrivacy = when {
+            markedPrivate || incognito -> ClipPrivacy.PRIVATE
             markedSensitive || passwordField -> if (keepSensitive) ClipPrivacy.SECRET else ClipPrivacy.PRIVATE
             else -> ClipPrivacy.NORMAL
         }
@@ -131,6 +133,16 @@ class ClipboardManager private constructor(private val context: Context) {
 
         @Volatile
         private var instance: ClipboardManager? = null
+
+        private val toolCabinCopies = ToolCabinClipPrivacy()
+
+        /** Mark the current copy before the cabin releases its temporary privacy source. */
+        internal fun toolCabinPrivacyChanged(open: Boolean) {
+            toolCabinCopies.setOpen(open) {
+                // Description only: never inspect clipboard text, a URI or an intent at this boundary.
+                instance?.androidClipboardManager?.primaryClipDescription?.timestamp
+            }
+        }
 
         fun getInstance(context: Context): ClipboardManager {
             return instance ?: synchronized(this) {
@@ -194,10 +206,15 @@ class ClipboardManager private constructor(private val context: Context) {
                     item.text ?: item.uri?.toString() ?: item.intent?.toUri(0))
                 val sensitive = clipData.description.extras?.getBoolean("android.content.extra.IS_SENSITIVE", false) == true
                 val manualIncognito = com.kingzcheung.xime.settings.SettingsPreferences.isIncognito(context)
+                // The callback/retry may arrive after close. Classify the copy's own timestamp,
+                // not just the cabin's current visibility, and let privateClips remember its identity.
+                val cabinPrivate = toolCabinCopies.isPrivate(clipData.description.timestamp) ||
+                    com.kingzcheung.xime.settings.IncognitoState.toolCabin
                 val privacy = clipPrivacy(sensitive, live && com.kingzcheung.xime.settings.IncognitoState.passwordField,
                     manualIncognito || com.kingzcheung.xime.settings.IncognitoState.manual ||
-                        com.kingzcheung.xime.settings.IncognitoState.clipboardSearch,
-                    com.kingzcheung.xime.settings.SettingsPreferences.isClipboardSensitiveCaptureEnabled(context))
+                        com.kingzcheung.xime.settings.IncognitoState.clipboardSearch || cabinPrivate,
+                    com.kingzcheung.xime.settings.SettingsPreferences.isClipboardSensitiveCaptureEnabled(context),
+                    markedPrivate = clipData.description.extras?.getBoolean(TOOL_CABIN_PRIVATE_EXTRA, false) == true)
                 val privateNow = privacy == ClipPrivacy.PRIVATE
                 // 手动无痕挡下的一次新复制（不是密码、不是本来就私密的那条）：第一次提示为什么没记进来。
                 val incognitoCopy = manualIncognito && !sensitive && clipKey !in privateClips &&
@@ -1035,6 +1052,49 @@ class ClipboardManager private constructor(private val context: Context) {
             Log.e(TAG, "MediaStore insert failed", e)
             null
         }
+    }
+}
+
+/**
+ * The system listener carries no old payload: callbacks, retries and board refreshes all read the
+ * current primary clip. Capture its description timestamp on close, before the private source is
+ * cleared. This also covers a callback that has not run yet, without retaining any clipboard text.
+ *
+ * Timestamps are opaque copy identities, not ordered wall-clock intervals. Clock changes therefore
+ * do not hide a range of later ordinary copies; a timestamp collision is conservatively private.
+ * The last private current-copy marker never expires or competes with a bounded history cache.
+ * Once read, the existing PrivateClipMemory additionally retains the timestamp/content identity.
+ *
+ * A missing/denied description cannot identify that copy. Quarantine the next readable primary clip
+ * once, then retain its timestamp: repeated reads of that same clip must not become ordinary. This
+ * may omit one ordinary copy from automatic history after an unavailable/empty clipboard. System
+ * paste still works, and a subsequent distinct copy is ordinary again.
+ */
+internal class ToolCabinClipPrivacy {
+    private var open = false
+    private var privateTimestamp: Long? = null
+    private var quarantineNextReadableCopy = false
+
+    @Synchronized fun setOpen(value: Boolean, currentTimestamp: () -> Long?) {
+        if (open == value) return
+        if (!value) {
+            val timestamp = runCatching(currentTimestamp).getOrNull()
+            if (timestamp == null) quarantineNextReadableCopy = true
+            else {
+                privateTimestamp = timestamp
+                quarantineNextReadableCopy = false
+            }
+        }
+        open = value
+    }
+
+    @Synchronized fun isPrivate(timestamp: Long): Boolean {
+        if (open || quarantineNextReadableCopy) {
+            privateTimestamp = timestamp
+            quarantineNextReadableCopy = false
+            return true
+        }
+        return timestamp == privateTimestamp
     }
 }
 

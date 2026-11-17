@@ -102,6 +102,8 @@ fun ToolPanel(
     /** Close button and field on one row, no title (see [CandidateBarOverlayPanel]). */
     inline: Boolean = false,
     actionLabel: String = "生成",
+    /** Only the cabin owns temporary drafts; ordinary plugin/search fields retain platform copy behavior. */
+    privateClipboardCopies: Boolean = false,
 ) {
     val closeButtonBg = androidx.compose.ui.graphics.lerp(
         MaterialTheme.colorScheme.surface,
@@ -125,9 +127,12 @@ fun ToolPanel(
             AndroidView(
                 factory = { context ->
                     toolPanelEditText(context, textColor, hint, singleLine, isFocused, onFocusChange, onTextChange,
-                        actionLabel = actionLabel)
+                        actionLabel = actionLabel).apply { this.privateClipboardCopies = privateClipboardCopies }
                 },
-                update = { editText -> syncToolPanelEditText(editText, isFocused, initialText) },
+                update = { editText ->
+                    editText.privateClipboardCopies = privateClipboardCopies
+                    syncToolPanelEditText(editText, isFocused, initialText)
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(if (singleLine) 36.dp else 52.dp),
@@ -160,7 +165,7 @@ private fun toolPanelEditText(
     onTextChange: ((String) -> Unit)?,
     keepFocusOnBlur: Boolean = false,
     actionLabel: String = "生成",
-): android.widget.EditText = android.widget.EditText(context).apply {
+): ToolPanelEditText = ToolPanelEditText(context).apply {
     setBackgroundColor(android.graphics.Color.TRANSPARENT)
     setTextColor(textColor.hashCode())
     setHintTextColor((textColor.copy(alpha = 0.4f)).hashCode())
@@ -189,6 +194,48 @@ private fun toolPanelEditText(
     ToolPanelEditTextHolder.editText = this
     if (isFocused) {
         post { requestFocus() }
+    }
+}
+
+/**
+ * Mark an explicit cabin copy before publishing it, so even the first listener (or a new IME
+ * process) sees its privacy metadata. Never read/rewrite the system clipboard to add a marker.
+ * InputConnection's copy/cut and the native selection menu both enter this same method.
+ */
+internal class ToolPanelEditText(context: android.content.Context) : android.widget.EditText(context) {
+    var privateClipboardCopies = false
+
+    override fun onTextContextMenuItem(id: Int): Boolean {
+        if (!privateClipboardCopies || (id != android.R.id.copy && id != android.R.id.cut))
+            return super.onTextContextMenuItem(id)
+
+        val content = text
+        val start = minOf(selectionStart, selectionEnd)
+        val end = maxOf(selectionStart, selectionEnd)
+        // Consume a private copy even if unavailable: a false return can trigger an unmarked
+        // fallback copy in the keyboard's editor toolbar. Empty selections never replace a clip.
+        if (start < 0 || end <= start || end > content.length) return true
+        val selected = android.text.SpannedString(content.subSequence(start, end))
+        val clip = android.content.ClipData.newPlainText("LanType tool cabin", selected)
+        clip.description.extras = android.os.PersistableBundle().apply {
+            putBoolean(com.kingzcheung.xime.clipboard.ClipboardManager.TOOL_CABIN_PRIVATE_EXTRA, true)
+            putBoolean("android.content.extra.IS_SENSITIVE", true)
+        }
+        val copied = runCatching {
+            val clipboard = context.getSystemService(android.content.Context.CLIPBOARD_SERVICE)
+                as android.content.ClipboardManager
+            clipboard.setPrimaryClip(clip)
+        }.isSuccess
+        if (!copied) return true // A failed cut must leave the draft and its selection intact.
+
+        if (id == android.R.id.cut) {
+            beginBatchEdit()
+            try {
+                content.delete(start, end)
+                setSelection(start)
+            } finally { endBatchEdit() }
+        } else setSelection(end)
+        return true
     }
 }
 

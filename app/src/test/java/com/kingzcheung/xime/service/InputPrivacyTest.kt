@@ -14,7 +14,7 @@ class InputPrivacyTest {
     private val savedPasswordField = IncognitoState.passwordField
     private val savedToolCabin = IncognitoState.toolCabin
     private val engine = mutableListOf<Boolean>()
-    private val privacy = InputPrivacy { engine += it }.also {
+    private val privacy = InputPrivacy(toolCabinBoundary = {}) { engine += it }.also {
         it.loadManual(false)
         IncognitoState.sensitiveEditor = false
         IncognitoState.clipboardSearch = false
@@ -111,6 +111,17 @@ class InputPrivacyTest {
         privacy.setToolCabin(false) // Close after an exception or a later lifecycle callback is idempotent.
         assertFalse(IncognitoState.active)
         assertEquals(listOf(false, true, false), engine)
+    }
+
+    @Test fun cabinCloseMarksClipboardBeforeItsPrivacyFlagIsCleared() {
+        val boundaries = mutableListOf<Pair<Boolean, Boolean>>()
+        val observed = InputPrivacy(toolCabinBoundary = { open ->
+            boundaries += open to IncognitoState.toolCabin
+        }) {}
+        observed.setToolCabin(true)
+        observed.setToolCabin(false)
+        assertEquals(listOf(true to false, false to true), boundaries)
+        assertFalse(IncognitoState.toolCabin)
     }
 
     /** 用户 11-09：网页上复制的普通文字被当成密码。剪贴板只认开着的藏字密码框。 */

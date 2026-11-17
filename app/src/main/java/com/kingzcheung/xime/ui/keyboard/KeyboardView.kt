@@ -1289,6 +1289,7 @@ fun KeyboardView(
                     hint = if (state.toolCabin != null) "2.5 MiB → B / {{date}} / {{cursor}}" else "输入上下文…",
                     actionLabel = if (state.toolCabin != null)
                         if (LocalConfiguration.current.locales[0].language == "en") "Preview" else "预览" else "生成",
+                    privateClipboardCopies = state.toolCabin != null,
                     onTextChange = if (state.toolCabin != null) ({ text ->
                         callbacks.onToolCabinAction?.invoke(com.kingzcheung.xime.toolcabin.CabinAction.Input(text))
                     }) else null,

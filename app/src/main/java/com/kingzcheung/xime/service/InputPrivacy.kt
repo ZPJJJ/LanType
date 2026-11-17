@@ -8,7 +8,10 @@ import com.kingzcheung.xime.settings.IncognitoState
  * clipboard search) changes only here, and every change re-applies the engine's learning switch,
  * so no source can change without the engine following it. Readers keep reading [IncognitoState].
  */
-internal class InputPrivacy(private val applyEngine: (active: Boolean) -> Unit) {
+internal class InputPrivacy(
+    private val toolCabinBoundary: (Boolean) -> Unit = { com.kingzcheung.xime.clipboard.ClipboardManager.toolCabinPrivacyChanged(it) },
+    private val applyEngine: (active: Boolean) -> Unit,
+) {
     private var applied: Boolean? = null
 
     /** The saved switch at start-up; the first field applies it to the engine. */
@@ -30,7 +33,11 @@ internal class InputPrivacy(private val applyEngine: (active: Boolean) -> Unit) 
     fun setClipboardSearch(open: Boolean) { IncognitoState.clipboardSearch = open; apply() }
 
     /** The cabin's temporary source must never change the user's manual or editor privacy choice. */
-    fun setToolCabin(open: Boolean) { IncognitoState.toolCabin = open; apply() }
+    fun setToolCabin(open: Boolean) {
+        toolCabinBoundary(open)
+        IncognitoState.toolCabin = open
+        apply()
+    }
 
     private fun apply() {
         val active = IncognitoState.active
