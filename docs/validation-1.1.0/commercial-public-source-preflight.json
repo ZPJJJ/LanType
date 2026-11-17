@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "edition": "1.1.0",
+  "mode": "git-index",
+  "scannedFiles": 3009,
+  "approvedHashesTakePrecedence": true,
+  "removedContentHashes": 179,
+  "pass": true,
+  "failures": [],
+  "byteSource": "Working-tree bytes of git-indexed paths at execution time; this preflight is not an immutable staged-blob or source-ZIP audit."
+}

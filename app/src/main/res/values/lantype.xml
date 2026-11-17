@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="lantype_background">#123F48</color>
+    <string name="subtype_chinese">中文（简体拼音）</string>
+    <string name="subtype_english_us">English (US)</string>
+</resources>

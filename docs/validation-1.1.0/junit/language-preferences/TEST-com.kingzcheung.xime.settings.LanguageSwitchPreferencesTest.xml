@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.kingzcheung.xime.settings.LanguageSwitchPreferencesTest" tests="13" skipped="0" failures="0" errors="0" timestamp="2026-11-17T02:51:39.641Z" hostname="66ec0b799489" time="0.097">
+  <properties/>
+  <testcase name="cycleUsesTheSavedLanguageOrderAndWraps" classname="com.kingzcheung.xime.settings.LanguageSwitchPreferencesTest" time="0.032"/>
+  <testcase name="specificPairFallsBackToEnglishWhenThePartnerIsMissing" classname="com.kingzcheung.xime.settings.LanguageSwitchPreferencesTest" time="0.0"/>
+  <testcase name="specificSpanishAndEnglishSwitchesBothWays" classname="com.kingzcheung.xime.settings.LanguageSwitchPreferencesTest" time="0.0"/>
+  <testcase name="specificPairSwitchesBetweenTwoLanguagesWithoutEnglish" classname="com.kingzcheung.xime.settings.LanguageSwitchPreferencesTest" time="0.0"/>
+  <testcase name="switchingLanguageDoesNotOverrideSelectedSchemeOrLayout" classname="com.kingzcheung.xime.settings.LanguageSwitchPreferencesTest" time="0.058"/>
+  <testcase name="specificChoicesListEveryNonEnglishLanguageNotOnlyChineseAndJapanese" classname="com.kingzcheung.xime.settings.LanguageSwitchPreferencesTest" time="0.0"/>
+  <testcase name="cycleSkipsDisabledOrUnavailableLanguagesAndDuplicateEntries" classname="com.kingzcheung.xime.settings.LanguageSwitchPreferencesTest" time="0.0"/>
+  <testcase name="specificJapaneseAndEnglishRetainsAnExplicitChoice" classname="com.kingzcheung.xime.settings.LanguageSwitchPreferencesTest" time="0.0"/>
+  <testcase name="defaultDoesNotEnableADisabledNativeLanguage" classname="com.kingzcheung.xime.settings.LanguageSwitchPreferencesTest" time="0.0"/>
+  <testcase name="specificChineseAndEnglishDoesNotDependOnTheEngineFallback" classname="com.kingzcheung.xime.settings.LanguageSwitchPreferencesTest" time="0.0"/>
+  <testcase name="pairChoiceKeepsTheOldStoredModes" classname="com.kingzcheung.xime.settings.LanguageSwitchPreferencesTest" time="0.0"/>
+  <testcase name="invalidSpecificChoiceFallsBackToAnAvailableNativeLanguage" classname="com.kingzcheung.xime.settings.LanguageSwitchPreferencesTest" time="0.0"/>
+  <testcase name="defaultKeepsCurrentNativeLanguageAndEnglishRegardlessOfLanguageOrder" classname="com.kingzcheung.xime.settings.LanguageSwitchPreferencesTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

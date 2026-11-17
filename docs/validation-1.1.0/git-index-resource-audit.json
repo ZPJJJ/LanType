@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "edition": "1.1.0",
+  "mode": "git-index",
+  "scannedFiles": 3015,
+  "byteSource": "actual staged Git blobs via cat-file",
+  "approvedHashesTakePrecedence": true,
+  "removedContentHashes": 179,
+  "pass": true,
+  "failures": []
+}

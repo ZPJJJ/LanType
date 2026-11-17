@@ -1,0 +1,86 @@
+# English (United States) preference pairs. Format: variant<TAB>preferred.
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Original, manually curated spelling-pair table for LanType, 2026-11-17.
+# This is not an extracted dictionary: no definitions or example sentences.
+# Spelling conventions checked against the UOC Language & Style guide:
+# https://www.uoc.edu/en/services/language/style/british-american-english/spelling
+# favorite/color also checked against Cambridge Dictionary's US spelling entries:
+# https://dictionary.cambridge.org/dictionary/english/favorite
+# https://dictionary.cambridge.org/dictionary/english/color
+# Regular inflections are listed explicitly; never apply suffix substitutions to names.
+# These are suggestions, not invalid-word rules. Keep both spellings available.
+colour	color
+colours	colors
+coloured	colored
+colouring	coloring
+colourful	colorful
+colourless	colorless
+favour	favor
+favours	favors
+favoured	favored
+favouring	favoring
+favourable	favorable
+favourably	favorably
+favourite	favorite
+favourites	favorites
+behaviour	behavior
+behaviours	behaviors
+behavioural	behavioral
+neighbour	neighbor
+neighbours	neighbors
+neighbouring	neighboring
+neighbourhood	neighborhood
+neighbourhoods	neighborhoods
+centre	center
+centres	centers
+centred	centered
+centring	centering
+fibre	fiber
+fibres	fibers
+litre	liter
+litres	liters
+metre	meter
+metres	meters
+theatre	theater
+theatres	theaters
+organise	organize
+organises	organizes
+organised	organized
+organising	organizing
+organiser	organizer
+organisers	organizers
+organisation	organization
+organisations	organizations
+maximise	maximize
+maximises	maximizes
+maximised	maximized
+maximising	maximizing
+analyse	analyze
+analysed	analyzed
+analysing	analyzing
+labelled	labeled
+labelling	labeling
+modelling	modeling
+modelled	modeled
+traveller	traveler
+travellers	travelers
+travelling	traveling
+travelled	traveled
+enrol	enroll
+enrolment	enrollment
+enrolments	enrollments
+fulfil	fulfill
+fulfilment	fulfillment
+instalment	installment
+instalments	installments
+catalogue	catalog
+catalogues	catalogs
+licence	license
+licences	licenses
+defence	defense
+defences	defenses
+aluminium	aluminum
+jewellery	jewelry
+programme	program
+programmes	programs
+sceptical	skeptical

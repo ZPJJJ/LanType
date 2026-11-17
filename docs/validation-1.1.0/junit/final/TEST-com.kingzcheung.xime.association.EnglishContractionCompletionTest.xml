@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.kingzcheung.xime.association.EnglishContractionCompletionTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-17T02:13:30.366Z" hostname="66ec0b799489" time="0.007">
+  <properties/>
+  <testcase name="followsTypedCase" classname="com.kingzcheung.xime.association.EnglishContractionCompletionTest" time="0.004"/>
+  <testcase name="otherWordsAreUntouched" classname="com.kingzcheung.xime.association.EnglishContractionCompletionTest" time="0.002"/>
+  <testcase name="realWordsStayFirstAndTheContractionComesSecond" classname="com.kingzcheung.xime.association.EnglishContractionCompletionTest" time="0.001"/>
+  <testcase name="prefixCompletionsSwapOnlyNonWords" classname="com.kingzcheung.xime.association.EnglishContractionCompletionTest" time="0.0"/>
+  <testcase name="fullSpellingPutsTheContractionFirst" classname="com.kingzcheung.xime.association.EnglishContractionCompletionTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

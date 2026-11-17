@@ -1,0 +1,51 @@
+# Original grammar mappings and editorial ranks, CC0-1.0.
+im I'm 100
+ive I've 110
+ill I'll 120 ?
+id I'd 130 ?
+youre you're 140
+youve you've 150
+youll you'll 160
+youd you'd 170
+hes he's 180
+hell he'll 190 ?
+hed he'd 200
+shes she's 210
+shell she'll 220 ?
+shed she'd 230 ?
+its it's 240 ?
+itll it'll 250
+were we're 260 ?
+weve we've 270
+well we'll 280 ?
+wed we'd 290 ?
+theyre they're 300
+theyve they've 310
+theyll they'll 320
+theyd they'd 330
+thats that's 340
+thatll that'll 350
+whats what's 360
+whos who's 370
+wheres where's 380
+hows how's 390
+theres there's 400
+heres here's 410
+lets let's 420 ?
+dont don't 430
+doesnt doesn't 440
+didnt didn't 450
+cant can't 460 ?
+couldnt couldn't 470
+wont won't 480 ?
+wouldnt wouldn't 490
+shouldnt shouldn't 500
+isnt isn't 510
+arent aren't 520
+wasnt wasn't 530
+werent weren't 540
+havent haven't 550
+hasnt hasn't 560
+hadnt hadn't 570
+mustnt mustn't 580
+neednt needn't 590

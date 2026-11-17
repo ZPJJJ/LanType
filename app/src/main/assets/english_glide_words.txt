@@ -1,0 +1,1 @@
+# SCOWL supplies the entire English vocabulary; no external frequency supplement.

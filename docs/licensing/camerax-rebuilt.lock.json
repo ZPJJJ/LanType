@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "edition": "LanType 1.1.0",
+  "cameraVersion": "1.6.2",
+  "sourceInputs": [
+    {
+      "id": "androidx-camera-core",
+      "commit": "9046f07948c1e7a89aaec581463730f4d666611b",
+      "archive_sha256": "34feb7305c4642908e1d10039b05109b1253bd71cc584e0613901596468dabe0"
+    },
+    {
+      "id": "lantype-camerax-libyuv",
+      "commit": "741c38751c436f60c583110f617340b7f3322d94",
+      "archive_sha256": "6bc6ff60c3e4a3924bac1726177e8eee0dccff7f1e8b2e2fb7e23162a9631392"
+    }
+  ],
+  "ndk": "27.2.12479018",
+  "cmake": "3.22.1",
+  "abi": "arm64-v8a",
+  "minSdk": 28,
+  "stl": "c++_static",
+  "pageSize": 16384,
+  "jpegEnabled": false,
+  "buildScript": "scripts/camerax-native/CMakeLists.txt",
+  "outputs": [
+    {
+      "path": "vendor/lantype-camerax-native/arm64-v8a/libimage_processing_util_jni.so",
+      "size": 30048,
+      "sha256": "0f69c4cb30faaa53efea372d7fa4ac765e586183b386c5d178de334162fba3de",
+      "jniExports": [
+        "Java_androidx_camera_core_ImageProcessingUtil_nativeConvertAndroid420ToABGR@@VERS_1.0",
+        "Java_androidx_camera_core_ImageProcessingUtil_nativeConvertAndroid420ToBitmap@@VERS_1.0",
+        "Java_androidx_camera_core_ImageProcessingUtil_nativeCopyBetweenByteBufferAndBitmap@@VERS_1.0",
+        "Java_androidx_camera_core_ImageProcessingUtil_nativeGetYUVImageVUOff@@VERS_1.0",
+        "Java_androidx_camera_core_ImageProcessingUtil_nativeNewDirectByteBuffer@@VERS_1.0",
+        "Java_androidx_camera_core_ImageProcessingUtil_nativeRotateYUV@@VERS_1.0",
+        "Java_androidx_camera_core_ImageProcessingUtil_nativeShiftPixel@@VERS_1.0",
+        "Java_androidx_camera_core_ImageProcessingUtil_nativeWriteJpegToSurface@@VERS_1.0"
+      ],
+      "needed": [
+        "libandroid.so",
+        "libc.so",
+        "libdl.so",
+        "libjnigraphics.so",
+        "liblog.so",
+        "libm.so"
+      ],
+      "soname": "libimage_processing_util_jni.so",
+      "originalMavenSha256": "0292b063fafccf734472cbb59588e756c2dbca907c72021ba6fbf126385508a2"
+    },
+    {
+      "path": "vendor/lantype-camerax-native/arm64-v8a/libsurface_util_jni.so",
+      "size": 4896,
+      "sha256": "1b8a49ebdf42e18ef9722a5947751fb0dcc2f362805353ca63a4423d1a14e78a",
+      "jniExports": [
+        "Java_androidx_camera_core_impl_utils_SurfaceUtil_nativeGetSurfaceInfo@@VERS_1.0"
+      ],
+      "needed": [
+        "libandroid.so",
+        "libc.so",
+        "libdl.so",
+        "libm.so"
+      ],
+      "soname": "libsurface_util_jni.so",
+      "originalMavenSha256": "a5c9d1928ea92ec7a94dff8cf666e7739cd734198b9f0ae1d4e28ea3c86516ba"
+    }
+  ],
+  "buildScriptSha256": "08f5bc8b2f2b80ee8432d01832d9e0a2380c1ef88ac012369f101f6d50c7213a"
+}

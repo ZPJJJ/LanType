@@ -1,0 +1,7 @@
+# Dictionary tables retain their individual Apache-2.0 and CC-BY-SA-4.0 licences.
+---
+name: rime_ice
+version: "lantype-commercial-1"
+sort: by_weight
+import_tables: [cn_dicts/base, cn_dicts/cedict]
+...

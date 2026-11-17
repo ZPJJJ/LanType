@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.kingzcheung.xime.association.AmericanEnglishSpellingTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-17T02:09:53.251Z" hostname="66ec0b799489" time="0.061">
+  <properties/>
+  <testcase name="ordinaryCompletionsAndExplicitResultLimitsAreRespected" classname="com.kingzcheung.xime.association.AmericanEnglishSpellingTest" time="0.033"/>
+  <testcase name="usPrefixStillCompletesWhenOnlyTheBritishSpellingWasInTheDictionary" classname="com.kingzcheung.xime.association.AmericanEnglishSpellingTest" time="0.011"/>
+  <testcase name="glideVocabularyPrefersUsFormsAndRetainsEveryExistingWord" classname="com.kingzcheung.xime.association.AmericanEnglishSpellingTest" time="0.004"/>
+  <testcase name="capitalizationFollowsTheUserButIdentifiersAndNamesArePreserved" classname="com.kingzcheung.xime.association.AmericanEnglishSpellingTest" time="0.004"/>
+  <testcase name="commonVariantsOfferUsFirstWithoutLosingTheTypedSpelling" classname="com.kingzcheung.xime.association.AmericanEnglishSpellingTest" time="0.001"/>
+  <testcase name="partialBritishSpellingCanOfferAnAmericanCompletion" classname="com.kingzcheung.xime.association.AmericanEnglishSpellingTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

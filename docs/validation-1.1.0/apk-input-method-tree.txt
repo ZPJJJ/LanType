@@ -1,0 +1,19 @@
+N: android=http://schemas.android.com/apk/res/android (line=6)
+  E: input-method (line=6)
+    A: http://schemas.android.com/apk/res/android:isDefault(0x01010221)=false
+    A: http://schemas.android.com/apk/res/android:settingsActivity(0x01010225)="com.kingzcheung.xime.MainActivity" (Raw: "com.kingzcheung.xime.MainActivity")
+    A: http://schemas.android.com/apk/res/android:supportsSwitchingToNextInputMethod(0x010103eb)=true
+    A: http://schemas.android.com/apk/res/android:supportsInlineSuggestions(0x0101060d)=true
+      E: subtype (line=9)
+        A: http://schemas.android.com/apk/res/android:label(0x01010001)=@0x7f100164
+        A: http://schemas.android.com/apk/res/android:imeSubtypeLocale(0x010102ec)="zh_CN" (Raw: "zh_CN")
+        A: http://schemas.android.com/apk/res/android:imeSubtypeMode(0x010102ed)="keyboard" (Raw: "keyboard")
+        A: http://schemas.android.com/apk/res/android:subtypeId(0x010103c1)=1001
+        A: http://schemas.android.com/apk/res/android:languageTag(0x01010508)="zh-CN" (Raw: "zh-CN")
+      E: subtype (line=12)
+        A: http://schemas.android.com/apk/res/android:label(0x01010001)=@0x7f100165
+        A: http://schemas.android.com/apk/res/android:imeSubtypeLocale(0x010102ec)="en_US" (Raw: "en_US")
+        A: http://schemas.android.com/apk/res/android:imeSubtypeMode(0x010102ed)="keyboard" (Raw: "keyboard")
+        A: http://schemas.android.com/apk/res/android:subtypeId(0x010103c1)=1002
+        A: http://schemas.android.com/apk/res/android:isAsciiCapable(0x010103e9)=true
+        A: http://schemas.android.com/apk/res/android:languageTag(0x01010508)="en-US" (Raw: "en-US")

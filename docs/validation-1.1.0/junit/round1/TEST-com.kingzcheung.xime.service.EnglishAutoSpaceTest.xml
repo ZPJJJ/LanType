@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.kingzcheung.xime.service.EnglishAutoSpaceTest" tests="9" skipped="0" failures="0" errors="0" timestamp="2026-11-17T02:10:14.921Z" hostname="66ec0b799489" time="0.01">
+  <properties/>
+  <testcase name="punctuationSpaceFollowsWordsNotNumbers" classname="com.kingzcheung.xime.service.EnglishAutoSpaceTest" time="0.004"/>
+  <testcase name="pageSwitchKeysKeepTheAutoSpaceForTheSymbolTypedNext" classname="com.kingzcheung.xime.service.EnglishAutoSpaceTest" time="0.0"/>
+  <testcase name="punctuationSpaceSkipsOtherContexts" classname="com.kingzcheung.xime.service.EnglishAutoSpaceTest" time="0.0"/>
+  <testcase name="punctuationSpaceArmsWithThePunctuation" classname="com.kingzcheung.xime.service.EnglishAutoSpaceTest" time="0.0"/>
+  <testcase name="onlyTheNextKeyIsAffected" classname="com.kingzcheung.xime.service.EnglishAutoSpaceTest" time="0.0"/>
+  <testcase name="completionGetsTheSpaceInTheSameReplacement" classname="com.kingzcheung.xime.service.EnglishAutoSpaceTest" time="0.004"/>
+  <testcase name="nextKeyRules" classname="com.kingzcheung.xime.service.EnglishAutoSpaceTest" time="0.0"/>
+  <testcase name="offByDefaultLeavesSelectionUnchanged" classname="com.kingzcheung.xime.service.EnglishAutoSpaceTest" time="0.001"/>
+  <testcase name="originalWordOnlyAddsTheSpace" classname="com.kingzcheung.xime.service.EnglishAutoSpaceTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "sources": [
+    {
+      "name": "scowl-en_US.txt",
+      "license": "SCOWL",
+      "revision": "rel-2026.02.25",
+      "sourceUrl": "https://raw.githubusercontent.com/en-wl/wordlist-diff/rel-2026.02.25/en_US.txt",
+      "sha256": "4ff7e0b6d86763e1e042ffd746e94cdf4432618702deac303a1669e2a838db04",
+      "size": 1033485,
+      "sourceArchive": "tools/lantype_resources/source_data/scowl-en_US.txt.gz",
+      "sourceArchiveSha256": "e144b24038c9841639114e585de3474b59d0fa611f1f4a34b9f1731de6beebd7"
+    },
+    {
+      "name": "rime-pinyin-simp-dict.yaml",
+      "license": "Apache-2.0",
+      "revision": "0c6861ef7420ee780270ca6d993d18d4101049d0",
+      "sourceUrl": "https://raw.githubusercontent.com/rime/rime-pinyin-simp/0c6861ef7420ee780270ca6d993d18d4101049d0/pinyin_simp.dict.yaml",
+      "sha256": "e341598343a0f0f2035bb1aafc34a7f3bb7887deeecb3f60796262aaa2983e6b",
+      "size": 1266216,
+      "sourceArchive": "tools/lantype_resources/source_data/rime-pinyin-simp-dict.yaml.gz",
+      "sourceArchiveSha256": "79b30186c72bd9c09cfaf1a1dde6b394d6527767e675e17ff2461c3da219d11d"
+    },
+    {
+      "name": "cedict.txt",
+      "license": "CC-BY-SA-4.0",
+      "revision": "2026-11-16T07:16:40Z",
+      "sourceUrl": "https://www.mdbg.net/chinese/export/cedict/cedict_1_0_ts_utf-8_mdbg.txt.gz",
+      "sha256": "e633d741b2cfa2f8fac706f4072a9868c4768b81289295a96db676775c219e28",
+      "size": 9876850,
+      "sourceArchive": "tools/lantype_resources/source_data/cedict.txt.gz",
+      "sourceArchiveSha256": "2259cc642a2521ba5f5452ba0f729fecf5f8f57af1cfb095e6f9ee3ea6b587f2"
+    },
+    {
+      "name": "makemeahanzi-graphics.txt",
+      "license": "LicenseRef-Arphic-1999",
+      "revision": "bddc96d41bef78427ed0e034e9f7e31d71fd1b92",
+      "sourceUrl": "https://raw.githubusercontent.com/skishore/makemeahanzi/bddc96d41bef78427ed0e034e9f7e31d71fd1b92/graphics.txt",
+      "sha256": "a28c478b5178e98f67f510b2d52fde08a69dc664654ef43498253b9b764d46ee",
+      "size": 30778076,
+      "sourceArchive": "tools/lantype_resources/source_data/makemeahanzi-graphics.txt.gz",
+      "sourceArchiveSha256": "e939baf5a2fde64d662ae66816791f71c464f3ced31dd9f3c852f986b713474a"
+    }
+  ]
+}

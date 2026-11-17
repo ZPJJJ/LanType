@@ -1,0 +1,2718 @@
+{
+  "schemaVersion": 1,
+  "edition": "1.1.0",
+  "mode": "apk",
+  "apk": "app/build/outputs/apk/offline/LanType-1.1.0-offline-arm64-v8a.apk",
+  "lockSha256": "db6c94c9cb44de3b883ba237fc04de3d3e7d61d3ed5ab9f383508f5bc18a6381",
+  "approvedAssetCount": 379,
+  "checkedAssetCount": 379,
+  "rawResourceCount": 11,
+  "allZipEntriesScanned": 2161,
+  "zipFilenameEncodingCorrections": [
+    {
+      "zipDisplayName": "assets/rime/macOS-╧â├à├«╧â├ºΓòù╧â├▒├¼╧â├¬Γòó┬╡├╗├º╬úΓòùΓòó╧â├Ñ├á╧â┬½Γòú.command",
+      "androidUtf8Name": "assets/rime/macOS-σÅîσç╗σñìσê╢µûçΣ╗╢σåàσ«╣.command"
+    }
+  ],
+  "generatedAssets": [
+    {
+      "path": "dexopt/baseline.prof",
+      "basis": "AGP-generated ART profile, exact path, bounded size and binary magic",
+      "sha256": "8ae96d019478cdf7d4380cae6423c5bb14bae213f84de558a204c1dc677d5ddf"
+    },
+    {
+      "path": "dexopt/baseline.profm",
+      "basis": "AGP-generated ART profile, exact path, bounded size and binary magic",
+      "sha256": "cea185a411dde8a5384e160e36d733c51fa398fe403d83143fa271ad27248961"
+    },
+    {
+      "path": "builtin-plugins/windows-clipboard.xipk",
+      "basis": "exact two-file package built from the published GPL plugin source",
+      "entries": [
+        {
+          "path": "main.lua",
+          "sha256": "beaec8b56f04512b95af8a42bc5499266780891324d77c18da506384ef5fa7cf"
+        },
+        {
+          "path": "manifest.yaml",
+          "sha256": "cd231d21bb37d25179b04e07d5268bbb9266a18a6e8bcc1226b707daefaee3c6"
+        }
+      ]
+    },
+    {
+      "path": "plugin-market/index.yaml",
+      "basis": "exact published source bytes",
+      "sourcePath": "store/plugins/index.yaml",
+      "sha256": "56b86feb18dfb0304b894cf82a19de6f8408d5423957d4040c7ef59c70c9a205"
+    }
+  ],
+  "cameraNativeReplacements": [
+    {
+      "path": "lib/arm64-v8a/libimage_processing_util_jni.so",
+      "matchesSourceBuiltLock": true,
+      "sha256": "0f69c4cb30faaa53efea372d7fa4ac765e586183b386c5d178de334162fba3de"
+    },
+    {
+      "path": "lib/arm64-v8a/libsurface_util_jni.so",
+      "matchesSourceBuiltLock": true,
+      "sha256": "1b8a49ebdf42e18ef9722a5947751fb0dcc2f362805353ca63a4423d1a14e78a"
+    }
+  ],
+  "pass": true,
+  "failures": [],
+  "assets": [
+    {
+      "path": "NOTICE.txt",
+      "packagedPath": "assets/NOTICE.txt",
+      "encoding": "identity",
+      "sha256": "2c95114f723e6d5e8a25652dccb3728a5b502329227dc9bd7fc7db50021cf04f",
+      "size": 7749
+    },
+    {
+      "path": "PublicSuffixDatabase.list",
+      "packagedPath": "assets/PublicSuffixDatabase.list",
+      "encoding": "identity",
+      "sha256": "c75ab827afd7ffff59a51b14729c25dbfc3b45237eb40ccf02bec7b7d44304a4",
+      "size": 132737
+    },
+    {
+      "path": "association/lantype-original-v1.completions",
+      "packagedPath": "assets/association/lantype-original-v1.completions",
+      "encoding": "identity",
+      "sha256": "a7b0e9b6cd393a3d7b07bc52fe9e1d6cdc42df715f285d38703e9721e9ba171a",
+      "size": 33
+    },
+    {
+      "path": "association/lantype-original-v1.tsv",
+      "packagedPath": "assets/association/lantype-original-v1.tsv",
+      "encoding": "identity",
+      "sha256": "3972856101e7382f11dc596004be2b7e9f64765e63004fd190990a98db6446ea",
+      "size": 1267
+    },
+    {
+      "path": "bundled-models/manifest.json",
+      "packagedPath": "assets/bundled-models/manifest.json",
+      "encoding": "identity",
+      "sha256": "c3e9bf23a0cf5af827185d91ab946fa833a898fe81b663a5272c5e5e56656615",
+      "size": 1049
+    },
+    {
+      "path": "bundled-models/whisper-base-multilingual-int8/base-decoder.int8.onnx",
+      "packagedPath": "assets/bundled-models/whisper-base-multilingual-int8/base-decoder.int8.onnx",
+      "encoding": "identity",
+      "sha256": "9759d217388a01b3a4c7c15533201067b48ae819c4daafc8624e64b9409dc02d",
+      "size": 130672026
+    },
+    {
+      "path": "bundled-models/whisper-base-multilingual-int8/base-encoder.int8.onnx",
+      "packagedPath": "assets/bundled-models/whisper-base-multilingual-int8/base-encoder.int8.onnx",
+      "encoding": "identity",
+      "sha256": "0b8fb1304b6109976038efff5ace81720e00386f3ff6b54ee8c75291ca0a1e11",
+      "size": 29120534
+    },
+    {
+      "path": "bundled-models/whisper-base-multilingual-int8/base-tokens.txt",
+      "packagedPath": "assets/bundled-models/whisper-base-multilingual-int8/base-tokens.txt",
+      "encoding": "identity",
+      "sha256": "b34b360dbb493e781e479794586d661700670d65564001f23024971d1f2fa126",
+      "size": 816730
+    },
+    {
+      "path": "default.custom.yaml",
+      "packagedPath": "assets/default.custom.yaml",
+      "encoding": "identity",
+      "sha256": "f2aed59bed0a9a2b3b16fcf18482b20918ad41ef7851dee5080cc7b902c5a10c",
+      "size": 6087
+    },
+    {
+      "path": "english.txt",
+      "packagedPath": "assets/english.txt",
+      "encoding": "identity",
+      "sha256": "479e206347eae3129589967935011ef9392af1835715fb8b6542412c9d0c024c",
+      "size": 829409
+    },
+    {
+      "path": "english_bigrams.txt",
+      "packagedPath": "assets/english_bigrams.txt",
+      "encoding": "identity",
+      "sha256": "e84925189fb3634947aa713644f437f7758dfe6a590a929a79bcccaec943b994",
+      "size": 544
+    },
+    {
+      "path": "english_contractions.txt",
+      "packagedPath": "assets/english_contractions.txt",
+      "encoding": "identity",
+      "sha256": "c824fb5529454c96012927192a4e02e53854a84b58971b15a8dd96fb92d0c3e4",
+      "size": 902
+    },
+    {
+      "path": "english_glide_words.txt",
+      "packagedPath": "assets/english_glide_words.txt",
+      "encoding": "identity",
+      "sha256": "29660eab669869096a5e14fbf09ef16d4298543f4c4431e4a904badda0ae2b08",
+      "size": 82
+    },
+    {
+      "path": "english_trie.bin",
+      "packagedPath": "assets/english_trie.bin",
+      "encoding": "identity",
+      "sha256": "eba10c41e266e46c697807a400d2a024aca23bd637bc48e0a3f5e40db8133c97",
+      "size": 2650695
+    },
+    {
+      "path": "english_typo_corrections.tsv",
+      "packagedPath": "assets/english_typo_corrections.tsv",
+      "encoding": "identity",
+      "sha256": "a750b4fa304b2a62977e3889f3895dc05c56508337dd5e51740903afcfd081b2",
+      "size": 925
+    },
+    {
+      "path": "english_us_spelling.tsv",
+      "packagedPath": "assets/english_us_spelling.tsv",
+      "encoding": "identity",
+      "sha256": "528b05fee92aeeb544f78bcb6adae8bca5befe45107d3be76ae1db63cbf8112a",
+      "size": 2214
+    },
+    {
+      "path": "glide_pinyin.txt",
+      "packagedPath": "assets/glide_pinyin.txt",
+      "encoding": "identity",
+      "sha256": "17bedfb228c41991412df10d7b1ca585d44327d4508cb3fa1541ed5087903da5",
+      "size": 303653
+    },
+    {
+      "path": "glide_pinyin_words.txt",
+      "packagedPath": "assets/glide_pinyin_words.txt",
+      "encoding": "identity",
+      "sha256": "f14beb6c0134d2cff47f6e66e14f26eee45f558e7d17eb969bdedd067b78dc43",
+      "size": 250950
+    },
+    {
+      "path": "handwriting/hanzi_frequency.tsv",
+      "packagedPath": "assets/handwriting/hanzi_frequency.tsv",
+      "encoding": "identity",
+      "sha256": "ed506aa7a999cd47a4e97b6f201df332c3b7bbc72d2462dbd6cd3b7c35c9f928",
+      "size": 118615
+    },
+    {
+      "path": "handwriting/hanzi_pinyin.tsv",
+      "packagedPath": "assets/handwriting/hanzi_pinyin.tsv",
+      "encoding": "identity",
+      "sha256": "8ab41ab58af9b981deb50f6ed0339e644765a81574ec49e25f873856ed7358aa",
+      "size": 146929
+    },
+    {
+      "path": "handwriting/lantype-strokes.lth",
+      "packagedPath": "assets/handwriting/lantype-strokes.lth",
+      "encoding": "identity",
+      "sha256": "96ed0bf44b0fccf0f8e0c3b3152990568e98783da252ca623b5e262d7d95f57d",
+      "size": 3674617
+    },
+    {
+      "path": "katex/fonts/KaTeX_AMS-Regular.woff2",
+      "packagedPath": "assets/katex/fonts/KaTeX_AMS-Regular.woff2",
+      "encoding": "identity",
+      "sha256": "0cdd387c9590a1a9f9794560022dbb59654a7d86f187aa0c81495ad42d3a7308",
+      "size": 28076
+    },
+    {
+      "path": "katex/fonts/KaTeX_Caligraphic-Bold.woff2",
+      "packagedPath": "assets/katex/fonts/KaTeX_Caligraphic-Bold.woff2",
+      "encoding": "identity",
+      "sha256": "de7701e42cf1f4cf0b766c03fb27977207eee2f4fd5d76fa82188406da43ea4c",
+      "size": 6912
+    },
+    {
+      "path": "katex/fonts/KaTeX_Caligraphic-Regular.woff2",
+      "packagedPath": "assets/katex/fonts/KaTeX_Caligraphic-Regular.woff2",
+      "encoding": "identity",
+      "sha256": "5d53e70ad607c2352162dec9e0923fb54ecdafaccbf604cd8dcf7d00facb989b",
+      "size": 6908
+    },
+    {
+      "path": "katex/fonts/KaTeX_Fraktur-Bold.woff2",
+      "packagedPath": "assets/katex/fonts/KaTeX_Fraktur-Bold.woff2",
+      "encoding": "identity",
+      "sha256": "74444efd593c005e3f4573b44524704c0af0a937fe911cca9e94068d0d140d3f",
+      "size": 11348
+    },
+    {
+      "path": "katex/fonts/KaTeX_Fraktur-Regular.woff2",
+      "packagedPath": "assets/katex/fonts/KaTeX_Fraktur-Regular.woff2",
+      "encoding": "identity",
+      "sha256": "51814d270d06ff0255dba0799994fa4d8c84d11f09951d47595f4abb1f3602dc",
+      "size": 11316
+    },
+    {
+      "path": "katex/fonts/KaTeX_Main-Bold.woff2",
+      "packagedPath": "assets/katex/fonts/KaTeX_Main-Bold.woff2",
+      "encoding": "identity",
+      "sha256": "0f60d1b897938ec918c8ce073092411baf9438f6739465693ff18b0f9d20b021",
+      "size": 25324
+    },
+    {
+      "path": "katex/fonts/KaTeX_Main-BoldItalic.woff2",
+      "packagedPath": "assets/katex/fonts/KaTeX_Main-BoldItalic.woff2",
+      "encoding": "identity",
+      "sha256": "99cd42a3c072d918f2f44984a807cf7aa16e13545fd0875fc07c6c65f99e715b",
+      "size": 16780
+    },
+    {
+      "path": "katex/fonts/KaTeX_Main-Italic.woff2",
+      "packagedPath": "assets/katex/fonts/KaTeX_Main-Italic.woff2",
+      "encoding": "identity",
+      "sha256": "97479ca6cce906abc961ecac96faa5f9ca2e61b8e7670d475826bcdee9a7c267",
+      "size": 16988
+    },
+    {
+      "path": "katex/fonts/KaTeX_Main-Regular.woff2",
+      "packagedPath": "assets/katex/fonts/KaTeX_Main-Regular.woff2",
+      "encoding": "identity",
+      "sha256": "c2342cd8b869e01752a9321dc17213fc40d4d04c79688c1d43f2cf316abd7866",
+      "size": 26272
+    },
+    {
+      "path": "katex/fonts/KaTeX_Math-BoldItalic.woff2",
+      "packagedPath": "assets/katex/fonts/KaTeX_Math-BoldItalic.woff2",
+      "encoding": "identity",
+      "sha256": "dc47344dbb6cb5b655c8460d561f4df5f501b90c804ad3c6cec65fe322351ab1",
+      "size": 16400
+    },
+    {
+      "path": "katex/fonts/KaTeX_Math-Italic.woff2",
+      "packagedPath": "assets/katex/fonts/KaTeX_Math-Italic.woff2",
+      "encoding": "identity",
+      "sha256": "7af58c5ec8f132a2ddde9027c6d7814decce4d3b822a11192a42a20e2e973264",
+      "size": 16440
+    },
+    {
+      "path": "katex/fonts/KaTeX_SansSerif-Bold.woff2",
+      "packagedPath": "assets/katex/fonts/KaTeX_SansSerif-Bold.woff2",
+      "encoding": "identity",
+      "sha256": "e99ae51144bf1232efcc1bfe5add36262c6866b0faab24fa75740e1b98577a62",
+      "size": 12216
+    },
+    {
+      "path": "katex/fonts/KaTeX_SansSerif-Italic.woff2",
+      "packagedPath": "assets/katex/fonts/KaTeX_SansSerif-Italic.woff2",
+      "encoding": "identity",
+      "sha256": "00b26ac825e2095056396e0553b8ac26d3f8ad158c3826e28b4c45b385c4714a",
+      "size": 12028
+    },
+    {
+      "path": "katex/fonts/KaTeX_SansSerif-Regular.woff2",
+      "packagedPath": "assets/katex/fonts/KaTeX_SansSerif-Regular.woff2",
+      "encoding": "identity",
+      "sha256": "68e8c73ef42afd3ccec58bf0fba302cce448938e7fc020a5e31f8a952eee1342",
+      "size": 10344
+    },
+    {
+      "path": "katex/fonts/KaTeX_Script-Regular.woff2",
+      "packagedPath": "assets/katex/fonts/KaTeX_Script-Regular.woff2",
+      "encoding": "identity",
+      "sha256": "036d4e95149b69ff9bcc0cd55771efeb25ffa3947293e69acd78d5ac328c684b",
+      "size": 9644
+    },
+    {
+      "path": "katex/fonts/KaTeX_Size1-Regular.woff2",
+      "packagedPath": "assets/katex/fonts/KaTeX_Size1-Regular.woff2",
+      "encoding": "identity",
+      "sha256": "6b47c40166b6dbe21a5dfca7718413f2147fd2399be1ba605d8ad39cedf25dfe",
+      "size": 5468
+    },
+    {
+      "path": "katex/fonts/KaTeX_Size2-Regular.woff2",
+      "packagedPath": "assets/katex/fonts/KaTeX_Size2-Regular.woff2",
+      "encoding": "identity",
+      "sha256": "d04c54219f9eaec6d4d4fd42dfb28785975a4794d6b2fc71e566b9cd6db842dd",
+      "size": 5208
+    },
+    {
+      "path": "katex/fonts/KaTeX_Size3-Regular.woff2",
+      "packagedPath": "assets/katex/fonts/KaTeX_Size3-Regular.woff2",
+      "encoding": "identity",
+      "sha256": "73d591271b1604960cb10bb90fee021670af7297017e0e98480b332d11f51995",
+      "size": 3624
+    },
+    {
+      "path": "katex/fonts/KaTeX_Size4-Regular.woff2",
+      "packagedPath": "assets/katex/fonts/KaTeX_Size4-Regular.woff2",
+      "encoding": "identity",
+      "sha256": "a4af7d414440a1c1790825cfb700cf9cf43b0f2c4b04f0ebc523011ad9853ec0",
+      "size": 4928
+    },
+    {
+      "path": "katex/fonts/KaTeX_Typewriter-Regular.woff2",
+      "packagedPath": "assets/katex/fonts/KaTeX_Typewriter-Regular.woff2",
+      "encoding": "identity",
+      "sha256": "71d517d67827787cfabdf186914cc3358eda539e37931941f2b2fd4a21f68c0b",
+      "size": 13568
+    },
+    {
+      "path": "katex/katex.min.css",
+      "packagedPath": "assets/katex/katex.min.css",
+      "encoding": "identity",
+      "sha256": "b075123b50e51a0a7819b49efa2a62bb05bc7dac04b0d65a9a3799c2211ea48f",
+      "size": 21218
+    },
+    {
+      "path": "katex/katex.min.js",
+      "packagedPath": "assets/katex/katex.min.js",
+      "encoding": "identity",
+      "sha256": "e8d885505949f3a5f4abdd5dd0d53696bd1371ad26ffbf4f310dcd77c8cdae89",
+      "size": 276701
+    },
+    {
+      "path": "layout-presets/ga10-v4-english.custom.yaml",
+      "packagedPath": "assets/layout-presets/ga10-v4-english.custom.yaml",
+      "encoding": "identity",
+      "sha256": "59c368b2eb9d1d7e1c89995a0efa76f4724b2119609f2afbfd42101a24df62b3",
+      "size": 4723
+    },
+    {
+      "path": "licenses/ASRInput-MIT.txt",
+      "packagedPath": "assets/licenses/ASRInput-MIT.txt",
+      "encoding": "identity",
+      "sha256": "fb5784b087881ffece8016f65a3883dfe87612419644df5105fbe9de98a2a44e",
+      "size": 1064
+    },
+    {
+      "path": "licenses/Arphic-Public-License.txt",
+      "packagedPath": "assets/licenses/Arphic-Public-License.txt",
+      "encoding": "identity",
+      "sha256": "3a5e90c0957524a89e48203febcd4492ca4393678abaa7e5b4d70f3ff32b386d",
+      "size": 6901
+    },
+    {
+      "path": "licenses/Aux-Code-MIT.txt",
+      "packagedPath": "assets/licenses/Aux-Code-MIT.txt",
+      "encoding": "identity",
+      "sha256": "1e76e42a9fbad571cebce151b38a7deece66760f368a2e90f2bc749878c898a2",
+      "size": 1066
+    },
+    {
+      "path": "licenses/CC-BY-SA-4.0.txt",
+      "packagedPath": "assets/licenses/CC-BY-SA-4.0.txt",
+      "encoding": "identity",
+      "sha256": "cd18f297822720adeb761b45e57a17f788a312fb2936dceab36701bc555c2678",
+      "size": 19468
+    },
+    {
+      "path": "licenses/CC-CEDICT-NOTICE.txt",
+      "packagedPath": "assets/licenses/CC-CEDICT-NOTICE.txt",
+      "encoding": "identity",
+      "sha256": "d487a716891142fc451c81338c5b693468d178175a514b0ed766009c262f7957",
+      "size": 655
+    },
+    {
+      "path": "licenses/CC0-1.0.txt",
+      "packagedPath": "assets/licenses/CC0-1.0.txt",
+      "encoding": "identity",
+      "sha256": "5cda864dd3cd4c5359214c72cddc97aa7a6e1aebd1e18514d376a94cb820d461",
+      "size": 7300
+    },
+    {
+      "path": "licenses/Cangjie5-MIT.txt",
+      "packagedPath": "assets/licenses/Cangjie5-MIT.txt",
+      "encoding": "identity",
+      "sha256": "cf2746abe0b37ba14fb0e735eb868d418e4d335b9040887f579da958f95ffa77",
+      "size": 1154
+    },
+    {
+      "path": "licenses/CyIME-GPL-3.0.txt",
+      "packagedPath": "assets/licenses/CyIME-GPL-3.0.txt",
+      "encoding": "identity",
+      "sha256": "7fe14716ed31cc71fc3bf9af293c368d464a853a70ea86e9995388f6b9e929e5",
+      "size": 35151
+    },
+    {
+      "path": "licenses/KaTeX-Fonts-Notices.txt",
+      "packagedPath": "assets/licenses/KaTeX-Fonts-Notices.txt",
+      "encoding": "identity",
+      "sha256": "006a1de6eea4e71812eb7fd1f9a88308fa4a9623a96eb8aea26273096b8dbdee",
+      "size": 4135
+    },
+    {
+      "path": "licenses/KaTeX-MIT.txt",
+      "packagedPath": "assets/licenses/KaTeX-MIT.txt",
+      "encoding": "identity",
+      "sha256": "766ccc1f306c885aa45542a9846bbd0a505b27a0374f146778171c2254ce18e3",
+      "size": 1107
+    },
+    {
+      "path": "licenses/Libtabe-COPYING.txt",
+      "packagedPath": "assets/licenses/Libtabe-COPYING.txt",
+      "encoding": "identity",
+      "sha256": "055d91064dfd275f7f098bd373cf04a2bf32ade93fc05b5dd3c3d7e798153c33",
+      "size": 3437
+    },
+    {
+      "path": "licenses/MakeMeAHanzi-COPYING.txt",
+      "packagedPath": "assets/licenses/MakeMeAHanzi-COPYING.txt",
+      "encoding": "identity",
+      "sha256": "26fa6b699b32401de4b75a4af574c2e0a99b3df6cb12df9313d257ee4634359c",
+      "size": 1016
+    },
+    {
+      "path": "licenses/McBopomofo-Data-README.txt",
+      "packagedPath": "assets/licenses/McBopomofo-Data-README.txt",
+      "encoding": "identity",
+      "sha256": "4b2eea7122a2a4d8bea7f23f611c6817d681a55d397b1ba3f8100acbfeb9f82e",
+      "size": 4478
+    },
+    {
+      "path": "licenses/McBopomofo-LICENSE.txt",
+      "packagedPath": "assets/licenses/McBopomofo-LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "72ed32193b0c629def66df63791b2fb125946b593a3251380e6b949488f47b72",
+      "size": 1083
+    },
+    {
+      "path": "licenses/Public-Suffix-MPL-2.0.txt",
+      "packagedPath": "assets/licenses/Public-Suffix-MPL-2.0.txt",
+      "encoding": "identity",
+      "sha256": "3f3d9e0024b1921b067d6f7f88deb4a60cbe7a78e76c64e3f1d7fc3b779b9d04",
+      "size": 16726
+    },
+    {
+      "path": "licenses/Rime-Ice-GPL-3.0.txt",
+      "packagedPath": "assets/licenses/Rime-Ice-GPL-3.0.txt",
+      "encoding": "identity",
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "size": 35149
+    },
+    {
+      "path": "licenses/Rime-Pinyin-Simp-Apache-2.0.txt",
+      "packagedPath": "assets/licenses/Rime-Pinyin-Simp-Apache-2.0.txt",
+      "encoding": "identity",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "size": 11358
+    },
+    {
+      "path": "licenses/Rime-Stroke-LGPL-3.0.txt",
+      "packagedPath": "assets/licenses/Rime-Stroke-LGPL-3.0.txt",
+      "encoding": "identity",
+      "sha256": "da7eabb7bafdf7d3ae5e9f223aa5bdc1eece45ac569dc21b3b037520b4464768",
+      "size": 7651
+    },
+    {
+      "path": "licenses/SCOWL-Copyright.txt",
+      "packagedPath": "assets/licenses/SCOWL-Copyright.txt",
+      "encoding": "identity",
+      "sha256": "090575a131b4260926c7a6b30a90aca0f5db5fbb5c46778e0c5855227bf6ebc3",
+      "size": 4863
+    },
+    {
+      "path": "licenses/SIL-OFL-1.1.txt",
+      "packagedPath": "assets/licenses/SIL-OFL-1.1.txt",
+      "encoding": "identity",
+      "sha256": "d9b1ee83feec1b5d2a23d1c044fce083cca0cef21241ce58ca758b42b4a5c317",
+      "size": 4139
+    },
+    {
+      "path": "licenses/Whisper-MIT.txt",
+      "packagedPath": "assets/licenses/Whisper-MIT.txt",
+      "encoding": "identity",
+      "sha256": "b5d65a59060e68c4ff940e1eddfa6f94b2d68fdf58ed7f4dd57721c997e35e9d",
+      "size": 1063
+    },
+    {
+      "path": "licenses/Xime-Rime-Apache-2.0.txt",
+      "packagedPath": "assets/licenses/Xime-Rime-Apache-2.0.txt",
+      "encoding": "identity",
+      "sha256": "43070e2d4e532684de521b885f385d0841030efa2b1a20bafb76133a5e1379c1",
+      "size": 11356
+    },
+    {
+      "path": "licenses/camerax/camera-camera2-1.6.2.txt",
+      "packagedPath": "assets/licenses/camerax/camera-camera2-1.6.2.txt",
+      "encoding": "identity",
+      "sha256": "809fa1ed21450f59827d1e9aec720bbc4b687434fa22283c6cb5dd82a47ab9c0",
+      "size": 10175
+    },
+    {
+      "path": "licenses/camerax/camera-camera2-pipe-1.6.2.txt",
+      "packagedPath": "assets/licenses/camerax/camera-camera2-pipe-1.6.2.txt",
+      "encoding": "identity",
+      "sha256": "809fa1ed21450f59827d1e9aec720bbc4b687434fa22283c6cb5dd82a47ab9c0",
+      "size": 10175
+    },
+    {
+      "path": "licenses/camerax/camera-core-1.6.2.txt",
+      "packagedPath": "assets/licenses/camerax/camera-core-1.6.2.txt",
+      "encoding": "identity",
+      "sha256": "809fa1ed21450f59827d1e9aec720bbc4b687434fa22283c6cb5dd82a47ab9c0",
+      "size": 10175
+    },
+    {
+      "path": "licenses/camerax/camera-lifecycle-1.6.2.txt",
+      "packagedPath": "assets/licenses/camerax/camera-lifecycle-1.6.2.txt",
+      "encoding": "identity",
+      "sha256": "809fa1ed21450f59827d1e9aec720bbc4b687434fa22283c6cb5dd82a47ab9c0",
+      "size": 10175
+    },
+    {
+      "path": "licenses/camerax/camera-video-1.6.2.txt",
+      "packagedPath": "assets/licenses/camerax/camera-video-1.6.2.txt",
+      "encoding": "identity",
+      "sha256": "809fa1ed21450f59827d1e9aec720bbc4b687434fa22283c6cb5dd82a47ab9c0",
+      "size": 10175
+    },
+    {
+      "path": "licenses/camerax/camera-view-1.6.2.txt",
+      "packagedPath": "assets/licenses/camerax/camera-view-1.6.2.txt",
+      "encoding": "identity",
+      "sha256": "809fa1ed21450f59827d1e9aec720bbc4b687434fa22283c6cb5dd82a47ab9c0",
+      "size": 10175
+    },
+    {
+      "path": "licenses/camerax/libyuv-BSD-3-Clause.txt",
+      "packagedPath": "assets/licenses/camerax/libyuv-BSD-3-Clause.txt",
+      "encoding": "identity",
+      "sha256": "2b2cc1180c7e6988328ad2033b04b80117419db9c4c584918bbb3cfec7e9364f",
+      "size": 1506
+    },
+    {
+      "path": "licenses/native/INDEX.txt",
+      "packagedPath": "assets/licenses/native/INDEX.txt",
+      "encoding": "identity",
+      "sha256": "935b475edfd0c739afeabf7519081dcbc13547a7e79a75c43bf24ff30edf5a3d",
+      "size": 10315
+    },
+    {
+      "path": "licenses/native/android-libcxx-LICENSE.txt",
+      "packagedPath": "assets/licenses/native/android-libcxx-LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "539dd7aed86e8a4f12cbdd0e6c50c189c7d74847e4fecc64ce2c6ee3a01da38b",
+      "size": 16703
+    },
+    {
+      "path": "licenses/native/android-libcxxabi-LICENSE.txt",
+      "packagedPath": "assets/licenses/native/android-libcxxabi-LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "e2b35be49f7284a45b7baca8fc7b3ab7440e7902392b2528a457816b5bb2a15c",
+      "size": 16706
+    },
+    {
+      "path": "licenses/native/ort-dep-abseil_cpp/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-abseil_cpp/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "c79a7fea0e3cac04cd43f20e7b648e5a0ff8fa5344e644b0ee09ca1162b62747",
+      "size": 11361
+    },
+    {
+      "path": "licenses/native/ort-dep-cxxopts/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-cxxopts/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "aa324fbe633a96546bebca975fbbab65caa175894bd00cfa13d7335e7363400c",
+      "size": 1055
+    },
+    {
+      "path": "licenses/native/ort-dep-date/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-date/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "c90f6c00fb961170560299cbda28ca2d45804913aa8b2a9f36dbb8e0028d6930",
+      "size": 1637
+    },
+    {
+      "path": "licenses/native/ort-dep-dlpack/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-dlpack/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "3e8f6bc39276a586d60c8c5aaece2ff989262181cf2b3d2a128db58f97a9300c",
+      "size": 11345
+    },
+    {
+      "path": "licenses/native/ort-dep-eigen/COPYING.APACHE.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-eigen/COPYING.APACHE.txt",
+      "encoding": "identity",
+      "sha256": "03379001a7b12a2ec997a25554247d985270b353c10d5bafee9ac8d6519820b7",
+      "size": 11362
+    },
+    {
+      "path": "licenses/native/ort-dep-eigen/COPYING.BSD.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-eigen/COPYING.BSD.txt",
+      "encoding": "identity",
+      "sha256": "51928dce36213c5333ba3172e847d735d4c6e9b7ff2722a326c49067155b82eb",
+      "size": 1517
+    },
+    {
+      "path": "licenses/native/ort-dep-eigen/COPYING.MINPACK.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-eigen/COPYING.MINPACK.txt",
+      "encoding": "identity",
+      "sha256": "c87b7f8ee88f6195e91743820c00354833583aef091b72e2d4a49c8e28e798a0",
+      "size": 2193
+    },
+    {
+      "path": "licenses/native/ort-dep-eigen/COPYING.MPL2.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-eigen/COPYING.MPL2.txt",
+      "encoding": "identity",
+      "sha256": "66a3107d5ad6a058aab753eaac2047ccb2ed0e39465dd0fe5844da3e300d5172",
+      "size": 16727
+    },
+    {
+      "path": "licenses/native/ort-dep-eigen/COPYING.README.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-eigen/COPYING.README.txt",
+      "encoding": "identity",
+      "sha256": "db640ff2bd90c6abd6a4d3fbb351e0ee4d555417cf840492054d1cbb2ea85644",
+      "size": 264
+    },
+    {
+      "path": "licenses/native/ort-dep-eigen/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-eigen/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5",
+      "size": 16725
+    },
+    {
+      "path": "licenses/native/ort-dep-extensions/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-extensions/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383",
+      "size": 1141
+    },
+    {
+      "path": "licenses/native/ort-dep-extensions/ThirdPartyNotices.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-extensions/ThirdPartyNotices.txt",
+      "encoding": "identity",
+      "sha256": "aee7ac843a336e794cb892e90f7ac895ce0621ae63da39e996749fb5baa69585",
+      "size": 53885
+    },
+    {
+      "path": "licenses/native/ort-dep-extensions/nuget/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-extensions/nuget/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "c2cfccb812fe482101a8f04597dfc5a9991a6b2748266c47ac91b6a5aae15383",
+      "size": 1141
+    },
+    {
+      "path": "licenses/native/ort-dep-flatbuffers/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-flatbuffers/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "size": 11358
+    },
+    {
+      "path": "licenses/native/ort-dep-flatbuffers/dart/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-flatbuffers/dart/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "edd9b3459bee4c79b549a5ef66d06d12bd144ddb8d08e0b448fb421267f43dd5",
+      "size": 11341
+    },
+    {
+      "path": "licenses/native/ort-dep-flatbuffers/swift/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-flatbuffers/swift/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "size": 11358
+    },
+    {
+      "path": "licenses/native/ort-dep-fp16/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-fp16/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "17e4f539024be2749ee729d1e2f01d24cef12ece8c9bf18e91a4349be29c80bf",
+      "size": 1157
+    },
+    {
+      "path": "licenses/native/ort-dep-fxdiv/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-fxdiv/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "7cac00006125b1486a27e4801ed66357236e984c540bd323945ab7b66b078ec3",
+      "size": 1117
+    },
+    {
+      "path": "licenses/native/ort-dep-google_benchmark/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-google_benchmark/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "size": 11358
+    },
+    {
+      "path": "licenses/native/ort-dep-googletest/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-googletest/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "9702de7e4117a8e2b20dafab11ffda58c198aede066406496bef670d40a22138",
+      "size": 1475
+    },
+    {
+      "path": "licenses/native/ort-dep-googlexnnpack/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-googlexnnpack/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "63f519e15726f4c4f830bd958f694c84fecb4e0a4cacc527d2696bb71ef95ada",
+      "size": 1560
+    },
+    {
+      "path": "licenses/native/ort-dep-json/LICENSE.MIT.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-json/LICENSE.MIT.txt",
+      "encoding": "identity",
+      "sha256": "86b998c792894ccb911a1cb7994f7a9652894e7a094c0b5e45be2f553f45cf14",
+      "size": 1076
+    },
+    {
+      "path": "licenses/native/ort-dep-json/LICENSES/Apache-2.0.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-json/LICENSES/Apache-2.0.txt",
+      "encoding": "identity",
+      "sha256": "074e6e32c86a4c0ef8b3ed25b721ca23aca83df277cd88106ef7177c354615ff",
+      "size": 10280
+    },
+    {
+      "path": "licenses/native/ort-dep-json/LICENSES/BSD-3-Clause.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-json/LICENSES/BSD-3-Clause.txt",
+      "encoding": "identity",
+      "sha256": "5a93d5831e1297ab10fe643e1a631e83be392896da14ee2951285a79012df69d",
+      "size": 1460
+    },
+    {
+      "path": "licenses/native/ort-dep-json/LICENSES/GPL-3.0-only.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-json/LICENSES/GPL-3.0-only.txt",
+      "encoding": "identity",
+      "sha256": "b6a8bf63ae2c95b0aa256ee774680d7bd18f21f457da75466f7610b3b16acc4e",
+      "size": 34670
+    },
+    {
+      "path": "licenses/native/ort-dep-json/LICENSES/MIT.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-json/LICENSES/MIT.txt",
+      "encoding": "identity",
+      "sha256": "b85dcd3e453d05982552c52b5fc9e0bdd6d23c6f8e844b984a88af32570b0cc0",
+      "size": 1078
+    },
+    {
+      "path": "licenses/native/ort-dep-kleidiai/LICENSES/Apache-2.0.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-kleidiai/LICENSES/Apache-2.0.txt",
+      "encoding": "identity",
+      "sha256": "074e6e32c86a4c0ef8b3ed25b721ca23aca83df277cd88106ef7177c354615ff",
+      "size": 10280
+    },
+    {
+      "path": "licenses/native/ort-dep-kleidiai/LICENSES/BSD-3-Clause.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-kleidiai/LICENSES/BSD-3-Clause.txt",
+      "encoding": "identity",
+      "sha256": "5a93d5831e1297ab10fe643e1a631e83be392896da14ee2951285a79012df69d",
+      "size": 1460
+    },
+    {
+      "path": "licenses/native/ort-dep-kleidiai-qmx/LICENSES/Apache-2.0.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-kleidiai-qmx/LICENSES/Apache-2.0.txt",
+      "encoding": "identity",
+      "sha256": "074e6e32c86a4c0ef8b3ed25b721ca23aca83df277cd88106ef7177c354615ff",
+      "size": 10280
+    },
+    {
+      "path": "licenses/native/ort-dep-kleidiai-qmx/LICENSES/BSD-3-Clause.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-kleidiai-qmx/LICENSES/BSD-3-Clause.txt",
+      "encoding": "identity",
+      "sha256": "5a93d5831e1297ab10fe643e1a631e83be392896da14ee2951285a79012df69d",
+      "size": 1460
+    },
+    {
+      "path": "licenses/native/ort-dep-microsoft_gsl/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-microsoft_gsl/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "4c21dc82a1c7186ea754fd59d504c00947953a3401fe8e24eaa44109ef8e2555",
+      "size": 1157
+    },
+    {
+      "path": "licenses/native/ort-dep-microsoft_gsl/ThirdPartyNotices.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-microsoft_gsl/ThirdPartyNotices.txt",
+      "encoding": "identity",
+      "sha256": "691d94413053d5bda219c05f57739192b30c171db0925f3722604fe06f865d3b",
+      "size": 2022
+    },
+    {
+      "path": "licenses/native/ort-dep-mimalloc/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-mimalloc/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "19c99805e7a44a34b297a75d1edea9985e300066dfc024d5c99d4236d4573b5d",
+      "size": 1096
+    },
+    {
+      "path": "licenses/native/ort-dep-onnx/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-onnx/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "size": 11358
+    },
+    {
+      "path": "licenses/native/ort-dep-onnx/LICENSES/Apache-2.0.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-onnx/LICENSES/Apache-2.0.txt",
+      "encoding": "identity",
+      "sha256": "074e6e32c86a4c0ef8b3ed25b721ca23aca83df277cd88106ef7177c354615ff",
+      "size": 10280
+    },
+    {
+      "path": "licenses/native/ort-dep-onnx/LICENSES/BSD-2-Clause.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-onnx/LICENSES/BSD-2-Clause.txt",
+      "encoding": "identity",
+      "sha256": "017b5ee48f680e82cba79141c7895a1f02b856df2512225f5c427fe36765ef0b",
+      "size": 1266
+    },
+    {
+      "path": "licenses/native/ort-dep-onnx/NOTICE.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-onnx/NOTICE.txt",
+      "encoding": "identity",
+      "sha256": "4d680fb1f48f07f134c9f7a8d715303b8f5160b5757bc9eec4cac783703ea592",
+      "size": 2133
+    },
+    {
+      "path": "licenses/native/ort-dep-protobuf/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-protobuf/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "6e5e117324afd944dcf67f36cf329843bc1a92229a8cd9bb573d7a83130fea7d",
+      "size": 1732
+    },
+    {
+      "path": "licenses/native/ort-dep-protobuf/third_party/utf8_range/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-protobuf/third_party/utf8_range/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "5a629d2b868081d8af08bbce5d038116f3a0e2e0d4ce9adf4d53f14e76b6b2e0",
+      "size": 1065
+    },
+    {
+      "path": "licenses/native/ort-dep-psimd/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-psimd/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "984ce1e0b8ee89d234e28b960381f240e03a07a8031f35012f9c3256f56964e2",
+      "size": 1162
+    },
+    {
+      "path": "licenses/native/ort-dep-pthreadpool/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-pthreadpool/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "57814a606b4d0fb087d9a534919084b6c11b58a4174cb5a4aef200187780dc3a",
+      "size": 1378
+    },
+    {
+      "path": "licenses/native/ort-dep-pybind11/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-pybind11/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "83965b843b98f670d3a85bd041ed4b372c8ec50d7b4a5995a83ac697ba675dcb",
+      "size": 1684
+    },
+    {
+      "path": "licenses/native/ort-dep-pytorch_cpuinfo/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-pytorch_cpuinfo/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "8e7e60636c3aa0cb03571a1a841ce5697f9551ff92b3c426c2561613d15ade70",
+      "size": 1424
+    },
+    {
+      "path": "licenses/native/ort-dep-re2/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-re2/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "6040cda75d90b1738292a631d89934c411ef7ffd543c4d6a1b7edfc8edf29449",
+      "size": 1558
+    },
+    {
+      "path": "licenses/native/ort-dep-re2/python/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-re2/python/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "1e881ecf2862d01e6e5bc2b861e46886d2a6fb01499c0c508a209a7271b13cf2",
+      "size": 10
+    },
+    {
+      "path": "licenses/native/ort-dep-safeint/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-safeint/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "a46919cc8f01eb73f6e4b84af0d41b46b2a33b87c74e864279ef585079f82da4",
+      "size": 1066
+    },
+    {
+      "path": "licenses/native/ort-dep-vulkan_headers/LICENSE.md.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-vulkan_headers/LICENSE.md.txt",
+      "encoding": "identity",
+      "sha256": "ac24e5ea920e4318e4d02c4086ae51f53cfb03feed06c18df1019e7ada1ec7bc",
+      "size": 458
+    },
+    {
+      "path": "licenses/native/ort-dep-vulkan_headers/LICENSES/Apache-2.0.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-vulkan_headers/LICENSES/Apache-2.0.txt",
+      "encoding": "identity",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "size": 11358
+    },
+    {
+      "path": "licenses/native/ort-dep-vulkan_headers/LICENSES/MIT.txt",
+      "packagedPath": "assets/licenses/native/ort-dep-vulkan_headers/LICENSES/MIT.txt",
+      "encoding": "identity",
+      "sha256": "1ca3502222d967f3be5751c55f6b7ee735b5383909c3b501495f54b216dbf227",
+      "size": 1084
+    },
+    {
+      "path": "licenses/native/rime-librime/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/rime-librime/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "f67d27a6d2d586fcfed4b4c886a83747095396a39b6641e18e855086be2ec400",
+      "size": 1513
+    },
+    {
+      "path": "licenses/native/rime-librime/include/COPYING.darts-clone.txt",
+      "packagedPath": "assets/licenses/native/rime-librime/include/COPYING.darts-clone.txt",
+      "encoding": "identity",
+      "sha256": "11bf6ca180d01e60656cd3cbe65cff95b738afe4ca5a8a66b9dd1ec594a41d2f",
+      "size": 1481
+    },
+    {
+      "path": "licenses/native/rime-librime-deps-glog/COPYING.txt",
+      "packagedPath": "assets/licenses/native/rime-librime-deps-glog/COPYING.txt",
+      "encoding": "identity",
+      "sha256": "136d48dea7a681413691f3db3098f6cf5ffaa3119d96d97bb83b8cff3ce38c4a",
+      "size": 1479
+    },
+    {
+      "path": "licenses/native/rime-librime-deps-googletest/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/rime-librime-deps-googletest/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "9702de7e4117a8e2b20dafab11ffda58c198aede066406496bef670d40a22138",
+      "size": 1475
+    },
+    {
+      "path": "licenses/native/rime-librime-deps-leveldb/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/rime-librime-deps-leveldb/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "ccc19f1da0798ed666609b65a5b44dd8b3abe6fc08b9c0592eb76e82e174db19",
+      "size": 1484
+    },
+    {
+      "path": "licenses/native/rime-librime-deps-leveldb-third_party-benchmark/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/rime-librime-deps-leveldb-third_party-benchmark/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "size": 11358
+    },
+    {
+      "path": "licenses/native/rime-librime-deps-leveldb-third_party-googletest/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/rime-librime-deps-leveldb-third_party-googletest/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "9702de7e4117a8e2b20dafab11ffda58c198aede066406496bef670d40a22138",
+      "size": 1475
+    },
+    {
+      "path": "licenses/native/rime-librime-deps-leveldb-third_party-googletest/googlemock/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/rime-librime-deps-leveldb-third_party-googletest/googlemock/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "9702de7e4117a8e2b20dafab11ffda58c198aede066406496bef670d40a22138",
+      "size": 1475
+    },
+    {
+      "path": "licenses/native/rime-librime-deps-leveldb-third_party-googletest/googletest/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/rime-librime-deps-leveldb-third_party-googletest/googletest/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "9702de7e4117a8e2b20dafab11ffda58c198aede066406496bef670d40a22138",
+      "size": 1475
+    },
+    {
+      "path": "licenses/native/rime-librime-deps-marisa-trie/COPYING.md.txt",
+      "packagedPath": "assets/licenses/native/rime-librime-deps-marisa-trie/COPYING.md.txt",
+      "encoding": "identity",
+      "sha256": "edf58dab34c3dc239ba4ba2d5d3d844d8c5b442aa4dd1149fac81b2d8c6cb8d1",
+      "size": 2275
+    },
+    {
+      "path": "licenses/native/rime-librime-deps-opencc/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/rime-librime-deps-opencc/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "b534e465949558eec2597b04f5092b5e161236a68dfbfd04d547592ac3964308",
+      "size": 9165
+    },
+    {
+      "path": "licenses/native/rime-librime-deps-yaml-cpp/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/rime-librime-deps-yaml-cpp/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "aa6fcc27be034e41e21dd832f9175bfe694a48491d9e14ff0fa278e19ad14f1b",
+      "size": 1061
+    },
+    {
+      "path": "licenses/native/rime-librime-lua/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/rime-librime-lua/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "c6bd4f58b13ae9d45c5e53adddeea5049114a25862797c6c6f64920431eea249",
+      "size": 1520
+    },
+    {
+      "path": "licenses/native/rime-librime-lua-deps/lua5.3-lua.h-Copyright.txt",
+      "packagedPath": "assets/licenses/native/rime-librime-lua-deps/lua5.3-lua.h-Copyright.txt",
+      "encoding": "identity",
+      "sha256": "1867b09d1f6ec74521b96de7960dc689741ae11577392d453302f78f66f9c62b",
+      "size": 1262
+    },
+    {
+      "path": "licenses/native/rime-librime-lua-deps/lua5.4-lua.h-Copyright.txt",
+      "packagedPath": "assets/licenses/native/rime-librime-lua-deps/lua5.4-lua.h-Copyright.txt",
+      "encoding": "identity",
+      "sha256": "3095b996addbc7d4b0414ef55166b00b91bff8709a79b667e7177ff0430a366c",
+      "size": 1262
+    },
+    {
+      "path": "licenses/native/rime-librime-octagram/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/rime-librime-octagram/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "size": 35147
+    },
+    {
+      "path": "licenses/native/rime-librime-predict/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/rime-librime-predict/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "9b1bbdf15a381884b47dfd9422e68f6382170b2841c476afc076f2d448c7a59f",
+      "size": 1502
+    },
+    {
+      "path": "licenses/native/rime-snappy/COPYING.txt",
+      "packagedPath": "assets/licenses/native/rime-snappy/COPYING.txt",
+      "encoding": "identity",
+      "sha256": "55172044f7e241207117448a4d9d6ba1d0925c8ad66b5d4c08c70adfa9cc3de6",
+      "size": 2645
+    },
+    {
+      "path": "licenses/native/rime-snappy-third_party-benchmark/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/rime-snappy-third_party-benchmark/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "size": 11358
+    },
+    {
+      "path": "licenses/native/rime-snappy-third_party-googletest/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/rime-snappy-third_party-googletest/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "9702de7e4117a8e2b20dafab11ffda58c198aede066406496bef670d40a22138",
+      "size": 1475
+    },
+    {
+      "path": "licenses/native/runtime-boost/LICENSE_1_0.txt",
+      "packagedPath": "assets/licenses/native/runtime-boost/LICENSE_1_0.txt",
+      "encoding": "identity",
+      "sha256": "c9bff75738922193e67fa726fa225535870d2aa1059f91452c411736284ad566",
+      "size": 1338
+    },
+    {
+      "path": "licenses/native/runtime-onnxruntime/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/runtime-onnxruntime/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "size": 1073
+    },
+    {
+      "path": "licenses/native/runtime-onnxruntime/ThirdPartyNotices.txt",
+      "packagedPath": "assets/licenses/native/runtime-onnxruntime/ThirdPartyNotices.txt",
+      "encoding": "identity",
+      "sha256": "0e07b95f3a8d6230037707c5c4a2b554d12c4cb67369669ac255635528ffcee2",
+      "size": 325054
+    },
+    {
+      "path": "licenses/native/runtime-onnxruntime/dockerfiles/LICENSE-IMAGE.txt",
+      "packagedPath": "assets/licenses/native/runtime-onnxruntime/dockerfiles/LICENSE-IMAGE.txt",
+      "encoding": "identity",
+      "sha256": "ca180cdd0ec6f4ca68db0488ba79e7db666e26ea1e49db15c3b2a3b8381442fd",
+      "size": 903
+    },
+    {
+      "path": "licenses/native/runtime-onnxruntime/rust/LICENSE-APACHE.txt",
+      "packagedPath": "assets/licenses/native/runtime-onnxruntime/rust/LICENSE-APACHE.txt",
+      "encoding": "identity",
+      "sha256": "f4d2c773ac92765f2f2b2f4cae3b0710b6fb4293ddc555d8f8a011ada12e84f3",
+      "size": 10838
+    },
+    {
+      "path": "licenses/native/runtime-onnxruntime/rust/LICENSE-MIT.txt",
+      "packagedPath": "assets/licenses/native/runtime-onnxruntime/rust/LICENSE-MIT.txt",
+      "encoding": "identity",
+      "sha256": "acda9cba15b9c7e0663718fdc8bd8e1cbbc142545da187d84c7e8e2a6146e76e",
+      "size": 1075
+    },
+    {
+      "path": "licenses/native/runtime-onnxruntime-sherpa-static/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/runtime-onnxruntime-sherpa-static/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "2f07c72751aed99790b8a4869cf2311df85a860b22ded05fa22803587a48922c",
+      "size": 1073
+    },
+    {
+      "path": "licenses/native/runtime-onnxruntime-sherpa-static/ThirdPartyNotices.txt",
+      "packagedPath": "assets/licenses/native/runtime-onnxruntime-sherpa-static/ThirdPartyNotices.txt",
+      "encoding": "identity",
+      "sha256": "0e07b95f3a8d6230037707c5c4a2b554d12c4cb67369669ac255635528ffcee2",
+      "size": 325054
+    },
+    {
+      "path": "licenses/native/runtime-onnxruntime-sherpa-static/dockerfiles/LICENSE-IMAGE.txt",
+      "packagedPath": "assets/licenses/native/runtime-onnxruntime-sherpa-static/dockerfiles/LICENSE-IMAGE.txt",
+      "encoding": "identity",
+      "sha256": "ca180cdd0ec6f4ca68db0488ba79e7db666e26ea1e49db15c3b2a3b8381442fd",
+      "size": 903
+    },
+    {
+      "path": "licenses/native/runtime-onnxruntime-sherpa-static/rust/LICENSE-APACHE.txt",
+      "packagedPath": "assets/licenses/native/runtime-onnxruntime-sherpa-static/rust/LICENSE-APACHE.txt",
+      "encoding": "identity",
+      "sha256": "f4d2c773ac92765f2f2b2f4cae3b0710b6fb4293ddc555d8f8a011ada12e84f3",
+      "size": 10838
+    },
+    {
+      "path": "licenses/native/runtime-onnxruntime-sherpa-static/rust/LICENSE-MIT.txt",
+      "packagedPath": "assets/licenses/native/runtime-onnxruntime-sherpa-static/rust/LICENSE-MIT.txt",
+      "encoding": "identity",
+      "sha256": "acda9cba15b9c7e0663718fdc8bd8e1cbbc142545da187d84c7e8e2a6146e76e",
+      "size": 1075
+    },
+    {
+      "path": "licenses/native/runtime-opencv/3rdparty/cpufeatures/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/runtime-opencv/3rdparty/cpufeatures/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "c870d52f42a8f93023b99a85fe68d02637d6b04e5f35bbcd7f98759adb4e4d49",
+      "size": 577
+    },
+    {
+      "path": "licenses/native/runtime-opencv/3rdparty/ffmpeg/license.txt",
+      "packagedPath": "assets/licenses/native/runtime-opencv/3rdparty/ffmpeg/license.txt",
+      "encoding": "identity",
+      "sha256": "1f9d4168b4a9a2bdd1851023735a41d0ab09ffa5fcc1a721a99ebc1d7d35a9c5",
+      "size": 27393
+    },
+    {
+      "path": "licenses/native/runtime-opencv/3rdparty/flatbuffers/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/runtime-opencv/3rdparty/flatbuffers/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "size": 11358
+    },
+    {
+      "path": "licenses/native/runtime-opencv/3rdparty/include/opencl/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/runtime-opencv/3rdparty/include/opencl/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "cfaceadff07c2c9458283079cd0166872aa2d93d5c480f1f417be321aa7e0f4d",
+      "size": 1309
+    },
+    {
+      "path": "licenses/native/runtime-opencv/3rdparty/libjasper/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/runtime-opencv/3rdparty/libjasper/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "edf9f4257cc33a1f396f9b062ca4a01dca7c79747c7d85b8947e603e5166760e",
+      "size": 2744
+    },
+    {
+      "path": "licenses/native/runtime-opencv/3rdparty/libjpeg-turbo/LICENSE.md.txt",
+      "packagedPath": "assets/licenses/native/runtime-opencv/3rdparty/libjpeg-turbo/LICENSE.md.txt",
+      "encoding": "identity",
+      "sha256": "96f5b328adbb78eeaaec6980d73fd558cb1e4d62560ed615646bc3cf5e532430",
+      "size": 5620
+    },
+    {
+      "path": "licenses/native/runtime-opencv/3rdparty/libpng/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/runtime-opencv/3rdparty/libpng/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "7317e078e2d3b5d7ba5a6159e650945153262b44b76f6700f8e9edb261c5143e",
+      "size": 5345
+    },
+    {
+      "path": "licenses/native/runtime-opencv/3rdparty/libspng/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/runtime-opencv/3rdparty/libspng/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "a2656f1d2643b1f9d17f263be03eb0d0be8fa5e0561dbcfaf0cf8ec3befb1413",
+      "size": 1340
+    },
+    {
+      "path": "licenses/native/runtime-opencv/3rdparty/libwebp/COPYING.txt",
+      "packagedPath": "assets/licenses/native/runtime-opencv/3rdparty/libwebp/COPYING.txt",
+      "encoding": "identity",
+      "sha256": "5aec868f669e384a22372a4e8a1a6cd7d44c64cd451f960ca69cc170d1e13acf",
+      "size": 1496
+    },
+    {
+      "path": "licenses/native/runtime-opencv/3rdparty/openexr/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/runtime-opencv/3rdparty/openexr/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "14eba5f05238f57c77e94f0ebd29a0b3736ba0456ff990cda16e21b6903ac453",
+      "size": 1697
+    },
+    {
+      "path": "licenses/native/runtime-opencv/3rdparty/openjpeg/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/runtime-opencv/3rdparty/openjpeg/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "a6af136f3e15038a666b61f376612a07d9a4e48cb7c01adbf3e33b3f14ab49b6",
+      "size": 2112
+    },
+    {
+      "path": "licenses/native/runtime-opencv/3rdparty/protobuf/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/runtime-opencv/3rdparty/protobuf/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "6e5e117324afd944dcf67f36cf329843bc1a92229a8cd9bb573d7a83130fea7d",
+      "size": 1732
+    },
+    {
+      "path": "licenses/native/runtime-opencv/3rdparty/quirc/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/runtime-opencv/3rdparty/quirc/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "f64a0d2030dd3bb501f303eb66097ed92cd0c63f824e515b1116dafbce5346fe",
+      "size": 790
+    },
+    {
+      "path": "licenses/native/runtime-opencv/3rdparty/zlib/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/runtime-opencv/3rdparty/zlib/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "845efc77857d485d91fb3e0b884aaa929368c717ae8186b66fe1ed2495753243",
+      "size": 1002
+    },
+    {
+      "path": "licenses/native/runtime-opencv/3rdparty/zlib-ng/LICENSE.md.txt",
+      "packagedPath": "assets/licenses/native/runtime-opencv/3rdparty/zlib-ng/LICENSE.md.txt",
+      "encoding": "identity",
+      "sha256": "6c9f0d975b41afaa34d22f55bb8986ce69e5cb7ad327cb2b28820cd425edf5ee",
+      "size": 867
+    },
+    {
+      "path": "licenses/native/runtime-opencv/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/runtime-opencv/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "size": 11358
+    },
+    {
+      "path": "licenses/native/runtime-opencv/doc/LICENSE_BSD.txt",
+      "packagedPath": "assets/licenses/native/runtime-opencv/doc/LICENSE_BSD.txt",
+      "encoding": "identity",
+      "sha256": "a5a7cf90fe5ac9763baad852cf69cf9d9b89bff934a679fdc5c8fcecaeba9a25",
+      "size": 2294
+    },
+    {
+      "path": "licenses/native/runtime-opencv/doc/LICENSE_CHANGE_NOTICE.txt",
+      "packagedPath": "assets/licenses/native/runtime-opencv/doc/LICENSE_CHANGE_NOTICE.txt",
+      "encoding": "identity",
+      "sha256": "b2255f81ae7162e36550daefe432c72a8506cfc1b954897dbc553ed5160ad4b8",
+      "size": 2768
+    },
+    {
+      "path": "licenses/native/runtime-opencv/modules/core/3rdparty/SoftFloat/COPYING.txt",
+      "packagedPath": "assets/licenses/native/runtime-opencv/modules/core/3rdparty/SoftFloat/COPYING.txt",
+      "encoding": "identity",
+      "sha256": "0c5b08365136da52639d777f1ebfc03988b0169d80655c90c59f1b3fa3e526a2",
+      "size": 1732
+    },
+    {
+      "path": "licenses/native/runtime-opencv/modules/gapi/src/3rdparty/vasot/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/runtime-opencv/modules/gapi/src/3rdparty/vasot/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "a9c8a68807d39b6810d593008f02e7835a8f8280781e5ce9b544a7fb973bb79e",
+      "size": 1083
+    },
+    {
+      "path": "licenses/native/runtime-sherpa-onnx/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/runtime-sherpa-onnx/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "size": 11358
+    },
+    {
+      "path": "licenses/native/runtime-sora-editor/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/runtime-sora-editor/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "7ffe1954587c77dfba1cf8eb9b2ea743671fa6e63f9e7a2f258119d42e14eefe",
+      "size": 27030
+    },
+    {
+      "path": "licenses/native/sherpa-dep-cargs/LICENSE.md.txt",
+      "packagedPath": "assets/licenses/native/sherpa-dep-cargs/LICENSE.md.txt",
+      "encoding": "identity",
+      "sha256": "e144db54f3cbd2110ccdd99cda1eaef528eb89a2f97bbee46989a7ba6b5292a3",
+      "size": 1091
+    },
+    {
+      "path": "licenses/native/sherpa-dep-eigen/COPYING.APACHE.txt",
+      "packagedPath": "assets/licenses/native/sherpa-dep-eigen/COPYING.APACHE.txt",
+      "encoding": "identity",
+      "sha256": "03379001a7b12a2ec997a25554247d985270b353c10d5bafee9ac8d6519820b7",
+      "size": 11362
+    },
+    {
+      "path": "licenses/native/sherpa-dep-eigen/COPYING.BSD.txt",
+      "packagedPath": "assets/licenses/native/sherpa-dep-eigen/COPYING.BSD.txt",
+      "encoding": "identity",
+      "sha256": "51928dce36213c5333ba3172e847d735d4c6e9b7ff2722a326c49067155b82eb",
+      "size": 1517
+    },
+    {
+      "path": "licenses/native/sherpa-dep-eigen/COPYING.MINPACK.txt",
+      "packagedPath": "assets/licenses/native/sherpa-dep-eigen/COPYING.MINPACK.txt",
+      "encoding": "identity",
+      "sha256": "c87b7f8ee88f6195e91743820c00354833583aef091b72e2d4a49c8e28e798a0",
+      "size": 2193
+    },
+    {
+      "path": "licenses/native/sherpa-dep-eigen/COPYING.MPL2.txt",
+      "packagedPath": "assets/licenses/native/sherpa-dep-eigen/COPYING.MPL2.txt",
+      "encoding": "identity",
+      "sha256": "66a3107d5ad6a058aab753eaac2047ccb2ed0e39465dd0fe5844da3e300d5172",
+      "size": 16727
+    },
+    {
+      "path": "licenses/native/sherpa-dep-eigen/COPYING.README.txt",
+      "packagedPath": "assets/licenses/native/sherpa-dep-eigen/COPYING.README.txt",
+      "encoding": "identity",
+      "sha256": "db640ff2bd90c6abd6a4d3fbb351e0ee4d555417cf840492054d1cbb2ea85644",
+      "size": 264
+    },
+    {
+      "path": "licenses/native/sherpa-dep-eigen/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/sherpa-dep-eigen/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "1f256ecad192880510e84ad60474eab7589218784b9a50bc7ceee34c2b91f1d5",
+      "size": 16725
+    },
+    {
+      "path": "licenses/native/sherpa-dep-espeak-ng-for-piper/COPYING.APACHE.txt",
+      "packagedPath": "assets/licenses/native/sherpa-dep-espeak-ng-for-piper/COPYING.APACHE.txt",
+      "encoding": "identity",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "size": 11358
+    },
+    {
+      "path": "licenses/native/sherpa-dep-espeak-ng-for-piper/COPYING.BSD2.txt",
+      "packagedPath": "assets/licenses/native/sherpa-dep-espeak-ng-for-piper/COPYING.BSD2.txt",
+      "encoding": "identity",
+      "sha256": "a8b0c1c7d7af6c0415c068be8cf373799d1a42b0707b79dc4ccfcaf593cd902d",
+      "size": 1244
+    },
+    {
+      "path": "licenses/native/sherpa-dep-espeak-ng-for-piper/COPYING.UCD.txt",
+      "packagedPath": "assets/licenses/native/sherpa-dep-espeak-ng-for-piper/COPYING.UCD.txt",
+      "encoding": "identity",
+      "sha256": "be029c50df83105a810e391778b6edcb522d6cb4b4e142332aca54437a499bf7",
+      "size": 2788
+    },
+    {
+      "path": "licenses/native/sherpa-dep-espeak-ng-for-piper/COPYING.txt",
+      "packagedPath": "assets/licenses/native/sherpa-dep-espeak-ng-for-piper/COPYING.txt",
+      "encoding": "identity",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "size": 35147
+    },
+    {
+      "path": "licenses/native/sherpa-dep-hclust-cpp/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/sherpa-dep-hclust-cpp/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "e361d842da1d290351860ad6dcce2673a1e42e4f873a3ae1ff4eb92c6adaa882",
+      "size": 1483
+    },
+    {
+      "path": "licenses/native/sherpa-dep-json/LICENSE.MIT.txt",
+      "packagedPath": "assets/licenses/native/sherpa-dep-json/LICENSE.MIT.txt",
+      "encoding": "identity",
+      "sha256": "46a65cffd1ea955132d95a8dd921640714a8d6b537d2e4e482d31145ae95b603",
+      "size": 1076
+    },
+    {
+      "path": "licenses/native/sherpa-dep-json/LICENSES/Apache-2.0.txt",
+      "packagedPath": "assets/licenses/native/sherpa-dep-json/LICENSES/Apache-2.0.txt",
+      "encoding": "identity",
+      "sha256": "074e6e32c86a4c0ef8b3ed25b721ca23aca83df277cd88106ef7177c354615ff",
+      "size": 10280
+    },
+    {
+      "path": "licenses/native/sherpa-dep-json/LICENSES/BSD-3-Clause.txt",
+      "packagedPath": "assets/licenses/native/sherpa-dep-json/LICENSES/BSD-3-Clause.txt",
+      "encoding": "identity",
+      "sha256": "5a93d5831e1297ab10fe643e1a631e83be392896da14ee2951285a79012df69d",
+      "size": 1460
+    },
+    {
+      "path": "licenses/native/sherpa-dep-json/LICENSES/GPL-3.0-only.txt",
+      "packagedPath": "assets/licenses/native/sherpa-dep-json/LICENSES/GPL-3.0-only.txt",
+      "encoding": "identity",
+      "sha256": "b6a8bf63ae2c95b0aa256ee774680d7bd18f21f457da75466f7610b3b16acc4e",
+      "size": 34670
+    },
+    {
+      "path": "licenses/native/sherpa-dep-json/LICENSES/MIT.txt",
+      "packagedPath": "assets/licenses/native/sherpa-dep-json/LICENSES/MIT.txt",
+      "encoding": "identity",
+      "sha256": "b85dcd3e453d05982552c52b5fc9e0bdd6d23c6f8e844b984a88af32570b0cc0",
+      "size": 1078
+    },
+    {
+      "path": "licenses/native/sherpa-dep-kaldi-decoder/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/sherpa-dep-kaldi-decoder/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "size": 11358
+    },
+    {
+      "path": "licenses/native/sherpa-dep-kaldi-eigen/COPYING.APACHE.txt",
+      "packagedPath": "assets/licenses/native/sherpa-dep-kaldi-eigen/COPYING.APACHE.txt",
+      "encoding": "identity",
+      "sha256": "03379001a7b12a2ec997a25554247d985270b353c10d5bafee9ac8d6519820b7",
+      "size": 11362
+    },
+    {
+      "path": "licenses/native/sherpa-dep-kaldi-eigen/COPYING.BSD.txt",
+      "packagedPath": "assets/licenses/native/sherpa-dep-kaldi-eigen/COPYING.BSD.txt",
+      "encoding": "identity",
+      "sha256": "51928dce36213c5333ba3172e847d735d4c6e9b7ff2722a326c49067155b82eb",
+      "size": 1517
+    },
+    {
+      "path": "licenses/native/sherpa-dep-kaldi-eigen/COPYING.GPL.txt",
+      "packagedPath": "assets/licenses/native/sherpa-dep-kaldi-eigen/COPYING.GPL.txt",
+      "encoding": "identity",
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "size": 35147
+    },
+    {
+      "path": "licenses/native/sherpa-dep-kaldi-eigen/COPYING.LGPL.txt",
+      "packagedPath": "assets/licenses/native/sherpa-dep-kaldi-eigen/COPYING.LGPL.txt",
+      "encoding": "identity",
+      "sha256": "dc626520dcd53a22f727af3ee42c770e56c97a64fe3adb063799d8ab032fe551",
+      "size": 26530
+    },
+    {
+      "path": "licenses/native/sherpa-dep-kaldi-eigen/COPYING.MINPACK.txt",
+      "packagedPath": "assets/licenses/native/sherpa-dep-kaldi-eigen/COPYING.MINPACK.txt",
+      "encoding": "identity",
+      "sha256": "c87b7f8ee88f6195e91743820c00354833583aef091b72e2d4a49c8e28e798a0",
+      "size": 2193
+    },
+    {
+      "path": "licenses/native/sherpa-dep-kaldi-eigen/COPYING.MPL2.txt",
+      "packagedPath": "assets/licenses/native/sherpa-dep-kaldi-eigen/COPYING.MPL2.txt",
+      "encoding": "identity",
+      "sha256": "fab3dd6bdab226f1c08630b1dd917e11fcb4ec5e1e020e2c16f83a0a13863e85",
+      "size": 16726
+    },
+    {
+      "path": "licenses/native/sherpa-dep-kaldi-eigen/COPYING.README.txt",
+      "packagedPath": "assets/licenses/native/sherpa-dep-kaldi-eigen/COPYING.README.txt",
+      "encoding": "identity",
+      "sha256": "c83230b770f17ef1386ea1fd3681271dd98aa93646bdbfb5bff3a1b7050fff9d",
+      "size": 779
+    },
+    {
+      "path": "licenses/native/sherpa-dep-kaldi-native-fbank/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/sherpa-dep-kaldi-native-fbank/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "size": 11358
+    },
+    {
+      "path": "licenses/native/sherpa-dep-kaldifst/LICENSE.txt",
+      "packagedPath": "assets/licenses/native/sherpa-dep-kaldifst/LICENSE.txt",
+      "encoding": "identity",
+      "sha256": "a682d6efd1ee5dee08a8e405c233c2c198ea70ae0718129daa83ab58cfe31c5d",
+      "size": 11728
+    },
+    {
+      "path": "licenses/native/sherpa-dep-kissfft/COPYING.txt",
+      "packagedPath": "assets/licenses/native/sherpa-dep-kissfft/COPYING.txt",
+      "encoding": "identity",
+      "sha256": "a2840585f8411be8e6826a31ef15ae65c950bd74a2437a73b013398a934ad0c6",
+      "size": 246
+    },
+    {
+      "path": "licenses/native/sherpa-dep-kissfft/LICENSES/BSD-3-Clause.txt",
+      "packagedPath": "assets/licenses/native/sherpa-dep-kissfft/LICENSES/BSD-3-Clause.txt",
+      "encoding": "identity",
+      "sha256": "4d6bcab46f27d6d0c878e8305d4bdcfe040d52bf6656b9771f04c9fb9902c0ed",
+      "size": 1830
+    },
+    {
+      "path": "licenses/native/sherpa-dep-kissfft/LICENSES/Unlicense.txt",
+      "packagedPath": "assets/licenses/native/sherpa-dep-kissfft/LICENSES/Unlicense.txt",
+      "encoding": "identity",
+      "sha256": "c543dab3c100d8741a83b02f397746b1e10fc0046f30b942f308191a68e99407",
+      "size": 1521
+    },
+    {
+      "path": "licenses/native/sherpa-dep-openfst/COPYING.txt",
+      "packagedPath": "assets/licenses/native/sherpa-dep-openfst/COPYING.txt",
+      "encoding": "identity",
+      "sha256": "4300529197035fd3452350718a0b8cee984e9412c9932d7f35fcde849fc97a4b",
+      "size": 559
+    },
+    {
+      "path": "licenses/native/sherpa-dep-piper-phonemize/LICENSE.md.txt",
+      "packagedPath": "assets/licenses/native/sherpa-dep-piper-phonemize/LICENSE.md.txt",
+      "encoding": "identity",
+      "sha256": "13746d509d74e55ea2265fbef204bb7cdbf84a8315b0207e988326cb54387028",
+      "size": 1071
+    },
+    {
+      "path": "licenses/native/sherpa-dep-piper-phonemize/licenses/uni-algo/LICENSE.md.txt",
+      "packagedPath": "assets/licenses/native/sherpa-dep-piper-phonemize/licenses/uni-algo/LICENSE.md.txt",
+      "encoding": "identity",
+      "sha256": "c55648b02873556d6ab2de14938998101fda3a0f293337542af9196435def318",
+      "size": 2208
+    },
+    {
+      "path": "licenses/ocr/OpenCV-LICENSE",
+      "packagedPath": "assets/licenses/ocr/OpenCV-LICENSE",
+      "encoding": "identity",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "size": 11358
+    },
+    {
+      "path": "licenses/ocr/PP-OCR-NOTICE.txt",
+      "packagedPath": "assets/licenses/ocr/PP-OCR-NOTICE.txt",
+      "encoding": "identity",
+      "sha256": "9ea37a4af073f2dbb64470f85e1d782b44380691a4fef6f778924fbc86a40344",
+      "size": 1749
+    },
+    {
+      "path": "licenses/ocr/PaddleOCR-LICENSE",
+      "packagedPath": "assets/licenses/ocr/PaddleOCR-LICENSE",
+      "encoding": "identity",
+      "sha256": "3840c5c0c61c294264d2dd77b8777be6ddd90121ef4e0e64abcd22edea581d6e",
+      "size": 11376
+    },
+    {
+      "path": "licenses/ocr/RapidOCR-LICENSE",
+      "packagedPath": "assets/licenses/ocr/RapidOCR-LICENSE",
+      "encoding": "identity",
+      "sha256": "3e0af25fdd06aa9586ae97adb00ea927ebe5a3805ac77d2d3a81ce5f55693333",
+      "size": 11422
+    },
+    {
+      "path": "licenses/ocr/Tesseract4Android-LICENSE",
+      "packagedPath": "assets/licenses/ocr/Tesseract4Android-LICENSE",
+      "encoding": "identity",
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "size": 11357
+    },
+    {
+      "path": "licenses/ocr/leptonica-LICENSE",
+      "packagedPath": "assets/licenses/ocr/leptonica-LICENSE",
+      "encoding": "identity",
+      "sha256": "87829abb5bbb00b55a107365da89e9a33f86c4250169e5a1e5588505be7d5806",
+      "size": 1521
+    },
+    {
+      "path": "licenses/ocr/libjpeg-README",
+      "packagedPath": "assets/licenses/ocr/libjpeg-README",
+      "encoding": "identity",
+      "sha256": "7c25493a9f64fed34d01445467341bda77bc1cdbeccbe33558659ef173fb9ff2",
+      "size": 18719
+    },
+    {
+      "path": "licenses/ocr/libpng-LICENSE",
+      "packagedPath": "assets/licenses/ocr/libpng-LICENSE",
+      "encoding": "identity",
+      "sha256": "16d9daaafbf63a31a5bdc91d4600972548fef5aaa1244202393288dbd079c49a",
+      "size": 5345
+    },
+    {
+      "path": "licenses/ocr/tessdata-LICENSE",
+      "packagedPath": "assets/licenses/ocr/tessdata-LICENSE",
+      "encoding": "identity",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "size": 11358
+    },
+    {
+      "path": "licenses/ocr/tesseract-LICENSE",
+      "packagedPath": "assets/licenses/ocr/tesseract-LICENSE",
+      "encoding": "identity",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "size": 11358
+    },
+    {
+      "path": "licenses/sherpa-onnx-Apache-2.0.txt",
+      "packagedPath": "assets/licenses/sherpa-onnx-Apache-2.0.txt",
+      "encoding": "identity",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "size": 11358
+    },
+    {
+      "path": "licenses/silero-vad-MIT.txt",
+      "packagedPath": "assets/licenses/silero-vad-MIT.txt",
+      "encoding": "identity",
+      "sha256": "2e63e9a38b6e8fc0c7bc37ce174caca1862870856c6daf5697cfb785e925520b",
+      "size": 1075
+    },
+    {
+      "path": "ocr/ppocr-v5/ch_PP-OCRv5_det_mobile.onnx",
+      "packagedPath": "assets/ocr/ppocr-v5/ch_PP-OCRv5_det_mobile.onnx",
+      "encoding": "identity",
+      "sha256": "4d97c44a20d30a81aad087d6a396b08f786c4635742afc391f6621f5c6ae78ae",
+      "size": 4819576
+    },
+    {
+      "path": "ocr/ppocr-v5/ch_PP-OCRv5_rec_mobile.onnx",
+      "packagedPath": "assets/ocr/ppocr-v5/ch_PP-OCRv5_rec_mobile.onnx",
+      "encoding": "identity",
+      "sha256": "5825fc7ebf84ae7a412be049820b4d86d77620f204a041697b0494669b1742c5",
+      "size": 16631306
+    },
+    {
+      "path": "ocr/ppocr-v5/ppocrv5-characters.txt",
+      "packagedPath": "assets/ocr/ppocr-v5/ppocrv5-characters.txt",
+      "encoding": "identity",
+      "sha256": "d1979e9f794c464c0d2e0b70a7fe14dd978e9dc644c0e71f14158cdf8342af1b",
+      "size": 74012
+    },
+    {
+      "path": "perf_costs.json",
+      "packagedPath": "assets/perf_costs.json",
+      "encoding": "identity",
+      "sha256": "daf28e93117915904db68f4160366929e594d09e77f78a426dac662b5b279ed0",
+      "size": 6271
+    },
+    {
+      "path": "readme.md",
+      "packagedPath": "assets/readme.md",
+      "encoding": "identity",
+      "sha256": "47de07e9bba83b242b7e1f69726ec003aa5621510e63943f499c9f1c99d0829c",
+      "size": 128
+    },
+    {
+      "path": "rime/LICENSE",
+      "packagedPath": "assets/rime/LICENSE",
+      "encoding": "identity",
+      "sha256": "43070e2d4e532684de521b885f385d0841030efa2b1a20bafb76133a5e1379c1",
+      "size": 11356
+    },
+    {
+      "path": "rime/README.md",
+      "packagedPath": "assets/rime/README.md",
+      "encoding": "identity",
+      "sha256": "25a5041e781ee98e9a01b5e2daffe16741bd06697cd1bd68875b05e84871d48b",
+      "size": 10910
+    },
+    {
+      "path": "rime/default.custom.yaml",
+      "packagedPath": "assets/rime/default.custom.yaml",
+      "encoding": "identity",
+      "sha256": "d4754a38200a3f88c25e8b3c5fbd6fed0af95d294fac2f0a1492f5e6d65d6b17",
+      "size": 5478
+    },
+    {
+      "path": "rime/default.yaml",
+      "packagedPath": "assets/rime/default.yaml",
+      "encoding": "identity",
+      "sha256": "77096dd15a5fbe3984760df9949ad32e19e091a485bcae34db0ed8dd4cd4fd6e",
+      "size": 4762
+    },
+    {
+      "path": "rime/handwriting.schema.yaml",
+      "packagedPath": "assets/rime/handwriting.schema.yaml",
+      "encoding": "identity",
+      "sha256": "25a464fa4eaf0f7608bf4ef2005dfe709e5be81b0ef414dbf29ee8b5fb53464c",
+      "size": 1162
+    },
+    {
+      "path": "rime/lua/README.md",
+      "packagedPath": "assets/rime/lua/README.md",
+      "encoding": "identity",
+      "sha256": "85233a926a8c457c3137db24748a0fc44c02ccc54b53a2493611de941eadc4c5",
+      "size": 201
+    },
+    {
+      "path": "rime/lua/convert_ar_num_to_zh.lua",
+      "packagedPath": "assets/rime/lua/convert_ar_num_to_zh.lua",
+      "encoding": "identity",
+      "sha256": "b98ea57bfdb0d9b9eb661e48fbf779959e254b75414382ba8a060c60028b88af",
+      "size": 2891
+    },
+    {
+      "path": "rime/lua/date_translator.lua",
+      "packagedPath": "assets/rime/lua/date_translator.lua",
+      "encoding": "identity",
+      "sha256": "87c86d1008a8e246c8d6cdad1d52707eea0b964ac6d154069da28d67e07a3fd4",
+      "size": 6076
+    },
+    {
+      "path": "rime/lua/uuid.lua",
+      "packagedPath": "assets/rime/lua/uuid.lua",
+      "encoding": "identity",
+      "sha256": "ebf8b26b9d79dee56f10ecc672475881335767c5a6c68521f1670b0feaea43e7",
+      "size": 1015
+    },
+    {
+      "path": "rime/macOS-σÅîσç╗σñìσê╢µûçΣ╗╢σåàσ«╣.command",
+      "packagedPath": "assets/rime/macOS-σÅîσç╗σñìσê╢µûçΣ╗╢σåàσ«╣.command",
+      "encoding": "identity",
+      "sha256": "1ac64691dd8e1b0a74ee91f194f2ece3c23eb2423d2830286429d8494b60d4e8",
+      "size": 1847
+    },
+    {
+      "path": "rime/numbers.schema.yaml",
+      "packagedPath": "assets/rime/numbers.schema.yaml",
+      "encoding": "identity",
+      "sha256": "b3a1c02d9709eb332c9677197f33af31956dc71a603af93e1ea9caee76b94bbf",
+      "size": 2918
+    },
+    {
+      "path": "rime/pinyin_simp.dict.yaml",
+      "packagedPath": "assets/rime/pinyin_simp.dict.yaml",
+      "encoding": "identity",
+      "sha256": "32242d98f286cf7967c46001dc1de5b5eb645a5f411fccde0382adec2e016d0a",
+      "size": 1266115
+    },
+    {
+      "path": "rime/pinyin_simp.schema.yaml",
+      "packagedPath": "assets/rime/pinyin_simp.schema.yaml",
+      "encoding": "identity",
+      "sha256": "380636cd442b328645999957b6955a40a8837e9b1075e6318a0397936525f1d9",
+      "size": 1958
+    },
+    {
+      "path": "rime/squirrel.custom.yaml",
+      "packagedPath": "assets/rime/squirrel.custom.yaml",
+      "encoding": "identity",
+      "sha256": "9b17026aeeb1351fef4d40407336ee3a5523b116ccfc9878eb637706ccf471a7",
+      "size": 7491
+    },
+    {
+      "path": "rime/symbols.yaml",
+      "packagedPath": "assets/rime/symbols.yaml",
+      "encoding": "identity",
+      "sha256": "661f369dfec70ee0a2776cf20cf8e915aaac8a8908f3a787c9f8e16c73e77a9f",
+      "size": 28522
+    },
+    {
+      "path": "rime/t9_pinyin.schema.yaml",
+      "packagedPath": "assets/rime/t9_pinyin.schema.yaml",
+      "encoding": "identity",
+      "sha256": "aa05aa86cb7157ddf920f1b3536488126c56a307168e30b20fbfa96df0f1fcf3",
+      "size": 4083
+    },
+    {
+      "path": "rime/trime.custom.yaml",
+      "packagedPath": "assets/rime/trime.custom.yaml",
+      "encoding": "identity",
+      "sha256": "b3c308428146b92a92e9e9af8b64d737a090f8dd265fc55d46d5b60eeb2ee7ce",
+      "size": 4441
+    },
+    {
+      "path": "rime-bundled-manifest.tsv",
+      "packagedPath": "assets/rime-bundled-manifest.tsv",
+      "encoding": "identity",
+      "sha256": "ed5d80753388fcab3578d3ec5d803ff52dab6ea57769110a623859d207b55cc8",
+      "size": 14981
+    },
+    {
+      "path": "rime-retired-resources.tsv",
+      "packagedPath": "assets/rime-retired-resources.tsv",
+      "encoding": "identity",
+      "sha256": "d978c89c99fb2a8c4e320f49cd71c34844f3f4583ccdbf4d638637af05930a9f",
+      "size": 6467
+    },
+    {
+      "path": "rime_chinese/AUX-CODE-NOTICE.md",
+      "packagedPath": "assets/rime_chinese/AUX-CODE-NOTICE.md",
+      "encoding": "identity",
+      "sha256": "acb19f1141858bca9f0e5981ca23c615c8f3214d504ff8d3bb5453f8dffa49fc",
+      "size": 1749
+    },
+    {
+      "path": "rime_chinese/CANGJIE-NOTICE.md",
+      "packagedPath": "assets/rime_chinese/CANGJIE-NOTICE.md",
+      "encoding": "identity",
+      "sha256": "103b2713dd1f170b383875259288f0e319d2c676e9f6ac89a3c11e8da1147921",
+      "size": 770
+    },
+    {
+      "path": "rime_chinese/LICENSE-cangjie",
+      "packagedPath": "assets/rime_chinese/LICENSE-cangjie",
+      "encoding": "identity",
+      "sha256": "cf2746abe0b37ba14fb0e735eb868d418e4d335b9040887f579da958f95ffa77",
+      "size": 1154
+    },
+    {
+      "path": "rime_chinese/LICENSE-stroke",
+      "packagedPath": "assets/rime_chinese/LICENSE-stroke",
+      "encoding": "identity",
+      "sha256": "da7eabb7bafdf7d3ae5e9f223aa5bdc1eece45ac569dc21b3b037520b4464768",
+      "size": 7651
+    },
+    {
+      "path": "rime_chinese/NOTICE.md",
+      "packagedPath": "assets/rime_chinese/NOTICE.md",
+      "encoding": "identity",
+      "sha256": "ac9aa404ac21b48010fdd3038894ed8fc4843cc45cbd102dcabf0e5575be69a3",
+      "size": 1196
+    },
+    {
+      "path": "rime_chinese/STROKE-NOTICE.md",
+      "packagedPath": "assets/rime_chinese/STROKE-NOTICE.md",
+      "encoding": "identity",
+      "sha256": "159945c5c4416448b1a2a7af83991be164b1c7efea4379b88638d16527ac79f3",
+      "size": 780
+    },
+    {
+      "path": "rime_chinese/cyime_aux_flypy.dict.yaml",
+      "packagedPath": "assets/rime_chinese/cyime_aux_flypy.dict.yaml",
+      "encoding": "identity",
+      "sha256": "efeab7d89b638e8b78908e5cdf4b024b32027a76b1c2f4f991fa0c74fcd0e6d3",
+      "size": 58835
+    },
+    {
+      "path": "rime_chinese/cyime_aux_flypy.schema.yaml",
+      "packagedPath": "assets/rime_chinese/cyime_aux_flypy.schema.yaml",
+      "encoding": "identity",
+      "sha256": "e2dfdfd4b411f5d828514cdaed51e2dd8093ee52921d07255e3af57c8849b87b",
+      "size": 966
+    },
+    {
+      "path": "rime_chinese/cyime_aux_zrm.dict.yaml",
+      "packagedPath": "assets/rime_chinese/cyime_aux_zrm.dict.yaml",
+      "encoding": "identity",
+      "sha256": "5855509e6633720a791a72f21051c2332e0287a626da00ce5f19dfc6c5ecdc46",
+      "size": 199567
+    },
+    {
+      "path": "rime_chinese/cyime_aux_zrm.schema.yaml",
+      "packagedPath": "assets/rime_chinese/cyime_aux_zrm.schema.yaml",
+      "encoding": "identity",
+      "sha256": "ccd504d31e9adf554f5ed165fc5d6a2cbf1eec742a0e60475c097060c322d3a4",
+      "size": 954
+    },
+    {
+      "path": "rime_chinese/cyime_cangjie.dict.yaml",
+      "packagedPath": "assets/rime_chinese/cyime_cangjie.dict.yaml",
+      "encoding": "identity",
+      "sha256": "79e5750e07dc30f22ed36db7fb341903518d7c6bbcc6fcae58478bcac34ef2ba",
+      "size": 401139
+    },
+    {
+      "path": "rime_chinese/cyime_cangjie.schema.yaml",
+      "packagedPath": "assets/rime_chinese/cyime_cangjie.schema.yaml",
+      "encoding": "identity",
+      "sha256": "0a77873d3111bf197c55070b978e957b850b65f04832c56e33fd58dc76fac63f",
+      "size": 2987
+    },
+    {
+      "path": "rime_chinese/cyime_english.schema.yaml",
+      "packagedPath": "assets/rime_chinese/cyime_english.schema.yaml",
+      "encoding": "identity",
+      "sha256": "66d06e70fd2d617cff9d05074ae88975cf0bde6e4a599e3d3d1d0b070d66ef92",
+      "size": 3531
+    },
+    {
+      "path": "rime_chinese/cyime_k14_english.schema.yaml",
+      "packagedPath": "assets/rime_chinese/cyime_k14_english.schema.yaml",
+      "encoding": "identity",
+      "sha256": "47ba422e93c378732d74c9e6d78a8b155821bcc0271b50397908f0a7f56342d7",
+      "size": 422
+    },
+    {
+      "path": "rime_chinese/cyime_particle_shortcuts.yaml",
+      "packagedPath": "assets/rime_chinese/cyime_particle_shortcuts.yaml",
+      "encoding": "identity",
+      "sha256": "b660f0e77887d7ff96cd807910436e629565b48f670ccb82adf135bbe398fa0c",
+      "size": 626
+    },
+    {
+      "path": "rime_chinese/cyime_punctuator.yaml",
+      "packagedPath": "assets/rime_chinese/cyime_punctuator.yaml",
+      "encoding": "identity",
+      "sha256": "5981628cd1c3dd9c79a189c93673ae0526d31eb3cf0b45af6b1898c3f414c6a3",
+      "size": 28650
+    },
+    {
+      "path": "rime_chinese/cyime_quick.dict.yaml",
+      "packagedPath": "assets/rime_chinese/cyime_quick.dict.yaml",
+      "encoding": "identity",
+      "sha256": "602579eb1205eab8134af51d3ff9378a84be10b53871360406d5ad6e6f6669f2",
+      "size": 303226
+    },
+    {
+      "path": "rime_chinese/cyime_quick.schema.yaml",
+      "packagedPath": "assets/rime_chinese/cyime_quick.schema.yaml",
+      "encoding": "identity",
+      "sha256": "755a7e42852d8b01573e70902c3de45f9342408c20911b671dfcb4362141f7c3",
+      "size": 2262
+    },
+    {
+      "path": "rime_chinese/cyime_t9_english.schema.yaml",
+      "packagedPath": "assets/rime_chinese/cyime_t9_english.schema.yaml",
+      "encoding": "identity",
+      "sha256": "457ad0537945d784a1a21e1ed180e50d9a46120081968cf0affcb646f563958c",
+      "size": 417
+    },
+    {
+      "path": "rime_chinese/cyime_tw.dict.yaml",
+      "packagedPath": "assets/rime_chinese/cyime_tw.dict.yaml",
+      "encoding": "identity",
+      "sha256": "cd386d3af75db4117517c95ccc4f81329c02e915191561a6a8c7811d67bdfcc3",
+      "size": 26266
+    },
+    {
+      "path": "rime_chinese/cyime_zhuyin.schema.yaml",
+      "packagedPath": "assets/rime_chinese/cyime_zhuyin.schema.yaml",
+      "encoding": "identity",
+      "sha256": "29c00b889d7e537652dc916e3be40355d657d10ab57f942a0e7b9a309ec9824e",
+      "size": 5971
+    },
+    {
+      "path": "rime_chinese/double_pinyin_flypy_14jian.schema.yaml",
+      "packagedPath": "assets/rime_chinese/double_pinyin_flypy_14jian.schema.yaml",
+      "encoding": "identity",
+      "sha256": "cb0ab83836d4f6e48cfdc49e534d8b4b0eac2e8f15201552bdf69052bd7bef45",
+      "size": 6533
+    },
+    {
+      "path": "rime_chinese/lua/cyime_english_words.lua",
+      "packagedPath": "assets/rime_chinese/lua/cyime_english_words.lua",
+      "encoding": "identity",
+      "sha256": "bb53a07a931d12d3889c009bd1246e1997fad4b27b4c058f0db614198f7f8f5b",
+      "size": 1922
+    },
+    {
+      "path": "rime_chinese/lua/cyime_k14_english.lua",
+      "packagedPath": "assets/rime_chinese/lua/cyime_k14_english.lua",
+      "encoding": "identity",
+      "sha256": "063d3389f217b3e8843c751a8d5160bf0cccc06bebaadc53a4b795570ddf2009",
+      "size": 4027
+    },
+    {
+      "path": "rime_chinese/lua/cyime_stroke_phrase.lua",
+      "packagedPath": "assets/rime_chinese/lua/cyime_stroke_phrase.lua",
+      "encoding": "identity",
+      "sha256": "648664fb9875a2ba574ebc048b3f45c373931f95a8d85b39d034e5ba6fd3cfc4",
+      "size": 15007
+    },
+    {
+      "path": "rime_chinese/lua/cyime_stroke_rank.lua",
+      "packagedPath": "assets/rime_chinese/lua/cyime_stroke_rank.lua",
+      "encoding": "identity",
+      "sha256": "b1fda63254b9d8d5a5c6411a6cc6eb40b5ffb6bce4aa9ea718e1bc5dc1ba8c1e",
+      "size": 2153
+    },
+    {
+      "path": "rime_chinese/lua/cyime_stroke_wildcard.lua",
+      "packagedPath": "assets/rime_chinese/lua/cyime_stroke_wildcard.lua",
+      "encoding": "identity",
+      "sha256": "e75c53068d4755cd47df753df785e399d8635ae9e608aa5b224e70dd9cbfb99d",
+      "size": 3936
+    },
+    {
+      "path": "rime_chinese/lua/cyime_zhuyin_tone.lua",
+      "packagedPath": "assets/rime_chinese/lua/cyime_zhuyin_tone.lua",
+      "encoding": "identity",
+      "sha256": "a3946a9c8c8ee81d38751cdc04055fe065ceb703f59caaa015bb8b7ecf6b3a79",
+      "size": 3141
+    },
+    {
+      "path": "rime_chinese/lua/cyime_zhuyin_tones.lua",
+      "packagedPath": "assets/rime_chinese/lua/cyime_zhuyin_tones.lua",
+      "encoding": "identity",
+      "sha256": "bfc9ceff4437106f7c69b932cfc4308e4956bab790202cdb76d95eab034d7108",
+      "size": 63389
+    },
+    {
+      "path": "rime_chinese/opencc/CJK_Compatibility_Ideographs.ocd2",
+      "packagedPath": "assets/rime_chinese/opencc/CJK_Compatibility_Ideographs.ocd2",
+      "encoding": "identity",
+      "sha256": "4b1faa6649012f524068ec18c0fb520ead343c11cbe0a8e4c8853ca61369d666",
+      "size": 13843
+    },
+    {
+      "path": "rime_chinese/opencc/CyimeSurnames.txt",
+      "packagedPath": "assets/rime_chinese/opencc/CyimeSurnames.txt",
+      "encoding": "identity",
+      "sha256": "81cefb1333c57c615ee39f03c2d4f9ba84cfc3f42725040da22207f67db699cf",
+      "size": 7130
+    },
+    {
+      "path": "rime_chinese/opencc/CyimeTWPhrases.ocd2",
+      "packagedPath": "assets/rime_chinese/opencc/CyimeTWPhrases.ocd2",
+      "encoding": "identity",
+      "sha256": "fbb659111cfdd1ecbb763cde435891ce8e256f42e756a9d15c8d8ce0aa38bde5",
+      "size": 8257
+    },
+    {
+      "path": "rime_chinese/opencc/CyimeUserKeep.txt",
+      "packagedPath": "assets/rime_chinese/opencc/CyimeUserKeep.txt",
+      "encoding": "identity",
+      "sha256": "45a98ecb0001f498a2a607b23803c4dcfd534287f6c7b4ebd24a89bc7210da42",
+      "size": 8
+    },
+    {
+      "path": "rime_chinese/opencc/HKVariants.ocd2",
+      "packagedPath": "assets/rime_chinese/opencc/HKVariants.ocd2",
+      "encoding": "identity",
+      "sha256": "b4be56685bddda964977bbd271f976df939d1f46a75332b8f9e793d0f06e6c7c",
+      "size": 4957
+    },
+    {
+      "path": "rime_chinese/opencc/HKVariantsPhrases.ocd2",
+      "packagedPath": "assets/rime_chinese/opencc/HKVariantsPhrases.ocd2",
+      "encoding": "identity",
+      "sha256": "80c215b6bef0f324a71340bc21164d063c5540af6f50c07fd1c703af9c1207da",
+      "size": 10522
+    },
+    {
+      "path": "rime_chinese/opencc/STCharacters.ocd2",
+      "packagedPath": "assets/rime_chinese/opencc/STCharacters.ocd2",
+      "encoding": "identity",
+      "sha256": "39649c3d15862a33772495676e56c42e4fd8ad53db58737f798b4c52f55893b6",
+      "size": 45873
+    },
+    {
+      "path": "rime_chinese/opencc/STPhrases.ocd2",
+      "packagedPath": "assets/rime_chinese/opencc/STPhrases.ocd2",
+      "encoding": "identity",
+      "sha256": "dbc01d6cc42169a50944e38b092054f71fcb2221c0ae86fe974f3f1242499529",
+      "size": 925287
+    },
+    {
+      "path": "rime_chinese/opencc/STPhrases_GeneratedFromRegionalPhrases.ocd2",
+      "packagedPath": "assets/rime_chinese/opencc/STPhrases_GeneratedFromRegionalPhrases.ocd2",
+      "encoding": "identity",
+      "sha256": "4d4a6f369af0da758b63f4a0474f348fbcb4b00173574fca8f361cd603eddd3e",
+      "size": 17861
+    },
+    {
+      "path": "rime_chinese/opencc/TSCharacters.ocd2",
+      "packagedPath": "assets/rime_chinese/opencc/TSCharacters.ocd2",
+      "encoding": "identity",
+      "sha256": "2db309dc85301d69112d919f76cb6de1a1f9e7fdfd3fd32e7610d1e934570797",
+      "size": 52400
+    },
+    {
+      "path": "rime_chinese/opencc/TSPhrases.ocd2",
+      "packagedPath": "assets/rime_chinese/opencc/TSPhrases.ocd2",
+      "encoding": "identity",
+      "sha256": "6c9948d947f5ad97ebf829cd5728cfe3ac036f4e70c609b7c70984b616285b0f",
+      "size": 13442
+    },
+    {
+      "path": "rime_chinese/opencc/TWVariants.ocd2",
+      "packagedPath": "assets/rime_chinese/opencc/TWVariants.ocd2",
+      "encoding": "identity",
+      "sha256": "f8a6e00b7b03b406a74fed43a7293aa12c4646cc7fd38a8d2ecf8da88267bef6",
+      "size": 4587
+    },
+    {
+      "path": "rime_chinese/opencc/TWVariantsPhrases.ocd2",
+      "packagedPath": "assets/rime_chinese/opencc/TWVariantsPhrases.ocd2",
+      "encoding": "identity",
+      "sha256": "549d7025f70caf89381d396f5d9555b57c17cee8e604915dd6a7315cc7cc6a68",
+      "size": 4215
+    },
+    {
+      "path": "rime_chinese/opencc/cyime_s2tw.json",
+      "packagedPath": "assets/rime_chinese/opencc/cyime_s2tw.json",
+      "encoding": "identity",
+      "sha256": "2a43dcbd66a6a17d4ef3315fc6c3a622049ccb8950fedeeb39541798c7bd1eba",
+      "size": 1797
+    },
+    {
+      "path": "rime_chinese/opencc/cyime_s2tw_user.json",
+      "packagedPath": "assets/rime_chinese/opencc/cyime_s2tw_user.json",
+      "encoding": "identity",
+      "sha256": "0f10aab339e6ebc6f035f780585ce6e75aa87bc84ebb53f86a51f448afa7df64",
+      "size": 1904
+    },
+    {
+      "path": "rime_chinese/opencc/cyime_symbols.json",
+      "packagedPath": "assets/rime_chinese/opencc/cyime_symbols.json",
+      "encoding": "identity",
+      "sha256": "d422d7a7ce806e296cc39b3c0d64a6a186e3d0fe0d33dac62aeffe5e9674ca98",
+      "size": 295
+    },
+    {
+      "path": "rime_chinese/opencc/cyime_symbols.txt",
+      "packagedPath": "assets/rime_chinese/opencc/cyime_symbols.txt",
+      "encoding": "identity",
+      "sha256": "74b4f8fdbb9a898480a7600876d61ddfbbda2590c72ffe996b51e24f8efbdc07",
+      "size": 2031
+    },
+    {
+      "path": "rime_chinese/opencc/cyime_t2s.json",
+      "packagedPath": "assets/rime_chinese/opencc/cyime_t2s.json",
+      "encoding": "identity",
+      "sha256": "f1163c5b86f2106ac1465c4fa640e1e09298fae3bb0c871027f9ac0036762c5e",
+      "size": 581
+    },
+    {
+      "path": "rime_chinese/opencc/s2hk.json",
+      "packagedPath": "assets/rime_chinese/opencc/s2hk.json",
+      "encoding": "identity",
+      "sha256": "b3a4b6c7f5fdd61c4f7e6eaa292d9a0e29eece584c35fe04fc124b1d9796051b",
+      "size": 1211
+    },
+    {
+      "path": "rime_chinese/opencc/s2t.json",
+      "packagedPath": "assets/rime_chinese/opencc/s2t.json",
+      "encoding": "identity",
+      "sha256": "a188392af5ca23e1d602c5a93651f1d852fccdaa24c2b29abed7a0c8ac359048",
+      "size": 676
+    },
+    {
+      "path": "rime_chinese/opencc/s2tw.json",
+      "packagedPath": "assets/rime_chinese/opencc/s2tw.json",
+      "encoding": "identity",
+      "sha256": "5830ee3440ba3dc6bf1e197205b4248e2d860b8a3680475db4419b0dbf96ac39",
+      "size": 1209
+    },
+    {
+      "path": "rime_chinese/pinyin_14jian.schema.yaml",
+      "packagedPath": "assets/rime_chinese/pinyin_14jian.schema.yaml",
+      "encoding": "identity",
+      "sha256": "8f8500d1c94861fa6644d166fd9812cd3e205ba004eff1a8750fbf8b555b1246",
+      "size": 11366
+    },
+    {
+      "path": "rime_chinese/stroke.dict.yaml",
+      "packagedPath": "assets/rime_chinese/stroke.dict.yaml",
+      "encoding": "identity",
+      "sha256": "56bef2a58ffe2b1562c05962d5ec46346982f4157efcc5d6f84fdff85954cb90",
+      "size": 576268
+    },
+    {
+      "path": "rime_chinese/stroke.schema.yaml",
+      "packagedPath": "assets/rime_chinese/stroke.schema.yaml",
+      "encoding": "identity",
+      "sha256": "ff192abef2aad0ec15e4c233c571d21b3e8f406df4b8e0178a1c755e2192daf8",
+      "size": 3650
+    },
+    {
+      "path": "rime_chinese/stroke_phrase.dict.yaml",
+      "packagedPath": "assets/rime_chinese/stroke_phrase.dict.yaml",
+      "encoding": "identity",
+      "sha256": "4178735cb7be15fd5ee1071b765e964a44d59db1604efb7dd9aeefa6df717d3a",
+      "size": 764461
+    },
+    {
+      "path": "rime_chinese/stroke_phrase.schema.yaml",
+      "packagedPath": "assets/rime_chinese/stroke_phrase.schema.yaml",
+      "encoding": "identity",
+      "sha256": "f921944b7d66fc64d143ab6120a684a80d3d0ed78abb276aea04dbac089085dc",
+      "size": 574
+    },
+    {
+      "path": "rime_chinese/t9_pinyin.schema.yaml",
+      "packagedPath": "assets/rime_chinese/t9_pinyin.schema.yaml",
+      "encoding": "identity",
+      "sha256": "e6d433f5c9045759b08095f47999fc12e3205ed42b51057d6329da6b0297501b",
+      "size": 13418
+    },
+    {
+      "path": "rime_ice/LICENSE",
+      "packagedPath": "assets/rime_ice/LICENSE",
+      "encoding": "identity",
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "size": 35149
+    },
+    {
+      "path": "rime_ice/README.md",
+      "packagedPath": "assets/rime_ice/README.md",
+      "encoding": "identity",
+      "sha256": "818e752e0e4bc38eadd17fd11e4139d31379aa0193476f3885b9f40e3a95f37e",
+      "size": 20494
+    },
+    {
+      "path": "rime_ice/cn_dicts/base.dict.yaml",
+      "packagedPath": "assets/rime_ice/cn_dicts/base.dict.yaml",
+      "encoding": "identity",
+      "sha256": "cbc47589d865ba756010eefcd437893bcd185d977f3334b9ca071f2cd78e9273",
+      "size": 1266163
+    },
+    {
+      "path": "rime_ice/cn_dicts/cedict.dict.yaml",
+      "packagedPath": "assets/rime_ice/cn_dicts/cedict.dict.yaml",
+      "encoding": "identity",
+      "sha256": "492c18799450d1e1c67aa9175795b238091712fcc1cf458a93bde6f76de37105",
+      "size": 1920863
+    },
+    {
+      "path": "rime_ice/cyime_cn_en.dict.yaml",
+      "packagedPath": "assets/rime_ice/cyime_cn_en.dict.yaml",
+      "encoding": "identity",
+      "sha256": "f7348212c29072f93ca61c17c4d5c7dde675e7ff2ed57f8afc3a1c4c869fad5b",
+      "size": 303
+    },
+    {
+      "path": "rime_ice/cyime_cn_en.schema.yaml",
+      "packagedPath": "assets/rime_ice/cyime_cn_en.schema.yaml",
+      "encoding": "identity",
+      "sha256": "dc3d35a1bf746e5cc517e3de11481e25b206cf9a06e2f6f0ca34286a71237818",
+      "size": 445
+    },
+    {
+      "path": "rime_ice/cyime_digit_edit.schema.yaml",
+      "packagedPath": "assets/rime_ice/cyime_digit_edit.schema.yaml",
+      "encoding": "identity",
+      "sha256": "d546dd9cdb7b3d54eef2083d874c24cef8846812507f7964191238c23a91f1a2",
+      "size": 50673
+    },
+    {
+      "path": "rime_ice/cyime_digit_tap.schema.yaml",
+      "packagedPath": "assets/rime_ice/cyime_digit_tap.schema.yaml",
+      "encoding": "identity",
+      "sha256": "0cdac7fd89dd69efab06214e9938cb254ef8eaa26a3c3f9ee2f3db4516cb0aec",
+      "size": 70329
+    },
+    {
+      "path": "rime_ice/cyime_english.dict.yaml",
+      "packagedPath": "assets/rime_ice/cyime_english.dict.yaml",
+      "encoding": "identity",
+      "sha256": "d5513b2f813536c624c4f628eb4300d87f588c78cbf943316715a9f3196d703f",
+      "size": 2195816
+    },
+    {
+      "path": "rime_ice/cyime_k14_aliases.tsv",
+      "packagedPath": "assets/rime_ice/cyime_k14_aliases.tsv",
+      "encoding": "identity",
+      "sha256": "06371de65f687ac384614f3cd3d7f43bec1d9def7aa65819efa881192f6e977c",
+      "size": 45
+    },
+    {
+      "path": "rime_ice/cyime_k14_english.dict.yaml",
+      "packagedPath": "assets/rime_ice/cyime_k14_english.dict.yaml",
+      "encoding": "identity",
+      "sha256": "9d80c5b629c437c689b50448d41788b16aabc046abfc993aca13e1e44d2da611",
+      "size": 1846702
+    },
+    {
+      "path": "rime_ice/cyime_letter_swap.schema.yaml",
+      "packagedPath": "assets/rime_ice/cyime_letter_swap.schema.yaml",
+      "encoding": "identity",
+      "sha256": "af9065585c30c17258f78d1164a50e4cacd8bbbbaacbd2f8d9f794dddd2f35dd",
+      "size": 22822
+    },
+    {
+      "path": "rime_ice/cyime_omission.schema.yaml",
+      "packagedPath": "assets/rime_ice/cyime_omission.schema.yaml",
+      "encoding": "identity",
+      "sha256": "19458665c604c093f2f1ddbb282317849c449e1383280ab9ce27c0b712124bba",
+      "size": 39438
+    },
+    {
+      "path": "rime_ice/cyime_rare.dict.yaml",
+      "packagedPath": "assets/rime_ice/cyime_rare.dict.yaml",
+      "encoding": "identity",
+      "sha256": "535864f33bd9cef8e571c6b3728ed898ceb4d282ed55321a25a5aec77d08faa7",
+      "size": 203450
+    },
+    {
+      "path": "rime_ice/cyime_rare.txt",
+      "packagedPath": "assets/rime_ice/cyime_rare.txt",
+      "encoding": "identity",
+      "sha256": "56b31e390e8f0ae1a511d85162c8c38017f4e93a7a1f00f305ddeeabfbcbc819",
+      "size": 151858
+    },
+    {
+      "path": "rime_ice/cyime_readings.txt",
+      "packagedPath": "assets/rime_ice/cyime_readings.txt",
+      "encoding": "identity",
+      "sha256": "c90916eb97cbc0000c673e7a7a35d748fef58a14a0ccd8a6910a69b8d8cfd0ee",
+      "size": 53
+    },
+    {
+      "path": "rime_ice/cyime_t9_english.dict.yaml",
+      "packagedPath": "assets/rime_ice/cyime_t9_english.dict.yaml",
+      "encoding": "identity",
+      "sha256": "c7945b891391848fb39866d33e5e69d33fe99dc864395119b7502956bc27b303",
+      "size": 1846701
+    },
+    {
+      "path": "rime_ice/double_pinyin_flypy.schema.yaml",
+      "packagedPath": "assets/rime_ice/double_pinyin_flypy.schema.yaml",
+      "encoding": "identity",
+      "sha256": "39b4296b3138578ecb849f2e3e14fadbe8b0eaa969e3f7b57e67f83e499cb366",
+      "size": 17586
+    },
+    {
+      "path": "rime_ice/en_dicts/en.dict.yaml",
+      "packagedPath": "assets/rime_ice/en_dicts/en.dict.yaml",
+      "encoding": "identity",
+      "sha256": "ffe9692bdcda545e1873a8036ecb0032c57a501d35ea95641d311c31d2d47f54",
+      "size": 2195805
+    },
+    {
+      "path": "rime_ice/lua/autocap_filter.lua",
+      "packagedPath": "assets/rime_ice/lua/autocap_filter.lua",
+      "encoding": "identity",
+      "sha256": "8b1cb8d836d0e544cc63278f31ab0c6e32a877083972535aa88049b4a6b37663",
+      "size": 2404
+    },
+    {
+      "path": "rime_ice/lua/calc_translator.lua",
+      "packagedPath": "assets/rime_ice/lua/calc_translator.lua",
+      "encoding": "identity",
+      "sha256": "590aab2de4527e9c0832f872d676b8951871104b29b95f258392269cc9e1e4ee",
+      "size": 6747
+    },
+    {
+      "path": "rime_ice/lua/cn_en_spacer.lua",
+      "packagedPath": "assets/rime_ice/lua/cn_en_spacer.lua",
+      "encoding": "identity",
+      "sha256": "5e90e53872c749c7ab212dce8a741a09db4c9fe3c96e7746e7c847723e79cf62",
+      "size": 922
+    },
+    {
+      "path": "rime_ice/lua/cold_word_drop/drop_words.lua",
+      "packagedPath": "assets/rime_ice/lua/cold_word_drop/drop_words.lua",
+      "encoding": "identity",
+      "sha256": "c54cc787cf23a28321b42e256a094c4aadbf27a836f9852ea7b8a48e433ee591",
+      "size": 65
+    },
+    {
+      "path": "rime_ice/lua/cold_word_drop/filter.lua",
+      "packagedPath": "assets/rime_ice/lua/cold_word_drop/filter.lua",
+      "encoding": "identity",
+      "sha256": "cb862d048c0b670a22b329992efe436d5e9107bf24d83f6d5f00213139ad5e82",
+      "size": 2496
+    },
+    {
+      "path": "rime_ice/lua/cold_word_drop/hide_words.lua",
+      "packagedPath": "assets/rime_ice/lua/cold_word_drop/hide_words.lua",
+      "encoding": "identity",
+      "sha256": "26df6ed82bbc646e29aa647be35df9076f6195e520489ccd9022dc081a02cb30",
+      "size": 109
+    },
+    {
+      "path": "rime_ice/lua/cold_word_drop/logger.lua",
+      "packagedPath": "assets/rime_ice/lua/cold_word_drop/logger.lua",
+      "encoding": "identity",
+      "sha256": "f4be75968364390d7d48bb83b789e4834f9b3f8cd577fb0caac7a00ea1eca312",
+      "size": 1233
+    },
+    {
+      "path": "rime_ice/lua/cold_word_drop/metatable.lua",
+      "packagedPath": "assets/rime_ice/lua/cold_word_drop/metatable.lua",
+      "encoding": "identity",
+      "sha256": "66d88f4d9dc0bf7c37e8f5ca9ab3c237ca995a28468c53f57cc3aa3937b798cb",
+      "size": 3705
+    },
+    {
+      "path": "rime_ice/lua/cold_word_drop/processor.lua",
+      "packagedPath": "assets/rime_ice/lua/cold_word_drop/processor.lua",
+      "encoding": "identity",
+      "sha256": "3af3de687ad7feba4e9f49e7b2768e9137d1447bbeede7f81f8c10206c0747f0",
+      "size": 4805
+    },
+    {
+      "path": "rime_ice/lua/cold_word_drop/reduce_freq_words.lua",
+      "packagedPath": "assets/rime_ice/lua/cold_word_drop/reduce_freq_words.lua",
+      "encoding": "identity",
+      "sha256": "2124f57446510ceae3ed5f8383237fdcaec68e54cfd0d66218b14f4f011872ca",
+      "size": 113
+    },
+    {
+      "path": "rime_ice/lua/cold_word_drop/string.lua",
+      "packagedPath": "assets/rime_ice/lua/cold_word_drop/string.lua",
+      "encoding": "identity",
+      "sha256": "a84155b7fe1e6f3f1eed6cfa89efa3b72536d37d37f8b47674cdc4472a44ab16",
+      "size": 983
+    },
+    {
+      "path": "rime_ice/lua/convert_ar_num_to_zh.lua",
+      "packagedPath": "assets/rime_ice/lua/convert_ar_num_to_zh.lua",
+      "encoding": "identity",
+      "sha256": "858f0fad1b9d2fbe1f065f1015e32699ec32e174bb14d80ba88c45614ad616f0",
+      "size": 2892
+    },
+    {
+      "path": "rime_ice/lua/corrector.lua",
+      "packagedPath": "assets/rime_ice/lua/corrector.lua",
+      "encoding": "identity",
+      "sha256": "ec5ed5328a39a8bc8678fac5b51372bde0d0a164bc3e89eaaecf6842f07e5608",
+      "size": 20071
+    },
+    {
+      "path": "rime_ice/lua/cyime_acronym_filter.lua",
+      "packagedPath": "assets/rime_ice/lua/cyime_acronym_filter.lua",
+      "encoding": "identity",
+      "sha256": "e3f88edd4d59dabf175612a425d8046d7d15cfd8fd987b551e2523994867e47b",
+      "size": 2486
+    },
+    {
+      "path": "rime_ice/lua/cyime_en_memory.lua",
+      "packagedPath": "assets/rime_ice/lua/cyime_en_memory.lua",
+      "encoding": "identity",
+      "sha256": "c6d69fce3348c8d86e3e561d63fe513442f1eaf36d945e64a7743593316b26a1",
+      "size": 11914
+    },
+    {
+      "path": "rime_ice/lua/cyime_greek_letters.lua",
+      "packagedPath": "assets/rime_ice/lua/cyime_greek_letters.lua",
+      "encoding": "identity",
+      "sha256": "fe32154fd575667475a1f264f68cbf16e24e97898f570c2e81eb6a531a839ad6",
+      "size": 4490
+    },
+    {
+      "path": "rime_ice/lua/cyime_mixed_input.lua",
+      "packagedPath": "assets/rime_ice/lua/cyime_mixed_input.lua",
+      "encoding": "identity",
+      "sha256": "d2aea5747ee41251223eeb7ae3de5629c0254c69fcf5a2002f28de7fd095b042",
+      "size": 16429
+    },
+    {
+      "path": "rime_ice/lua/cyime_rare_chars.lua",
+      "packagedPath": "assets/rime_ice/lua/cyime_rare_chars.lua",
+      "encoding": "identity",
+      "sha256": "a43f22d4684c3219e3edaa2d22313a648353e50c153a92e064325f907ffbbe49",
+      "size": 9052
+    },
+    {
+      "path": "rime_ice/lua/cyime_shortcut_order.lua",
+      "packagedPath": "assets/rime_ice/lua/cyime_shortcut_order.lua",
+      "encoding": "identity",
+      "sha256": "517789820b8582b1e1d754686764e6f16c01fd7dd7b67c7de96e085638b23872",
+      "size": 2353
+    },
+    {
+      "path": "rime_ice/lua/cyime_single_syllable.lua",
+      "packagedPath": "assets/rime_ice/lua/cyime_single_syllable.lua",
+      "encoding": "identity",
+      "sha256": "cf90bd1b532bcb6fa0e0b5a3348f8b209fbc337a050157f0bebb76d6ac371cef",
+      "size": 5021
+    },
+    {
+      "path": "rime_ice/lua/date_translator.lua",
+      "packagedPath": "assets/rime_ice/lua/date_translator.lua",
+      "encoding": "identity",
+      "sha256": "9e4b067660cb417cc57bef141ae455620784ac7cee038d18c5026c8b7c0d7629",
+      "size": 6261
+    },
+    {
+      "path": "rime_ice/lua/debuger.lua",
+      "packagedPath": "assets/rime_ice/lua/debuger.lua",
+      "encoding": "identity",
+      "sha256": "833af467f40a6c84332788ae0e8ab18b761da5d81972b6f35492f5ec6ce15a65",
+      "size": 277
+    },
+    {
+      "path": "rime_ice/lua/en_spacer.lua",
+      "packagedPath": "assets/rime_ice/lua/en_spacer.lua",
+      "encoding": "identity",
+      "sha256": "8bcda9df7bff13a69d429fc4119db3532a7aeb2360dbc0a401937f2c3c6231d4",
+      "size": 669
+    },
+    {
+      "path": "rime_ice/lua/force_gc.lua",
+      "packagedPath": "assets/rime_ice/lua/force_gc.lua",
+      "encoding": "identity",
+      "sha256": "bdffdf8342eb2167343de3a3cc5529ccfdde13afc0ea0dac3f917419eba0f382",
+      "size": 250
+    },
+    {
+      "path": "rime_ice/lua/is_in_user_dict.lua",
+      "packagedPath": "assets/rime_ice/lua/is_in_user_dict.lua",
+      "encoding": "identity",
+      "sha256": "78c0c16daa3fdfba6de0d358487e4377277d2245f536807c363610d8a954c7f7",
+      "size": 761
+    },
+    {
+      "path": "rime_ice/lua/long_word_filter.lua",
+      "packagedPath": "assets/rime_ice/lua/long_word_filter.lua",
+      "encoding": "identity",
+      "sha256": "f024cec6fe1a0e3396eac7450dc41f8e6df13c6735ba64615778e3416dcfcd81",
+      "size": 1817
+    },
+    {
+      "path": "rime_ice/lua/lunar.db",
+      "packagedPath": "assets/rime_ice/lua/lunar.db",
+      "encoding": "identity",
+      "sha256": "30e66ebc3c7223397f2d98368e159ae6d636571056bbe6885f1fcafad56ad1c9",
+      "size": 722428
+    },
+    {
+      "path": "rime_ice/lua/lunar.lua",
+      "packagedPath": "assets/rime_ice/lua/lunar.lua",
+      "encoding": "identity",
+      "sha256": "27e7c5bfa1e872e4e03a7218a3f7e8c02aab41eafe043e96a6f376b6cddc134c",
+      "size": 3700
+    },
+    {
+      "path": "rime_ice/lua/number_translator.lua",
+      "packagedPath": "assets/rime_ice/lua/number_translator.lua",
+      "encoding": "identity",
+      "sha256": "2855c8fe23631d5951ece17759dbf24563d21a3156cbd2a579395daa354eb207",
+      "size": 7247
+    },
+    {
+      "path": "rime_ice/lua/pin_cand_filter.lua",
+      "packagedPath": "assets/rime_ice/lua/pin_cand_filter.lua",
+      "encoding": "identity",
+      "sha256": "e276c252380dfea558fefc99d6f07578050bd2a45e82e4dd51ee4444eed251cd",
+      "size": 13058
+    },
+    {
+      "path": "rime_ice/lua/reduce_english_filter.lua",
+      "packagedPath": "assets/rime_ice/lua/reduce_english_filter.lua",
+      "encoding": "identity",
+      "sha256": "cf7fc268192c70fb1411942c067773e0cabcde6a9c2282a252baa148253970f3",
+      "size": 6299
+    },
+    {
+      "path": "rime_ice/lua/search.lua",
+      "packagedPath": "assets/rime_ice/lua/search.lua",
+      "encoding": "identity",
+      "sha256": "30d4619ab5c636185d5ea28d8ed5f3a7b56292112905096bcd76e717b757bf82",
+      "size": 12138
+    },
+    {
+      "path": "rime_ice/lua/select_character.lua",
+      "packagedPath": "assets/rime_ice/lua/select_character.lua",
+      "encoding": "identity",
+      "sha256": "51e9975cf23ef42845c763957532b0ca1c8241713204457bb0497db98dbc610e",
+      "size": 2374
+    },
+    {
+      "path": "rime_ice/lua/t9_preedit.lua",
+      "packagedPath": "assets/rime_ice/lua/t9_preedit.lua",
+      "encoding": "identity",
+      "sha256": "9b69b73950ce23fb2e225263bcf19792cf2faa28a42162fcb6c2c11416123a53",
+      "size": 689
+    },
+    {
+      "path": "rime_ice/lua/unicode.lua",
+      "packagedPath": "assets/rime_ice/lua/unicode.lua",
+      "encoding": "identity",
+      "sha256": "1fcc8ce59b5d18a496db380e60b632e2eb1007534e881528edd33fe501a8633c",
+      "size": 1523
+    },
+    {
+      "path": "rime_ice/lua/uuid.lua",
+      "packagedPath": "assets/rime_ice/lua/uuid.lua",
+      "encoding": "identity",
+      "sha256": "85a950bc871096f4f70bc1f935540f01944536a7e818d30c5eb3d0a71a7900e2",
+      "size": 929
+    },
+    {
+      "path": "rime_ice/lua/v_filter.lua",
+      "packagedPath": "assets/rime_ice/lua/v_filter.lua",
+      "encoding": "identity",
+      "sha256": "3d1f9a1cda532e0c0eab9b774d727ab37c2a9e468e1219407c5c8fadb964b2e5",
+      "size": 1344
+    },
+    {
+      "path": "rime_ice/melt_eng.dict.yaml",
+      "packagedPath": "assets/rime_ice/melt_eng.dict.yaml",
+      "encoding": "identity",
+      "sha256": "ea76b2c8fe98f1526c3c60413a050fe291ddeea4b89339385990e242b3b8fbeb",
+      "size": 160
+    },
+    {
+      "path": "rime_ice/melt_eng.schema.yaml",
+      "packagedPath": "assets/rime_ice/melt_eng.schema.yaml",
+      "encoding": "identity",
+      "sha256": "e9efd9d211281e6de54e9932e0fe1487b3df986c6479be719959d3c54314f922",
+      "size": 9219
+    },
+    {
+      "path": "rime_ice/opencc/emoji.json",
+      "packagedPath": "assets/rime_ice/opencc/emoji.json",
+      "encoding": "identity",
+      "sha256": "79fe3b878625d8f96d70aeb6c4d1929ab2a582f8b935d309125b6ccffd799602",
+      "size": 352
+    },
+    {
+      "path": "rime_ice/opencc/emoji.txt",
+      "packagedPath": "assets/rime_ice/opencc/emoji.txt",
+      "encoding": "identity",
+      "sha256": "0b7ea285db6052dc156bfdbaf98957e55b80504ae2f2da5b8e7215c30eb568a1",
+      "size": 438
+    },
+    {
+      "path": "rime_ice/opencc/others.txt",
+      "packagedPath": "assets/rime_ice/opencc/others.txt",
+      "encoding": "identity",
+      "sha256": "129809aef20b75db7523a8b0c2fa2093cda7ea45fe8df8fa54116d0d20c780ff",
+      "size": 197
+    },
+    {
+      "path": "rime_ice/pinyin_colemak.schema.yaml",
+      "packagedPath": "assets/rime_ice/pinyin_colemak.schema.yaml",
+      "encoding": "identity",
+      "sha256": "013b9861790d2287a06ebde39312ecd7d2274d30b6465a4bd5ef0fa448afd296",
+      "size": 22035
+    },
+    {
+      "path": "rime_ice/pinyin_cyletix10.schema.yaml",
+      "packagedPath": "assets/rime_ice/pinyin_cyletix10.schema.yaml",
+      "encoding": "identity",
+      "sha256": "fc4bedfbe91716629d8f032382932344b14777025f72565a37288f943571ea82",
+      "size": 22051
+    },
+    {
+      "path": "rime_ice/pinyin_qwjrtk.schema.yaml",
+      "packagedPath": "assets/rime_ice/pinyin_qwjrtk.schema.yaml",
+      "encoding": "identity",
+      "sha256": "a0c646eeca72890c8c2d577c57f083f4115398c4bd4d0d36ac5411d19aff5457",
+      "size": 22048
+    },
+    {
+      "path": "rime_ice/pinyin_typewise.schema.yaml",
+      "packagedPath": "assets/rime_ice/pinyin_typewise.schema.yaml",
+      "encoding": "identity",
+      "sha256": "c4905d9dfc7c53da93ddb755b8f9ad6373e148ececbd85cfba36bd1a1374af97",
+      "size": 22037
+    },
+    {
+      "path": "rime_ice/radical_pinyin.dict.yaml",
+      "packagedPath": "assets/rime_ice/radical_pinyin.dict.yaml",
+      "encoding": "identity",
+      "sha256": "2adfca7721dec8fc72c4676cbfcd27faf59cfe4ac46bfc93000b6aa363f2b608",
+      "size": 779
+    },
+    {
+      "path": "rime_ice/radical_pinyin.schema.yaml",
+      "packagedPath": "assets/rime_ice/radical_pinyin.schema.yaml",
+      "encoding": "identity",
+      "sha256": "e5e0c5740a0114fb560870d95ff1efffd0a3951496268b98c9e8a43fdc52b240",
+      "size": 9248
+    },
+    {
+      "path": "rime_ice/rime_ice.dict.yaml",
+      "packagedPath": "assets/rime_ice/rime_ice.dict.yaml",
+      "encoding": "identity",
+      "sha256": "f10192d16abb3276fbdc19c195a5083d78de1b6cd6c975abf3e9657ccf45771d",
+      "size": 201
+    },
+    {
+      "path": "rime_ice/rime_ice.schema.yaml",
+      "packagedPath": "assets/rime_ice/rime_ice.schema.yaml",
+      "encoding": "identity",
+      "sha256": "03b9880936c48d226a96fc14e6846de291058ccb153e353ea9dc74707473495e",
+      "size": 22034
+    },
+    {
+      "path": "rime_ice/symbols_caps_v.yaml",
+      "packagedPath": "assets/rime_ice/symbols_caps_v.yaml",
+      "encoding": "identity",
+      "sha256": "1423988324bd447535810f0dbcbc71b228eef821be2c122511707c0c7d4e684a",
+      "size": 29731
+    },
+    {
+      "path": "rime_ice/symbols_v.yaml",
+      "packagedPath": "assets/rime_ice/symbols_v.yaml",
+      "encoding": "identity",
+      "sha256": "00aa27e61b8cb886b048561cbe353997cbd183a8c0b37fcc9f0439b89e80c4be",
+      "size": 31123
+    },
+    {
+      "path": "speech/silero_vad.onnx",
+      "packagedPath": "assets/speech/silero_vad.onnx",
+      "encoding": "identity",
+      "sha256": "9e2449e1087496d8d4caba907f23e0bd3f78d91fa552479bb9c23ac09cbb1fd6",
+      "size": 643854
+    },
+    {
+      "path": "textmate/languages.json",
+      "packagedPath": "assets/textmate/languages.json",
+      "encoding": "identity",
+      "sha256": "371908ab81afeafd83790adba02f06ba0fa5fcc296017e627f15de1a3daf4c6e",
+      "size": 156
+    },
+    {
+      "path": "textmate/themes/light.json",
+      "packagedPath": "assets/textmate/themes/light.json",
+      "encoding": "identity",
+      "sha256": "c25343e65f174a1486c7e66c47512823222fde1708e067eaa0c37c746edc388e",
+      "size": 958
+    },
+    {
+      "path": "textmate/yaml/syntaxes/yaml.tmLanguage.json",
+      "packagedPath": "assets/textmate/yaml/syntaxes/yaml.tmLanguage.json",
+      "encoding": "identity",
+      "sha256": "f0f25a1fdfe5abb70cc093d07ed4e91d479eb18e1e3744dc1f1d30fc6cbedcd1",
+      "size": 1769
+    },
+    {
+      "path": "xime.yaml",
+      "packagedPath": "assets/xime.yaml",
+      "encoding": "identity",
+      "sha256": "8dbe57d491e380cfe8f044ca07454874c43ef37cab94acc51aec1a314d6c54d7",
+      "size": 54619
+    }
+  ]
+}

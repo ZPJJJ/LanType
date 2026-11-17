@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.kingzcheung.xime.toolcabin.TextTransformsTest" tests="6" skipped="0" failures="0" errors="0" timestamp="2026-11-17T02:13:36.049Z" hostname="66ec0b799489" time="0.02">
+  <properties/>
+  <testcase name="commonChineseAndAmericanContactsAreMaskedWhileContextStaysReadable" classname="com.kingzcheung.xime.toolcabin.TextTransformsTest" time="0.001"/>
+  <testcase name="urlComponentEncodingRoundTripsUnicodeAndDoesNotTreatPlusAsSpace" classname="com.kingzcheung.xime.toolcabin.TextTransformsTest" time="0.003"/>
+  <testcase name="idLikeFormatsAreMaskedBeforeTheirEmbeddedPhoneDigits" classname="com.kingzcheung.xime.toolcabin.TextTransformsTest" time="0.0"/>
+  <testcase name="invalidOrExcessivelyNestedJsonFailsWithNoPartialOutput" classname="com.kingzcheung.xime.toolcabin.TextTransformsTest" time="0.013"/>
+  <testcase name="base64IsUtf8TextAndRejectsBinaryOrDamagedInput" classname="com.kingzcheung.xime.toolcabin.TextTransformsTest" time="0.001"/>
+  <testcase name="jsonFormattingPreservesHugeNumbersDuplicateKeysAndEscapes" classname="com.kingzcheung.xime.toolcabin.TextTransformsTest" time="0.001"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

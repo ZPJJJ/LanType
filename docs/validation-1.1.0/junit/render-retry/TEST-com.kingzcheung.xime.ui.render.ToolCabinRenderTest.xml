@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.kingzcheung.xime.ui.render.ToolCabinRenderTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-17T02:17:33.915Z" hostname="66ec0b799489" time="8.319">
+  <properties/>
+  <testcase name="editModeExposesTheNativeFieldUsedByTheExistingKeyboardRoute" classname="com.kingzcheung.xime.ui.render.ToolCabinRenderTest" time="6.405"/>
+  <testcase name="unitPreviewAndInsertionAreSeparateActionsOnANarrowKeyboard" classname="com.kingzcheung.xime.ui.render.ToolCabinRenderTest" time="0.9"/>
+  <testcase name="shortEnglishPanelKeepsNavigationAndExplicitInsertionReachable" classname="com.kingzcheung.xime.ui.render.ToolCabinRenderTest" time="0.285"/>
+  <testcase name="maskPreviewAndStaleSessionHaveClearStates" classname="com.kingzcheung.xime.ui.render.ToolCabinRenderTest" time="0.382"/>
+  <testcase name="templateUsesVisibleCursorAndClipboardNeedsItsOwnConfirmation" classname="com.kingzcheung.xime.ui.render.ToolCabinRenderTest" time="0.343"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

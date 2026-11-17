@@ -1,0 +1,115 @@
+{
+  "templateCount": 9636,
+  "loadMs": 123.825023,
+  "cases": [
+    {
+      "expected": "一",
+      "rank": 1,
+      "top": "一",
+      "ms": 5.020722
+    },
+    {
+      "expected": "二",
+      "rank": 1,
+      "top": "二工三匸匚",
+      "ms": 4.909777
+    },
+    {
+      "expected": "三",
+      "rank": 1,
+      "top": "三工王五卫",
+      "ms": 1.500319
+    },
+    {
+      "expected": "十",
+      "rank": 1,
+      "top": "十七千干卄",
+      "ms": 0.85469
+    },
+    {
+      "expected": "人",
+      "rank": 1,
+      "top": "人九乂儿入",
+      "ms": 0.836073
+    },
+    {
+      "expected": "大",
+      "rank": 1,
+      "top": "大尢丈太天",
+      "ms": 1.224334
+    },
+    {
+      "expected": "口",
+      "rank": 2,
+      "top": "囗口日冂曰",
+      "ms": 1.085587
+    },
+    {
+      "expected": "中",
+      "rank": 1,
+      "top": "中巾由忄⺳",
+      "ms": 1.73551
+    },
+    {
+      "expected": "木",
+      "rank": 1,
+      "top": "木术末禾本",
+      "ms": 1.533267
+    },
+    {
+      "expected": "日",
+      "rank": 1,
+      "top": "日囗曰彐囚",
+      "ms": 1.331085
+    },
+    {
+      "expected": "A",
+      "rank": 1,
+      "top": "ARFXx",
+      "ms": 0.455102
+    },
+    {
+      "expected": "H",
+      "rank": 1,
+      "top": "HhKkp",
+      "ms": 0.227121
+    },
+    {
+      "expected": "L",
+      "rank": 1,
+      "top": "LlkXx",
+      "ms": 0.31363
+    },
+    {
+      "expected": "T",
+      "rank": 1,
+      "top": "TIYy7",
+      "ms": 0.271967
+    },
+    {
+      "expected": "X",
+      "rank": 1,
+      "top": "XxytY",
+      "ms": 0.329574
+    },
+    {
+      "expected": "4",
+      "rank": 1,
+      "top": "4yXxQ",
+      "ms": 0.270445
+    }
+  ],
+  "top10Hits": 16,
+  "caseCount": 16,
+  "timedReplays": 192,
+  "medianMs": 0.208302,
+  "p95Ms": 0.845947,
+  "cancelledOnThirdCheckpoint": true,
+  "limitsVerified": true,
+  "scope": "JVM host manual single-character replay; not Android UI or corpus accuracy benchmark",
+  "sourceSha256": {
+    "app/src/main/java/com/kingzcheung/xime/handwriting/LicensedStrokeRecognizer.kt": "4a439c9ed934386385b8db38b2e1ab0827f4c8d7387a8e359440947e49a92020",
+    "tools/lantype_resources/StrokeProbe.kt": "636ec2a15c69ab5285849ac6333c831deef5b23ff784b939e398d95c2d1f6885"
+  },
+  "compiler": "Kotlin 2.3.20 host; not the Android project compiler"
+}

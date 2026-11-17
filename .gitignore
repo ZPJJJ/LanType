@@ -1,0 +1,173 @@
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+/.idea/deploymentTargetSelector.xml
+/.idea/misc.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+signing-key-base64.txt
+# APK签名密钥文件（不要提交到Git）
+*.keystore
+node_modules
+*.jks
+keystore-base64.txt
+PROGRESS.md
+DECISIONS.md
+# librime and its dependencies
+app/src/main/jni/librime/
+app/src/main/jni/snappy/
+app/src/main/jni/boost*
+app/src/main/jni/onnxruntime/
+app/src/main/jniLibs/
+app/src/main/jni/librime-t9/build_test/
+app/release
+# Large archives
+*.tar.xz
+*.tar.gz
+*.zip
+/.agents
+# Association model weights (large files, manually placed)
+app/src/main/assets/association_model
+/.sisyphus
+/.kilo
+/.kotlin
+
+# Plugin module builds
+plugin-api/build
+
+# Plugin APKs (development only, not packaged in main app)
+app/src/main/assets/plugins/*.apk
+app/src/main/assets/plugins/*.xipk
+
+/.skills
+fix_encoding.py
+perf.data
+xime_heap.hprof
+app/src/main/jni/ncnn-build
+app/src/main/jni/ncnn
+# Downloaded at build time by gradle task downloadKnf
+app/src/main/jni/third_party/
+/.zcode
+
+.analysis
+.codex-remote-attachments
+zipformer识别测试.txt
+开发常用命令.md
+.codex-artifacts/
+# 私人释义补充包：打包器临时放入，只进“装到我的设备”，不得提交
+app/src/main/assets/gloss/cyime_gloss-private.tsv
+# CyLM files staged by the packager for 装到我的设备 only (scripts/packager/config.json cylm).
+app/src/main/assets/rime_chinese/cylm_*
+# Python 字节码缓存、JVM 崩溃日志
+__pycache__/
+hs_err_pid*.log
+
+# 开发日志和研究文档只留在本地，不进公开仓库（用户 2026-11-06 要求）
+/docs/development/
+/docs/research/
+/docs/*-research.md
+/AGENTS.local.md
+# 涉及个人隐私、已从历史里清掉的文件（本地保留，用户 2026-11-07 要求）
+/tools/ime_lab/fixtures/t9_rank_20261105.json
+/tools/ime_lab/fixtures/t9_rank_20261105.README.md
+/tools/ime_lab/fixtures/user_reported_20261009.json
+/app/src/androidTest/assets/ime_lab/t9_reported_cases.json
+/tools/ime_lab/chat_corpus*.py
+/tools/ime_lab/project_messages.py
+/tools/ime_lab/project_testset.py
+/tools/ime_lab/personal_holdout.py
+/tools/ime_lab/ngram/private_corpus.py
+/tools/ime_lab/learning_workbench.py
+/tools/ime_lab/test_learning_workbench.py
+/tools/ime_lab/workbench.*
+/tools/ime_lab/inspect_backup.py
+/tools/ime_lab/comment_typing_bench.py
+/tools/ime_lab/test_chat_corpus*.py
+/tools/dictionaries/glossary/build_private_addon.py
+/tools/speech_lab/tuning_replay.py
+/tools/handwriting_training/finetune_ochwpro.py
+/tools/handwriting_training/fewshot_eval.py
+/tools/handwriting_training/read_samples.py
+
+# LanType public repository: signed releases and reviewed resource bundles are
+# distributed as Release attachments, never as opaque Git blobs.
+/vendor/
+/toolchain/
+/recovery/
+/deliverables/
+/private-signing/
+/app/build/
+/plugin-core/build/
+**/.gradle/
+**/.cxx/
+*.apk
+*.aab
+*.apks
+*.so
+*.onnx
+*.tflite
+*.hprof
+*.p12
+*.pfx
+*.pem
+*.key
+**/keystore.properties
+**/*signing*private*
+**/*signing*backup*
+**/signing-passwords*
+*.log
+app/src/main/jni/librime-lua/
+app/src/main/jni/librime-lua-deps/
+app/src/main/jni/librime-octagram/
+app/src/main/jni/librime-predict/
+app/src/main/assets/bundled-models/
+app/src/main/assets/association/*.bin*
+app/src/main/assets/rime_chinese/*.lm*
+app/src/main/assets/handwriting/*.bin*
+
+# Upstream experiments, personal fixtures and old release evidence stay local.
+# The application's sources, build scripts and license notices remain public.
+/scripts/packager/
+/tools/demo_typer/
+/tools/speech_lab/
+/tools/handwriting_training/
+/tools/ime_lab/fixtures/
+/tools/ime_lab/eval/
+/tools/ime_lab/results/
+/app/src/androidTest/assets/ime_lab/
+/docs/validation/
+/docs/releases/evidence/
+/docs/fork-*.md
+/docs/cyime-*.md
+/docs/1.*.md
+/docs/status.md
+/docs/packaging.md
+/docs/LANTYPE-DELIVERY-STATUS.md
+/docs/logo.jpg
+/docs/icon_light.png
+
+# Only the independent LanType CI is enabled. Upstream signing, nightly and
+# auto-publication workflows must not run in this repository.
+/.github/workflows/*
+!/.github/workflows/offline-ci.yml
+
+# Reviewed text sources are public; generated binary dictionaries stay external.
+app/src/main/assets/rime/**/*.bin
+app/src/main/assets/rime/**/*.bin.gz
+app/src/main/assets/english_trie.bin
+!tools/lantype_resources/source_data/*.gz
+!app/src/main/assets/handwriting/lantype-strokes.lth.gz
+
+/app/src/androidTest/assets/ocr/
+
+*.xipk

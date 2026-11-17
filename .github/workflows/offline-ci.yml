@@ -1,0 +1,58 @@
+name: LanType offline build
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: lantype-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: '3.12'
+      - uses: android-actions/setup-android@be39fa834029ff78f1a44aa3bb0819b8fc2bd8fd # v4
+      - name: Install fixed Android tools
+        run: sdkmanager 'platforms;android-36' 'build-tools;36.0.0' 'ndk;27.2.12479018' 'cmake;3.22.1'
+      - name: Check the public source inventory
+        run: python3 scripts/check-public-source.py
+      - name: Prepare approved runtime data and native dependencies
+        run: |
+          python3 scripts/prepare-upstream.py
+          python3 scripts/build-camerax-native.py --download
+          python3 tools/lantype_resources/prepare_resources.py --download
+      - name: Build offline release variant
+        run: ./gradlew :app:assembleOffline --no-daemon --max-workers=1 -Pkotlin.compiler.execution.strategy=in-process '-Dorg.gradle.jvmargs=-Xmx4096m -Dfile.encoding=UTF-8'
+      - name: Run focused tests and Compose renders
+        run: bash scripts/test-targeted.sh
+      - name: Verify final APK data and source-built CameraX JNI replacements
+        run: |
+          for apk in app/build/outputs/apk/offline/*.apk; do
+            python3 scripts/build-camerax-native.py --verify-apk "$apk"
+            python3 scripts/verify-commercial-resources.py --apk "$apk"
+          done
+      - name: Preserve unsigned build and test evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: lantype-unsigned-offline-validation
+          if-no-files-found: error
+          path: |
+            app/build/outputs/apk/offline/*.apk
+            app/build/test-results/testDebugUnitTest/*.xml
+            app/build/reports/tests/testDebugUnitTest/
+            docs/validation-1.1.0/screenshots/*.png

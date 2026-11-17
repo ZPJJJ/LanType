@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<input-method xmlns:android="http://schemas.android.com/apk/res/android"
+    android:settingsActivity="com.kingzcheung.xime.MainActivity"
+    android:isDefault="false"
+    android:supportsInlineSuggestions="true"
+    android:supportsSwitchingToNextInputMethod="true">
+    <subtype android:label="@string/subtype_chinese"
+        android:imeSubtypeLocale="zh_CN" android:languageTag="zh-CN"
+        android:imeSubtypeMode="keyboard" android:subtypeId="1001" />
+    <subtype android:label="@string/subtype_english_us"
+        android:imeSubtypeLocale="en_US" android:languageTag="en-US"
+        android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" android:subtypeId="1002" />
+</input-method>

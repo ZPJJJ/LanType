@@ -1,0 +1,459 @@
+{
+  "apk": "/workspace/scratch/c1efc7ba12ce/deliverables/1.1.0/LanType-1.1.0-offline-arm64-v8a.apk",
+  "count": 12,
+  "allArm64": true,
+  "allElfLoadAligned16KiB": true,
+  "zipalign16KiBCheckPassed": true,
+  "compressedNativeLibraries": 12,
+  "extractNativeLibs": true,
+  "libraries": [
+    {
+      "path": "lib/arm64-v8a/libandroidx.graphics.path.so",
+      "abi": "arm64-v8a",
+      "size": 10096,
+      "sha256": "41e9a793c43a0f4fddb19e33f346bace464f30f888ba7b9eaf96294ea115bfb6",
+      "elfClass": 64,
+      "elfMachine": 183,
+      "ptLoad": [
+        {
+          "offset": 0,
+          "virtualAddress": 0,
+          "alignment": 16384,
+          "fileSize": 7232,
+          "memorySize": 7232,
+          "congruentAt16KiB": true
+        },
+        {
+          "offset": 7232,
+          "virtualAddress": 23616,
+          "alignment": 16384,
+          "fileSize": 912,
+          "memorySize": 912,
+          "congruentAt16KiB": true
+        },
+        {
+          "offset": 8144,
+          "virtualAddress": 40912,
+          "alignment": 16384,
+          "fileSize": 0,
+          "memorySize": 16,
+          "congruentAt16KiB": true
+        }
+      ],
+      "zipMethod": "deflate",
+      "zipDataOffset": 14166284,
+      "zipPageAlignmentApplicable": false,
+      "zipPageAlignmentReason": "Compressed native libraries are extracted at installation (extractNativeLibs=true); their ZIP byte offsets are not mmap page-alignment evidence."
+    },
+    {
+      "path": "lib/arm64-v8a/libc++_shared.so",
+      "abi": "arm64-v8a",
+      "size": 1292904,
+      "sha256": "4397241b4bd20a8e579bfb41d21107857e12985f6a01ca0c2a5f83380d1270b4",
+      "elfClass": 64,
+      "elfMachine": 183,
+      "ptLoad": [
+        {
+          "offset": 0,
+          "virtualAddress": 0,
+          "alignment": 16384,
+          "fileSize": 634024,
+          "memorySize": 634024,
+          "congruentAt16KiB": true
+        },
+        {
+          "offset": 634032,
+          "virtualAddress": 650416,
+          "alignment": 16384,
+          "fileSize": 616000,
+          "memorySize": 616000,
+          "congruentAt16KiB": true
+        },
+        {
+          "offset": 1250032,
+          "virtualAddress": 1282800,
+          "alignment": 16384,
+          "fileSize": 39760,
+          "memorySize": 40208,
+          "congruentAt16KiB": true
+        },
+        {
+          "offset": 1289792,
+          "virtualAddress": 1338944,
+          "alignment": 16384,
+          "fileSize": 568,
+          "memorySize": 32016,
+          "congruentAt16KiB": true
+        }
+      ],
+      "zipMethod": "deflate",
+      "zipDataOffset": 14170730,
+      "zipPageAlignmentApplicable": false,
+      "zipPageAlignmentReason": "Compressed native libraries are extracted at installation (extractNativeLibs=true); their ZIP byte offsets are not mmap page-alignment evidence."
+    },
+    {
+      "path": "lib/arm64-v8a/libcyime_cpubench.so",
+      "abi": "arm64-v8a",
+      "size": 350560,
+      "sha256": "1cf58ff2fd4f995bcdf3d3ed13aba64ce4dfbeefc4064175312d010284c382e1",
+      "elfClass": 64,
+      "elfMachine": 183,
+      "ptLoad": [
+        {
+          "offset": 0,
+          "virtualAddress": 0,
+          "alignment": 16384,
+          "fileSize": 328560,
+          "memorySize": 328560,
+          "congruentAt16KiB": true
+        },
+        {
+          "offset": 328560,
+          "virtualAddress": 344944,
+          "alignment": 16384,
+          "fileSize": 18976,
+          "memorySize": 19600,
+          "congruentAt16KiB": true
+        },
+        {
+          "offset": 347536,
+          "virtualAddress": 380304,
+          "alignment": 16384,
+          "fileSize": 368,
+          "memorySize": 4560,
+          "congruentAt16KiB": true
+        }
+      ],
+      "zipMethod": "deflate",
+      "zipDataOffset": 14577357,
+      "zipPageAlignmentApplicable": false,
+      "zipPageAlignmentReason": "Compressed native libraries are extracted at installation (extractNativeLibs=true); their ZIP byte offsets are not mmap page-alignment evidence."
+    },
+    {
+      "path": "lib/arm64-v8a/libimage_processing_util_jni.so",
+      "abi": "arm64-v8a",
+      "size": 30048,
+      "sha256": "0f69c4cb30faaa53efea372d7fa4ac765e586183b386c5d178de334162fba3de",
+      "elfClass": 64,
+      "elfMachine": 183,
+      "ptLoad": [
+        {
+          "offset": 0,
+          "virtualAddress": 0,
+          "alignment": 16384,
+          "fileSize": 27392,
+          "memorySize": 27392,
+          "congruentAt16KiB": true
+        },
+        {
+          "offset": 27392,
+          "virtualAddress": 43776,
+          "alignment": 16384,
+          "fileSize": 664,
+          "memorySize": 1280,
+          "congruentAt16KiB": true
+        },
+        {
+          "offset": 28056,
+          "virtualAddress": 60824,
+          "alignment": 16384,
+          "fileSize": 0,
+          "memorySize": 4,
+          "congruentAt16KiB": true
+        }
+      ],
+      "zipMethod": "deflate",
+      "zipDataOffset": 14696526,
+      "zipPageAlignmentApplicable": false,
+      "zipPageAlignmentReason": "Compressed native libraries are extracted at installation (extractNativeLibs=true); their ZIP byte offsets are not mmap page-alignment evidence."
+    },
+    {
+      "path": "lib/arm64-v8a/libonnx_env.so",
+      "abi": "arm64-v8a",
+      "size": 349320,
+      "sha256": "a23971076085f2494d753c21dc1376c9186d35821681e6f095427e796702c864",
+      "elfClass": 64,
+      "elfMachine": 183,
+      "ptLoad": [
+        {
+          "offset": 0,
+          "virtualAddress": 0,
+          "alignment": 16384,
+          "fileSize": 327296,
+          "memorySize": 327296,
+          "congruentAt16KiB": true
+        },
+        {
+          "offset": 327296,
+          "virtualAddress": 343680,
+          "alignment": 16384,
+          "fileSize": 19000,
+          "memorySize": 20864,
+          "congruentAt16KiB": true
+        },
+        {
+          "offset": 346296,
+          "virtualAddress": 379064,
+          "alignment": 16384,
+          "fileSize": 368,
+          "memorySize": 4616,
+          "congruentAt16KiB": true
+        }
+      ],
+      "zipMethod": "deflate",
+      "zipDataOffset": 14712073,
+      "zipPageAlignmentApplicable": false,
+      "zipPageAlignmentReason": "Compressed native libraries are extracted at installation (extractNativeLibs=true); their ZIP byte offsets are not mmap page-alignment evidence."
+    },
+    {
+      "path": "lib/arm64-v8a/libonnx_jni.so",
+      "abi": "arm64-v8a",
+      "size": 126448,
+      "sha256": "48a147747104bb4f7a274fab23139a31f39d407a10a2e659b1e395388b849fd9",
+      "elfClass": 64,
+      "elfMachine": 183,
+      "ptLoad": [
+        {
+          "offset": 0,
+          "virtualAddress": 0,
+          "alignment": 16384,
+          "fileSize": 122544,
+          "memorySize": 122544,
+          "congruentAt16KiB": true
+        },
+        {
+          "offset": 122544,
+          "virtualAddress": 138928,
+          "alignment": 16384,
+          "fileSize": 1280,
+          "memorySize": 4432,
+          "congruentAt16KiB": true
+        },
+        {
+          "offset": 123824,
+          "virtualAddress": 156592,
+          "alignment": 16384,
+          "fileSize": 48,
+          "memorySize": 2360,
+          "congruentAt16KiB": true
+        }
+      ],
+      "zipMethod": "deflate",
+      "zipDataOffset": 14829987,
+      "zipPageAlignmentApplicable": false,
+      "zipPageAlignmentReason": "Compressed native libraries are extracted at installation (extractNativeLibs=true); their ZIP byte offsets are not mmap page-alignment evidence."
+    },
+    {
+      "path": "lib/arm64-v8a/libonnxruntime.so",
+      "abi": "arm64-v8a",
+      "size": 28637280,
+      "sha256": "f826d8efb03adf0a84f10e7ba408f9d4cd11b0a2ccd8d08aeb0f7451fb50cacc",
+      "elfClass": 64,
+      "elfMachine": 183,
+      "ptLoad": [
+        {
+          "offset": 0,
+          "virtualAddress": 0,
+          "alignment": 16384,
+          "fileSize": 27973984,
+          "memorySize": 27973984,
+          "congruentAt16KiB": true
+        },
+        {
+          "offset": 27973984,
+          "virtualAddress": 27990368,
+          "alignment": 16384,
+          "fileSize": 652184,
+          "memorySize": 652960,
+          "congruentAt16KiB": true
+        },
+        {
+          "offset": 28626168,
+          "virtualAddress": 28658936,
+          "alignment": 16384,
+          "fileSize": 8664,
+          "memorySize": 83744,
+          "congruentAt16KiB": true
+        }
+      ],
+      "zipMethod": "deflate",
+      "zipDataOffset": 14872308,
+      "zipPageAlignmentApplicable": false,
+      "zipPageAlignmentReason": "Compressed native libraries are extracted at installation (extractNativeLibs=true); their ZIP byte offsets are not mmap page-alignment evidence."
+    },
+    {
+      "path": "lib/arm64-v8a/libonnxruntime4j_jni.so",
+      "abi": "arm64-v8a",
+      "size": 111648,
+      "sha256": "99db53ca399095cfa17f3f40924b1012a0ff5846c32198e8cef01dd8480f6b45",
+      "elfClass": 64,
+      "elfMachine": 183,
+      "ptLoad": [
+        {
+          "offset": 0,
+          "virtualAddress": 0,
+          "alignment": 16384,
+          "fileSize": 80544,
+          "memorySize": 80544,
+          "congruentAt16KiB": true
+        },
+        {
+          "offset": 80544,
+          "virtualAddress": 96928,
+          "alignment": 16384,
+          "fileSize": 832,
+          "memorySize": 1376,
+          "congruentAt16KiB": true
+        }
+      ],
+      "zipMethod": "deflate",
+      "zipDataOffset": 25445464,
+      "zipPageAlignmentApplicable": false,
+      "zipPageAlignmentReason": "Compressed native libraries are extracted at installation (extractNativeLibs=true); their ZIP byte offsets are not mmap page-alignment evidence."
+    },
+    {
+      "path": "lib/arm64-v8a/libopencv_java4.so",
+      "abi": "arm64-v8a",
+      "size": 23465088,
+      "sha256": "144bbc9ad0b0bac4ba58f7d53198aead64379e5314f68200968c703d2c1c14ab",
+      "elfClass": 64,
+      "elfMachine": 183,
+      "ptLoad": [
+        {
+          "offset": 0,
+          "virtualAddress": 0,
+          "alignment": 16384,
+          "fileSize": 22731088,
+          "memorySize": 22731088,
+          "congruentAt16KiB": true
+        },
+        {
+          "offset": 22731088,
+          "virtualAddress": 22747472,
+          "alignment": 16384,
+          "fileSize": 444736,
+          "memorySize": 448176,
+          "congruentAt16KiB": true
+        },
+        {
+          "offset": 23175824,
+          "virtualAddress": 23208592,
+          "alignment": 16384,
+          "fileSize": 287184,
+          "memorySize": 1381392,
+          "congruentAt16KiB": true
+        }
+      ],
+      "zipMethod": "deflate",
+      "zipDataOffset": 25477255,
+      "zipPageAlignmentApplicable": false,
+      "zipPageAlignmentReason": "Compressed native libraries are extracted at installation (extractNativeLibs=true); their ZIP byte offsets are not mmap page-alignment evidence."
+    },
+    {
+      "path": "lib/arm64-v8a/librime_jni.so",
+      "abi": "arm64-v8a",
+      "size": 7458176,
+      "sha256": "b1aa35c250e301119d19473c10b493486e2a80537bcf70501748c294b909d16f",
+      "elfClass": 64,
+      "elfMachine": 183,
+      "ptLoad": [
+        {
+          "offset": 0,
+          "virtualAddress": 0,
+          "alignment": 16384,
+          "fileSize": 7280000,
+          "memorySize": 7280000,
+          "congruentAt16KiB": true
+        },
+        {
+          "offset": 7280000,
+          "virtualAddress": 7296384,
+          "alignment": 16384,
+          "fileSize": 171952,
+          "memorySize": 174720,
+          "congruentAt16KiB": true
+        },
+        {
+          "offset": 7451952,
+          "virtualAddress": 7484720,
+          "alignment": 16384,
+          "fileSize": 3568,
+          "memorySize": 98952,
+          "congruentAt16KiB": true
+        }
+      ],
+      "zipMethod": "deflate",
+      "zipDataOffset": 34817123,
+      "zipPageAlignmentApplicable": false,
+      "zipPageAlignmentReason": "Compressed native libraries are extracted at installation (extractNativeLibs=true); their ZIP byte offsets are not mmap page-alignment evidence."
+    },
+    {
+      "path": "lib/arm64-v8a/libsherpa-onnx-jni.so",
+      "abi": "arm64-v8a",
+      "size": 24169352,
+      "sha256": "b4a53d915c19cb6d09b1cdc9a8084be54419b647aab9097ffdfb46f30c3c4dd8",
+      "elfClass": 64,
+      "elfMachine": 183,
+      "ptLoad": [
+        {
+          "offset": 0,
+          "virtualAddress": 0,
+          "alignment": 16384,
+          "fileSize": 23767520,
+          "memorySize": 23767520,
+          "congruentAt16KiB": true
+        },
+        {
+          "offset": 23767520,
+          "virtualAddress": 23783904,
+          "alignment": 16384,
+          "fileSize": 395088,
+          "memorySize": 398880,
+          "congruentAt16KiB": true
+        },
+        {
+          "offset": 24162608,
+          "virtualAddress": 24195376,
+          "alignment": 16384,
+          "fileSize": 4592,
+          "memorySize": 127784,
+          "congruentAt16KiB": true
+        }
+      ],
+      "zipMethod": "deflate",
+      "zipDataOffset": 37508765,
+      "zipPageAlignmentApplicable": false,
+      "zipPageAlignmentReason": "Compressed native libraries are extracted at installation (extractNativeLibs=true); their ZIP byte offsets are not mmap page-alignment evidence."
+    },
+    {
+      "path": "lib/arm64-v8a/libsurface_util_jni.so",
+      "abi": "arm64-v8a",
+      "size": 4896,
+      "sha256": "1b8a49ebdf42e18ef9722a5947751fb0dcc2f362805353ca63a4423d1a14e78a",
+      "elfClass": 64,
+      "elfMachine": 183,
+      "ptLoad": [
+        {
+          "offset": 0,
+          "virtualAddress": 0,
+          "alignment": 16384,
+          "fileSize": 2480,
+          "memorySize": 2480,
+          "congruentAt16KiB": true
+        },
+        {
+          "offset": 2480,
+          "virtualAddress": 18864,
+          "alignment": 16384,
+          "fileSize": 568,
+          "memorySize": 1616,
+          "congruentAt16KiB": true
+        }
+      ],
+      "zipMethod": "deflate",
+      "zipDataOffset": 46494518,
+      "zipPageAlignmentApplicable": false,
+      "zipPageAlignmentReason": "Compressed native libraries are extracted at installation (extractNativeLibs=true); their ZIP byte offsets are not mmap page-alignment evidence."
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.kingzcheung.xime.service.InputPrivacyTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2026-11-17T02:23:04.591Z" hostname="66ec0b799489" time="0.034">
+  <properties/>
+  <testcase name="theSavedSwitchWaitsForTheFirstField" classname="com.kingzcheung.xime.service.InputPrivacyTest" time="0.027"/>
+  <testcase name="theManualSwitchDuringSearchOutlivesIt" classname="com.kingzcheung.xime.service.InputPrivacyTest" time="0.0"/>
+  <testcase name="cabinAndClipboardSearchReleaseTheirOwnSourceIndependently" classname="com.kingzcheung.xime.service.InputPrivacyTest" time="0.0"/>
+  <testcase name="clipboardCountsOnlyAnOpenHiddenPasswordField" classname="com.kingzcheung.xime.service.InputPrivacyTest" time="0.0"/>
+  <testcase name="aFieldChangeDuringSearchIsNotUndoneWhenSearchCloses" classname="com.kingzcheung.xime.service.InputPrivacyTest" time="0.0"/>
+  <testcase name="closingCabinDoesNotDisableManualOrNewPasswordFieldPrivacy" classname="com.kingzcheung.xime.service.InputPrivacyTest" time="0.0"/>
+  <testcase name="searchOpenedInAPasswordFieldKeepsItPrivateAfterClosing" classname="com.kingzcheung.xime.service.InputPrivacyTest" time="0.001"/>
+  <testcase name="theEngineFollowsEveryFieldOnceWithoutRepeats" classname="com.kingzcheung.xime.service.InputPrivacyTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

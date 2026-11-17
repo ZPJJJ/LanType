@@ -1,0 +1,397 @@
+{
+  "schemaVersion": 1,
+  "edition": "1.1.0",
+  "generatedAtUtc": "2026-11-17T02:54:30.559031+00:00",
+  "uniqueLatestClasses": 20,
+  "uniqueLatestResults": {
+    "tests": 124,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "totalTestExecutions": 188,
+  "resultPolicy": "Use the latest result per class; repeated render cases are not counted as additional coverage. All raw runs, including diagnostic failures, are retained.",
+  "runs": [
+    {
+      "id": "round1",
+      "note": "Initial run; Mockito premain and contraction asset issues, one missing render environment skip",
+      "classes": [
+        {
+          "class": "com.kingzcheung.xime.association.AmericanEnglishSpellingTest",
+          "timestamp": "2026-11-17T02:09:53.251Z",
+          "seconds": 0.061,
+          "tests": 6,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "class": "com.kingzcheung.xime.association.EnglishAssociationStartupTest",
+          "timestamp": "2026-11-17T02:09:53.321Z",
+          "seconds": 21.561,
+          "tests": 7,
+          "failures": 7,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "class": "com.kingzcheung.xime.association.EnglishContractionCompletionTest",
+          "timestamp": "2026-11-17T02:10:14.885Z",
+          "seconds": 0.008,
+          "tests": 5,
+          "failures": 1,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "class": "com.kingzcheung.xime.association.EnglishTypoCorrectionsTest",
+          "timestamp": "2026-11-17T02:10:14.896Z",
+          "seconds": 0.021,
+          "tests": 5,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "class": "com.kingzcheung.xime.service.EnglishAutoSpaceTest",
+          "timestamp": "2026-11-17T02:10:14.921Z",
+          "seconds": 0.01,
+          "tests": 9,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "class": "com.kingzcheung.xime.service.EnglishCompletionEditorTest",
+          "timestamp": "2026-11-17T02:10:15.116Z",
+          "seconds": 5.288,
+          "tests": 10,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "class": "com.kingzcheung.xime.ui.render.LanTypeOfflineUiTest",
+          "timestamp": "2026-11-17T02:10:20.417Z",
+          "seconds": 5.009,
+          "tests": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "class": "com.kingzcheung.xime.ui.render.SettingsHomeRenderTest",
+          "timestamp": "2026-11-17T02:10:25.430Z",
+          "seconds": 0.071,
+          "tests": 1,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 1
+        },
+        {
+          "class": "com.kingzcheung.xime.ui.render.VerificationCodePermissionTest",
+          "timestamp": "2026-11-17T02:10:25.506Z",
+          "seconds": 0.14,
+          "tests": 1,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "class": "com.kingzcheung.xime.ui.settings.CreditsTest",
+          "timestamp": "2026-11-17T02:10:25.650Z",
+          "seconds": 0.002,
+          "tests": 4,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      ],
+      "tests": 50,
+      "failures": 8,
+      "errors": 0,
+      "skipped": 1
+    },
+    {
+      "id": "round2",
+      "note": "Full targeted set; all passed after fixes",
+      "classes": [
+        {
+          "class": "com.kingzcheung.xime.association.AmericanEnglishSpellingTest",
+          "timestamp": "2026-11-17T02:13:30.378Z",
+          "seconds": 0.008,
+          "tests": 6,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "class": "com.kingzcheung.xime.association.EnglishAssociationStartupTest",
+          "timestamp": "2026-11-17T02:13:29.303Z",
+          "seconds": 1.058,
+          "tests": 7,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "class": "com.kingzcheung.xime.association.EnglishContractionCompletionTest",
+          "timestamp": "2026-11-17T02:13:30.366Z",
+          "seconds": 0.007,
+          "tests": 5,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "class": "com.kingzcheung.xime.association.EnglishTypoCorrectionsTest",
+          "timestamp": "2026-11-17T02:13:30.388Z",
+          "seconds": 0.009,
+          "tests": 5,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "class": "com.kingzcheung.xime.keyboard.QuickActionLayoutTest",
+          "timestamp": "2026-11-17T02:13:30.399Z",
+          "seconds": 0.003,
+          "tests": 5,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "class": "com.kingzcheung.xime.service.EnglishAutoSpaceTest",
+          "timestamp": "2026-11-17T02:13:30.404Z",
+          "seconds": 0.009,
+          "tests": 9,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "class": "com.kingzcheung.xime.service.EnglishCompletionEditorTest",
+          "timestamp": "2026-11-17T02:13:30.575Z",
+          "seconds": 4.271,
+          "tests": 10,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "class": "com.kingzcheung.xime.service.ToolCabinEditorTest",
+          "timestamp": "2026-11-17T02:13:34.856Z",
+          "seconds": 1.072,
+          "tests": 24,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "class": "com.kingzcheung.xime.service.ToolCabinQueueBoundaryTest",
+          "timestamp": "2026-11-17T02:13:35.930Z",
+          "seconds": 0.114,
+          "tests": 1,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "class": "com.kingzcheung.xime.toolcabin.DynamicTemplateTest",
+          "timestamp": "2026-11-17T02:13:36.046Z",
+          "seconds": 0.002,
+          "tests": 4,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "class": "com.kingzcheung.xime.toolcabin.TextTransformsTest",
+          "timestamp": "2026-11-17T02:13:36.049Z",
+          "seconds": 0.02,
+          "tests": 6,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "class": "com.kingzcheung.xime.toolcabin.UnitConverterTest",
+          "timestamp": "2026-11-17T02:13:36.071Z",
+          "seconds": 0.012,
+          "tests": 5,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "class": "com.kingzcheung.xime.ui.render.LanTypeOfflineUiTest",
+          "timestamp": "2026-11-17T02:13:36.092Z",
+          "seconds": 4.95,
+          "tests": 2,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "class": "com.kingzcheung.xime.ui.render.SettingsHomeRenderTest",
+          "timestamp": "2026-11-17T02:13:41.045Z",
+          "seconds": 0.98,
+          "tests": 1,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "class": "com.kingzcheung.xime.ui.render.ToolCabinRenderTest",
+          "timestamp": "2026-11-17T02:13:42.029Z",
+          "seconds": 1.145,
+          "tests": 4,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "class": "com.kingzcheung.xime.ui.render.VerificationCodePermissionTest",
+          "timestamp": "2026-11-17T02:13:43.180Z",
+          "seconds": 0.071,
+          "tests": 1,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        {
+          "class": "com.kingzcheung.xime.ui.settings.CreditsTest",
+          "timestamp": "2026-11-17T02:13:43.253Z",
+          "seconds": 0.002,
+          "tests": 4,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      ],
+      "tests": 99,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "id": "render-retry",
+      "note": "Dark theme/short panel fix; first manual-canvas render",
+      "classes": [
+        {
+          "class": "com.kingzcheung.xime.ui.render.ToolCabinRenderTest",
+          "timestamp": "2026-11-17T02:17:33.915Z",
+          "seconds": 8.319,
+          "tests": 5,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      ],
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "id": "commercial-assets",
+      "note": "Real AssetManager regression tests for handwriting, associations and SCOWL",
+      "classes": [
+        {
+          "class": "com.kingzcheung.xime.resources.CommercialAssetPackagingTest",
+          "timestamp": "2026-11-17T02:21:26.706Z",
+          "seconds": 4.485,
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      ],
+      "tests": 3,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "id": "input-privacy",
+      "note": "Tool cabin incognito isolation",
+      "classes": [
+        {
+          "class": "com.kingzcheung.xime.service.InputPrivacyTest",
+          "timestamp": "2026-11-17T02:23:04.591Z",
+          "seconds": 0.034,
+          "tests": 8,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      ],
+      "tests": 8,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "id": "capture-environment-failure",
+      "note": "Compose captureToImage timeout in Robolectric; capture mechanism only",
+      "classes": [
+        {
+          "class": "com.kingzcheung.xime.ui.render.ToolCabinRenderTest",
+          "timestamp": "2026-11-17T02:24:46.370Z",
+          "seconds": 18.287,
+          "tests": 5,
+          "failures": 5,
+          "errors": 0,
+          "skipped": 0
+        }
+      ],
+      "tests": 5,
+      "failures": 5,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "id": "render-final",
+      "note": "Complete manual redraw fallback, five passing render tests",
+      "classes": [
+        {
+          "class": "com.kingzcheung.xime.ui.render.ToolCabinRenderTest",
+          "timestamp": "2026-11-17T02:28:39.574Z",
+          "seconds": 9.005,
+          "tests": 5,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      ],
+      "tests": 5,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    {
+      "id": "language-preferences",
+      "note": "Chinese/English supported-language boundary and stored preference regressions",
+      "classes": [
+        {
+          "class": "com.kingzcheung.xime.settings.LanguageSwitchPreferencesTest",
+          "timestamp": "2026-11-17T02:51:39.641Z",
+          "seconds": 0.097,
+          "tests": 13,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        }
+      ],
+      "tests": 13,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  ],
+  "sourceOfEvidence": "All XML files were produced in this 1.1.0 task. No 1.0.0 historical report was reused.",
+  "runner": "scripts/test-targeted.sh",
+  "jvmConfiguration": "scripts/test-runtime.init.gradle",
+  "deviceTestsExecuted": false
+}

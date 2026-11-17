@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.kingzcheung.xime.service.ToolCabinEditorTest" tests="24" skipped="0" failures="0" errors="0" timestamp="2026-11-17T02:13:34.856Z" hostname="66ec0b799489" time="1.072">
+  <properties/>
+  <testcase name="invalidSurrogateCursorAndExcessiveOutputAreRejectedBeforeWriting[30]" classname="com.kingzcheung.xime.service.ToolCabinEditorTest" time="0.042"/>
+  <testcase name="invalidSurrogateCursorAndExcessiveOutputAreRejectedBeforeWriting" classname="com.kingzcheung.xime.service.ToolCabinEditorTest" time="0.055"/>
+  <testcase name="cursorOrBatchFailureAfterACommitDoesNotInviteDuplicateInsertion[30]" classname="com.kingzcheung.xime.service.ToolCabinEditorTest" time="0.083"/>
+  <testcase name="cursorOrBatchFailureAfterACommitDoesNotInviteDuplicateInsertion" classname="com.kingzcheung.xime.service.ToolCabinEditorTest" time="0.049"/>
+  <testcase name="explicitlyReadSelectionCanBeReplacedWithoutTouchingItsNeighbors[30]" classname="com.kingzcheung.xime.service.ToolCabinEditorTest" time="0.046"/>
+  <testcase name="explicitlyReadSelectionCanBeReplacedWithoutTouchingItsNeighbors" classname="com.kingzcheung.xime.service.ToolCabinEditorTest" time="0.047"/>
+  <testcase name="previewAndTargetCaptureNeverReadOrWriteTheHost[30]" classname="com.kingzcheung.xime.service.ToolCabinEditorTest" time="0.051"/>
+  <testcase name="previewAndTargetCaptureNeverReadOrWriteTheHost" classname="com.kingzcheung.xime.service.ToolCabinEditorTest" time="0.048"/>
+  <testcase name="changedSelectedTextWithTheSameRangeCannotBeOverwritten[30]" classname="com.kingzcheung.xime.service.ToolCabinEditorTest" time="0.033"/>
+  <testcase name="changedSelectedTextWithTheSameRangeCannotBeOverwritten" classname="com.kingzcheung.xime.service.ToolCabinEditorTest" time="0.036"/>
+  <testcase name="typingStaysInTheCabinWhenItsNativeFieldTemporarilyLosesFocus[30]" classname="com.kingzcheung.xime.service.ToolCabinEditorTest" time="0.068"/>
+  <testcase name="typingStaysInTheCabinWhenItsNativeFieldTemporarilyLosesFocus" classname="com.kingzcheung.xime.service.ToolCabinEditorTest" time="0.063"/>
+  <testcase name="movingTheCaretAfterPreviewDoesNotInsertAtAnUnexpectedPosition[30]" classname="com.kingzcheung.xime.service.ToolCabinEditorTest" time="0.038"/>
+  <testcase name="movingTheCaretAfterPreviewDoesNotInsertAtAnUnexpectedPosition" classname="com.kingzcheung.xime.service.ToolCabinEditorTest" time="0.039"/>
+  <testcase name="rejectedInsertionPreservesTheHostAndAllowsTheUserToKeepThePreview[30]" classname="com.kingzcheung.xime.service.ToolCabinEditorTest" time="0.036"/>
+  <testcase name="rejectedInsertionPreservesTheHostAndAllowsTheUserToKeepThePreview" classname="com.kingzcheung.xime.service.ToolCabinEditorTest" time="0.05"/>
+  <testcase name="switchedSessionOrConnectionRejectsOldPreview[30]" classname="com.kingzcheung.xime.service.ToolCabinEditorTest" time="0.033"/>
+  <testcase name="switchedSessionOrConnectionRejectsOldPreview" classname="com.kingzcheung.xime.service.ToolCabinEditorTest" time="0.028"/>
+  <testcase name="restrictedOrDisconnectedEditorsAreNotReadAndCannotAcceptResults[30]" classname="com.kingzcheung.xime.service.ToolCabinEditorTest" time="0.032"/>
+  <testcase name="restrictedOrDisconnectedEditorsAreNotReadAndCannotAcceptResults" classname="com.kingzcheung.xime.service.ToolCabinEditorTest" time="0.029"/>
+  <testcase name="compositionStartedAfterPreviewCannotBeReplacedByAToolResult[30]" classname="com.kingzcheung.xime.service.ToolCabinEditorTest" time="0.042"/>
+  <testcase name="compositionStartedAfterPreviewCannotBeReplacedByAToolResult" classname="com.kingzcheung.xime.service.ToolCabinEditorTest" time="0.049"/>
+  <testcase name="cSharpTemplateCursorGoesInsideTheQuotesInTheActualEditor[30]" classname="com.kingzcheung.xime.service.ToolCabinEditorTest" time="0.038"/>
+  <testcase name="cSharpTemplateCursorGoesInsideTheQuotesInTheActualEditor" classname="com.kingzcheung.xime.service.ToolCabinEditorTest" time="0.033"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

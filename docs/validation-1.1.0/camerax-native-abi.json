@@ -1,0 +1,59 @@
+{
+  "pass": true,
+  "actualNativeRebuild": true,
+  "cameraVersion": "1.6.2",
+  "libyuvCommit": "741c38751c436f60c583110f617340b7f3322d94",
+  "records": [
+    {
+      "library": "libimage_processing_util_jni.so",
+      "jniExportsIdentical": true,
+      "jniExports": [
+        "Java_androidx_camera_core_ImageProcessingUtil_nativeConvertAndroid420ToABGR@@VERS_1.0",
+        "Java_androidx_camera_core_ImageProcessingUtil_nativeConvertAndroid420ToBitmap@@VERS_1.0",
+        "Java_androidx_camera_core_ImageProcessingUtil_nativeCopyBetweenByteBufferAndBitmap@@VERS_1.0",
+        "Java_androidx_camera_core_ImageProcessingUtil_nativeGetYUVImageVUOff@@VERS_1.0",
+        "Java_androidx_camera_core_ImageProcessingUtil_nativeNewDirectByteBuffer@@VERS_1.0",
+        "Java_androidx_camera_core_ImageProcessingUtil_nativeRotateYUV@@VERS_1.0",
+        "Java_androidx_camera_core_ImageProcessingUtil_nativeShiftPixel@@VERS_1.0",
+        "Java_androidx_camera_core_ImageProcessingUtil_nativeWriteJpegToSurface@@VERS_1.0"
+      ],
+      "originalSha256": "0292b063fafccf734472cbb59588e756c2dbca907c72021ba6fbf126385508a2",
+      "rebuiltSha256": "0f69c4cb30faaa53efea372d7fa4ac765e586183b386c5d178de334162fba3de",
+      "loadAlignments": [
+        16384,
+        16384,
+        16384
+      ],
+      "needed": [
+        "libandroid.so",
+        "libc.so",
+        "libdl.so",
+        "libjnigraphics.so",
+        "liblog.so",
+        "libm.so"
+      ],
+      "soname": "libimage_processing_util_jni.so"
+    },
+    {
+      "library": "libsurface_util_jni.so",
+      "jniExportsIdentical": true,
+      "jniExports": [
+        "Java_androidx_camera_core_impl_utils_SurfaceUtil_nativeGetSurfaceInfo@@VERS_1.0"
+      ],
+      "originalSha256": "a5c9d1928ea92ec7a94dff8cf666e7739cd734198b9f0ae1d4e28ea3c86516ba",
+      "rebuiltSha256": "1b8a49ebdf42e18ef9722a5947751fb0dcc2f362805353ca63a4423d1a14e78a",
+      "loadAlignments": [
+        16384,
+        16384
+      ],
+      "needed": [
+        "libandroid.so",
+        "libc.so",
+        "libdl.so",
+        "libm.so"
+      ],
+      "soname": "libsurface_util_jni.so"
+    }
+  ],
+  "deviceExecutionTested": false
+}

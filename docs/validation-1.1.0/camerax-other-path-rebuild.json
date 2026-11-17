@@ -1,0 +1,20 @@
+{
+  "generatedAtUtc": "2026-11-17T02:55:52.274350+00:00",
+  "scope": "Two CameraX JNI libraries only; fresh CMake/Ninja build at a different absolute checkout path on the same host and pinned toolchain.",
+  "differentHostTested": false,
+  "pass": true,
+  "records": [
+    {
+      "library": "libimage_processing_util_jni.so",
+      "expectedSha256": "0f69c4cb30faaa53efea372d7fa4ac765e586183b386c5d178de334162fba3de",
+      "freshOtherPathSha256": "0f69c4cb30faaa53efea372d7fa4ac765e586183b386c5d178de334162fba3de",
+      "same": true
+    },
+    {
+      "library": "libsurface_util_jni.so",
+      "expectedSha256": "1b8a49ebdf42e18ef9722a5947751fb0dcc2f362805353ca63a4423d1a14e78a",
+      "freshOtherPathSha256": "1b8a49ebdf42e18ef9722a5947751fb0dcc2f362805353ca63a4423d1a14e78a",
+      "same": true
+    }
+  ]
+}

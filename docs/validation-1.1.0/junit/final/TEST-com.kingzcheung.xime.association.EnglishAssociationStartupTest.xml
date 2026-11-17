@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.kingzcheung.xime.association.EnglishAssociationStartupTest" tests="7" skipped="0" failures="0" errors="0" timestamp="2026-11-17T02:13:29.303Z" hostname="66ec0b799489" time="1.058">
+  <properties/>
+  <testcase name="typedSpellingWithoutApostropheOffersTheContraction" classname="com.kingzcheung.xime.association.EnglishAssociationStartupTest" time="0.806"/>
+  <testcase name="keyboardStartupDoesNotOpenEnglishDictionaryUntilTheFirstCompletion" classname="com.kingzcheung.xime.association.EnglishAssociationStartupTest" time="0.116"/>
+  <testcase name="firstEnglishRequestLoadsBundledWordsWithoutPriorWarmUp" classname="com.kingzcheung.xime.association.EnglishAssociationStartupTest" time="0.028"/>
+  <testcase name="suggestionsPreserveTypedCaseAndKeepTheSameRanking" classname="com.kingzcheung.xime.association.EnglishAssociationStartupTest" time="0.026"/>
+  <testcase name="usEnglishCompletionOffersAmericanSpellingAndPreservesTheLiteral" classname="com.kingzcheung.xime.association.EnglishAssociationStartupTest" time="0.028"/>
+  <testcase name="failedInitialLoadCanRecoverOnTheNextEnglishRequest" classname="com.kingzcheung.xime.association.EnglishAssociationStartupTest" time="0.025"/>
+  <testcase name="simultaneousFirstWordsShareASingleDictionaryLoad" classname="com.kingzcheung.xime.association.EnglishAssociationStartupTest" time="0.024"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

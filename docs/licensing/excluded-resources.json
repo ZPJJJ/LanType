@@ -1,0 +1,1768 @@
+{
+  "schemaVersion": 1,
+  "excluded": [
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/ChaiPUA-0.2.7-snow.ttf",
+      "assetPath": "ChaiPUA-0.2.7-snow.ttf",
+      "sha256": "d27872811c926f62e305e6b57c08e30dfa7b47c2676e21afda3cc0bd1d0e3d97",
+      "size": 438568,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/association/LCCC-LICENSE-and-source.md",
+      "assetPath": "association/LCCC-LICENSE-and-source.md",
+      "sha256": "2edc281c34969e7cd9bb9c2ba4f3190128a71cc0dc27c4363da45456bd3b744d",
+      "size": 6453,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/association/lccc-base-v1.bin",
+      "assetPath": "association/lccc-base-v1.bin",
+      "sha256": "a8e76e91022e611afa34dad541d7574ec89119bfdbf4fcc216aed40ea710ddb4",
+      "size": 2428256,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/association/lccc-base-v1.completions",
+      "assetPath": "association/lccc-base-v1.completions",
+      "sha256": "9ed1a2cb116ea9d28f09e07b584f163c80832ba62d3e134c37fe5dfa48fe5f69",
+      "size": 351060,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/association/lccc-base-v1.manifest.json",
+      "assetPath": "association/lccc-base-v1.manifest.json",
+      "sha256": "f8471c1bdaccef5d7700c9f925ad276fc04882359c98def796c266c438187c8c",
+      "size": 1911,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/azookey/dictionary.version",
+      "assetPath": "azookey/dictionary.version",
+      "sha256": "41519fbb5e958c53c898e123508a71a66eef15fb28c9e249294e374ada1d99b8",
+      "size": 64,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/azookey/dictionary.zip",
+      "assetPath": "azookey/dictionary.zip",
+      "sha256": "0fd3bb8689ee4fde6519d0d12ad4fbc7e000d112be566ddae80499c6cbc7c486",
+      "size": 19213569,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/bundled-models/manifest.json",
+      "assetPath": "bundled-models/manifest.json",
+      "sha256": "d7db9d7e36dcf67426a3428fd11079f46d323b899fed39336c4ccf30898fdc97",
+      "size": 1841,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/bundled-models/ochwpro/char_index.json",
+      "assetPath": "bundled-models/ochwpro/char_index.json",
+      "sha256": "171cf2ac23731428ac9dd28f64be82dece5f66a0ca3d674ffb3b567b51532176",
+      "size": 51317,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/bundled-models/ochwpro/ochwpro.onnx",
+      "assetPath": "bundled-models/ochwpro/ochwpro.onnx",
+      "sha256": "8a6095f9ccd222fa391d4e98e2795f478d3d88daaa62d4844677fac18c7acb02",
+      "size": 7001270,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/bundled-models/sensevoice-multilingual-int8/model.int8.onnx",
+      "assetPath": "bundled-models/sensevoice-multilingual-int8/model.int8.onnx",
+      "sha256": "c71f0ce00bec95b07744e116345e33d8cbbe08cef896382cf907bf4b51a2cd51",
+      "size": 239233841,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/bundled-models/sensevoice-multilingual-int8/tokens.txt",
+      "assetPath": "bundled-models/sensevoice-multilingual-int8/tokens.txt",
+      "sha256": "f449eb28dc567533d7fa59be34e2abca8784f771850c78a47fb731a31429a1dc",
+      "size": 315894,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/bundled-models/speaker-campplus-zh/3dspeaker_speech_campplus_sv_zh-cn_16k-common.onnx",
+      "assetPath": "bundled-models/speaker-campplus-zh/3dspeaker_speech_campplus_sv_zh-cn_16k-common.onnx",
+      "sha256": "f682b514c05d947ee3fa91cd6ec6c5c7543479a128373fa29b1faedccd21fd11",
+      "size": 28281138,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/cell_dictionaries/cell_builtin_anime.dict.yaml",
+      "assetPath": "cell_dictionaries/cell_builtin_anime.dict.yaml",
+      "sha256": "65bd767aee2648b34e4883f20e25a191ccffe53dd15587e83f3615122d7eeb3b",
+      "size": 35708,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/cell_dictionaries/cell_builtin_arknights.dict.yaml",
+      "assetPath": "cell_dictionaries/cell_builtin_arknights.dict.yaml",
+      "sha256": "1dd798903bd2143dfc2d77aabfe0de35a36e71f47bee84c243c18c8cf6c584b5",
+      "size": 202363,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/cell_dictionaries/cell_builtin_bluearchive.dict.yaml",
+      "assetPath": "cell_dictionaries/cell_builtin_bluearchive.dict.yaml",
+      "sha256": "7ae5a15b04b77318457ed631cd093d5b8c83164f2b3fe70299b12e3722e47d76",
+      "size": 12546,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/cell_dictionaries/cell_builtin_bluearchive.en.txt",
+      "assetPath": "cell_dictionaries/cell_builtin_bluearchive.en.txt",
+      "sha256": "1b0d3a0c27f7fab44b6c70e7d1b83b710796573eac52fadef9abbb8735314c9b",
+      "size": 916,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/cell_dictionaries/cell_builtin_cs2.dict.yaml",
+      "assetPath": "cell_dictionaries/cell_builtin_cs2.dict.yaml",
+      "sha256": "18f1b8b46b112779bb2a2821cd9a5403ed65a0d7bb85e40dca6da60c9f1e6829",
+      "size": 21591,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/cell_dictionaries/cell_builtin_cs2.en.txt",
+      "assetPath": "cell_dictionaries/cell_builtin_cs2.en.txt",
+      "sha256": "63243598d3e176dd526bde0422d3740848335d492ec230a334f632de5ed7af21",
+      "size": 2563,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/cell_dictionaries/cell_builtin_dota2.dict.yaml",
+      "assetPath": "cell_dictionaries/cell_builtin_dota2.dict.yaml",
+      "sha256": "a54ba494cf7488404b0e4d66932bee6dc84a05f4584a37e68bd6108bd2fc2983",
+      "size": 50267,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/cell_dictionaries/cell_builtin_dota2.en.txt",
+      "assetPath": "cell_dictionaries/cell_builtin_dota2.en.txt",
+      "sha256": "e62f1d7188d983181165f5edcc100a7f9ed4d1b550edb58bd54108da6ea1ffd3",
+      "size": 5527,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/cell_dictionaries/cell_builtin_endfield.dict.yaml",
+      "assetPath": "cell_dictionaries/cell_builtin_endfield.dict.yaml",
+      "sha256": "9ddb82df85c94a17afb50b9b9815ad0c2ed33de6c01a134ebed9ad1e1b13c4e5",
+      "size": 12575,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/cell_dictionaries/cell_builtin_endfield.en.txt",
+      "assetPath": "cell_dictionaries/cell_builtin_endfield.en.txt",
+      "sha256": "f02e944b89ff23739f6faa17eca97587d3651e10321738397b71ea3f8dfa44c0",
+      "size": 214,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/cell_dictionaries/cell_builtin_gacha.dict.yaml",
+      "assetPath": "cell_dictionaries/cell_builtin_gacha.dict.yaml",
+      "sha256": "5159ec495cc1ab1bd7a5696bdee5897371a5f9cecc2618e160784a7d88c75623",
+      "size": 11887,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/cell_dictionaries/cell_builtin_gacha.en.txt",
+      "assetPath": "cell_dictionaries/cell_builtin_gacha.en.txt",
+      "sha256": "2c0795f4542f68c043ba828e046123c1352682df00861cf5b1c9c63136f693f3",
+      "size": 1132,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/cell_dictionaries/cell_builtin_genshin.dict.yaml",
+      "assetPath": "cell_dictionaries/cell_builtin_genshin.dict.yaml",
+      "sha256": "4829f8a002828982c33ea33b1d5bbb12116d4cb84421bb1b679d02f35d14872c",
+      "size": 15828,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/cell_dictionaries/cell_builtin_genshin.en.txt",
+      "assetPath": "cell_dictionaries/cell_builtin_genshin.en.txt",
+      "sha256": "9c305c5972cebdab3dbbd758782eee89857f14cc19ad7d75c8a50c47e164b5e3",
+      "size": 1250,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/cell_dictionaries/cell_builtin_honkai3.dict.yaml",
+      "assetPath": "cell_dictionaries/cell_builtin_honkai3.dict.yaml",
+      "sha256": "4426f7969e46bed87d2e4e0a829bdd838ab36727c7557ba8c257dfd36792ef0b",
+      "size": 14265,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/cell_dictionaries/cell_builtin_honkai3.en.txt",
+      "assetPath": "cell_dictionaries/cell_builtin_honkai3.en.txt",
+      "sha256": "da30d57e5ac50fe6c9dfb4ce20944956fb36683228413e22cec7039fd76df924",
+      "size": 1450,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/cell_dictionaries/cell_builtin_hsr.dict.yaml",
+      "assetPath": "cell_dictionaries/cell_builtin_hsr.dict.yaml",
+      "sha256": "d041858ce72f984c67eeff37e4c7018cfe69ab57ce6db1df66a4b958bbb52277",
+      "size": 13758,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/cell_dictionaries/cell_builtin_hsr.en.txt",
+      "assetPath": "cell_dictionaries/cell_builtin_hsr.en.txt",
+      "sha256": "4b4bcd4e168c57a65c50a3f8a7b180f346b1470888eceb62deff2cdfc82d556d",
+      "size": 778,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/cell_dictionaries/cell_builtin_llm.dict.yaml",
+      "assetPath": "cell_dictionaries/cell_builtin_llm.dict.yaml",
+      "sha256": "1b77363038a898114753a961da4cacbcf93f1bb7339345ccd3fac973bcfd6f85",
+      "size": 43737,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/cell_dictionaries/cell_builtin_llm.en.txt",
+      "assetPath": "cell_dictionaries/cell_builtin_llm.en.txt",
+      "sha256": "12b2c3c72500560badf9a3a0c8f121f205835e6a2038f568a5bedcf41cd04de2",
+      "size": 3438,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/cell_dictionaries/cell_builtin_math.dict.yaml",
+      "assetPath": "cell_dictionaries/cell_builtin_math.dict.yaml",
+      "sha256": "0a67bb27bd945218b23c6a80d6fd3a7c6e07a389d7259839291412673141f7c3",
+      "size": 83070,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/cell_dictionaries/cell_builtin_math.en.txt",
+      "assetPath": "cell_dictionaries/cell_builtin_math.en.txt",
+      "sha256": "c6000691808e9355bc37635c12e704331e72ccec58af553143c7dd413905510f",
+      "size": 2372,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/cell_dictionaries/cell_builtin_ml.dict.yaml",
+      "assetPath": "cell_dictionaries/cell_builtin_ml.dict.yaml",
+      "sha256": "9ae8b98451b6197254e05db30546ad874a503db5663425be4fbe720a2bcaf30e",
+      "size": 70352,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/cell_dictionaries/cell_builtin_ml.en.txt",
+      "assetPath": "cell_dictionaries/cell_builtin_ml.en.txt",
+      "sha256": "c3e0d48930fafa945a57508f50342da6a342fd0bbd99e0e05961d70e79b795e8",
+      "size": 5377,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/cell_dictionaries/cell_builtin_movie.dict.yaml",
+      "assetPath": "cell_dictionaries/cell_builtin_movie.dict.yaml",
+      "sha256": "e6b4acca6f4f667937d22957a57b84ce05d1e63b6ae71e94e5669bee7a9735e8",
+      "size": 47040,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/cell_dictionaries/cell_builtin_movie.en.txt",
+      "assetPath": "cell_dictionaries/cell_builtin_movie.en.txt",
+      "sha256": "14e28799f78eacaa521763553c36f8160588a085f3862ca2cbd0faaefda926bf",
+      "size": 4110,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/cell_dictionaries/cell_builtin_onmyoji.dict.yaml",
+      "assetPath": "cell_dictionaries/cell_builtin_onmyoji.dict.yaml",
+      "sha256": "197dff28c54f6d2255b41f2c71fbf056ee2a61c4ed7a85865d251e8f05ff89cf",
+      "size": 10290,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/cell_dictionaries/cell_builtin_onmyoji.en.txt",
+      "assetPath": "cell_dictionaries/cell_builtin_onmyoji.en.txt",
+      "sha256": "64ee7fd79c35dc2b303447909a028222787e7820771e7ea243f2aa37f9780e1e",
+      "size": 121,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/cell_dictionaries/cell_builtin_programming.dict.yaml",
+      "assetPath": "cell_dictionaries/cell_builtin_programming.dict.yaml",
+      "sha256": "5a7992b12117a03809877e78c5f840a7f89270985734cbd76a754b4b98553ce8",
+      "size": 54955,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/cell_dictionaries/cell_builtin_programming.en.txt",
+      "assetPath": "cell_dictionaries/cell_builtin_programming.en.txt",
+      "sha256": "1e4d4761f74251f0a7a4b7280ae6116b8d919f625baf7b431baa4dbdbda5eddd",
+      "size": 3105,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/cell_dictionaries/cell_builtin_wenshi.dict.yaml",
+      "assetPath": "cell_dictionaries/cell_builtin_wenshi.dict.yaml",
+      "sha256": "47090be9d4bf6d0cc0764c8699de2dbc0796bd8b75b9f189ee75ccc05dbae927",
+      "size": 49353,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/cell_dictionaries/cell_builtin_wenshi.en.txt",
+      "assetPath": "cell_dictionaries/cell_builtin_wenshi.en.txt",
+      "sha256": "b9992d5c27277c52a31690aa767862fe7d6b109e78e2c662f929b3a318670f23",
+      "size": 490,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/cell_dictionaries/cell_builtin_wuwa.dict.yaml",
+      "assetPath": "cell_dictionaries/cell_builtin_wuwa.dict.yaml",
+      "sha256": "ed393787daab2e0473835df0348954339a100c3b72e36de4a0d68504283d832f",
+      "size": 13486,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/cell_dictionaries/cell_builtin_wuwa.en.txt",
+      "assetPath": "cell_dictionaries/cell_builtin_wuwa.en.txt",
+      "sha256": "5069ae13fe5c90560cdcf10776f96405ddb8bf07768e441f7afba4a95ae30208",
+      "size": 1446,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/cell_dictionaries/cell_builtin_zzz.dict.yaml",
+      "assetPath": "cell_dictionaries/cell_builtin_zzz.dict.yaml",
+      "sha256": "e4cbcca40bd059360b590bbb8607028c9673718e11743e1d43775ceb17d7422f",
+      "size": 8631,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/cell_dictionaries/cell_builtin_zzz.en.txt",
+      "assetPath": "cell_dictionaries/cell_builtin_zzz.en.txt",
+      "sha256": "c1b8238aaeaad54d97462b4ff4cefbe954ef2aee4ffd544f7f7d50d376e8abee",
+      "size": 1233,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/cell_dictionaries/word_updates.json",
+      "assetPath": "cell_dictionaries/word_updates.json",
+      "sha256": "408e5681c69a904933c701259dd9d9f3844c8f57839724042d6b0f0fe19aa183",
+      "size": 166,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/english.txt",
+      "assetPath": "english.txt",
+      "sha256": "d6b3e04f1ac30be6525d41474166c0bff28486ecd8c48dcb0ab9c7c9cc05ed86",
+      "size": 75153,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/english_bigrams.txt",
+      "assetPath": "english_bigrams.txt",
+      "sha256": "d76572ff4f6b68c85037dff8303bfd9134bf4647f4734d72fb4016555828abd2",
+      "size": 4950447,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/english_contractions.txt",
+      "assetPath": "english_contractions.txt",
+      "sha256": "7be8b3dc6e7475429ae23e70193f6140932a770e1d9babd67c57a7df9db67380",
+      "size": 1151,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/english_glide_words.txt",
+      "assetPath": "english_glide_words.txt",
+      "sha256": "00f6b5b6a18ec7a08a38324320dacda76e517973754b0e46f52ef34cc470133b",
+      "size": 85414,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/english_trie.bin",
+      "assetPath": "english_trie.bin",
+      "sha256": "383e6972cc265827e180bd98b86fe7e594e1edadb8436e7ae5df27ba26e799aa",
+      "size": 282495,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/glide_pinyin.txt",
+      "assetPath": "glide_pinyin.txt",
+      "sha256": "659b94a76ac2414b7e3720b0b0db359b6e4eb256c4e0c811b6f1e35edf4c8d3b",
+      "size": 298335,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/glide_pinyin_words.txt",
+      "assetPath": "glide_pinyin_words.txt",
+      "sha256": "8c27a6a2ca65de188242c0b202c05bb8eaa899207dac5cd59802cc44959ea98f",
+      "size": 251740,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/handwriting/contribute_pool.tsv",
+      "assetPath": "handwriting/contribute_pool.tsv",
+      "sha256": "f5ea40c120e6557cd1d2de409b49a63715575ac71bb445b8871193eddb4941ce",
+      "size": 132809,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/handwriting/contribute_prompts.tsv",
+      "assetPath": "handwriting/contribute_prompts.tsv",
+      "sha256": "872d71c45d95f2aa5b62201e46516c5a6b16271ed5f23b847ca5f55048b7beb8",
+      "size": 4864,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/handwriting/hanzi_frequency.tsv",
+      "assetPath": "handwriting/hanzi_frequency.tsv",
+      "sha256": "00e2505478b5f2e70b1df08e6ddbaf8e2079a2658515f7a3a09547132221a1bf",
+      "size": 102083,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/handwriting/hanzi_pinyin.tsv",
+      "assetPath": "handwriting/hanzi_pinyin.tsv",
+      "sha256": "ef079ab6ae7c6c5b0dda80fbce03dfbfef4656836e2b33b40e9a72723057dcc4",
+      "size": 310082,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/handwriting/hanzi_rare_och.bin",
+      "assetPath": "handwriting/hanzi_rare_och.bin",
+      "sha256": "b901f5d89eedcd6614adb606a08926af2c035281e384964376e79595ac6dc26c",
+      "size": 4797590,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/handwriting/hanzi_rare_och.json",
+      "assetPath": "handwriting/hanzi_rare_och.json",
+      "sha256": "f31e0a2396092aea18d0440f5911d8cce2e64cdbbb13f44c94dd74e221f2356b",
+      "size": 60370,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/handwriting/japanese_kanji.json",
+      "assetPath": "handwriting/japanese_kanji.json",
+      "sha256": "669b35903847b9eb0ec26a4d97a0d9e552cd640f0e191c2bde47e1b6702a1096",
+      "size": 69575,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/handwriting/japanese_kanji_och.bin",
+      "assetPath": "handwriting/japanese_kanji_och.bin",
+      "sha256": "5cd4ec8bb303905c767d819f0afefb725e135e7c38f88f5dbadc27847dedc6a9",
+      "size": 1013760,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/handwriting/japanese_kanji_och.json",
+      "assetPath": "handwriting/japanese_kanji_och.json",
+      "sha256": "0bac23cf96a695c4b5af96a19ad0058c55c55f3933348c21cf3d1b5a7744e390",
+      "size": 4863,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/handwriting/japanese_kanji_strokes.json",
+      "assetPath": "handwriting/japanese_kanji_strokes.json",
+      "sha256": "d3fd183315af5e4e9f5b6c171acbc3e0d31f3689c94870c092fe934ecc71529b",
+      "size": 1450736,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/handwriting/kana_default_och.bin",
+      "assetPath": "handwriting/kana_default_och.bin",
+      "sha256": "d906eab4c82fed3450496a155b1e007429946dcc4e850f0493b97db32485fa4c",
+      "size": 2027520,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/handwriting/kana_default_och.json",
+      "assetPath": "handwriting/kana_default_och.json",
+      "sha256": "24396db84969ea66e4d3338e9872dd99ed2badb5f52dcc35d01d89fe5057bb8b",
+      "size": 9606,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/handwriting/kana_default_strokes.json",
+      "assetPath": "handwriting/kana_default_strokes.json",
+      "sha256": "2b82e9b4ee2c463909e385904f604709af411a02463bda0e46cfd66c801870ab",
+      "size": 1087267,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/handwriting/latin_default_strokes.json",
+      "assetPath": "handwriting/latin_default_strokes.json",
+      "sha256": "e93652411d8ca56a64e959999b4e43dc79e4ff2eb2c1458b9698a6271b6762d7",
+      "size": 307616,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime/pinyin_simp.dict.yaml",
+      "assetPath": "rime/pinyin_simp.dict.yaml",
+      "sha256": "54e6c6ea3992aeea988422d465e211398ca83fe3b33398861f87a1f88e9d7b28",
+      "size": 2044447,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime/pinyin_simp_ext.dict.yaml",
+      "assetPath": "rime/pinyin_simp_ext.dict.yaml",
+      "sha256": "d49fb0e5c067e4486c7617c89734f5f5f0e68999864720af9b9a21a69d8918a1",
+      "size": 8038262,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime/wubi86.dict.yaml",
+      "assetPath": "rime/wubi86.dict.yaml",
+      "sha256": "9992603d581c87a3484181ede66dad807a79795e2048306c96942bc2ab1d4b0a",
+      "size": 1320201,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime/wubi86.schema.yaml",
+      "assetPath": "rime/wubi86.schema.yaml",
+      "sha256": "0904d866edc7ebfb661a4f7c7f6464165ca219c69745f38bc951a31736df2beb",
+      "size": 1348,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime/wubi86_extra.dict.yaml",
+      "assetPath": "rime/wubi86_extra.dict.yaml",
+      "sha256": "4c0b2a808ca094171902465a378c69bb4e7a8735ee6d8b38536e3b906c18bfa0",
+      "size": 35404,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime/wubi86_pinyin.schema.yaml",
+      "assetPath": "rime/wubi86_pinyin.schema.yaml",
+      "sha256": "5a315cfc85e166663aa4047ba4356d4c7cc7e374ae98df861f56491d128b7d57",
+      "size": 1756,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime/wubi86_trad.schema.yaml",
+      "assetPath": "rime/wubi86_trad.schema.yaml",
+      "sha256": "de34805d8fdeecaebe9b7571fbcbd359de0e6c1513266e04b0973fc2834a11b9",
+      "size": 3997,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime/wubi86_trad_pinyin.schema.yaml",
+      "assetPath": "rime/wubi86_trad_pinyin.schema.yaml",
+      "sha256": "3236396a8f2730fb18eba45dd5ad4252faace13f3e8beafc449f782fca41cd1b",
+      "size": 3501,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime/wubi86_user.dict.yaml",
+      "assetPath": "rime/wubi86_user.dict.yaml",
+      "sha256": "17850cacf6c8664fe01b45580db9766e08e57efcb5d8056dd641be13fed30f38",
+      "size": 605,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime/wubi98.dict.yaml",
+      "assetPath": "rime/wubi98.dict.yaml",
+      "sha256": "94d11ce06613f9dd9eea9a23abb4105d89dbab7c5aaeacb4c728562148657db1",
+      "size": 2474903,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime/wubi98.schema.yaml",
+      "assetPath": "rime/wubi98.schema.yaml",
+      "sha256": "5f3ca9227f25b50ee4b3ec92733e7fd87c1a14dc019f418e272f2ac29d1e6a3c",
+      "size": 1453,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_chinese/cyime_tail.cyt",
+      "assetPath": "rime_chinese/cyime_tail.cyt",
+      "sha256": "9c6a7dda1d2f75a964ba2f3dfd30bb45aed6c9d4c6d7afb729a944be226f0f23",
+      "size": 523832,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_chinese/t9_ngram.lm",
+      "assetPath": "rime_chinese/t9_ngram.lm",
+      "sha256": "eaa084e142bdeed0b82fb15969992d7a726a6631f24cc594c81d0b773c91a5da",
+      "size": 109685746,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_chinese/t9_sentence.vocab",
+      "assetPath": "rime_chinese/t9_sentence.vocab",
+      "sha256": "45bbac6b341c319adc98a532532882e91a9cefc0329aa57bac9ae761c27b291c",
+      "size": 109540,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_ice/cn_dicts/8105.dict.yaml",
+      "assetPath": "rime_ice/cn_dicts/8105.dict.yaml",
+      "sha256": "71b42ba120fd54a1e537c5147969ccbb10a1d05beddc3aaa15c1efd438e62cf8",
+      "size": 113505,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_ice/cn_dicts/base.dict.yaml",
+      "assetPath": "rime_ice/cn_dicts/base.dict.yaml",
+      "sha256": "c747dffe3f934ed6837b4b0f9a8d30f490e4bbfb04d68d401aa48f01feda9b6b",
+      "size": 16244697,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_ice/cn_dicts/ext.dict.yaml",
+      "assetPath": "rime_ice/cn_dicts/ext.dict.yaml",
+      "sha256": "e1795f2833449d273c04bc206e632a865994ec8b58f5d5dd2d317fa179769c7a",
+      "size": 11669117,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_ice/cn_dicts/others.dict.yaml",
+      "assetPath": "rime_ice/cn_dicts/others.dict.yaml",
+      "sha256": "c7475d773e619f61b88d47fa8ec789aba02aa0d1c98edaed309e53487b048b32",
+      "size": 17454,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_ice/cn_dicts/tencent.dict.yaml",
+      "assetPath": "rime_ice/cn_dicts/tencent.dict.yaml",
+      "sha256": "990de67d2c97a84fb02e01d45011a0a6c8fcbe116136a4870736e852538a5243",
+      "size": 13570698,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_ice/cyime_cn_en.dict.yaml",
+      "assetPath": "rime_ice/cyime_cn_en.dict.yaml",
+      "sha256": "6bc51f62eedd80d399359100b5c08fa823949533e39f595b7b4314721ac0d0cd",
+      "size": 19990,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_ice/cyime_di.dict.yaml",
+      "assetPath": "rime_ice/cyime_di.dict.yaml",
+      "sha256": "a89f08b6aff2e2f955003d252eedc6caaab35e95b17d2eec31dbab4a640af661",
+      "size": 26334,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_ice/cyime_english.dict.yaml",
+      "assetPath": "rime_ice/cyime_english.dict.yaml",
+      "sha256": "e6bcf6883a670720022d2e2b33f148a8fcceb75cc03bbfde0049c69800a6f52c",
+      "size": 448162,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_ice/cyime_k14_aliases.tsv",
+      "assetPath": "rime_ice/cyime_k14_aliases.tsv",
+      "sha256": "7e085993402d32813a08217f28a62e9bc79bd0ad5a4273b09744b04f4371657b",
+      "size": 17316,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_ice/cyime_k14_english.dict.yaml",
+      "assetPath": "rime_ice/cyime_k14_english.dict.yaml",
+      "sha256": "09dcf0cd024638a382dd980cb2ce823520163156563d8461be8e30853dedae41",
+      "size": 467040,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_ice/cyime_mixed.dict.yaml",
+      "assetPath": "rime_ice/cyime_mixed.dict.yaml",
+      "sha256": "9041ca2db1938d7df820d8c0cd978abf1f7205cb57f241c5eae1b21a26166f5b",
+      "size": 5658,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_ice/cyime_rare.dict.yaml",
+      "assetPath": "rime_ice/cyime_rare.dict.yaml",
+      "sha256": "527bd05d877818f7b9f08ac7c1c0dea983ea64d91c4ea6e267b57b11de4ac583",
+      "size": 174475,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_ice/cyime_rare.txt",
+      "assetPath": "rime_ice/cyime_rare.txt",
+      "sha256": "b185fbfd58edc8453002fb8931d277ad03c9becfb287005b7fa5b459077918fa",
+      "size": 174282,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_ice/cyime_readings.txt",
+      "assetPath": "rime_ice/cyime_readings.txt",
+      "sha256": "a4ddc495dd53e5370d28918afd6c6a40206149e268230c2569bcefa0fa4ac952",
+      "size": 19265,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_ice/cyime_t9_english.dict.yaml",
+      "assetPath": "rime_ice/cyime_t9_english.dict.yaml",
+      "sha256": "92d798a4b73ad0b1b17c542615f8792964321d0c91a866fe1066a9462750b495",
+      "size": 470401,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_ice/cyime_terms.dict.yaml",
+      "assetPath": "rime_ice/cyime_terms.dict.yaml",
+      "sha256": "aad5e6a9c7140cc16f16893f83cecb1dae1c5e5fc6e6fbcb30ce91f02f1054bb",
+      "size": 7038,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_ice/en_dicts/cn_en.txt",
+      "assetPath": "rime_ice/en_dicts/cn_en.txt",
+      "sha256": "e52ffc88598eb3d4db476a10064df3e8bbb6c23bc4c3969723f3dfab45ad4089",
+      "size": 16050,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_ice/en_dicts/cn_en_abc.txt",
+      "assetPath": "rime_ice/en_dicts/cn_en_abc.txt",
+      "sha256": "3f53416ff5acebeb564ab894c10b33cd2b212bd6520012f62b6b9db324c1e9e8",
+      "size": 14324,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_ice/en_dicts/cn_en_double_pinyin.txt",
+      "assetPath": "rime_ice/en_dicts/cn_en_double_pinyin.txt",
+      "sha256": "eb91037140fefa1a9f62141f2e64e50da54a7aaabd58d40d0c03e06a8ec45943",
+      "size": 14334,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_ice/en_dicts/cn_en_flypy.txt",
+      "assetPath": "rime_ice/en_dicts/cn_en_flypy.txt",
+      "sha256": "edeee1d7a84b378a248a3ea1384f22dcfde64694caee87fe05901a09a90cfc6f",
+      "size": 14323,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_ice/en_dicts/cn_en_jiajia.txt",
+      "assetPath": "rime_ice/en_dicts/cn_en_jiajia.txt",
+      "sha256": "d79db38e8202b0ec0bcce60310d3a50df6ea03a8dcbc69c128f073485dd659a5",
+      "size": 14328,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_ice/en_dicts/cn_en_mspy.txt",
+      "assetPath": "rime_ice/en_dicts/cn_en_mspy.txt",
+      "sha256": "c21e2ea1c50e6fc718075876dec3efbaccd920767864240a814a1213825da5d0",
+      "size": 14322,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_ice/en_dicts/cn_en_sogou.txt",
+      "assetPath": "rime_ice/en_dicts/cn_en_sogou.txt",
+      "sha256": "3aaf228f9a9816dd1685cbeecb8ec47b25bd8db44d71adc99987d13f56e9eaea",
+      "size": 14323,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_ice/en_dicts/cn_en_ziguang.txt",
+      "assetPath": "rime_ice/en_dicts/cn_en_ziguang.txt",
+      "sha256": "401670289d24c6e02bdc197cf9d597636b340f84c49dac42596cbe94a64a995d",
+      "size": 14323,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_ice/en_dicts/en.dict.yaml",
+      "assetPath": "rime_ice/en_dicts/en.dict.yaml",
+      "sha256": "d08db21af6c686bfafa4d62926e33ea685319927a374acd99dde84a351b5aa35",
+      "size": 369842,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_ice/en_dicts/en_ext.dict.yaml",
+      "assetPath": "rime_ice/en_dicts/en_ext.dict.yaml",
+      "sha256": "675bd699cbdcd05409cd9c9fbc8de3f925b3d08a5175806d45d3789ea27c36eb",
+      "size": 52437,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_japanese/LICENSE",
+      "assetPath": "rime_japanese/LICENSE",
+      "sha256": "1ad7585641ef7b7f3468b2b954c281061b7c35a470efe63d07b9b35627bda662",
+      "size": 10763,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_japanese/NOTICE.md",
+      "assetPath": "rime_japanese/NOTICE.md",
+      "sha256": "b78aef1a9ded9f3f4406c8d9e0b948ad2c70abfa75f3eae4a15d926323e11368",
+      "size": 9433,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_japanese/README.md",
+      "assetPath": "rime_japanese/README.md",
+      "sha256": "9b589cd853a24e080287a5659f65755db3a3905c6fbf01eafe039aa6f1cb3f06",
+      "size": 3367,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_japanese/cyime_japanese_romaji.lua",
+      "assetPath": "rime_japanese/cyime_japanese_romaji.lua",
+      "sha256": "784c660230295cff47cb458db34ca3ce681193e5180a42ae04dc5a51dc10c861",
+      "size": 1281,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_japanese/japanese.schema.yaml",
+      "assetPath": "rime_japanese/japanese.schema.yaml",
+      "sha256": "7839607f81ae412293cfee736589be568e5f71bd37d1ae1ed13e26acc78df709",
+      "size": 4087,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_japanese/japanese_kana.schema.yaml",
+      "assetPath": "rime_japanese/japanese_kana.schema.yaml",
+      "sha256": "2a89a71b11727d95ee655ce3529f6f8ad1078a2abc1e5bab1da103274cb7a937",
+      "size": 4096,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_japanese/jaroomaji.schema.yaml",
+      "assetPath": "rime_japanese/jaroomaji.schema.yaml",
+      "sha256": "37e90b9427bf05e947d1d6836d77c09c363cf8979c0483feb35a8c3a785d7222",
+      "size": 3928,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_letters/french.schema.yaml",
+      "assetPath": "rime_letters/french.schema.yaml",
+      "sha256": "61e98c4334a1450d372178c558224a67a212ca191de6da9b42dedd007c044afa",
+      "size": 702,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_letters/german.schema.yaml",
+      "assetPath": "rime_letters/german.schema.yaml",
+      "sha256": "0ad61a695de44c893e23a4d620d25f4335449c54ee80f3d29c4477e1424a6e31",
+      "size": 692,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_letters/italian.schema.yaml",
+      "assetPath": "rime_letters/italian.schema.yaml",
+      "sha256": "fefcdc715a92193961491d169b1c4b263a2a413ba46daf2c81c24fee568a6f7a",
+      "size": 725,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_letters/korean.schema.yaml",
+      "assetPath": "rime_letters/korean.schema.yaml",
+      "sha256": "fce7412792565a6733b0d7b7254dde86c781722dd94b8d70dd5d717a0d32f0c0",
+      "size": 667,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_letters/russian.schema.yaml",
+      "assetPath": "rime_letters/russian.schema.yaml",
+      "sha256": "62c93f1eecf6a3c1c9240a3f2817c88a882bdcda4691abb6948d484e8a5a2579",
+      "size": 712,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_letters/spanish.schema.yaml",
+      "assetPath": "rime_letters/spanish.schema.yaml",
+      "sha256": "9a91433e49cfed722a3093479571c958c727c92e36e64629d1849b2b68062fe2",
+      "size": 740,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/ChaiPUA-0.2.7-snow.ttf",
+      "assetPath": "ChaiPUA-0.2.7-snow.ttf",
+      "sha256": "d27872811c926f62e305e6b57c08e30dfa7b47c2676e21afda3cc0bd1d0e3d97",
+      "size": 438568,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/association/LCCC-LICENSE-and-source.md",
+      "assetPath": "association/LCCC-LICENSE-and-source.md",
+      "sha256": "2edc281c34969e7cd9bb9c2ba4f3190128a71cc0dc27c4363da45456bd3b744d",
+      "size": 6453,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/association/lccc-base-v1.bin",
+      "assetPath": "association/lccc-base-v1.bin",
+      "sha256": "a8e76e91022e611afa34dad541d7574ec89119bfdbf4fcc216aed40ea710ddb4",
+      "size": 2428256,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/association/lccc-base-v1.completions.gz",
+      "assetPath": "association/lccc-base-v1.completions.gz",
+      "sha256": "33a77d1bf121d92ebe4d618600d0ed69ee8f473b910683880f8bb4e8af74c195",
+      "size": 184098,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/association/lccc-base-v1.manifest.json",
+      "assetPath": "association/lccc-base-v1.manifest.json",
+      "sha256": "f8471c1bdaccef5d7700c9f925ad276fc04882359c98def796c266c438187c8c",
+      "size": 1911,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/cell_dictionaries/cell_builtin_anime.dict.yaml",
+      "assetPath": "cell_dictionaries/cell_builtin_anime.dict.yaml",
+      "sha256": "65bd767aee2648b34e4883f20e25a191ccffe53dd15587e83f3615122d7eeb3b",
+      "size": 35708,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/cell_dictionaries/cell_builtin_arknights.dict.yaml",
+      "assetPath": "cell_dictionaries/cell_builtin_arknights.dict.yaml",
+      "sha256": "1dd798903bd2143dfc2d77aabfe0de35a36e71f47bee84c243c18c8cf6c584b5",
+      "size": 202363,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/cell_dictionaries/cell_builtin_bluearchive.dict.yaml",
+      "assetPath": "cell_dictionaries/cell_builtin_bluearchive.dict.yaml",
+      "sha256": "7ae5a15b04b77318457ed631cd093d5b8c83164f2b3fe70299b12e3722e47d76",
+      "size": 12546,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/cell_dictionaries/cell_builtin_bluearchive.en.txt",
+      "assetPath": "cell_dictionaries/cell_builtin_bluearchive.en.txt",
+      "sha256": "1b0d3a0c27f7fab44b6c70e7d1b83b710796573eac52fadef9abbb8735314c9b",
+      "size": 916,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/cell_dictionaries/cell_builtin_cs2.dict.yaml",
+      "assetPath": "cell_dictionaries/cell_builtin_cs2.dict.yaml",
+      "sha256": "18f1b8b46b112779bb2a2821cd9a5403ed65a0d7bb85e40dca6da60c9f1e6829",
+      "size": 21591,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/cell_dictionaries/cell_builtin_cs2.en.txt",
+      "assetPath": "cell_dictionaries/cell_builtin_cs2.en.txt",
+      "sha256": "63243598d3e176dd526bde0422d3740848335d492ec230a334f632de5ed7af21",
+      "size": 2563,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/cell_dictionaries/cell_builtin_dota2.dict.yaml",
+      "assetPath": "cell_dictionaries/cell_builtin_dota2.dict.yaml",
+      "sha256": "a54ba494cf7488404b0e4d66932bee6dc84a05f4584a37e68bd6108bd2fc2983",
+      "size": 50267,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/cell_dictionaries/cell_builtin_dota2.en.txt",
+      "assetPath": "cell_dictionaries/cell_builtin_dota2.en.txt",
+      "sha256": "e62f1d7188d983181165f5edcc100a7f9ed4d1b550edb58bd54108da6ea1ffd3",
+      "size": 5527,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/cell_dictionaries/cell_builtin_endfield.dict.yaml",
+      "assetPath": "cell_dictionaries/cell_builtin_endfield.dict.yaml",
+      "sha256": "9ddb82df85c94a17afb50b9b9815ad0c2ed33de6c01a134ebed9ad1e1b13c4e5",
+      "size": 12575,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/cell_dictionaries/cell_builtin_endfield.en.txt",
+      "assetPath": "cell_dictionaries/cell_builtin_endfield.en.txt",
+      "sha256": "f02e944b89ff23739f6faa17eca97587d3651e10321738397b71ea3f8dfa44c0",
+      "size": 214,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/cell_dictionaries/cell_builtin_gacha.dict.yaml",
+      "assetPath": "cell_dictionaries/cell_builtin_gacha.dict.yaml",
+      "sha256": "5159ec495cc1ab1bd7a5696bdee5897371a5f9cecc2618e160784a7d88c75623",
+      "size": 11887,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/cell_dictionaries/cell_builtin_gacha.en.txt",
+      "assetPath": "cell_dictionaries/cell_builtin_gacha.en.txt",
+      "sha256": "2c0795f4542f68c043ba828e046123c1352682df00861cf5b1c9c63136f693f3",
+      "size": 1132,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/cell_dictionaries/cell_builtin_genshin.dict.yaml",
+      "assetPath": "cell_dictionaries/cell_builtin_genshin.dict.yaml",
+      "sha256": "4829f8a002828982c33ea33b1d5bbb12116d4cb84421bb1b679d02f35d14872c",
+      "size": 15828,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/cell_dictionaries/cell_builtin_genshin.en.txt",
+      "assetPath": "cell_dictionaries/cell_builtin_genshin.en.txt",
+      "sha256": "9c305c5972cebdab3dbbd758782eee89857f14cc19ad7d75c8a50c47e164b5e3",
+      "size": 1250,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/cell_dictionaries/cell_builtin_honkai3.dict.yaml",
+      "assetPath": "cell_dictionaries/cell_builtin_honkai3.dict.yaml",
+      "sha256": "4426f7969e46bed87d2e4e0a829bdd838ab36727c7557ba8c257dfd36792ef0b",
+      "size": 14265,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/cell_dictionaries/cell_builtin_honkai3.en.txt",
+      "assetPath": "cell_dictionaries/cell_builtin_honkai3.en.txt",
+      "sha256": "da30d57e5ac50fe6c9dfb4ce20944956fb36683228413e22cec7039fd76df924",
+      "size": 1450,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/cell_dictionaries/cell_builtin_hsr.dict.yaml",
+      "assetPath": "cell_dictionaries/cell_builtin_hsr.dict.yaml",
+      "sha256": "d041858ce72f984c67eeff37e4c7018cfe69ab57ce6db1df66a4b958bbb52277",
+      "size": 13758,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/cell_dictionaries/cell_builtin_hsr.en.txt",
+      "assetPath": "cell_dictionaries/cell_builtin_hsr.en.txt",
+      "sha256": "4b4bcd4e168c57a65c50a3f8a7b180f346b1470888eceb62deff2cdfc82d556d",
+      "size": 778,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/cell_dictionaries/cell_builtin_llm.dict.yaml",
+      "assetPath": "cell_dictionaries/cell_builtin_llm.dict.yaml",
+      "sha256": "1b77363038a898114753a961da4cacbcf93f1bb7339345ccd3fac973bcfd6f85",
+      "size": 43737,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/cell_dictionaries/cell_builtin_llm.en.txt",
+      "assetPath": "cell_dictionaries/cell_builtin_llm.en.txt",
+      "sha256": "12b2c3c72500560badf9a3a0c8f121f205835e6a2038f568a5bedcf41cd04de2",
+      "size": 3438,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/cell_dictionaries/cell_builtin_math.dict.yaml",
+      "assetPath": "cell_dictionaries/cell_builtin_math.dict.yaml",
+      "sha256": "0a67bb27bd945218b23c6a80d6fd3a7c6e07a389d7259839291412673141f7c3",
+      "size": 83070,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/cell_dictionaries/cell_builtin_math.en.txt",
+      "assetPath": "cell_dictionaries/cell_builtin_math.en.txt",
+      "sha256": "c6000691808e9355bc37635c12e704331e72ccec58af553143c7dd413905510f",
+      "size": 2372,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/cell_dictionaries/cell_builtin_ml.dict.yaml",
+      "assetPath": "cell_dictionaries/cell_builtin_ml.dict.yaml",
+      "sha256": "9ae8b98451b6197254e05db30546ad874a503db5663425be4fbe720a2bcaf30e",
+      "size": 70352,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/cell_dictionaries/cell_builtin_ml.en.txt",
+      "assetPath": "cell_dictionaries/cell_builtin_ml.en.txt",
+      "sha256": "c3e0d48930fafa945a57508f50342da6a342fd0bbd99e0e05961d70e79b795e8",
+      "size": 5377,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/cell_dictionaries/cell_builtin_movie.dict.yaml",
+      "assetPath": "cell_dictionaries/cell_builtin_movie.dict.yaml",
+      "sha256": "e6b4acca6f4f667937d22957a57b84ce05d1e63b6ae71e94e5669bee7a9735e8",
+      "size": 47040,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/cell_dictionaries/cell_builtin_movie.en.txt",
+      "assetPath": "cell_dictionaries/cell_builtin_movie.en.txt",
+      "sha256": "14e28799f78eacaa521763553c36f8160588a085f3862ca2cbd0faaefda926bf",
+      "size": 4110,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/cell_dictionaries/cell_builtin_onmyoji.dict.yaml",
+      "assetPath": "cell_dictionaries/cell_builtin_onmyoji.dict.yaml",
+      "sha256": "197dff28c54f6d2255b41f2c71fbf056ee2a61c4ed7a85865d251e8f05ff89cf",
+      "size": 10290,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/cell_dictionaries/cell_builtin_onmyoji.en.txt",
+      "assetPath": "cell_dictionaries/cell_builtin_onmyoji.en.txt",
+      "sha256": "64ee7fd79c35dc2b303447909a028222787e7820771e7ea243f2aa37f9780e1e",
+      "size": 121,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/cell_dictionaries/cell_builtin_programming.dict.yaml",
+      "assetPath": "cell_dictionaries/cell_builtin_programming.dict.yaml",
+      "sha256": "5a7992b12117a03809877e78c5f840a7f89270985734cbd76a754b4b98553ce8",
+      "size": 54955,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/cell_dictionaries/cell_builtin_programming.en.txt",
+      "assetPath": "cell_dictionaries/cell_builtin_programming.en.txt",
+      "sha256": "1e4d4761f74251f0a7a4b7280ae6116b8d919f625baf7b431baa4dbdbda5eddd",
+      "size": 3105,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/cell_dictionaries/cell_builtin_wenshi.dict.yaml",
+      "assetPath": "cell_dictionaries/cell_builtin_wenshi.dict.yaml",
+      "sha256": "47090be9d4bf6d0cc0764c8699de2dbc0796bd8b75b9f189ee75ccc05dbae927",
+      "size": 49353,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/cell_dictionaries/cell_builtin_wenshi.en.txt",
+      "assetPath": "cell_dictionaries/cell_builtin_wenshi.en.txt",
+      "sha256": "b9992d5c27277c52a31690aa767862fe7d6b109e78e2c662f929b3a318670f23",
+      "size": 490,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/cell_dictionaries/cell_builtin_wuwa.dict.yaml",
+      "assetPath": "cell_dictionaries/cell_builtin_wuwa.dict.yaml",
+      "sha256": "ed393787daab2e0473835df0348954339a100c3b72e36de4a0d68504283d832f",
+      "size": 13486,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/cell_dictionaries/cell_builtin_wuwa.en.txt",
+      "assetPath": "cell_dictionaries/cell_builtin_wuwa.en.txt",
+      "sha256": "5069ae13fe5c90560cdcf10776f96405ddb8bf07768e441f7afba4a95ae30208",
+      "size": 1446,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/cell_dictionaries/cell_builtin_zzz.dict.yaml",
+      "assetPath": "cell_dictionaries/cell_builtin_zzz.dict.yaml",
+      "sha256": "e4cbcca40bd059360b590bbb8607028c9673718e11743e1d43775ceb17d7422f",
+      "size": 8631,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/cell_dictionaries/cell_builtin_zzz.en.txt",
+      "assetPath": "cell_dictionaries/cell_builtin_zzz.en.txt",
+      "sha256": "c1b8238aaeaad54d97462b4ff4cefbe954ef2aee4ffd544f7f7d50d376e8abee",
+      "size": 1233,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/cell_dictionaries/word_updates.json",
+      "assetPath": "cell_dictionaries/word_updates.json",
+      "sha256": "408e5681c69a904933c701259dd9d9f3844c8f57839724042d6b0f0fe19aa183",
+      "size": 166,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/english.txt",
+      "assetPath": "english.txt",
+      "sha256": "d6b3e04f1ac30be6525d41474166c0bff28486ecd8c48dcb0ab9c7c9cc05ed86",
+      "size": 75153,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/english_bigrams.txt",
+      "assetPath": "english_bigrams.txt",
+      "sha256": "d76572ff4f6b68c85037dff8303bfd9134bf4647f4734d72fb4016555828abd2",
+      "size": 4950447,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/english_contractions.txt",
+      "assetPath": "english_contractions.txt",
+      "sha256": "7be8b3dc6e7475429ae23e70193f6140932a770e1d9babd67c57a7df9db67380",
+      "size": 1151,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/english_glide_words.txt",
+      "assetPath": "english_glide_words.txt",
+      "sha256": "00f6b5b6a18ec7a08a38324320dacda76e517973754b0e46f52ef34cc470133b",
+      "size": 85414,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/glide_pinyin.txt",
+      "assetPath": "glide_pinyin.txt",
+      "sha256": "659b94a76ac2414b7e3720b0b0db359b6e4eb256c4e0c811b6f1e35edf4c8d3b",
+      "size": 298335,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/glide_pinyin_words.txt",
+      "assetPath": "glide_pinyin_words.txt",
+      "sha256": "8c27a6a2ca65de188242c0b202c05bb8eaa899207dac5cd59802cc44959ea98f",
+      "size": 251740,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/handwriting/contribute_pool.tsv",
+      "assetPath": "handwriting/contribute_pool.tsv",
+      "sha256": "f5ea40c120e6557cd1d2de409b49a63715575ac71bb445b8871193eddb4941ce",
+      "size": 132809,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/handwriting/contribute_prompts.tsv",
+      "assetPath": "handwriting/contribute_prompts.tsv",
+      "sha256": "872d71c45d95f2aa5b62201e46516c5a6b16271ed5f23b847ca5f55048b7beb8",
+      "size": 4864,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/handwriting/hanzi_frequency.tsv",
+      "assetPath": "handwriting/hanzi_frequency.tsv",
+      "sha256": "00e2505478b5f2e70b1df08e6ddbaf8e2079a2658515f7a3a09547132221a1bf",
+      "size": 102083,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/handwriting/hanzi_pinyin.tsv",
+      "assetPath": "handwriting/hanzi_pinyin.tsv",
+      "sha256": "a7f00b5becabd6c334718e54c7ea4c6d278601d16084c0461e6e1ac7517c2b32",
+      "size": 280959,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/handwriting/hanzi_rare_och.bin",
+      "assetPath": "handwriting/hanzi_rare_och.bin",
+      "sha256": "5f676c3f8ae2f240df8adeaa7772078d9d60e555ccdd29b544123b60aaa1d0d2",
+      "size": 4390792,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/handwriting/hanzi_rare_och.json",
+      "assetPath": "handwriting/hanzi_rare_och.json",
+      "sha256": "514d3c0cc3d3493abd9e2eaf958ea2bab9e9e8547e7dcbc23d605edc5864c1a1",
+      "size": 48816,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/handwriting/japanese_kanji.json",
+      "assetPath": "handwriting/japanese_kanji.json",
+      "sha256": "669b35903847b9eb0ec26a4d97a0d9e552cd640f0e191c2bde47e1b6702a1096",
+      "size": 69575,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/handwriting/japanese_kanji_och.bin",
+      "assetPath": "handwriting/japanese_kanji_och.bin",
+      "sha256": "5cd4ec8bb303905c767d819f0afefb725e135e7c38f88f5dbadc27847dedc6a9",
+      "size": 1013760,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/handwriting/japanese_kanji_och.json",
+      "assetPath": "handwriting/japanese_kanji_och.json",
+      "sha256": "0bac23cf96a695c4b5af96a19ad0058c55c55f3933348c21cf3d1b5a7744e390",
+      "size": 4863,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/handwriting/japanese_kanji_strokes.json",
+      "assetPath": "handwriting/japanese_kanji_strokes.json",
+      "sha256": "d3fd183315af5e4e9f5b6c171acbc3e0d31f3689c94870c092fe934ecc71529b",
+      "size": 1450736,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/handwriting/kana_default_och.bin",
+      "assetPath": "handwriting/kana_default_och.bin",
+      "sha256": "d906eab4c82fed3450496a155b1e007429946dcc4e850f0493b97db32485fa4c",
+      "size": 2027520,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/handwriting/kana_default_och.json",
+      "assetPath": "handwriting/kana_default_och.json",
+      "sha256": "24396db84969ea66e4d3338e9872dd99ed2badb5f52dcc35d01d89fe5057bb8b",
+      "size": 9606,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/handwriting/kana_default_strokes.json",
+      "assetPath": "handwriting/kana_default_strokes.json",
+      "sha256": "2b82e9b4ee2c463909e385904f604709af411a02463bda0e46cfd66c801870ab",
+      "size": 1087267,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/handwriting/latin_default_strokes.json",
+      "assetPath": "handwriting/latin_default_strokes.json",
+      "sha256": "e93652411d8ca56a64e959999b4e43dc79e4ff2eb2c1458b9698a6271b6762d7",
+      "size": 307616,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/rime_chinese/cyime_tail.cyt",
+      "assetPath": "rime_chinese/cyime_tail.cyt",
+      "sha256": "9c6a7dda1d2f75a964ba2f3dfd30bb45aed6c9d4c6d7afb729a944be226f0f23",
+      "size": 523832,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/rime_chinese/t9_sentence.onnx",
+      "assetPath": "rime_chinese/t9_sentence.onnx",
+      "sha256": "159576a96e282f929f5726d53bae5322dc41235d3deef40e806297d9e69ca4fc",
+      "size": 35300003,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/rime_chinese/t9_sentence.vocab",
+      "assetPath": "rime_chinese/t9_sentence.vocab",
+      "sha256": "45bbac6b341c319adc98a532532882e91a9cefc0329aa57bac9ae761c27b291c",
+      "size": 109540,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/rime_japanese/LICENSE",
+      "assetPath": "rime_japanese/LICENSE",
+      "sha256": "1ad7585641ef7b7f3468b2b954c281061b7c35a470efe63d07b9b35627bda662",
+      "size": 10763,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/rime_japanese/NOTICE.md",
+      "assetPath": "rime_japanese/NOTICE.md",
+      "sha256": "b78aef1a9ded9f3f4406c8d9e0b948ad2c70abfa75f3eae4a15d926323e11368",
+      "size": 9433,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/rime_japanese/README.md",
+      "assetPath": "rime_japanese/README.md",
+      "sha256": "9b589cd853a24e080287a5659f65755db3a3905c6fbf01eafe039aa6f1cb3f06",
+      "size": 3367,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/rime_japanese/cyime_japanese_romaji.lua",
+      "assetPath": "rime_japanese/cyime_japanese_romaji.lua",
+      "sha256": "784c660230295cff47cb458db34ca3ce681193e5180a42ae04dc5a51dc10c861",
+      "size": 1281,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/rime_japanese/japanese.schema.yaml",
+      "assetPath": "rime_japanese/japanese.schema.yaml",
+      "sha256": "7839607f81ae412293cfee736589be568e5f71bd37d1ae1ed13e26acc78df709",
+      "size": 4087,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/rime_japanese/japanese_kana.schema.yaml",
+      "assetPath": "rime_japanese/japanese_kana.schema.yaml",
+      "sha256": "2a89a71b11727d95ee655ce3529f6f8ad1078a2abc1e5bab1da103274cb7a937",
+      "size": 4096,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/rime_japanese/jaroomaji.schema.yaml",
+      "assetPath": "rime_japanese/jaroomaji.schema.yaml",
+      "sha256": "37e90b9427bf05e947d1d6836d77c09c363cf8979c0483feb35a8c3a785d7222",
+      "size": 3928,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/rime_letters/french.schema.yaml",
+      "assetPath": "rime_letters/french.schema.yaml",
+      "sha256": "61e98c4334a1450d372178c558224a67a212ca191de6da9b42dedd007c044afa",
+      "size": 702,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/rime_letters/german.schema.yaml",
+      "assetPath": "rime_letters/german.schema.yaml",
+      "sha256": "0ad61a695de44c893e23a4d620d25f4335449c54ee80f3d29c4477e1424a6e31",
+      "size": 692,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/rime_letters/italian.schema.yaml",
+      "assetPath": "rime_letters/italian.schema.yaml",
+      "sha256": "fefcdc715a92193961491d169b1c4b263a2a413ba46daf2c81c24fee568a6f7a",
+      "size": 725,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/rime_letters/korean.schema.yaml",
+      "assetPath": "rime_letters/korean.schema.yaml",
+      "sha256": "fce7412792565a6733b0d7b7254dde86c781722dd94b8d70dd5d717a0d32f0c0",
+      "size": 667,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/rime_letters/russian.schema.yaml",
+      "assetPath": "rime_letters/russian.schema.yaml",
+      "sha256": "62c93f1eecf6a3c1c9240a3f2817c88a882bdcda4691abb6948d484e8a5a2579",
+      "size": 712,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/src/main/assets/rime_letters/spanish.schema.yaml",
+      "assetPath": "rime_letters/spanish.schema.yaml",
+      "sha256": "9a91433e49cfed722a3093479571c958c727c92e36e64629d1849b2b68062fe2",
+      "size": 740,
+      "reason": "Replaced or removed for the commercial resource whitelist; no reuse of uncertain data or superseded model."
+    },
+    {
+      "oldPath": "app/data/cyime_mixed_word_counts.tsv",
+      "assetPath": null,
+      "sha256": "7edb481e9dc8b5c02ab1bf0002882960d409a3061e39e2075ae83df6bc26ea67",
+      "size": 7069,
+      "reason": "Old mixed-corpus weights/curation inputs are not part of the commercial build"
+    },
+    {
+      "oldPath": "app/data/cyime_new_words.tsv",
+      "assetPath": null,
+      "sha256": "60ac06e1ff803d34730f87d122324de1738c237eb1dd728d710f66db8cee255d",
+      "size": 4216,
+      "reason": "Old mixed-corpus weights/curation inputs are not part of the commercial build"
+    },
+    {
+      "oldPath": "app/data/cyime_user_fixes.tsv",
+      "assetPath": null,
+      "sha256": "dbc6b08d04db1d7a9414ed669a93578c377d101374061ca7961a802a5f33022b",
+      "size": 3805,
+      "reason": "Old mixed-corpus weights/curation inputs are not part of the commercial build"
+    },
+    {
+      "oldPath": "app/data/cyime_domain_terms.tsv",
+      "assetPath": null,
+      "sha256": "e008205723c4fcc36eb74606696c2e7bcc2f14d366cc0b1463977de6d3401cc2",
+      "size": 4092,
+      "reason": "Old mixed-corpus weights/curation inputs are not part of the commercial build"
+    },
+    {
+      "oldPath": "app/data/rime_ice_tencent_weights.tsv.gz",
+      "assetPath": null,
+      "sha256": "42d4962168ecb6986b9f33890f80a344b54c2c2a09962bd21db47ad572bd55ca",
+      "size": 5969059,
+      "reason": "Old mixed-corpus weights/curation inputs are not part of the commercial build"
+    },
+    {
+      "oldPath": "app/data/rime_ice_base_weights.tsv.gz",
+      "assetPath": null,
+      "sha256": "44951d6a89f8be9cb18c211509ff36f4116f892925cbf9cb7bec6ade0d9c8498",
+      "size": 6053104,
+      "reason": "Old mixed-corpus weights/curation inputs are not part of the commercial build"
+    },
+    {
+      "oldPath": "app/data/cyime_removed_names.txt",
+      "assetPath": null,
+      "sha256": "5ec60c1ebbff4729fa0f04a1c8b0ddbc7a083942f861c998edde8b3a442be04d",
+      "size": 165399,
+      "reason": "Old mixed-corpus weights/curation inputs are not part of the commercial build"
+    },
+    {
+      "oldPath": "app/data/sentence_final_particles.txt",
+      "assetPath": null,
+      "sha256": "b0e5e81552faa7c54721acd5a874c32dd583c33686101f4e1138a31608d3b10c",
+      "size": 303,
+      "reason": "Old mixed-corpus weights/curation inputs are not part of the commercial build"
+    },
+    {
+      "oldPath": "app/data/rime_ice_ext_weights.tsv.gz",
+      "assetPath": null,
+      "sha256": "2875bb0468e931e7b638a29bc807d3522e5318c3533ebed61e009a2e054b3354",
+      "size": 4125055,
+      "reason": "Old mixed-corpus weights/curation inputs are not part of the commercial build"
+    },
+    {
+      "oldPath": "app/data/cyime_removed_particle_homophones.txt",
+      "assetPath": null,
+      "sha256": "3930706f75575fb54031cc01ee8d9b0992ba6b44e8060b5a928d0ed6ad43c008",
+      "size": 777,
+      "reason": "Old mixed-corpus weights/curation inputs are not part of the commercial build"
+    },
+    {
+      "oldPath": "app/data/cyime_removed_words.txt.gz",
+      "assetPath": null,
+      "sha256": "0df31b1ca13fa08b98b1678bbdc94bd085f966e678af17fc676d0a9b713ead7b",
+      "size": 1001272,
+      "reason": "Old mixed-corpus weights/curation inputs are not part of the commercial build"
+    },
+    {
+      "oldPath": "app/data/sentence_measure_words.txt",
+      "assetPath": null,
+      "sha256": "afe8178f7a3f8db9de7dd35bf148e5b9a182260d62812bcc9be1c2816d184183",
+      "size": 227,
+      "reason": "Old mixed-corpus weights/curation inputs are not part of the commercial build"
+    },
+    {
+      "oldPath": "app/data/rime_ice_8105_weights.tsv.gz",
+      "assetPath": null,
+      "sha256": "2c33b99d2ad5f79c4c0fd67a047d82f1c098be2bc4ef1609801d94cf505158ec",
+      "size": 54733,
+      "reason": "Old mixed-corpus weights/curation inputs are not part of the commercial build"
+    },
+    {
+      "oldPath": "app/data/cyime_mixed_words.tsv",
+      "assetPath": null,
+      "sha256": "18b46a20c7a72103f54b9d46906d8ec3d68de2f7362b50980008592da97c7915",
+      "size": 1180,
+      "reason": "Old mixed-corpus weights/curation inputs are not part of the commercial build"
+    },
+    {
+      "oldPath": "app/data/cell_updates/builtin_arknights.tsv",
+      "assetPath": null,
+      "sha256": "e7622f26e83ec10ddd8426d5d132d97a8ff28c1356c7880f119ba2ea7bdf89ca",
+      "size": 375,
+      "reason": "Old mixed-corpus weights/curation inputs are not part of the commercial build"
+    },
+    {
+      "oldPath": "tools/dictionaries/glossary/curated_singles.tsv",
+      "assetPath": null,
+      "sha256": "325d649419a917a16b87fccbdae0d2de935d5f0d69f44cd69d5ab438473e4865",
+      "size": 6331,
+      "reason": "Unused legacy glossary/translation curation data not included in the commercial resource set"
+    },
+    {
+      "oldPath": "tools/dictionaries/glossary/curated_phrases.tsv",
+      "assetPath": null,
+      "sha256": "414849ad175e94202029d9cca88373a64e156965030d9bebd2718b5fda439cf5",
+      "size": 16807,
+      "reason": "Unused legacy glossary/translation curation data not included in the commercial resource set"
+    },
+    {
+      "oldPath": "tools/dictionaries/glossary/eval/round1-sample.tsv",
+      "assetPath": null,
+      "sha256": "bbdf34ddf1c973888a4963c7f78b06ad92a1f9c77ecbbd8386cf08085c2182e3",
+      "size": 1781,
+      "reason": "Unused legacy glossary/translation curation data not included in the commercial resource set"
+    },
+    {
+      "oldPath": "tools/dictionaries/glossary/eval/round2-sample.tsv",
+      "assetPath": null,
+      "sha256": "aed1c4eb30e7c27b94cd50f2053dce2a78e7c462832facd474b2d6cca251a359",
+      "size": 1633,
+      "reason": "Unused legacy glossary/translation curation data not included in the commercial resource set"
+    },
+    {
+      "oldPath": "tools/dictionaries/glossary/eval/round5-sample.tsv",
+      "assetPath": null,
+      "sha256": "2598dc41742c55321836316b847aa1ba2af6c374b18fc3c43319db40597b6dd8",
+      "size": 1644,
+      "reason": "Unused legacy glossary/translation curation data not included in the commercial resource set"
+    },
+    {
+      "oldPath": "tools/dictionaries/glossary/eval/round7-sample.tsv",
+      "assetPath": null,
+      "sha256": "44d1b7df6f02cf75d8d97cc6dc3d54d0d8be51742c8b9c8dad35465237123301",
+      "size": 1677,
+      "reason": "Unused legacy glossary/translation curation data not included in the commercial resource set"
+    },
+    {
+      "oldPath": "tools/dictionaries/glossary/eval/round4-sample.tsv",
+      "assetPath": null,
+      "sha256": "a5664deb711e3f3dcec3dcc8d709302f82089288377f81400716820a5f02f28e",
+      "size": 1599,
+      "reason": "Unused legacy glossary/translation curation data not included in the commercial resource set"
+    },
+    {
+      "oldPath": "tools/dictionaries/glossary/eval/round3-sample.tsv",
+      "assetPath": null,
+      "sha256": "87de90a251bf5457613511126392115b345d7d0f671bb45d3825c8f63d9cab09",
+      "size": 1612,
+      "reason": "Unused legacy glossary/translation curation data not included in the commercial resource set"
+    },
+    {
+      "oldPath": "tools/dictionaries/glossary/eval/round6-sample.tsv",
+      "assetPath": null,
+      "sha256": "9fe2e6061f7bfa8bf559713f9e33f2cf1fdd98689def34e197749256528293a7",
+      "size": 1638,
+      "reason": "Unused legacy glossary/translation curation data not included in the commercial resource set"
+    },
+    {
+      "oldPath": "app/src/main/assets/rime_ice/radical_pinyin.dict.yaml",
+      "assetPath": "rime_ice/radical_pinyin.dict.yaml",
+      "sha256": "298bb907aff1d17fdc34e097f35dcfd3547e8a28d2640fa2c87340ce7e2ce058",
+      "size": 2167717,
+      "reason": "Replaced by a small original mapping set to keep corpus provenance explicit"
+    },
+    {
+      "oldPath": "app/src/main/assets/rime_ice/opencc/emoji.txt",
+      "assetPath": "rime_ice/opencc/emoji.txt",
+      "sha256": "09e29b83ad367ea273e9ab438e572a7621649d93b36924ead28852762d2898b1",
+      "size": 132908,
+      "reason": "Replaced by a small original mapping set to keep corpus provenance explicit"
+    },
+    {
+      "oldPath": "app/src/main/assets/rime_ice/opencc/others.txt",
+      "assetPath": "rime_ice/opencc/others.txt",
+      "sha256": "9595273a49139e1184bca0f1923660793b3873d7b4996d0a5dd665e777d4e55c",
+      "size": 45735,
+      "reason": "Replaced by a small original mapping set to keep corpus provenance explicit"
+    },
+    {
+      "oldPath": "app/src/main/res/raw/kb_handwriting_erase.wav",
+      "assetPath": null,
+      "sha256": "ecd49a8c5d591c8ad83e7ed32c024f77eebb40d58da30a91330b31351c4b8984",
+      "size": 9746,
+      "reason": "Replaced with deterministic original synthesized tones"
+    },
+    {
+      "oldPath": "app/src/main/res/raw/kb_key_delete.wav",
+      "assetPath": null,
+      "sha256": "a4e34751e3a92408c8c95314c432d29123c4663d56f17d4c845330fa58989767",
+      "size": 3572,
+      "reason": "Replaced with deterministic original synthesized tones"
+    },
+    {
+      "oldPath": "app/src/main/res/raw/kb_key_enter.wav",
+      "assetPath": null,
+      "sha256": "04d1212e9c27469fecc4869fece183d35fc4246303fc6c185b6facc9457b1528",
+      "size": 4012,
+      "reason": "Replaced with deterministic original synthesized tones"
+    },
+    {
+      "oldPath": "app/src/main/res/raw/kb_key_space.wav",
+      "assetPath": null,
+      "sha256": "ab74fe9305a6cf00cacfaae100c308d6eac5a4afd335bf34beb1174f3c46a328",
+      "size": 4454,
+      "reason": "Replaced with deterministic original synthesized tones"
+    },
+    {
+      "oldPath": "app/src/main/res/raw/kb_key_standard.wav",
+      "assetPath": null,
+      "sha256": "27aca2f20c4a9b368bcb97c229f4b5936334b42d911b81c1155eba3904729e63",
+      "size": 2690,
+      "reason": "Replaced with deterministic original synthesized tones"
+    },
+    {
+      "oldPath": "app/src/main/res/raw/kb_rec_backspace.wav",
+      "assetPath": null,
+      "sha256": "9534f54521a611c22f181bd34c0ca68da19be087fd61df9642bb85dc1a1e4366",
+      "size": 21554,
+      "reason": "Replaced with deterministic original synthesized tones"
+    },
+    {
+      "oldPath": "app/src/main/res/raw/kb_rec_enter.wav",
+      "assetPath": null,
+      "sha256": "188e515323c7ee1a63c75a4599b58f18f0e372a14664a52dae6de06d318e4e0a",
+      "size": 10842,
+      "reason": "Replaced with deterministic original synthesized tones"
+    },
+    {
+      "oldPath": "app/src/main/res/raw/kb_rec_normal.wav",
+      "assetPath": null,
+      "sha256": "2d9c9519ed2033d2b4d86709f978db106e53fe3a27501bab8e52a558104273df",
+      "size": 13302,
+      "reason": "Replaced with deterministic original synthesized tones"
+    },
+    {
+      "oldPath": "app/src/main/res/raw/kb_rec_space.wav",
+      "assetPath": null,
+      "sha256": "fe10a7eec4b77fe2849e764cbb6c04c8a8cfb11dcbfeb89428e6dec581af712a",
+      "size": 13218,
+      "reason": "Replaced with deterministic original synthesized tones"
+    },
+    {
+      "oldPath": "app/src/main/res/raw/kb_voice_end.wav",
+      "assetPath": null,
+      "sha256": "eb36c02c898e583fd4a8e6698e5d910c38a41ab86fb391fef2eb8933a532dd3f",
+      "size": 10604,
+      "reason": "Replaced with deterministic original synthesized tones"
+    },
+    {
+      "oldPath": "app/src/main/res/raw/kb_voice_start.wav",
+      "assetPath": null,
+      "sha256": "32b0a28d8e0e2951553c365c92e40ef86b260829f3bdc1fdf2833eade477689c",
+      "size": 10604,
+      "reason": "Replaced with deterministic original synthesized tones"
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_chinese/cyime_cangjie.dict.yaml",
+      "assetPath": "rime_chinese/cyime_cangjie.dict.yaml",
+      "sha256": "48f5699a93ae80c598922535fa4088f544d4bdbb4ba4cbe0edf2028b47152af5",
+      "size": 1249278,
+      "reason": "Legacy mixed-corpus frequencies replaced by approved AOSP or fixed weights"
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_chinese/cyime_quick.dict.yaml",
+      "assetPath": "rime_chinese/cyime_quick.dict.yaml",
+      "sha256": "f86b574856dba43086664a69737cf530afc32a7b607cd508c43bee7db19f265c",
+      "size": 290532,
+      "reason": "Legacy mixed-corpus frequencies replaced by approved AOSP or fixed weights"
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_chinese/stroke.dict.yaml",
+      "assetPath": "rime_chinese/stroke.dict.yaml",
+      "sha256": "0c81e3ac2452bfb88f64e50f011223559530e6c177ca894abc561f5024b82dc1",
+      "size": 1009117,
+      "reason": "Legacy mixed-corpus frequencies replaced by approved AOSP or fixed weights"
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_chinese/stroke_phrase.dict.yaml",
+      "assetPath": "rime_chinese/stroke_phrase.dict.yaml",
+      "sha256": "38b0f5b22aed1fc70cd379239e7340149decb914c0f2fa9dbc3feb51d9fe9b0d",
+      "size": 3070641,
+      "reason": "Legacy mixed-corpus frequencies replaced by approved AOSP or fixed weights"
+    },
+    {
+      "oldPath": "vendor/cyime-1.15.94/assets/rime_chinese/cyime_tw.dict.yaml",
+      "assetPath": "rime_chinese/cyime_tw.dict.yaml",
+      "sha256": "ac6a53b633dc1fa5ae391a19fa625d4a5180d4e292f8ebb3a9babe6e33b4925e",
+      "size": 30990,
+      "reason": "Legacy mixed-corpus frequencies replaced by approved AOSP or fixed weights"
+    },
+    {
+      "oldPath": "app/src/main/assets/themes/olivcelso-desert-bg.jpg",
+      "assetPath": "themes/olivcelso-desert-bg.jpg",
+      "sha256": "3bc987f3c711e916bf2ac598967729ecac9167bbddcf1da7b3b7a202a5e8b2e5",
+      "size": 77354,
+      "reason": "Photo provenance not evidenced; theme now uses an original color gradient"
+    },
+    {
+      "oldPath": "app/src/androidTest/assets/ocr/keycaps-reported.jpg",
+      "sha256": "d1baa0fb6aa7223e437876f1e69184362ddeca800f29c6c1ef71e7a84849a9db",
+      "size": 53812,
+      "reason": "Upstream user-feedback photo, not an approved public commercial source fixture"
+    },
+    {
+      "oldPath": "tools/wordlists/cyime-words-es-v1.txt",
+      "assetPath": null,
+      "sha256": "883f448de2eb617dd1e8269d8b3ce6c63a253c08c2b4e7ec9df27cfc606be9cf",
+      "size": 351490,
+      "reason": "Unused extra-language derivative of FrequencyWords/OpenSubtitles; excluded from commercial Chinese/US-English source distribution."
+    },
+    {
+      "oldPath": "tools/wordlists/cyime-words-ru-v1.txt",
+      "assetPath": null,
+      "sha256": "7a818abbe5e85670b76cdac369453848c664540122cf33112365eae749728177",
+      "size": 654612,
+      "reason": "Unused extra-language derivative of FrequencyWords/OpenSubtitles; excluded from commercial Chinese/US-English source distribution."
+    },
+    {
+      "oldPath": "tools/wordlists/cyime-words-it-v1.txt",
+      "assetPath": null,
+      "sha256": "a746aaaea5d3142fe22dc940cf8f390709242bddbc7a71d4dca67124cfc1d5a2",
+      "size": 356137,
+      "reason": "Unused extra-language derivative of FrequencyWords/OpenSubtitles; excluded from commercial Chinese/US-English source distribution."
+    },
+    {
+      "oldPath": "tools/wordlists/cyime-words-fr-v1.txt",
+      "assetPath": null,
+      "sha256": "5ed4378b44aecce3afba69f312bbb802f53ede4b8f8c3a941370a9a791b95a19",
+      "size": 339957,
+      "reason": "Unused extra-language derivative of FrequencyWords/OpenSubtitles; excluded from commercial Chinese/US-English source distribution."
+    },
+    {
+      "oldPath": "tools/wordlists/cyime-words-de-v1.txt",
+      "assetPath": null,
+      "sha256": "0b72230518bd82fe1e19b28f54154b2fdf91d4513c4c87cdec700ed051b2203a",
+      "size": 365973,
+      "reason": "Unused extra-language derivative of FrequencyWords/OpenSubtitles; excluded from commercial Chinese/US-English source distribution."
+    }
+  ]
+}

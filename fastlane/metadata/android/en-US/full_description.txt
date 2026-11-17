@@ -1,0 +1,11 @@
+LanType is an independent GPLv3 Android keyboard derived from CyIME and Rime, supporting Chinese and American English. The app has no INTERNET permission and requires no account or online activation.
+
+Type with Chinese Pinyin, nine-key and double-Pinyin layouts, local dictionaries, or US English completion, glide typing and spelling suggestions. Clipboard, phrases, Emoji, cursor controls and keyboard themes are available.
+
+The new Tool Cabin converts units, transforms explicitly selected text and expands dynamic templates. Preview before inserting or replacing text. Templates support local date/time and a cursor slot; clipboard variables require a separate confirmation. Password and restricted fields are blocked, and changed selections invalidate old previews.
+
+Bundled Whisper speech recognition and PP-OCRv5 image recognition run locally. Speech is decoded in segments, with performance depending on the device. Chinese handwriting uses single-character stroke-order templates; cursive or whole-line recognition is not promised.
+
+Microphone, camera and image access are requested for the relevant features. The keyboard does not read SMS or contacts. Copy verification codes from your messaging app or notifications and paste them manually. Personal dictionaries and settings remain on the device.
+
+Application source is provided under GPLv3. Charging for distribution does not remove recipients' GPL rights. Models and datasets retain their individual licenses, available for offline reading inside the app. LanType is not an official CyIME release. Android 9+ ARM64 is required.

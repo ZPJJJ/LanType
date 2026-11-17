@@ -1,0 +1,25 @@
+// Development JVM configuration only. No proxy setting is packaged into the APK.
+gradle.projectsEvaluated {
+    allprojects {
+        def mockitoAgent = configurations.create('lantypeMockitoAgent') {
+            canBeConsumed = false
+            canBeResolved = true
+            transitive = false
+        }
+        dependencies.add(mockitoAgent.name, 'org.mockito:mockito-core:5.23.0')
+        tasks.withType(Test).configureEach {
+            maxParallelForks = 1
+            maxHeapSize = '2304m'
+            ['http.proxyHost', 'http.proxyPort', 'https.proxyHost', 'https.proxyPort'].each { key ->
+                def value = System.getProperty(key)
+                if (value != null) systemProperty(key, value)
+            }
+            systemProperty 'robolectric.dependency.repo.url', 'https://repo.maven.apache.org/maven2'
+            doFirst {
+                // Use Mockito's supported premain mode instead of VM self-attach.
+                def agent = mockitoAgent.singleFile
+                jvmArgs "-javaagent:${agent.absolutePath}"
+            }
+        }
+    }
+}

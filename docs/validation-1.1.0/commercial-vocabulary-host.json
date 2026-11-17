@@ -1,0 +1,74 @@
+{
+  "wordCount": 89140,
+  "nodeCount": 209246,
+  "allTerminalRanksVerified": true,
+  "maxRank": 89140,
+  "americanFormsCount": 0,
+  "prefixResults": {
+    "s": [
+      "so",
+      "some",
+      "see"
+    ],
+    "c": [
+      "can",
+      "come",
+      "call"
+    ],
+    "p": [
+      "please",
+      "phone",
+      "people"
+    ],
+    "a": [
+      "a",
+      "are",
+      "and"
+    ],
+    "th": [
+      "the",
+      "that",
+      "this"
+    ],
+    "hel": [
+      "help",
+      "hello",
+      "helpful"
+    ],
+    "key": [
+      "keyboard",
+      "key",
+      "keys"
+    ],
+    "color": [
+      "color",
+      "colors",
+      "colored"
+    ],
+    "favorite": [
+      "favorite",
+      "favorites"
+    ],
+    "organize": [
+      "organize",
+      "organized",
+      "organizer"
+    ]
+  },
+  "queriesTimed": 300,
+  "medianMs": 0.129644,
+  "p95Ms": 0.679459,
+  "bigramCollisionRegressionPassed": true,
+  "scope": "JVM production TrieAssociationEngine queries with actual SCOWL binary; Android initialization and UI latency not measured",
+  "sourceSha256": {
+    "app/src/main/java/com/kingzcheung/xime/association/AssociationCandidate.kt": "c92aa8f6c1e0452975bd1d353120f500b13f691ffe37247ec6bd19207d3c824b",
+    "app/src/main/java/com/kingzcheung/xime/association/TrieAssociationEngine.kt": "3cc6db314f76fbd9d4c400c8dcdbc46509f1174d8600171c2ec27cfb546a2b9d",
+    "app/src/main/java/com/kingzcheung/xime/association/AmericanEnglishSpelling.kt": "5f391c94f141cf64c31c18203ecebb90df3cdcb9b2e6985cf840741cab04d0ae",
+    "app/src/main/java/com/kingzcheung/xime/association/EnglishUsLexicon.kt": "cbbcd30ca441a47d300031905d5a2a9855bd6450ba3ae5decbf603c8157051ba",
+    "app/src/main/java/com/kingzcheung/xime/association/EnglishTypoCorrections.kt": "3c50d85ee45ca764b87a0ec5680f25ef5368077a677f89e265b9098723a07528",
+    "app/src/main/java/com/kingzcheung/xime/glide/EnglishBigrams.kt": "30dccbaccf14cb5da3e5299584e654c49cdcc29ede2306c1e7c682867ad9a4a8",
+    "tools/lantype_resources/probe_stubs/GlideCandidate.kt": "40bbef1150e881d6626ccd9240dd6be4e279c5488ba9519670c6f7f965eecc36",
+    "tools/lantype_resources/VocabularyProbe.kt": "3b03de05e35c2cdeb10babfefa355d210666ad01d8de5a54429136601794a245"
+  },
+  "compiler": "Kotlin 2.3.20 host; not the Android project compiler"
+}

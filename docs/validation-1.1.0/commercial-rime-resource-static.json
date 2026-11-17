@@ -1,0 +1,64 @@
+{
+  "scope": "Static exact-byte deployment manifest and dictionary source checks; not native Rime compilation, candidate ranking or Android UI acceptance",
+  "deploymentEntries": 115,
+  "allManifestHashesAndSizesMatch": true,
+  "uniqueTargets": true,
+  "chineseEntries": 147288,
+  "commonWords": {
+    "中国": [
+      {
+        "pinyin": "zhong guo",
+        "weight": 106588
+      }
+    ],
+    "中文": [
+      {
+        "pinyin": "zhong wen",
+        "weight": 9371
+      }
+    ],
+    "你好": [
+      {
+        "pinyin": "ni hao",
+        "weight": 20728
+      }
+    ],
+    "美国": [
+      {
+        "pinyin": "mei guo",
+        "weight": 42227
+      }
+    ],
+    "谢谢": [
+      {
+        "pinyin": "xie xie",
+        "weight": 47594
+      }
+    ],
+    "输入法": [
+      {
+        "pinyin": "shu ru fa",
+        "weight": 2665
+      }
+    ]
+  },
+  "dictionaryReferences": [
+    "cyime_aux_flypy",
+    "cyime_aux_zrm",
+    "cyime_cangjie",
+    "cyime_cn_en",
+    "cyime_english",
+    "cyime_k14_english",
+    "cyime_quick",
+    "cyime_t9_english",
+    "melt_eng",
+    "pinyin_simp",
+    "radical_pinyin",
+    "rime_ice",
+    "stroke",
+    "stroke_phrase"
+  ],
+  "missingDictionaryReferences": [],
+  "optionalStatisticalModelsDisabled": true,
+  "retiredExactPathHashRows": 68
+}

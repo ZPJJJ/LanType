@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.kingzcheung.xime.toolcabin.UnitConverterTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-17T02:13:36.071Z" hostname="66ec0b799489" time="0.012">
+  <properties/>
+  <testcase name="binaryAndDecimalStorageAreDifferentAndExact" classname="com.kingzcheung.xime.toolcabin.UnitConverterTest" time="0.002"/>
+  <testcase name="developerFrameAndAngleConversionsSignalRounding" classname="com.kingzcheung.xime.toolcabin.UnitConverterTest" time="0.001"/>
+  <testcase name="temperatureUsesAnOffsetAndLengthUsesExactFactors" classname="com.kingzcheung.xime.toolcabin.UnitConverterTest" time="0.0"/>
+  <testcase name="arithmeticReusesExistingEngineWithoutChangingTheDraft" classname="com.kingzcheung.xime.toolcabin.UnitConverterTest" time="0.009"/>
+  <testcase name="invalidDimensionsAndNonphysicalValuesDoNotInventAResult" classname="com.kingzcheung.xime.toolcabin.UnitConverterTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

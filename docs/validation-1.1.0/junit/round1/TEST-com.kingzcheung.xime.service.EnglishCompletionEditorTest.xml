@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.kingzcheung.xime.service.EnglishCompletionEditorTest" tests="10" skipped="0" failures="0" errors="0" timestamp="2026-11-17T02:10:15.116Z" hostname="66ec0b799489" time="5.288">
+  <properties/>
+  <testcase name="spellingCorrectionsRequireTheEditorToSelectTheOriginalWord[30]" classname="com.kingzcheung.xime.service.EnglishCompletionEditorTest" time="2.906"/>
+  <testcase name="spellingCorrectionsRequireTheEditorToSelectTheOriginalWord" classname="com.kingzcheung.xime.service.EnglishCompletionEditorTest" time="2.001"/>
+  <testcase name="movedCaretSelectionAndRejectedWritePreserveTheDraft[30]" classname="com.kingzcheung.xime.service.EnglishCompletionEditorTest" time="0.066"/>
+  <testcase name="movedCaretSelectionAndRejectedWritePreserveTheDraft" classname="com.kingzcheung.xime.service.EnglishCompletionEditorTest" time="0.057"/>
+  <testcase name="autoSpaceOnOriginalWordRequiresThePrefixAtTheCurrentCaret[30]" classname="com.kingzcheung.xime.service.EnglishCompletionEditorTest" time="0.043"/>
+  <testcase name="autoSpaceOnOriginalWordRequiresThePrefixAtTheCurrentCaret" classname="com.kingzcheung.xime.service.EnglishCompletionEditorTest" time="0.051"/>
+  <testcase name="completionWorksWhenEditorReportsSuccessWithoutDeletingThePrefix[30]" classname="com.kingzcheung.xime.service.EnglishCompletionEditorTest" time="0.042"/>
+  <testcase name="completionWorksWhenEditorReportsSuccessWithoutDeletingThePrefix" classname="com.kingzcheung.xime.service.EnglishCompletionEditorTest" time="0.046"/>
+  <testcase name="typoCandidateKeepsLiteralUntilExplicitlySelectedAndRejectsStaleContext[30]" classname="com.kingzcheung.xime.service.EnglishCompletionEditorTest" time="0.036"/>
+  <testcase name="typoCandidateKeepsLiteralUntilExplicitlySelectedAndRejectsStaleContext" classname="com.kingzcheung.xime.service.EnglishCompletionEditorTest" time="0.04"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

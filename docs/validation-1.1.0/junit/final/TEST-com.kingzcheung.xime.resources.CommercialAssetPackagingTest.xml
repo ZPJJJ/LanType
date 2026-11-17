@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.kingzcheung.xime.resources.CommercialAssetPackagingTest" tests="3" skipped="0" failures="0" errors="0" timestamp="2026-11-17T02:21:26.706Z" hostname="66ec0b799489" time="4.485">
+  <properties/>
+  <testcase name="fullScowlBinarySupportsEnglishCompletion" classname="com.kingzcheung.xime.resources.CommercialAssetPackagingTest" time="4.128"/>
+  <testcase name="packagedStrokeTemplatesLoadThroughTheProductionEngine" classname="com.kingzcheung.xime.resources.CommercialAssetPackagingTest" time="0.295"/>
+  <testcase name="originalAssociationTablesAreReadableByTheirRuntimeNames" classname="com.kingzcheung.xime.resources.CommercialAssetPackagingTest" time="0.059"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

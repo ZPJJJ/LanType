@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.kingzcheung.xime.service.ToolCabinQueueBoundaryTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-11-17T02:13:35.930Z" hostname="66ec0b799489" time="0.114">
+  <properties/>
+  <testcase name="exitingInternalTypingCancelsOldDeliveryButFreshPreviewStillCommits" classname="com.kingzcheung.xime.service.ToolCabinQueueBoundaryTest" time="0.114"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

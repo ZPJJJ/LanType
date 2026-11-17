@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.kingzcheung.xime.ui.render.VerificationCodePermissionTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2026-11-17T02:10:25.506Z" hostname="66ec0b799489" time="0.14">
+  <properties/>
+  <testcase name="commercialBuildOffersManualPasteWithoutRequestingSmsEvenAfterLegacyRestore" classname="com.kingzcheung.xime.ui.render.VerificationCodePermissionTest" time="0.14"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

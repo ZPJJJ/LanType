@@ -1,0 +1,102 @@
+KaTeX fonts shipped unchanged from the official v0.16.22 release.
+The following copyright and reserved-name declarations are taken from the
+name tables of the matching TTF faces in that exact release. All 20 WOFF2
+files match it byte for byte; see docs/licensing/katex-fonts-evidence.json.
+Source: https://github.com/KaTeX/KaTeX/tree/v0.16.22/fonts
+The complete font license is SIL-OFL-1.1.txt in this directory.
+
+Copyright (c) 2009-2010, Design Science, Inc. (<www.mathjax.org>)
+Copyright (c) 2014-2018 Khan Academy (<www.khanacademy.org>),
+with Reserved Font Name KaTeX_AMS.
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+This license available with a FAQ at:
+http://scripts.sil.org/OFL
+
+Copyright (c) 2009-2010, Design Science, Inc. (<www.mathjax.org>)
+Copyright (c) 2014-2018 Khan Academy (<www.khanacademy.org>),
+with Reserved Font Name KaTeX_Caligraphic.
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+This license available with a FAQ at:
+http://scripts.sil.org/OFL
+
+Copyright (c) 2009-2010, Design Science, Inc. (<www.mathjax.org>)
+Copyright (c) 2014-2018 Khan Academy (<www.khanacademy.org>),
+with Reserved Font Name KaTeX_Fraktur.
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+This license available with a FAQ at:
+http://scripts.sil.org/OFL
+
+Copyright (c) 2009-2010, Design Science, Inc. (<www.mathjax.org>)
+Copyright (c) 2014-2018 Khan Academy (<www.khanacademy.org>),
+with Reserved Font Name KaTeX_Main.
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+This license available with a FAQ at:
+http://scripts.sil.org/OFL
+
+Copyright (c) 2009-2010, Design Science, Inc. (<www.mathjax.org>)
+Copyright (c) 2014-2018 Khan Academy (<www.khanacademy.org>),
+with Reserved Font Name KaTeX_Math.
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+This license available with a FAQ at:
+http://scripts.sil.org/OFL
+
+Copyright (c) 2009-2010, Design Science, Inc. (<www.mathjax.org>)
+Copyright (c) 2014-2018 Khan Academy (<www.khanacademy.org>),
+with Reserved Font Name KaTeX_SansSerif.
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+This license available with a FAQ at:
+http://scripts.sil.org/OFL
+
+Copyright (c) 2009-2010, Design Science, Inc. (<www.mathjax.org>)
+Copyright (c) 2014-2018 Khan Academy (<www.khanacademy.org>),
+with Reserved Font Name KaTeX_Script.
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+This license available with a FAQ at:
+http://scripts.sil.org/OFL
+
+Copyright (c) 2009-2010, Design Science, Inc. (<www.mathjax.org>)
+Copyright (c) 2014-2018 Khan Academy (<www.khanacademy.org>),
+with Reserved Font Name KaTeX_Size1.
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+This license available with a FAQ at:
+http://scripts.sil.org/OFL
+
+Copyright (c) 2009-2010, Design Science, Inc. (<www.mathjax.org>)
+Copyright (c) 2014-2018 Khan Academy (<www.khanacademy.org>),
+with Reserved Font Name KaTeX_Size2.
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+This license available with a FAQ at:
+http://scripts.sil.org/OFL
+
+Copyright (c) 2009-2010, Design Science, Inc. (<www.mathjax.org>)
+Copyright (c) 2014-2018 Khan Academy (<www.khanacademy.org>),
+with Reserved Font Name KaTeX_Size3.
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+This license available with a FAQ at:
+http://scripts.sil.org/OFL
+
+Copyright (c) 2009-2010, Design Science, Inc. (<www.mathjax.org>)
+Copyright (c) 2014-2018 Khan Academy (<www.khanacademy.org>),
+with Reserved Font Name KaTeX_Size4.
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+This license available with a FAQ at:
+http://scripts.sil.org/OFL
+
+Copyright (c) 2009-2010, Design Science, Inc. (<www.mathjax.org>)
+Copyright (c) 2014-2018 Khan Academy (<www.khanacademy.org>),
+with Reserved Font Name KaTeX_Typewriter.
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+This license available with a FAQ at:
+http://scripts.sil.org/OFL

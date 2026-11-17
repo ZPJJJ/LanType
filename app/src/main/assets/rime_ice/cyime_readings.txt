@@ -1,0 +1,1 @@
+# No subtitle-derived reading penalties are shipped.

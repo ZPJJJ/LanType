@@ -1,0 +1,40 @@
+{
+  "runtime": "sherpa-onnx 1.13.8 Python CPU",
+  "platform": "x86_64",
+  "numThreads": 2,
+  "task": "transcribe",
+  "tailPaddings": 1000,
+  "modelRevision": "bb53ee204431c90d314c1cc08d28d23e5b7927cc",
+  "modelFiles": {
+    "base-tokens.txt": "b34b360dbb493e781e479794586d661700670d65564001f23024971d1f2fa126",
+    "base-decoder.int8.onnx": "9759d217388a01b3a4c7c15533201067b48ae819c4daafc8624e64b9409dc02d",
+    "base-encoder.int8.onnx": "0b8fb1304b6109976038efff5ace81720e00386f3ff6b54ee8c75291ca0a1e11"
+  },
+  "cases": [
+    {
+      "language": "en",
+      "inputFile": "0.wav",
+      "inputSha256": "6bc58a4efdf20daac252b6b1502632601a71efe0308f6757dc1eda34891a7e4f",
+      "durationSeconds": 6.625,
+      "modelLoadSeconds": 1.0722406079985376,
+      "decodeSeconds": 0.8229103759986174,
+      "text": "After early nightfall, the yellow lamps would light up here and there, the squalid quarter of the brothels.",
+      "nonemptyExpectedLanguage": true,
+      "sampleSource": "https://huggingface.co/csukuangfj/sherpa-onnx-whisper-base/tree/bb53ee204431c90d314c1cc08d28d23e5b7927cc/test_wavs",
+      "audioRedistributed": false
+    },
+    {
+      "language": "zh",
+      "inputFile": "zh.wav",
+      "inputSha256": "b77f1794fe374a0ba1ee1dc458bfaf9349496cbbfc32780c50ba3c5a7ad8e373",
+      "durationSeconds": 5.592,
+      "modelLoadSeconds": 0.5273882939982286,
+      "decodeSeconds": 0.5442715479985054,
+      "text": "开放时间早上9点 于下5点",
+      "nonemptyExpectedLanguage": true,
+      "sampleSource": "https://huggingface.co/csukuangfj/sherpa-onnx-sense-voice-zh-en-ja-ko-yue-2024-07-17/tree/main/test_wavs",
+      "audioRedistributed": false
+    }
+  ],
+  "scope": "Actual bundled INT8 Whisper encoder/decoder/tokens decoded one English and one Chinese external test clip on the x86_64 host. Not Android JNI, microphone, latency or broad accuracy acceptance."
+}

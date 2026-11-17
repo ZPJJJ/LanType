@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.kingzcheung.xime.keyboard.QuickActionLayoutTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-17T02:13:30.399Z" hostname="66ec0b799489" time="0.003">
+  <properties/>
+  <testcase name="existingToolbarIsKeptAndDefaultMenuSkipsItsEntries" classname="com.kingzcheung.xime.keyboard.QuickActionLayoutTest" time="0.001"/>
+  <testcase name="hiddenEntriesKeepTheirPlaceWhenArrangingInAnotherLayout" classname="com.kingzcheung.xime.keyboard.QuickActionLayoutTest" time="0.0"/>
+  <testcase name="draggingAcrossDividersMovesBetweenToolbarMenuAndUnused" classname="com.kingzcheung.xime.keyboard.QuickActionLayoutTest" time="0.001"/>
+  <testcase name="eachEntryLivesInOnePlaceAndSettingsCannotBeRemoved" classname="com.kingzcheung.xime.keyboard.QuickActionLayoutTest" time="0.001"/>
+  <testcase name="enabledPluginButtonGoesIntoMenuBeforeArrange" classname="com.kingzcheung.xime.keyboard.QuickActionLayoutTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

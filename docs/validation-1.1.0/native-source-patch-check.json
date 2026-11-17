@@ -1,0 +1,24 @@
+{
+  "generatedAtUtc": "2026-11-17T02:20:08.071228+00:00",
+  "checks": [
+    {
+      "source": "app/src/main/jni/librime",
+      "patch": "patches/cyime-librime.patch",
+      "appliesToPinnedSource": true,
+      "diagnostic": ""
+    },
+    {
+      "source": "app/src/main/jni/librime-lua-deps",
+      "patch": "patches/cyime-lua-android.patch",
+      "appliesToPinnedSource": true,
+      "diagnostic": ""
+    },
+    {
+      "source": "app/src/main/jni/librime-octagram",
+      "patch": "app/src/main/jni/cmake/OctagramT9.patch",
+      "appliesToPinnedSource": true,
+      "diagnostic": ""
+    }
+  ],
+  "nativeRebuildExecuted": false
+}

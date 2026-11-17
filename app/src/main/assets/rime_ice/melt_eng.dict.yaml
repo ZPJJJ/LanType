@@ -1,0 +1,7 @@
+# SCOWL American English; see licenses/SCOWL-Copyright.txt.
+---
+name: melt_eng
+version: "lantype-commercial-1"
+sort: by_weight
+import_tables: [en_dicts/en]
+...

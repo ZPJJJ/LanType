@@ -1,0 +1,8 @@
+CC-CEDICT, community maintained Chinese-English dictionary.
+Published by MDBG, snapshot 2026-11-16T07:16:40Z.
+Source: https://www.mdbg.net/chinese/dictionary?page=cedict
+License: Creative Commons Attribution-ShareAlike 4.0 International
+https://creativecommons.org/licenses/by-sa/4.0/legalcode.en
+Referenced work: CEDICT Copyright (C) 1997, 1998 Paul Andrew Denisowski.
+LanType modifications (2026-11-17): extracted simplified words and toneless pinyin, assigned constant fallback weight; omitted definitions. These derivatives remain CC-BY-SA-4.0.
+The complete unmodified source snapshot is supplied in tools/lantype_resources/source_data/cedict.txt.gz.
