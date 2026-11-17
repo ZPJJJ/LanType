@@ -10,11 +10,16 @@ import hashlib
 import importlib.util
 import json
 import os
+import re
 import subprocess
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
-PREFIX = 'LanType-1.1.0/'
+VERSION_MATCH = re.search(r'versionName\s*=\s*"(\d+\.\d+\.\d+)"', (ROOT / 'app/build.gradle.kts').read_text())
+if VERSION_MATCH is None:
+    raise SystemExit('Cannot determine the release version from app/build.gradle.kts')
+VERSION = VERSION_MATCH.group(1)
+PREFIX = f'LanType-{VERSION}/'
 
 
 def load_module(name, file):
@@ -45,7 +50,7 @@ def write_zip(output, paths, kind):
             with source.open('rb') as stream, archive.open(info, 'w', force_zip64=True) as target:
                 while chunk := stream.read(1024 * 1024):
                     target.write(chunk)
-        manifest = {'edition': '1.1.0', 'kind': kind, 'files': inventory}
+        manifest = {'edition': VERSION, 'kind': kind, 'files': inventory}
         info = zipfile.ZipInfo(PREFIX + kind.upper() + '-INVENTORY.json', (2026, 11, 17, 0, 0, 0))
         info.compress_type = zipfile.ZIP_DEFLATED
         info.external_attr = 0o100644 << 16
@@ -58,7 +63,10 @@ def write_zip(output, paths, kind):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--source-output', type=Path, required=True)
-    parser.add_argument('--runtime-output', type=Path, required=True)
+    runtime = parser.add_mutually_exclusive_group(required=True)
+    runtime.add_argument('--runtime-output', type=Path)
+    runtime.add_argument('--source-only', action='store_true',
+                         help='Package application source only; provide the unchanged runtime and native source archives separately.')
     parser.add_argument('--dry-run', action='store_true')
     args = parser.parse_args()
     public = load_module('public_inventory', 'check-public-source.py')
@@ -100,7 +108,8 @@ def main():
                           'runtimeBytes': sum((ROOT / path).stat().st_size for path in set(runtime_files))}, indent=2))
         return
     write_zip(args.source_output, source_files, 'source')
-    write_zip(args.runtime_output, runtime_files, 'runtime-dependencies')
+    if args.runtime_output:
+        write_zip(args.runtime_output, runtime_files, 'runtime-dependencies')
 
 
 if __name__ == '__main__':

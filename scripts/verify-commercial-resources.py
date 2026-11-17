@@ -14,6 +14,13 @@ import zipfile
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def release_version():
+    match = re.search(r'versionName\s*=\s*"(\d+\.\d+\.\d+)"', (ROOT / 'app/build.gradle.kts').read_text())
+    if match is None:
+        raise ValueError('Cannot determine the release version from app/build.gradle.kts')
+    return match.group(1)
+
+
 def fingerprint(stream):
     digest, count, prefix = hashlib.sha256(), 0, b''
     while chunk := stream.read(1024 * 1024):
@@ -230,7 +237,7 @@ def check(apk=None):
     finally:
         if archive:
             archive.close()
-    return {'schemaVersion': 1, 'edition': '1.1.0', 'mode': 'apk' if apk else 'source',
+    return {'schemaVersion': 2, 'checkedAgainstSourceVersion': release_version(), 'mode': 'apk' if apk else 'source',
             'apk': str(apk) if apk else None, 'lockSha256': file_fingerprint(ROOT / 'docs/licensing/resources.lock.json')[1],
             'approvedAssetCount': len(expected), 'checkedAssetCount': len(checked), 'rawResourceCount': len(lock.get('rawResources', [])),
             'allZipEntriesScanned': full_zip_count, 'zipFilenameEncodingCorrections': filename_corrections,
@@ -288,7 +295,7 @@ def check_public_payloads(source_zip=None):
         finally:
             process.stdin.close()
             process.wait()
-    return {'schemaVersion': 1, 'edition': '1.1.0', 'mode': 'source-zip' if source_zip else 'git-index',
+    return {'schemaVersion': 2, 'checkedAgainstSourceVersion': release_version(), 'mode': 'source-zip' if source_zip else 'git-index',
             'scannedFiles': count, 'byteSource': 'ZIP entries' if source_zip else 'actual staged Git blobs via cat-file', 'approvedHashesTakePrecedence': True, 'removedContentHashes': len(denied), 'pass': not failures, 'failures': failures}
 
 

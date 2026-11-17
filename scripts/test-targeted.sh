@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 cd "$(dirname "$0")/.."
-export CYIME_RENDER_OUT="${CYIME_RENDER_OUT:-$PWD/docs/validation-1.1.0/screenshots}"
+export CYIME_RENDER_OUT="${CYIME_RENDER_OUT:-$PWD/app/build/lantype-test-renders}"
 mkdir -p "$CYIME_RENDER_OUT"
 if (( $# == 0 )); then
   set -- \
@@ -11,6 +11,13 @@ if (( $# == 0 )); then
     com.kingzcheung.xime.service.ToolCabinEditorTest \
     com.kingzcheung.xime.service.ToolCabinQueueBoundaryTest \
     com.kingzcheung.xime.service.InputPrivacyTest \
+    com.kingzcheung.xime.clipboard.PrivateClipMemoryTest \
+    com.kingzcheung.xime.clipboard.ToolCabinClipPrivacyTest \
+    com.kingzcheung.xime.clipboard.ClipboardSensitiveTest \
+    com.kingzcheung.xime.ui.keyboard.ToolPanelPrivateClipboardTest \
+    com.kingzcheung.xime.speech.OfflineWhisperLanguageSwitchTest \
+    com.kingzcheung.xime.speech.SpeechRecognitionLanguageSessionTest \
+    com.kingzcheung.xime.rime.LegacyRimeDirectoryMigrationTest \
     com.kingzcheung.xime.settings.LanguageSwitchPreferencesTest \
     com.kingzcheung.xime.keyboard.QuickActionLayoutTest \
     com.kingzcheung.xime.ui.render.ToolCabinRenderTest \

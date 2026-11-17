@@ -1,13 +1,15 @@
-# LanType 1.1.0 构建、资源与对应源码
+# LanType 1.1.1 构建、资源与对应源码
 
-本文件适用于 1.1.0 商业发行候选版。实际构建、测试、APK 指纹和未验收范围见 [本轮验证报告](validation-1.1.0/VALIDATION.md)。`docs/validation/` 是 1.0.0 历史材料，不能用作本版通过的证据。
+本文件说明 1.1.1 兼容修复批次的构建与交付方式。实际构建、测试、APK 指纹和未验收范围见 [1.1.1 验证报告](validation-1.1.1/VALIDATION.md)；本说明不预先声明安装包或设备验收通过。`docs/validation-1.1.0/` 与 `docs/validation/` 分别保留 1.1.0、1.0.0 的历史材料，不能代替本批验证。
+
+本批修复工具舱复制内容进入普通剪贴板历史的隐私边界、连续录音期间 Whisper 中英语言切换，以及遗留词库恢复中冲突或搬移失败数据被删除的问题。后者保留旧路径中的数据，不自动合并或启用两份数据库；完整范围见 [1.1.1 变更记录](CHANGELOG-1.1.1.zh-CN.md)。SDK、JDK、发行签名、模型、词库、原生库及其运行资源锁沿用 1.1.0。
 
 ## 版本与构建方式
 
 | 项目 | 本版固定值 |
 |---|---|
 | 应用 ID | `app.lantype.keyboard` |
-| versionName / versionCode | `1.1.0` / `2` |
+| versionName / versionCode | `1.1.1` / `3` |
 | 支持 ABI | `arm64-v8a` |
 | 最低 Android | API 28 / Android 9 |
 | compileSdk / targetSdk | 36 / 36 |
@@ -22,14 +24,62 @@
 
 应用运行时没有 `INTERNET` 权限。初始化语音资源只读取安装包，本地恢复也不下载。开发阶段取得 Gradle、Maven、SDK、源代码和模型构建输入需要网络；与手机运行时权限无关。
 
-## 四件套的作用
+## 发行物与复用依赖
 
-- `LanType-1.1.0-offline-arm64-v8a.apk`：最终独立签名安装包。
-- `LanType-1.1.0-source.zip`：经审阅 Git 跟踪清单中的应用源码、构建脚本、许可证、测试、受许可的生成源与小资源。
-- `LanType-1.1.0-runtime-dependencies.zip`：资源锁中的实际运行资源和预编译原生依赖。覆盖解压到相同 `LanType-1.1.0/` 目录即可补齐大文件。
-- `LanType-1.1.0-native-source.zip`：实际固定版本源码归档、每档哈希、原始构建源和说明；不是只有下载网址的源码声明。应与应用源码 ZIP 一起提供。
+- 本批安装包：`LanType-1.1.1-offline-arm64-v8a.apk`。以本批 Release 的实际附件、签名校验和 SHA-256 为准。
+- 本批应用源码：`LanType-1.1.1-source-release.zip`，解压根目录为 `LanType-1.1.1/`，包含经审阅的应用源码、构建脚本、许可证、测试、受许可的生成源与小资源。
+- 运行依赖：复用已发布的 `LanType-1.1.0-runtime-dependencies.zip`，内容与本批资源及原生锁一致，不重新命名为 1.1.1 内容。
+- 对应原生源码：复用已发布的三个 `LanType-1.1.0-native-source-part-*-of-3.zip`，合计 70 份实际固定版本源码归档。三个文件都是普通独立 ZIP，应分别解压到同一目录。
 
 Git 不存放 ONNX 模型、预编译 `.so`、大第三方树、APK、签名私钥、口令、私人测试照片或历史插件二进制。大文件在配套附件中提供，或由显式开发准备命令校验下载。
+
+### 固定下载地址与 SHA-256
+
+下列文件名、大小和摘要与 [已发布的 v1.1.0-rc1 API 清单](https://api.github.com/repos/ZPJJJ/LanType/releases/tags/v1.1.0-rc1) 一致，也与本地旧发行校验回执一致。本批 Release 复用这些固定地址和原摘要；应用源码仍必须使用本批的 1.1.1 文件。
+
+| 复用附件 | 大小（字节） |
+|---|---:|
+| [LanType-1.1.0-runtime-dependencies.zip](https://github.com/ZPJJJ/LanType/releases/download/v1.1.0-rc1/LanType-1.1.0-runtime-dependencies.zip) | 139,297,354 |
+| [LanType-1.1.0-native-source-part-1-of-3.zip](https://github.com/ZPJJJ/LanType/releases/download/v1.1.0-rc1/LanType-1.1.0-native-source-part-1-of-3.zip) | 339,827,618 |
+| [LanType-1.1.0-native-source-part-2-of-3.zip](https://github.com/ZPJJJ/LanType/releases/download/v1.1.0-rc1/LanType-1.1.0-native-source-part-2-of-3.zip) | 339,828,069 |
+| [LanType-1.1.0-native-source-part-3-of-3.zip](https://github.com/ZPJJJ/LanType/releases/download/v1.1.0-rc1/LanType-1.1.0-native-source-part-3-of-3.zip) | 339,828,348 |
+
+下载后在四个 ZIP 所在目录校验：
+
+```sh
+sha256sum --check <<'SHA256'
+42a0e57c002662e2a502719a7f002b061fd49605d92a87cab221bf6d9aa922bc  LanType-1.1.0-runtime-dependencies.zip
+00223f5255a7b6b1d9f32ea52402fd2693cc879c530e59a60d8e80fa11882b57  LanType-1.1.0-native-source-part-1-of-3.zip
+1ef3f166b8992957e5518b451de50def7db42d1443a1dc32811c3a7fc46c9eec  LanType-1.1.0-native-source-part-2-of-3.zip
+7f3b2a772532ba5ff65086efd289ac214577d498974d2253a6e4078547b8b4f7  LanType-1.1.0-native-source-part-3-of-3.zip
+SHA256
+```
+
+### 将旧依赖放进新源码目录
+
+先按本批发行摘要校验 `LanType-1.1.1-source-release.zip`，再解压到一个新的工作目录。旧 runtime ZIP 的根目录仍叫 `LanType-1.1.0/`，不能把它误当作本批源码根目录。以下命令只将其中的 `app/` 运行资源和 `vendor/` 原生依赖放到新源码的对应路径：
+
+```sh
+unzip LanType-1.1.1-source-release.zip -d build-work
+unzip LanType-1.1.0-runtime-dependencies.zip -d runtime-stage
+cp -a runtime-stage/LanType-1.1.0/app/. build-work/LanType-1.1.1/app/
+mkdir -p build-work/LanType-1.1.1/vendor
+cp -a runtime-stage/LanType-1.1.0/vendor/. build-work/LanType-1.1.1/vendor/
+```
+
+保留新源码中的根目录 `LICENSE`、`NOTICE`（如有）、`docs/licensing/` 锁文件、构建脚本与说明；不要把旧 runtime 根目录整体覆盖到新源码根目录。`app/` 中的随包许可及资源与本批锁定内容相同，补齐后仍用当前源码的校验脚本检查。旧发行的 source ZIP 或 CI 补丁不需要叠加到 1.1.1 源码。
+
+三个原生源码 ZIP 内没有 `LanType-1.1.0/` 前缀，分别解压到一个单独的源码附件目录：
+
+```sh
+unzip -n LanType-1.1.0-native-source-part-1-of-3.zip -d native-source
+unzip -n LanType-1.1.0-native-source-part-2-of-3.zip -d native-source
+unzip -n LanType-1.1.0-native-source-part-3-of-3.zip -d native-source
+```
+
+合并后是 `native-source/archives/` 下的 70 份源档，以及根目录的 `native-sources.lock.json`、`README.md`、`GPL-LICENSE.txt`、`SOURCE-SHA256SUMS.txt` 和 `PARTS-README.txt`。三包的根说明重复且字节相同，`unzip -n` 保留第一份即可；源档分别为 23、23、24 份，没有重复。不要用 `cat` 拼接这些 ZIP。后续 `--archive-dir` 指向该 `archives/` 目录。
+
+原生源码附件内的锁文件是旧发行快照；当前应用源码锁为六项源档补充了 Gitiles 获取元数据，70 项归档的文件名、大小和 SHA-256 均未改变。恢复与校验始终使用当前应用源码里的脚本和 `docs/licensing/native-sources.lock.json`，不要用附件中的旧锁覆盖它。
 
 ## 常规构建
 
@@ -47,12 +97,15 @@ python3 scripts/verify-commercial-resources.py
   '-Dorg.gradle.jvmargs=-Xmx4096m -Dfile.encoding=UTF-8'
 ```
 
-已经覆盖解压配套 runtime-dependencies ZIP 时，第一条命令只做本地哈希检查，资源准备命令也会复用已校验模型。只检查、不获取依赖可用：
+已经按上节补齐运行依赖时，可以在 `build-work/LanType-1.1.1/` 中先执行以下本地校验，再运行同一条 Gradle 构建命令，不必重新生成或下载这些已锁定资源：
 
 ```sh
 python3 scripts/prepare-upstream.py --verify-only
+python3 scripts/build-camerax-native.py --verify-only
 python3 scripts/verify-commercial-resources.py
 ```
+
+这些本地校验不替代 Gradle/Maven/SDK 准备；开发机器缺少构建依赖时，Gradle 仍需要获取相应公开组件。
 
 `prepare-upstream.py` 只提取 `native-prebuilt.lock.json` 列出的 6 个原生库和 Sherpa Java API JAR。它不会提取上游 APK 的 assets、词库、语音模型、手写数据或 DEX。即使本地旧 vendor 目录还有其他库，Gradle 也只同步锁中批准的 JNI 文件。
 
@@ -99,11 +152,11 @@ python3 scripts/prepare-native-build.py --download
 
 `-Plantype.nativeFromSource=true` 重建本项目 Rime/JNI 包装层，同时仍使用已锁定 Sherpa 原生库和官方 ORT AAR。独立重建 Sherpa、ORT、OpenCV 等上游项目应使用归档内相应构建脚本和工具版本；该选项不是“一次重新编译所有第三方原生库”的承诺。Sherpa 官方 Android 静态构建使用 NDK 27.0.11718014，与 Rime 的 NDK 29 配置不同。
 
-CameraX 1.6.2 与 Graphics 1.0.1 的精确发布模块、Java/Kotlin sources JAR 和 libyuv prefab 包装层源码也已归档。Google CameraX 发布包的独立 libyuv 提交未能唯一确认，因此本版已从源码重编其两个 JNI 库：保持 CameraX 1.6.2 实现和导出接口，明确选用 AOSP libyuv `741c38751c436f60c583110f617340b7f3322d94`，使用 NDK 27.2.12479018、CMake 3.22.1、ARM64/API28 和静态 C++，不启用 JPEG。真实输出在 `camerax-rebuilt.lock.json` 锁定；最终 APK 必须逐文件匹配，不能只依赖 Gradle pickFirst 顺序。
+CameraX 1.6.2 与 Graphics 1.0.1 的精确发布模块、Java/Kotlin sources JAR 和 libyuv prefab 包装层源码也已归档。Google CameraX 发布包的独立 libyuv 提交未能唯一确认，因此本批沿用 1.1.0 从源码重编的两个 JNI 库：保持 CameraX 1.6.2 实现和导出接口，明确选用 AOSP libyuv `741c38751c436f60c583110f617340b7f3322d94`，使用 NDK 27.2.12479018、CMake 3.22.1、ARM64/API28 和静态 C++，不启用 JPEG。真实输出在 `camerax-rebuilt.lock.json` 锁定；最终 APK 必须逐文件匹配，不能只依赖 Gradle pickFirst 顺序。
 
 从 Git 的小文件源码首次构建该组件，需要另外安装 `ndk;27.2.12479018` 和 `cmake;3.22.1`，然后运行 `python3 scripts/build-camerax-native.py --download`。运行资源附件已包含经过验证的两库时，可用 `--verify-only`，不需要重新取得 NDK。这两库的 8+1 个 JNI 导出名、SONAME、系统库依赖和 16 KB LOAD 对齐已与原接口合同核对；没有把选用的 libyuv 说成 Google 旧包的内部版本。
 
-本轮已验证源码档哈希、实际解包、ORT 头文件/共享库准备及 Rime/Lua/octagram 补丁适用性。**未建立全部上游原生二进制的逐字节重现，也未执行全部第三方库源码重编。** 所有已执行步骤和限制在验证报告中分别记录。
+1.1.0 的记录已验证这套固定源码档的哈希、实际解包、ORT 头文件/共享库准备及 Rime/Lua/octagram 补丁适用性；1.1.1 复用相同输入。**未建立全部上游原生二进制的逐字节重现，也未执行全部第三方库源码重编。** 本批实际执行步骤和限制以 1.1.1 验证报告为准。
 
 ## 测试与图像证据
 
@@ -111,7 +164,7 @@ CameraX 1.6.2 与 Graphics 1.0.1 的精确发布模块、Java/Kotlin sources JAR
 bash scripts/test-targeted.sh
 ```
 
-脚本设置 `CYIME_RENDER_OUT`，默认为 `docs/validation-1.1.0/screenshots`。可以传入类名，只运行与改动相关的测试。`scripts/test-runtime.init.gradle` 从 Maven 解析同版本 Mockito agent，在测试 JVM 启动时使用 premain；这是为不允许动态 self-attach 的环境提供支持，不替换 Mockito 实现、不关闭断言。代理参数只传给开发测试 JVM。
+脚本设置 `CYIME_RENDER_OUT`，默认为 `app/build/lantype-test-renders`；需要保留发行图像时可显式设置输出路径。默认选择集包含本批 Whisper 语言切换、录音会话、遗留目录迁移和工具舱剪贴板隐私回归。也可以传入类名，只运行与改动相关的测试。`scripts/test-runtime.init.gradle` 从 Maven 解析同版本 Mockito agent，在测试 JVM 启动时使用 premain；这是为不允许动态 self-attach 的环境提供支持，不替换 Mockito 实现、不关闭断言。代理参数只传给开发测试 JVM。
 
 Robolectric 的 Compose 图像、真实 Android `EditText`/`InputConnection` 测试与资源访问测试分别验证不同层面，不能代替 ARM64 手机的输入法启用、首次部署、16 KB 系统运行及语音/手写/OCR体验验收。截图采集不完整的诊断图不用于对外展示。
 
@@ -131,20 +184,21 @@ python3 scripts/verify-commercial-resources.py --git-index
 
 `--apk` 流式扫描 ZIP 全部条目并拒绝旧资源内容哈希，普通资源精确比对白名单；生成资产只允许明确路径、源文件精确内容或限定二进制格式。内置 clipboard 插件必须只含与公开源码相符的 `manifest.yaml` 和 `main.lua`，历史市场 `.xipk` 不进入 APK。
 
+校验回执的 `checkedAgainstSourceVersion` 表示校验使用的源码版本，不是从受检 APK 或 ZIP 中读出的版本。实际 APK 的 `versionName`/`versionCode` 仍须从其 Android manifest 单独核对，避免把沿用的旧附件误标成新包。
+
 源代码先经人工审阅并加入 Git 跟踪清单，再打包：
 
 ```sh
 python3 scripts/package-source.py \
-  --source-output /path/to/LanType-1.1.0-source.zip \
-  --runtime-output /path/to/LanType-1.1.0-runtime-dependencies.zip
-python3 scripts/package-native-source.py \
-  --archive-dir /path/to/native-source/archives \
-  --output /path/to/LanType-1.1.0-native-source.zip
-python3 scripts/verify-commercial-resources.py --source-zip /path/to/LanType-1.1.0-source.zip
+  --source-output /path/to/LanType-1.1.1-source-release.zip \
+  --source-only
+python3 scripts/verify-commercial-resources.py --source-zip /path/to/LanType-1.1.1-source-release.zip
 python3 scripts/verify-commercial-resources.py --source-zip /path/to/LanType-1.1.0-runtime-dependencies.zip
 ```
 
-每个附件有 SHA-256/大小回执。应用源码 ZIP 使用经审阅的 `git ls-files`；runtime ZIP 使用资源和 native 锁；native ZIP 使用源档锁。它们都不会递归打包整个工作区。
+`--source-only` 本批只产出新应用源码 ZIP，仍核对本地资源和原生输入；依赖大文件应先按本说明准备。Release 清单同时列出上节四个复用附件的固定链接、大小与原 SHA-256，不重复生成约 1 GB 的对应原生源码附件。新应用源码与复用依赖应作为一套材料提供。
+
+每个新附件有 SHA-256/大小回执。应用源码 ZIP 使用经审阅的 `git ls-files`；复用的 runtime ZIP 按资源和 native 锁生成，native ZIP 按源档锁生成。它们都不会递归打包整个工作区。只有运行资源或原生源档锁发生变化时，才需要另行生成并校验相应新附件。
 
 ## CI 的范围
 
