@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "runId": 44116007517,
+  "jobId": 134154114500,
+  "runUrl": "https://github.com/ZPJJJ/LanType/actions/runs/44116007517",
+  "headSha": "41e6cc2c2e0e1980f388a073512a941c4cf17569",
+  "mode": "candidate-startup",
+  "conclusion": "failure",
+  "failureClassification": "QA preflight parser error; installed-app runtime was not reached",
+  "failureReason": "The parser expected Signer #1 certificate lines; build-tools 37 apksigner emitted V3.0 Signer certificate lines. The actual certificate SHA-256 equals the fixed expected release certificate.",
+  "counts": {
+    "passed": 0,
+    "failed": 1,
+    "blocked": 3,
+    "not_run": 0
+  },
+  "cases": [
+    {
+      "name": "candidate-environment-and-signed-identity",
+      "status": "failed",
+      "reason": "SmokeFailure: Candidate signer does not match the established release certificate"
+    },
+    {
+      "name": "disable-network-before-candidate",
+      "status": "blocked",
+      "reason": "A prerequisite case did not pass"
+    },
+    {
+      "name": "fresh-candidate-and-host-install",
+      "status": "blocked",
+      "reason": "A prerequisite case did not pass"
+    },
+    {
+      "name": "candidate-first-launch",
+      "status": "blocked",
+      "reason": "A prerequisite case did not pass"
+    }
+  ],
+  "candidate": {
+    "versionName": "1.1.1",
+    "versionCode": 3,
+    "bytes": 179987242,
+    "sha256": "b841c42366df2db7ef16736ee93a65723e6495aae91dab2e27093db06a40e497",
+    "fileIdentityChecksPassed": true,
+    "apksignerExitCode": 0,
+    "apksignerNumberOfSigners": 1,
+    "expectedCertificateSha256": "c03b15a19d2ed8899fee6b71f7be09ea5b54c7db9895d7d87b20a9759d8e090b",
+    "observedCertificateSha256": "c03b15a19d2ed8899fee6b71f7be09ea5b54c7db9895d7d87b20a9759d8e090b",
+    "certificateMatches": true,
+    "installed": false,
+    "launched": false
+  },
+  "environment": {
+    "serial": "emulator-5554",
+    "properties": {
+      "ro.build.version.sdk": "35",
+      "ro.build.version.release": "15",
+      "ro.build.fingerprint": "google/sdk_gphone64_x86_64/emu64xa:15/AE3A.240806.043/12960925:userdebug/dev-keys",
+      "ro.product.model": "sdk_gphone64_x86_64",
+      "ro.product.cpu.abilist": "x86_64,arm64-v8a",
+      "ro.product.cpu.abilist64": "x86_64,arm64-v8a",
+      "ro.dalvik.vm.native.bridge": "libndk_translation.so",
+      "ro.enable.native.bridge.exec": "1",
+      "sys.boot_completed": "1",
+      "ro.kernel.qemu": "1"
+    },
+    "current_user": "0",
+    "page_size": "4096",
+    "users_evidence": "preflight-users.txt"
+  },
+  "radioDisableStepExecuted": false,
+  "hostInstalled": false,
+  "productExitInfo": "no product records",
+  "productNativeDropbox": "No entries found.",
+  "cpuTopology": "not collected; startup finally block was not reached",
+  "namedNativeFrames": "none for product; product was never installed or launched",
+  "artifact": {
+    "id": 14343396565,
+    "originalUrl": "https://github.com/ZPJJJ/LanType/actions/runs/44116007517/artifacts/14343396565",
+    "releaseFilename": "LanType-1.1.1-candidate-preflight-evidence.zip",
+    "releaseAttachmentStatus": "prepared",
+    "bytes": 263000,
+    "memberCount": 25,
+    "sha256": "290f1bde9103b978857b1c1094e7319aa28a8467e482415557725bf5561f46bd",
+    "serverSha256Matched": true,
+    "contentUnchanged": true,
+    "expiresAt": "2026-11-24T15:37:07Z"
+  },
+  "evidenceMembers": {
+    "result": "candidate-startup/result.json",
+    "signature": "candidate-startup/candidate-signature.txt",
+    "commands": "candidate-startup/commands.jsonl",
+    "downloads": "release-apks.json",
+    "exitInfo": "product-exit-info.txt",
+    "dropbox": "native-app-dropbox.txt"
+  },
+  "limits": [
+    "No installed 1.1.1 startup result was obtained.",
+    "This preflight failure is not evidence of a product native crash or changed signer.",
+    "No input, upgrade, clipboard, physical ARM64 or 16KiB runtime result.",
+    "Source CI and JUnit counts are separate."
+  ],
+  "archivalAction": {
+    "productSourceChanged": false,
+    "signedApkChanged": false,
+    "localVmOrAdbUsed": false,
+    "committed": false
+  }
+}

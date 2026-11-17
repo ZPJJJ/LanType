@@ -1,0 +1,212 @@
+LanType API 35 native-load analysis: compact, read-only ELF evidence
+Captured UTC: 2026-11-17T15:29:27+00:00
+Run: https://github.com/ZPJJJ/LanType/actions/runs/44112396806
+Observed package: app.lantype.keyboard, 1.1.0/code 2, pid=tid=3574.
+Inputs were read only. No product build, binary modification, CI run or device action.
+
+[Identity method]
+Python hashlib.sha256 over the old APK; zipfile.read of lib/arm64-v8a/libonnxruntime.so;
+byte comparison with the existing build ELF below before disassembly.
+APK: LanType-1.1.0-offline-arm64-v8a.apk
+APK bytes: 179983146
+APK SHA-256: 03e379a9b77fbddba9886e28bfa9fc78e447dc4843917117faf625b4339d18c6
+ELF path, relative to repository: app/build/intermediates/merged_native_libs/offline/mergeOfflineNativeLibs/out/lib/arm64-v8a/libonnxruntime.so
+ELF bytes: 28637280
+ELF SHA-256: f826d8efb03adf0a84f10e7ba408f9d4cd11b0a2ccd8d08aeb0f7451fb50cacc
+ELF bytes equal old APK member: true
+
+[Reproduction conventions]
+ELF means the verified file above (or the unchanged member extracted from the fixed APK).
+LLVM_BIN means Android NDK 27.2.12479018/toolchains/llvm/prebuilt/linux-x86_64/bin.
+The slices below are actual output. The nearest exported-symbol labels shown by objdump
+are not reliable internal function names; no source line is claimed from these labels.
+
+[readelf -n $ELF | selected Build ID]
+    Build ID: b178f5c22304a25ff481e608260312842627e868
+
+[readelf -SW $ELF | relevant sections]
+  [ 3] .dynsym           DYNSYM          00000000000002f8 0002f8 001728 18   A  8   1  8
+  [21] .init_array       INIT_ARRAY      0000000001b4c3c8 1b483c8 000108 00  WA  0   0  8
+No .symtab or .debug sections were present in readelf -SW output.
+
+[readelf -dW $ELF | NEEDED, INIT_ARRAY]
+ 0x0000000000000001 (NEEDED)             Shared library: [libdl.so]
+ 0x0000000000000001 (NEEDED)             Shared library: [liblog.so]
+ 0x0000000000000001 (NEEDED)             Shared library: [libandroid.so]
+ 0x0000000000000001 (NEEDED)             Shared library: [libm.so]
+ 0x0000000000000001 (NEEDED)             Shared library: [libc.so]
+ 0x0000000000000019 (INIT_ARRAY)         0x1b4c3c8
+ 0x000000000000001b (INIT_ARRAYSZ)       264 (bytes)
+
+[readelf -rW $ELF | selected constructor/object relocations]
+0000000001b4c460  0000000000000403 R_AARCH64_RELATIVE                        10d80d4
+0000000001b4cd08  0000000000000403 R_AARCH64_RELATIVE                        1b65cb8
+0000000001b4cd10  0000000000000403 R_AARCH64_RELATIVE                        1b65d20
+
+[llvm-symbolizer --obj=$ELF 0x9caedc 0x9c9f60 0x16f550c 0x10d8160]
+??
+??:0:0
+
+??
+??:0:0
+
+??
+??:0:0
+
+??
+??:0:0
+
+[llvm-objdump -d --start-address=0x10d8148 --stop-address=0x10d8168 $ELF]
+
+$ELF:	file format elf64-littleaarch64
+
+Disassembly of section .text:
+
+0000000000ecc510 <OrtSessionOptionsAppendExecutionProvider_CPU>:
+ 10d8148: 900053a0     	adrp	x0, 0x1b4c000
+ 10d814c: f9468800     	ldr	x0, [x0, #0xd10]
+ 10d8150: 97e50651     	bl	0xa19a94 <.text+0x2a9634>
+ 10d8154: 34fffde0     	cbz	w0, 0x10d8110 <OrtSessionOptionsAppendExecutionProvider_CPU+0x20bc00>
+ 10d8158: 900053a0     	adrp	x0, 0x1b4c000
+ 10d815c: f9468400     	ldr	x0, [x0, #0xd08]
+ 10d8160: 941874de     	bl	0x16f54d8 <OrtSessionOptionsAppendExecutionProvider_CPU+0x828fc8>
+ 10d8164: 900053a0     	adrp	x0, 0x1b4c000
+
+[llvm-objdump -d --start-address=0x16f54d8 --stop-address=0x16f554c $ELF]
+
+$ELF:	file format elf64-littleaarch64
+
+Disassembly of section .text:
+
+0000000000ecc510 <OrtSessionOptionsAppendExecutionProvider_CPU>:
+ 16f54d8: a9bd7bfd     	stp	x29, x30, [sp, #-0x30]!
+ 16f54dc: f9000bf5     	str	x21, [sp, #0x10]
+ 16f54e0: a9024ff4     	stp	x20, x19, [sp, #0x20]
+ 16f54e4: 910003fd     	mov	x29, sp
+ 16f54e8: 6f00e400     	movi	v0.2d, #0000000000000000
+ 16f54ec: aa0003f3     	mov	x19, x0
+ 16f54f0: aa0003f5     	mov	x21, x0
+ 16f54f4: b900081f     	str	wzr, [x0, #0x8]
+ 16f54f8: f900001f     	str	xzr, [x0]
+ 16f54fc: b900601f     	str	wzr, [x0, #0x60]
+ 16f5500: 3c810ea0     	str	q0, [x21, #0x10]!
+ 16f5504: ad010000     	stp	q0, q0, [x0, #0x20]
+ 16f5508: ad020000     	stp	q0, q0, [x0, #0x40]
+ 16f550c: 97cb528f     	bl	0x9c9f48 <.text+0x259ae8>
+ 16f5510: 12000008     	and	w8, w0, #0x1
+ 16f5514: 39000268     	strb	w8, [x19]
+ 16f5518: 370000a0     	tbnz	w0, #0x0, 0x16f552c <OrtSessionOptionsAppendExecutionProvider_CPU+0x82901c>
+ 16f551c: d0ff5de0     	adrp	x0, 0x2b3000
+ 16f5520: 910f0800     	add	x0, x0, #0x3c2
+ 16f5524: 52800ec1     	mov	w1, #0x76               // =118
+ 16f5528: 97fffe31     	bl	0x16f4dec <OrtSessionOptionsAppendExecutionProvider_CPU+0x8288dc>
+ 16f552c: aa1303e0     	mov	x0, x19
+ 16f5530: 94000034     	bl	0x16f5600 <OrtSessionOptionsAppendExecutionProvider_CPU+0x8290f0>
+ 16f5534: aa1303e0     	mov	x0, x19
+ 16f5538: 97fffea3     	bl	0x16f4fc4 <OrtSessionOptionsAppendExecutionProvider_CPU+0x828ab4>
+ 16f553c: a9424ff4     	ldp	x20, x19, [sp, #0x20]
+ 16f5540: f9400bf5     	ldr	x21, [sp, #0x10]
+ 16f5544: a8c37bfd     	ldp	x29, x30, [sp], #0x30
+ 16f5548: d65f03c0     	ret
+
+[llvm-objdump -d --start-address=0x9c9f48 --stop-address=0x9c9f74 $ELF]
+
+$ELF:	file format elf64-littleaarch64
+
+Disassembly of section .text:
+
+0000000000770460 <.text>:
+  9c9f48: a9bf7bfd     	stp	x29, x30, [sp, #-0x10]!
+  9c9f4c: 910003fd     	mov	x29, sp
+  9c9f50: d0008ca0     	adrp	x0, 0x1b5f000
+  9c9f54: 91180000     	add	x0, x0, #0x600
+  9c9f58: d503201f     	nop
+  9c9f5c: 10000661     	adr	x1, 0x9ca028 <.text+0x259bc8>
+  9c9f60: 94438c24     	bl	0x1aacff0 <pthread_once@plt>
+  9c9f64: d0008ca8     	adrp	x8, 0x1b5f000
+  9c9f68: 39559100     	ldrb	w0, [x8, #0x564]
+  9c9f6c: a8c17bfd     	ldp	x29, x30, [sp], #0x10
+  9c9f70: d65f03c0     	ret
+
+[llvm-objdump -d --start-address=0x9cac00 --stop-address=0x9cac28 $ELF]
+
+$ELF:	file format elf64-littleaarch64
+
+Disassembly of section .text:
+
+0000000000770460 <.text>:
+  9cac00: 340004b6     	cbz	w22, 0x9cac94 <.text+0x25a834>
+  9cac04: 2a1603f7     	mov	w23, w22
+  9cac08: 52800401     	mov	w1, #0x20               // =32
+  9cac0c: aa1703e0     	mov	x0, x23
+  9cac10: 944389b0     	bl	0x1aad2d0 <calloc@plt>
+  9cac14: f9400ff8     	ldr	x24, [sp, #0x18]
+  9cac18: b4000480     	cbz	x0, 0x9caca8 <.text+0x25a848>
+  9cac1c: a944ebfb     	ldp	x27, x26, [sp, #0x48]
+  9cac20: aa0003fc     	mov	x28, x0
+  9cac24: b9402ff6     	ldr	w22, [sp, #0x2c]
+
+[llvm-objdump -d --start-address=0x9cac94 --stop-address=0x9caca8 $ELF]
+
+$ELF:	file format elf64-littleaarch64
+
+Disassembly of section .text:
+
+0000000000770460 <.text>:
+  9cac94: 2a1f03fb     	mov	w27, wzr
+  9cac98: aa1f03eb     	mov	x11, xzr
+  9cac9c: aa1f03fc     	mov	x28, xzr
+  9caca0: f9400ff8     	ldr	x24, [sp, #0x18]
+  9caca4: 14000010     	b	0x9cace4 <.text+0x25a884>
+
+[llvm-objdump -d --start-address=0x9caedc --stop-address=0x9caf20 $ELF]
+
+$ELF:	file format elf64-littleaarch64
+
+Disassembly of section .text:
+
+0000000000770460 <.text>:
+  9caedc: f94057e9     	ldr	x9, [sp, #0xa8]
+  9caee0: b940dbea     	ldr	w10, [sp, #0xd8]
+  9caee4: 5280002c     	mov	w12, #0x1               // =1
+  9caee8: fd406be0     	ldr	d0, [sp, #0xd0]
+  9caeec: b940034b     	ldr	w11, [x26]
+  9caef0: 11000529     	add	w9, w9, #0x1
+  9caef4: f90057e9     	str	x9, [sp, #0xa8]
+  9caef8: 8b091789     	add	x9, x28, x9, lsl #5
+  9caefc: 2901312a     	stp	w10, w12, [x9, #0x8]
+  9caf00: b85f034a     	ldur	w10, [x26, #-0x10]
+  9caf04: fd000120     	str	d0, [x9]
+  9caf08: fd4073e0     	ldr	d0, [sp, #0xe0]
+  9caf0c: 6b0b015f     	cmp	w10, w11
+  9caf10: 29033136     	stp	w22, w12, [x9, #0x18]
+  9caf14: fd000920     	str	d0, [x9, #0x10]
+  9caf18: f81f8309     	stur	x9, [x24, #-0x8]
+  9caf1c: 54000381     	b.ne	0x9caf8c <.text+0x25ab2c>
+
+[Referenced strings: Python ELF64 PT_LOAD virtual-address to file-offset mapping]
+0x2b33c2: Failed to initialize PyTorch cpuinfo library. May cause CPU EP performance degradation due to undetected CPU features.
+0x2f888f: failed to allocate %zu bytes for descriptions of %u L2 caches
+0x201e1a: /sys/devices/system/cpu/cpu%u/cache/index%u/level
+0x2abcd6: /sys/devices/system/cpu/cpu%u/cache/index%u/size
+
+[Source comparison inputs; sources are not copied into this evidence file]
+Lock: docs/licensing/native-sources.lock.json
+ORT version 1.28.0, commit da9b5e364c465de65c49d91e696cd6485270757f.
+ORT source: onnxruntime/core/common/cpuid_info.cc (constructor at 377 onward).
+cpuinfo commit: 4628dc060ce4e82345dc166bbac875609db4ff69.
+cpuinfo archive: ort-dep-pytorch_cpuinfo-e58d4b47c16a.zip
+cpuinfo archive SHA-256 (read and verified): 2ed3ebc6c2656cc0aafc7af319e5cb0f97cc9b415eae180f566def84f1ca6a29
+Archive member: cpuinfo-4628dc060ce4e82345dc166bbac875609db4ff69/src/arm/linux/init.c
+Relevant source ranges: first counting pass 784-827; allocations 830-850;
+second-pass sysfs override and writes 872-946. src/init.c selects the pthread_once callback.
+
+[Interpretation limits]
+No DWARF or internal symbol names were recovered. Source-function correspondence is based
+on the fixed source, call instructions, callback, structure operations and matching strings.
+The guest PC 0x9caedc itself loads from SP+0xa8; the nearby 0x9caefc store is not claimed
+as a symbolized exact crash instruction. Native translation may report a block position.
+The tombstone has x28=0 and fault address 0x8. The matched block computes a 32-byte-stride
+address from x28, then contains stp w10,w12,[x9,#8]. This supports the null-cache hypothesis.
+The actual guest cpuinfo/sysfs topology inputs are not established by this analysis.
+No physical ARM64, inference, successful Rime initialization, new 1.1.1 runtime, or fix is claimed.

@@ -6,6 +6,8 @@ LanType 基于 [CyIME 1.15.94](https://github.com/Cyletix/CyIME/tree/6f97a555ced
 
 版本：**1.1.1**，应用 ID：`app.lantype.keyboard`。支持 **Android 9 及以上、ARM64**。本批修复工具舱复制隐私、中英语音会话切换和遗留词库恢复；实际构建、测试与设备验证范围见 [1.1.1 验证记录](docs/validation-1.1.1/VALIDATION.md)。[1.1.0 验收记录](docs/validation-1.1.0/VALIDATION.md) 保留资源替换批次的历史证据。
 
+**发行状态：预发布，已有启动阻塞，尚不具备稳定收费发行条件。** 本版源码 CI 的 187 个 JUnit 用例通过；实际签名 **1.1.1** 在 Android 15 的 ARM64 转译模拟器上完成身份、断网和安装检查，但首次启动在 ONNX Runtime 动态库初始化阶段发生原生崩溃。旧版 1.1.0 的 Android 11/15 对照也失败。中文/英文输入、升级及物理 ARM64 验收尚未完成，不能从单测通过推导运行通过。最新结果、原始证据与商用门槛见 [发布后验证补充](docs/validation-1.1.1/POST-RELEASE.md)。
+
 ## 1.1.1 修复
 
 - 工具舱的复制与剪切在首次写入系统剪贴板时附带私密标记，延迟回调、补读或输入法进程重启后仍排除自动历史。
@@ -56,6 +58,8 @@ LanType 基于 [CyIME 1.15.94](https://github.com/Cyletix/CyIME/tree/6f97a555ced
 应用衍生代码按 [GPLv3](LICENSE) 发布，可以收费分发；接收者继续享有 GPL 规定的获取对应源码、修改和再分发权。官方签名安装包、稳定更新和支持可以作为收费服务，源码不承担激活或限制用户使用的作用。
 
 模型、词典、笔迹图形和音效分别保留自己的许可证。顶层 GPL 不会替换第三方资源条款。随包声明在 [NOTICE.txt](app/src/main/assets/NOTICE.txt) 和 [licenses/](app/src/main/assets/licenses/)，资源与原生依赖锁定记录在 [docs/licensing/](docs/licensing/)。
+
+补充核查发现已编入 ORT 的 Dawn/WebGPU 源码未覆盖在原 70 份原生源码归档中；现已另行发布 7 份固定源档的补充包，并逐项核验 13 份许可/通知和来源原文。已随包的 Dawn 许可原文保留。旧三份基础源码包须与新补充一起使用，具体更正、下载和范围边界见 [Dawn 源码补充说明](docs/licensing/DAWN-SOURCE-SUPPLEMENT.md)。补档不改变或修复已签名 APK。
 
 本轮清除了 MathWriting、Google10000、旧混合词频及来源未充分确认的模型资源，改用有明确来源记录的材料。发行时仍必须连同实际二进制提供对应应用源码、必要构建脚本、原生源码归档及许可。未完成目标设备测试与渠道审核前，按预发布版本管理。
 

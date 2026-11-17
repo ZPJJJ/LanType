@@ -1,0 +1,227 @@
+{
+  "schemaVersion": 1,
+  "runId": 44117540529,
+  "jobId": 134159643388,
+  "runUrl": "https://github.com/ZPJJJ/LanType/actions/runs/44117540529",
+  "headSha": "5b5326524885caeaa389ecfe0ca4e7751d92173a",
+  "mode": "candidate-startup",
+  "conclusion": "failure",
+  "scope": "Direct fresh installation and first-launch observation of the unchanged signed 1.1.1 candidate; no old product APK was installed.",
+  "counts": {
+    "passed": 3,
+    "failed": 1,
+    "blocked": 0,
+    "not_run": 0
+  },
+  "cases": [
+    {
+      "name": "candidate-environment-and-signed-identity",
+      "required": true,
+      "started_utc": "2026-11-17T15:45:25.425475+00:00",
+      "status": "passed",
+      "observed": {
+        "serial": "emulator-5554",
+        "properties": {
+          "ro.build.version.sdk": "35",
+          "ro.build.version.release": "15",
+          "ro.build.fingerprint": "google/sdk_gphone64_x86_64/emu64xa:15/AE3A.240806.043/12960925:userdebug/dev-keys",
+          "ro.product.model": "sdk_gphone64_x86_64",
+          "ro.product.cpu.abilist": "x86_64,arm64-v8a",
+          "ro.product.cpu.abilist64": "x86_64,arm64-v8a",
+          "ro.dalvik.vm.native.bridge": "libndk_translation.so",
+          "ro.enable.native.bridge.exec": "1",
+          "sys.boot_completed": "1",
+          "ro.kernel.qemu": "1"
+        },
+        "current_user": "0",
+        "page_size": "4096",
+        "users_evidence": "preflight-users.txt"
+      },
+      "finished_utc": "2026-11-17T15:45:27.884630+00:00"
+    },
+    {
+      "name": "disable-network-before-candidate",
+      "required": true,
+      "started_utc": "2026-11-17T15:45:27.906572+00:00",
+      "status": "passed",
+      "observed": {
+        "settings_readback": {
+          "airplane_mode_on": "1",
+          "wifi_on": "0",
+          "mobile_data": "0"
+        },
+        "scope": "Radio settings plus dumpsys evidence; not a packet capture"
+      },
+      "finished_utc": "2026-11-17T15:45:35.197854+00:00"
+    },
+    {
+      "name": "fresh-candidate-and-host-install",
+      "required": true,
+      "started_utc": "2026-11-17T15:45:35.199620+00:00",
+      "status": "passed",
+      "observed": {
+        "candidate": {
+          "version_code": 3,
+          "version_name": "1.1.1"
+        },
+        "host": {
+          "version_code": 1,
+          "version_name": "1.0"
+        }
+      },
+      "finished_utc": "2026-11-17T15:45:48.285963+00:00"
+    },
+    {
+      "name": "candidate-first-launch",
+      "required": true,
+      "started_utc": "2026-11-17T15:45:48.286470+00:00",
+      "status": "failed",
+      "reason": "SmokeFailure: Command timed out: /usr/local/lib/android/sdk/platform-tools/adb -s emulator-5554 shell uiautomator dump /sdcard/lantype-smoke-3530-34.xml",
+      "finished_utc": "2026-11-17T15:47:51.818562+00:00"
+    }
+  ],
+  "candidate": {
+    "bytes": 179987242,
+    "sha256": "b841c42366df2db7ef16736ee93a65723e6495aae91dab2e27093db06a40e497",
+    "package": "app.lantype.keyboard",
+    "version_code": 3,
+    "version_name": "1.1.1",
+    "ime": "app.lantype.keyboard/com.kingzcheung.xime.service.XimeInputMethodService",
+    "certificate_sha256": "c03b15a19d2ed8899fee6b71f7be09ea5b54c7db9895d7d87b20a9759d8e090b",
+    "signature_evidence": "candidate-signature.txt",
+    "fileIdentityAndSignerPassed": true,
+    "installed": true,
+    "launched": true,
+    "onboardingUiObserved": false,
+    "finalMainPidPresent": false
+  },
+  "environment": {
+    "serial": "emulator-5554",
+    "properties": {
+      "ro.build.version.sdk": "35",
+      "ro.build.version.release": "15",
+      "ro.build.fingerprint": "google/sdk_gphone64_x86_64/emu64xa:15/AE3A.240806.043/12960925:userdebug/dev-keys",
+      "ro.product.model": "sdk_gphone64_x86_64",
+      "ro.product.cpu.abilist": "x86_64,arm64-v8a",
+      "ro.product.cpu.abilist64": "x86_64,arm64-v8a",
+      "ro.dalvik.vm.native.bridge": "libndk_translation.so",
+      "ro.enable.native.bridge.exec": "1",
+      "sys.boot_completed": "1",
+      "ro.kernel.qemu": "1"
+    },
+    "current_user": "0",
+    "page_size": "4096",
+    "users_evidence": "preflight-users.txt"
+  },
+  "radiosBeforeInstall": {
+    "airplane_mode_on": "1",
+    "wifi_on": "0",
+    "mobile_data": "0"
+  },
+  "crash": {
+    "timestamp": "2026-11-17T15:45:49.072229879Z",
+    "package": "app.lantype.keyboard",
+    "versionName": "1.1.1",
+    "versionCode": 3,
+    "pid": 3541,
+    "signal": "SIGSEGV",
+    "code": "SEGV_MAPERR",
+    "faultAddress": "0x8",
+    "guestArchitecture": "arm64",
+    "hostFrame": "#00 pc 0x370def /memfd:exec (deleted)",
+    "namedGuestLibrary": "libonnxruntime.so",
+    "guestPcs": [
+      "0x9caedc",
+      "0x9c9f60",
+      "0x16f550c",
+      "0x10d8160"
+    ],
+    "libraryBuildId": "b178f5c22304a25ff481e608260312842627e868",
+    "callers": [
+      "pthread_once",
+      "linker64 soinfo::call_constructors",
+      "linker64 do_dlopen",
+      "__loader_android_dlopen_ext",
+      "libnative_bridge_vdso.so"
+    ],
+    "exitInfo": {
+      "reason": 5,
+      "name": "APP CRASH(NATIVE)",
+      "status": 11,
+      "timestamp": "2026-11-17T15:45:49.321Z"
+    },
+    "interpretation": "Observed product-process native crash in ORT dynamic-library constructor initialization under ARM64 translation. The UI-dump deadline is the later script symptom. This does not establish physical ARM64 behavior or a specific source-level root cause."
+  },
+  "cpuTopology": {
+    "observationSource": "Read-only ordinary adb shell on the same guest after the failure; not an instrumented trace of cpuinfo internals.",
+    "cpuinfoVendor": "AuthenticAMD",
+    "cpuinfoModel": "Android virtual processor",
+    "cores": 4,
+    "cacheFieldsRead": 64,
+    "eachCore": {
+      "L1Data": "64K",
+      "L1Instruction": "64K",
+      "L2": {
+        "type": "Unified",
+        "size": "512K",
+        "sharing": "one individual core"
+      }
+    },
+    "L3": {
+      "type": "Unified",
+      "size": "16384K",
+      "sharedCpuList": "0-3"
+    },
+    "truncated": false
+  },
+  "artifact": {
+    "id": 14343862840,
+    "originalUrl": "https://github.com/ZPJJJ/LanType/actions/runs/44117540529/artifacts/14343862840",
+    "releaseFilename": "LanType-1.1.1-candidate-startup-evidence.zip",
+    "releaseAttachmentStatus": "published_verified",
+    "bytes": 42881346,
+    "memberCount": 105,
+    "sha256": "63ea1d9bfdf1d7317c310f5e86f030fdffca6722508157788570225124d7afc2",
+    "serverSha256Matched": true,
+    "contentUnchanged": true,
+    "expiresAt": "2026-11-24T15:47:52Z",
+    "safeExtractionChecks": [
+      "exact server SHA-256",
+      "no absolute/parent paths",
+      "no symlinks",
+      "no duplicate ZIP paths"
+    ],
+    "releaseAssetId": 759703647,
+    "releaseUrl": "https://github.com/ZPJJJ/LanType/releases/download/v1.1.1-rc1/LanType-1.1.1-candidate-startup-evidence.zip",
+    "releaseServerSha256Matched": true
+  },
+  "evidenceMembers": {
+    "result": "candidate-startup/result.json",
+    "signature": "candidate-startup/candidate-signature.txt",
+    "commands": "candidate-startup/commands.jsonl",
+    "cpuinfo": "candidate-startup/candidate-cpuinfo.txt",
+    "cacheTopology": "candidate-startup/candidate-cpu-cache-topology.txt",
+    "dropbox": "candidate-startup/candidate-native-dropbox.txt",
+    "fullNativeTombstone": "candidate-startup/candidate-native-tombstones.txt",
+    "exitInfo": "candidate-startup/candidate-exit-info.txt",
+    "pid": "candidate-startup/candidate-pid.txt",
+    "screenshot": "candidate-startup/0035-candidate-first-launch-failure.png",
+    "uiTree": "candidate-startup/0035-candidate-first-launch-failure.xml"
+  },
+  "previousPreflightRun": 44116007517,
+  "previousPreflightRecord": "../candidate-preflight/receipt.json",
+  "finalUi": "Pixel Launcher only; independently viewed PNG and UI XML.",
+  "emulatorStop": "OK: killing emulator, bye bye; OK",
+  "limits": [
+    "No successful onboarding, IME input, Rime deployment, upgrade, tool-cabin or clipboard runtime acceptance.",
+    "KVM x86_64 ARM64 translation with 4096-byte pages does not establish physical ARM64 or 16KiB runtime behavior.",
+    "Source CI and local unit-test counts are separate."
+  ],
+  "archivalAction": {
+    "productSourceChanged": false,
+    "signedApkChanged": false,
+    "localVmOrAdbUsed": false,
+    "newCiStartedByReviewer": false,
+    "committed": false
+  }
+}

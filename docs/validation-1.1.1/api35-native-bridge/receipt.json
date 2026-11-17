@@ -1,0 +1,237 @@
+{
+  "schemaVersion": 1,
+  "runId": 44112396806,
+  "jobId": 134141227368,
+  "runUrl": "https://github.com/ZPJJJ/LanType/actions/runs/44112396806",
+  "headSha": "8811716a1e99b25a9bc97a6b638a45f7d0b04276",
+  "conclusion": "failure",
+  "artifact": {
+    "id": 14341387652,
+    "bytes": 24213250,
+    "members": 68,
+    "sha256": "f6236f55f67fccbd3254ea182b71704b42bfb96f1d600d3c12332b0c80994d5c",
+    "serverSha256Matched": true,
+    "safeExtractionChecks": [
+      "SHA-256 before extraction",
+      "no absolute paths",
+      "no parent traversal",
+      "no symlinks",
+      "no duplicate ZIP paths"
+    ],
+    "originalArtifactUrl": "https://github.com/ZPJJJ/LanType/actions/runs/44112396806/artifacts/14341387652",
+    "releaseFilename": "LanType-1.1.1-api35-native-bridge-evidence.zip",
+    "releaseAttachmentStatus": "published_verified",
+    "contentUnchanged": true,
+    "expiresAt": "2026-11-24T15:19:55Z",
+    "publication": {
+      "assetId": 759574763,
+      "url": "https://github.com/ZPJJJ/LanType/releases/download/v1.1.1-rc1/LanType-1.1.1-api35-native-bridge-evidence.zip",
+      "serverSizeAndSha256Matched": true
+    }
+  },
+  "environment": {
+    "serial": "emulator-5554",
+    "properties": {
+      "ro.build.version.sdk": "35",
+      "ro.build.version.release": "15",
+      "ro.build.fingerprint": "google/sdk_gphone64_x86_64/emu64xa:15/AE3A.240806.043/12960925:userdebug/dev-keys",
+      "ro.product.model": "sdk_gphone64_x86_64",
+      "ro.product.cpu.abilist": "x86_64,arm64-v8a",
+      "ro.product.cpu.abilist64": "x86_64,arm64-v8a",
+      "ro.dalvik.vm.native.bridge": "libndk_translation.so",
+      "ro.enable.native.bridge.exec": "1",
+      "sys.boot_completed": "1",
+      "ro.kernel.qemu": "1"
+    },
+    "page_size": "4096",
+    "current_user": "0",
+    "users_evidence": "preflight-users.txt"
+  },
+  "kvm": "KVM (version 12) is installed and usable.",
+  "systemImageRevision": 9,
+  "coreCounts": {
+    "passed": 3,
+    "failed": 1,
+    "blocked": 8,
+    "not_run": 1
+  },
+  "cases": [
+    {
+      "name": "environment-and-apk-identities",
+      "status": "passed",
+      "reason": null
+    },
+    {
+      "name": "disable-network-before-product",
+      "status": "passed",
+      "reason": null
+    },
+    {
+      "name": "fresh-baseline-streaming-install",
+      "status": "passed",
+      "reason": null
+    },
+    {
+      "name": "first-run-rime-and-ime-setup",
+      "status": "failed",
+      "reason": "SmokeFailure: UI control not found: ('澜语 · 中文 / English (US)',); no guessed-coordinate fallback"
+    },
+    {
+      "name": "baseline-chinese-commit",
+      "status": "blocked",
+      "reason": "A prerequisite case did not pass"
+    },
+    {
+      "name": "baseline-us-english-commit",
+      "status": "blocked",
+      "reason": "A prerequisite case did not pass"
+    },
+    {
+      "name": "baseline-save-template-fixture",
+      "status": "blocked",
+      "reason": "A prerequisite case did not pass"
+    },
+    {
+      "name": "replace-apk-and-retain-setup",
+      "status": "blocked",
+      "reason": "A prerequisite case did not pass"
+    },
+    {
+      "name": "upgraded-load-template-fixture",
+      "status": "blocked",
+      "reason": "A prerequisite case did not pass"
+    },
+    {
+      "name": "upgraded-chinese-commit",
+      "status": "blocked",
+      "reason": "A prerequisite case did not pass"
+    },
+    {
+      "name": "upgraded-us-english-commit",
+      "status": "blocked",
+      "reason": "A prerequisite case did not pass"
+    },
+    {
+      "name": "tool-cabin-units-preview-insert",
+      "status": "blocked",
+      "reason": "A prerequisite case did not pass"
+    },
+    {
+      "name": "private-clipboard-close-and-process-restart",
+      "status": "not_run",
+      "reason": "Deferred until core accessibility nodes are observed; no private clipboard or process-restart pass is inferred from unit tests."
+    }
+  ],
+  "oldApkInstalled": true,
+  "newApkInstalled": false,
+  "clipboardExtension": "skipped after core failure",
+  "crash": {
+    "package": "app.lantype.keyboard",
+    "version": "1.1.0",
+    "versionCode": 2,
+    "pid": 3574,
+    "signal": "SIGSEGV",
+    "code": "SEGV_MAPERR",
+    "faultAddress": "0x8",
+    "timestamp": "2026-11-17T15:18:48.713724823Z",
+    "hostBacktrace": "#00 pc 0x370bcf /memfd:exec (deleted)",
+    "guestArchitecture": "arm64",
+    "guestFrames": [
+      {
+        "frame": 0,
+        "library": "libonnxruntime.so",
+        "pc": "0x9caedc"
+      },
+      {
+        "frame": 1,
+        "library": "libc.so",
+        "symbol": "pthread_once+148"
+      },
+      {
+        "frame": 2,
+        "library": "libonnxruntime.so",
+        "pc": "0x9c9f60"
+      },
+      {
+        "frame": 3,
+        "library": "libonnxruntime.so",
+        "pc": "0x16f550c"
+      },
+      {
+        "frame": 4,
+        "library": "libonnxruntime.so",
+        "pc": "0x10d8160"
+      },
+      {
+        "frame": 5,
+        "library": "linker64",
+        "symbol": "soinfo::call_constructors+604"
+      },
+      {
+        "frame": 6,
+        "library": "linker64",
+        "symbol": "soinfo::call_constructors+140"
+      },
+      {
+        "frame": 7,
+        "library": "linker64",
+        "symbol": "do_dlopen+2744"
+      },
+      {
+        "frame": 8,
+        "library": "linker64",
+        "symbol": "__loader_android_dlopen_ext+72"
+      },
+      {
+        "frame": 9,
+        "library": "libnative_bridge_vdso.so",
+        "pc": "0x4018"
+      }
+    ],
+    "onnxBuildId": "b178f5c22304a25ff481e608260312842627e868",
+    "exitInfo": {
+      "reason": 5,
+      "reasonName": "APP CRASH(NATIVE)",
+      "status": 11,
+      "timestamp": "2026-11-17T15:18:49.018Z"
+    },
+    "interpretation": "The named guest stack localizes the crash to libonnxruntime.so during dynamic-library constructor initialization. It does not by itself establish why the initializer fails under native translation or whether a physical ARM64 target fails."
+  },
+  "evidence": {
+    "result": "smoke/result.json",
+    "commands": "smoke/commands.jsonl",
+    "dropbox": "native-app-dropbox.txt",
+    "tombstone": "native-system-tombstones.txt",
+    "exitInfo": "product-exit-info.txt",
+    "screenshot": "smoke/0019-first-run-rime-and-ime-setup-failure.png",
+    "xml": "smoke/0019-first-run-rime-and-ime-setup-failure.xml"
+  },
+  "finalScreen": "Pixel Launcher, independently viewed PNG and XML; no onboarding UI",
+  "stopResult": "OK: killing emulator, bye bye; OK",
+  "sourceCiCountsUsed": false,
+  "localVmOrAdbUsed": false,
+  "archivalAction": {
+    "productSourceChanged": false,
+    "signedApkChanged": false,
+    "userDeviceTouched": false,
+    "localVmOrAdbUsed": false,
+    "committed": false
+  },
+  "apks": {
+    "old": {
+      "versionName": "1.1.0",
+      "versionCode": 2,
+      "sha256": "03e379a9b77fbddba9886e28bfa9fc78e447dc4843917117faf625b4339d18c6",
+      "installed": true,
+      "firstLaunch": "native SIGSEGV during libonnxruntime.so constructor initialization"
+    },
+    "new": {
+      "versionName": "1.1.1",
+      "versionCode": 3,
+      "sha256": "b841c42366df2db7ef16736ee93a65723e6495aae91dab2e27093db06a40e497",
+      "inputIdentityChecked": true,
+      "installed": false,
+      "runtimeTested": false
+    }
+  }
+}
