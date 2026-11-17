@@ -1,0 +1,1199 @@
+{
+  "schemaVersion": 1,
+  "kind": "lantype-ort-static-abi-contract",
+  "baseline": {
+    "appVersion": "1.1.1",
+    "abi": "arm64-v8a",
+    "ortCommit": "da9b5e364c465de65c49d91e696cd6485270757f",
+    "apk": {
+      "filename": "LanType-1.1.1-offline-arm64-v8a.apk",
+      "bytes": 179987242,
+      "sha256": "b841c42366df2db7ef16736ee93a65723e6495aae91dab2e27093db06a40e497",
+      "url": "https://github.com/ZPJJJ/LanType/releases/download/v1.1.1-rc1/LanType-1.1.1-offline-arm64-v8a.apk"
+    },
+    "readelfVersion": "GNU readelf (GNU Binutils for Debian) 2.44",
+    "readelfOptions": {
+      "header": "--file-header",
+      "programHeaders": "--program-headers",
+      "dynamic": "--dynamic",
+      "symbols": "--dyn-syms",
+      "versions": "--version-info",
+      "notes": "--notes"
+    },
+    "libraries": [
+      {
+        "filename": "libandroidx.graphics.path.so",
+        "bytes": 10096,
+        "sha256": "41e9a793c43a0f4fddb19e33f346bace464f30f888ba7b9eaf96294ea115bfb6",
+        "elf": {
+          "class": "ELF64",
+          "encoding": "2's complement, little endian",
+          "type": "DYN",
+          "machine": "AArch64"
+        },
+        "soname": "libandroidx.graphics.path.so",
+        "needed": [
+          "libc.so",
+          "libdl.so",
+          "libm.so"
+        ],
+        "runpath": [],
+        "rpath": [],
+        "hasTextRelocations": false,
+        "loadSegments": [
+          {
+            "offset": 0,
+            "virtualAddress": 0,
+            "physicalAddress": 0,
+            "fileSize": 7232,
+            "memorySize": 7232,
+            "flags": "RE",
+            "alignment": 16384
+          },
+          {
+            "offset": 7232,
+            "virtualAddress": 23616,
+            "physicalAddress": 23616,
+            "fileSize": 912,
+            "memorySize": 912,
+            "flags": "RW",
+            "alignment": 16384
+          },
+          {
+            "offset": 8144,
+            "virtualAddress": 40912,
+            "physicalAddress": 40912,
+            "fileSize": 0,
+            "memorySize": 16,
+            "flags": "RW",
+            "alignment": 16384
+          }
+        ],
+        "relroSegments": [
+          {
+            "offset": 7232,
+            "virtualAddress": 23616,
+            "physicalAddress": 23616,
+            "fileSize": 912,
+            "memorySize": 960,
+            "flags": "R",
+            "alignment": 1
+          }
+        ],
+        "stackSegments": [
+          {
+            "offset": 0,
+            "virtualAddress": 0,
+            "physicalAddress": 0,
+            "fileSize": 0,
+            "memorySize": 0,
+            "flags": "RW",
+            "alignment": 0
+          }
+        ],
+        "buildId": "a7846ae06d6bf6cf63fa7c5e056b5de493c71567",
+        "versionDefinitions": [
+          "LIBANDROIDX.GRAPHICS.PATH",
+          "libandroidx.graphics.path.so"
+        ],
+        "readelfEvidenceSha256": {
+          "header": "d2ff2cdd54ac1e14cc40d54d3a6747bc8e9d6f923d101361a88e5011f2dbe700",
+          "programHeaders": "d8492959bbf8e80ccc568fc821c065cab1eeb906c3703371c2341da5e3aaeedf",
+          "dynamic": "6ddb1db60bf0cff29632af5a8bbe4f4bee759e4c850fdf3a97ee67d4c8f122a2",
+          "symbols": "b3d6266e123df873ea81faa3c9c956cb79d91229f89e9eefd741179bb14bafbd",
+          "versions": "abf436f211b03487e2cfdeda3b55be588623c3d9a8162cfb6f2cb24051081420",
+          "notes": "b28be7f5918c1354753dc7af1002a29efb22c4d571ffe71e3135954576257bc2"
+        },
+        "apkMember": "lib/arm64-v8a/libandroidx.graphics.path.so",
+        "ortUndefinedSymbols": []
+      },
+      {
+        "filename": "libc++_shared.so",
+        "bytes": 1292904,
+        "sha256": "4397241b4bd20a8e579bfb41d21107857e12985f6a01ca0c2a5f83380d1270b4",
+        "elf": {
+          "class": "ELF64",
+          "encoding": "2's complement, little endian",
+          "type": "DYN",
+          "machine": "AArch64"
+        },
+        "soname": "libc++_shared.so",
+        "needed": [
+          "libc.so",
+          "libdl.so",
+          "libm.so"
+        ],
+        "runpath": [],
+        "rpath": [],
+        "hasTextRelocations": false,
+        "loadSegments": [
+          {
+            "offset": 0,
+            "virtualAddress": 0,
+            "physicalAddress": 0,
+            "fileSize": 634024,
+            "memorySize": 634024,
+            "flags": "R",
+            "alignment": 16384
+          },
+          {
+            "offset": 634032,
+            "virtualAddress": 650416,
+            "physicalAddress": 650416,
+            "fileSize": 616000,
+            "memorySize": 616000,
+            "flags": "RE",
+            "alignment": 16384
+          },
+          {
+            "offset": 1250032,
+            "virtualAddress": 1282800,
+            "physicalAddress": 1282800,
+            "fileSize": 39760,
+            "memorySize": 40208,
+            "flags": "RW",
+            "alignment": 16384
+          },
+          {
+            "offset": 1289792,
+            "virtualAddress": 1338944,
+            "physicalAddress": 1338944,
+            "fileSize": 568,
+            "memorySize": 32016,
+            "flags": "RW",
+            "alignment": 16384
+          }
+        ],
+        "relroSegments": [
+          {
+            "offset": 1250032,
+            "virtualAddress": 1282800,
+            "physicalAddress": 1282800,
+            "fileSize": 39760,
+            "memorySize": 40208,
+            "flags": "R",
+            "alignment": 1
+          }
+        ],
+        "stackSegments": [
+          {
+            "offset": 0,
+            "virtualAddress": 0,
+            "physicalAddress": 0,
+            "fileSize": 0,
+            "memorySize": 0,
+            "flags": "RW",
+            "alignment": 0
+          }
+        ],
+        "buildId": "b04675a35ad96f8a9dcaa073e3bd31d4536f00ad",
+        "versionDefinitions": [],
+        "readelfEvidenceSha256": {
+          "header": "0e34bf999a682fa0eb50a69bbacf7cd5d1f7c5151a9eaea3be07b1419e99e2b5",
+          "programHeaders": "a937e568ab179a90c283d1f5223a91750c5524dc53ce552b0807e5b2466d0be9",
+          "dynamic": "2c2a569cac5a0fa78cabe7c3e48538d48907000fa3d313a99e3f65b73be8bbe7",
+          "symbols": "7563bf318190797500680c30d8a3992f45d871366682c875d71f27f14e379bca",
+          "versions": "dfd93e3e2a20be83204addfe25c07e3e3598330851d7c31e3ab589f0be601cfd",
+          "notes": "8270d62e1caf4d8ee865e1bde1c9cd943a21c6ed0db6dd45958e42a383bf7af1"
+        },
+        "apkMember": "lib/arm64-v8a/libc++_shared.so",
+        "ortUndefinedSymbols": []
+      },
+      {
+        "filename": "libcyime_cpubench.so",
+        "bytes": 350560,
+        "sha256": "1cf58ff2fd4f995bcdf3d3ed13aba64ce4dfbeefc4064175312d010284c382e1",
+        "elf": {
+          "class": "ELF64",
+          "encoding": "2's complement, little endian",
+          "type": "DYN",
+          "machine": "AArch64"
+        },
+        "soname": "libcyime_cpubench.so",
+        "needed": [
+          "libc.so",
+          "libdl.so",
+          "libm.so"
+        ],
+        "runpath": [],
+        "rpath": [],
+        "hasTextRelocations": false,
+        "loadSegments": [
+          {
+            "offset": 0,
+            "virtualAddress": 0,
+            "physicalAddress": 0,
+            "fileSize": 328560,
+            "memorySize": 328560,
+            "flags": "RE",
+            "alignment": 16384
+          },
+          {
+            "offset": 328560,
+            "virtualAddress": 344944,
+            "physicalAddress": 344944,
+            "fileSize": 18976,
+            "memorySize": 19600,
+            "flags": "RW",
+            "alignment": 16384
+          },
+          {
+            "offset": 347536,
+            "virtualAddress": 380304,
+            "physicalAddress": 380304,
+            "fileSize": 368,
+            "memorySize": 4560,
+            "flags": "RW",
+            "alignment": 16384
+          }
+        ],
+        "relroSegments": [
+          {
+            "offset": 328560,
+            "virtualAddress": 344944,
+            "physicalAddress": 344944,
+            "fileSize": 18976,
+            "memorySize": 19600,
+            "flags": "R",
+            "alignment": 1
+          }
+        ],
+        "stackSegments": [
+          {
+            "offset": 0,
+            "virtualAddress": 0,
+            "physicalAddress": 0,
+            "fileSize": 0,
+            "memorySize": 0,
+            "flags": "RW",
+            "alignment": 0
+          }
+        ],
+        "buildId": "b35b2ba9aee8c6c4b344fc14a5592e78df5adb65",
+        "versionDefinitions": [],
+        "readelfEvidenceSha256": {
+          "header": "b686983419d6e82cb35daa647c47f691dadb00dbf69ca1a765c031ebbcadda10",
+          "programHeaders": "6ac09e93c975fcf0a43d13c9a5b9d16af0fe51692459ba075db16b689f22c8dd",
+          "dynamic": "1cc242de5242634f0a8b3445187852537908db5678bd27a9d74031c6f21a1929",
+          "symbols": "ae8d3668c3dbf428dff5bcebb47b02df324566dd6c7bece2da3c5c67074222bc",
+          "versions": "338b0b08125a3d8fc84657f8241a3ba5aefb69d06ea53c9fed18f12cc51ee420",
+          "notes": "cbd997d457fd039e3c65ded8ffaca2924a41b2b7dd98c14637509841739e18bc"
+        },
+        "apkMember": "lib/arm64-v8a/libcyime_cpubench.so",
+        "ortUndefinedSymbols": []
+      },
+      {
+        "filename": "libimage_processing_util_jni.so",
+        "bytes": 30048,
+        "sha256": "0f69c4cb30faaa53efea372d7fa4ac765e586183b386c5d178de334162fba3de",
+        "elf": {
+          "class": "ELF64",
+          "encoding": "2's complement, little endian",
+          "type": "DYN",
+          "machine": "AArch64"
+        },
+        "soname": "libimage_processing_util_jni.so",
+        "needed": [
+          "libandroid.so",
+          "libc.so",
+          "libdl.so",
+          "libjnigraphics.so",
+          "liblog.so",
+          "libm.so"
+        ],
+        "runpath": [],
+        "rpath": [],
+        "hasTextRelocations": false,
+        "loadSegments": [
+          {
+            "offset": 0,
+            "virtualAddress": 0,
+            "physicalAddress": 0,
+            "fileSize": 27392,
+            "memorySize": 27392,
+            "flags": "RE",
+            "alignment": 16384
+          },
+          {
+            "offset": 27392,
+            "virtualAddress": 43776,
+            "physicalAddress": 43776,
+            "fileSize": 664,
+            "memorySize": 1280,
+            "flags": "RW",
+            "alignment": 16384
+          },
+          {
+            "offset": 28056,
+            "virtualAddress": 60824,
+            "physicalAddress": 60824,
+            "fileSize": 0,
+            "memorySize": 4,
+            "flags": "RW",
+            "alignment": 16384
+          }
+        ],
+        "relroSegments": [
+          {
+            "offset": 27392,
+            "virtualAddress": 43776,
+            "physicalAddress": 43776,
+            "fileSize": 664,
+            "memorySize": 1280,
+            "flags": "R",
+            "alignment": 1
+          }
+        ],
+        "stackSegments": [
+          {
+            "offset": 0,
+            "virtualAddress": 0,
+            "physicalAddress": 0,
+            "fileSize": 0,
+            "memorySize": 0,
+            "flags": "RW",
+            "alignment": 0
+          }
+        ],
+        "buildId": "d75af0f043be9d5af820d7079bfc482255bf3013",
+        "versionDefinitions": [
+          "VERS_1.0",
+          "libimage_processing_util_jni.so"
+        ],
+        "readelfEvidenceSha256": {
+          "header": "f2075f256579d47c73257fdecc65119394e47521d45a439e5426702570e8b023",
+          "programHeaders": "91d9ac69fdc98cba8c7c2b3d44b0e74173b43c2c12664292a90838adbec24a5c",
+          "dynamic": "451ab5dc39cf5a6733962f48d1ac29d5680cd91bf0fd4359cc17faf26b4ccd3c",
+          "symbols": "5ac9dd4ce6193921150833acc046eefe0e43255b0547f0ce837fae25f50d7773",
+          "versions": "7e174b1165c6ec3e4c1ac2d874c1326fb9d59c37f1d096160783e412dfcf1e74",
+          "notes": "520c0f6cfe330f4ca6bd882bd48832cdf4a97fbb81425ef94423b09b2beb8160"
+        },
+        "apkMember": "lib/arm64-v8a/libimage_processing_util_jni.so",
+        "ortUndefinedSymbols": []
+      },
+      {
+        "filename": "libonnx_env.so",
+        "bytes": 349320,
+        "sha256": "a23971076085f2494d753c21dc1376c9186d35821681e6f095427e796702c864",
+        "elf": {
+          "class": "ELF64",
+          "encoding": "2's complement, little endian",
+          "type": "DYN",
+          "machine": "AArch64"
+        },
+        "soname": "libonnx_env.so",
+        "needed": [
+          "libc.so",
+          "libdl.so",
+          "liblog.so",
+          "libm.so",
+          "libonnxruntime.so"
+        ],
+        "runpath": [],
+        "rpath": [],
+        "hasTextRelocations": false,
+        "loadSegments": [
+          {
+            "offset": 0,
+            "virtualAddress": 0,
+            "physicalAddress": 0,
+            "fileSize": 327296,
+            "memorySize": 327296,
+            "flags": "RE",
+            "alignment": 16384
+          },
+          {
+            "offset": 327296,
+            "virtualAddress": 343680,
+            "physicalAddress": 343680,
+            "fileSize": 19000,
+            "memorySize": 20864,
+            "flags": "RW",
+            "alignment": 16384
+          },
+          {
+            "offset": 346296,
+            "virtualAddress": 379064,
+            "physicalAddress": 379064,
+            "fileSize": 368,
+            "memorySize": 4616,
+            "flags": "RW",
+            "alignment": 16384
+          }
+        ],
+        "relroSegments": [
+          {
+            "offset": 327296,
+            "virtualAddress": 343680,
+            "physicalAddress": 343680,
+            "fileSize": 19000,
+            "memorySize": 20864,
+            "flags": "R",
+            "alignment": 1
+          }
+        ],
+        "stackSegments": [
+          {
+            "offset": 0,
+            "virtualAddress": 0,
+            "physicalAddress": 0,
+            "fileSize": 0,
+            "memorySize": 0,
+            "flags": "RW",
+            "alignment": 0
+          }
+        ],
+        "buildId": "1f8b7508afcfcef351c70c0e3ef499de7c2f66c2",
+        "versionDefinitions": [],
+        "readelfEvidenceSha256": {
+          "header": "2395605c5d15ccb47e8906f71a2f207f29c50fcc1a2d1ffc7e9c2a656a1a4427",
+          "programHeaders": "9468ce17083cdf01160362086dc70d2349bd4f9e0a119357cba5baa74c535c83",
+          "dynamic": "abb9562461b1ee36272a31ed31dd989041f4409656f45f9b0d082a5032d9e9f9",
+          "symbols": "ee6ddd5888f5174bbb0cdd11dff0195d6540d37f414ba2db41693ef72b43c8c9",
+          "versions": "f02f4529dea4d24107f4da8d3a6ad042e9035c4f356f13950aff962565064950",
+          "notes": "0489057fbbc62e0b05e324aeec0a2001b8e7ea74e411124e192202508e6f1411"
+        },
+        "apkMember": "lib/arm64-v8a/libonnx_env.so",
+        "ortUndefinedSymbols": [
+          {
+            "name": "OrtGetApiBase",
+            "version": "VERS_1.28.0",
+            "defaultVersion": false,
+            "type": "FUNC",
+            "binding": "GLOBAL",
+            "visibility": "DEFAULT",
+            "versionProvider": "libonnxruntime.so"
+          }
+        ]
+      },
+      {
+        "filename": "libonnx_jni.so",
+        "bytes": 126448,
+        "sha256": "48a147747104bb4f7a274fab23139a31f39d407a10a2e659b1e395388b849fd9",
+        "elf": {
+          "class": "ELF64",
+          "encoding": "2's complement, little endian",
+          "type": "DYN",
+          "machine": "AArch64"
+        },
+        "soname": "libonnx_jni.so",
+        "needed": [
+          "libc.so",
+          "libdl.so",
+          "liblog.so",
+          "libm.so",
+          "libonnx_env.so",
+          "libonnxruntime.so"
+        ],
+        "runpath": [],
+        "rpath": [],
+        "hasTextRelocations": false,
+        "loadSegments": [
+          {
+            "offset": 0,
+            "virtualAddress": 0,
+            "physicalAddress": 0,
+            "fileSize": 122544,
+            "memorySize": 122544,
+            "flags": "RE",
+            "alignment": 16384
+          },
+          {
+            "offset": 122544,
+            "virtualAddress": 138928,
+            "physicalAddress": 138928,
+            "fileSize": 1280,
+            "memorySize": 4432,
+            "flags": "RW",
+            "alignment": 16384
+          },
+          {
+            "offset": 123824,
+            "virtualAddress": 156592,
+            "physicalAddress": 156592,
+            "fileSize": 48,
+            "memorySize": 2360,
+            "flags": "RW",
+            "alignment": 16384
+          }
+        ],
+        "relroSegments": [
+          {
+            "offset": 122544,
+            "virtualAddress": 138928,
+            "physicalAddress": 138928,
+            "fileSize": 1280,
+            "memorySize": 4432,
+            "flags": "R",
+            "alignment": 1
+          }
+        ],
+        "stackSegments": [
+          {
+            "offset": 0,
+            "virtualAddress": 0,
+            "physicalAddress": 0,
+            "fileSize": 0,
+            "memorySize": 0,
+            "flags": "RW",
+            "alignment": 0
+          }
+        ],
+        "buildId": "95b8ce326b0b4a5108bd1ed79ce67a620ac824bc",
+        "versionDefinitions": [],
+        "readelfEvidenceSha256": {
+          "header": "b6cf4bf55f9f7a43d47f0d4d4d600d3a6ec3c32d9bbe22a2cd0aa6a880b361b3",
+          "programHeaders": "58a88d1af8e190eed2991f4506d363ff8c1f5547ac5b3ed4ffbff525f954bb2f",
+          "dynamic": "8086cd015d062bf6aedf113ad318fb81a737f33d588b7490ace070ab03052233",
+          "symbols": "fbdf6c9281a1776270be869e5a3defb14cfd411c5260d562c43de6acdcb31f11",
+          "versions": "3112539bae463a801b3e27a6a2d9a9cfddb81073a615ad26978c62ec16d5e9c2",
+          "notes": "c135783d5c09e374b99ce0b2ef1676a64951573a33b6e00de90d9cd3c5898fc2"
+        },
+        "apkMember": "lib/arm64-v8a/libonnx_jni.so",
+        "ortUndefinedSymbols": []
+      },
+      {
+        "filename": "libonnxruntime.so",
+        "bytes": 28637280,
+        "sha256": "f826d8efb03adf0a84f10e7ba408f9d4cd11b0a2ccd8d08aeb0f7451fb50cacc",
+        "elf": {
+          "class": "ELF64",
+          "encoding": "2's complement, little endian",
+          "type": "DYN",
+          "machine": "AArch64"
+        },
+        "soname": "libonnxruntime.so",
+        "needed": [
+          "libandroid.so",
+          "libc.so",
+          "libdl.so",
+          "liblog.so",
+          "libm.so"
+        ],
+        "runpath": [
+          "$ORIGIN"
+        ],
+        "rpath": [],
+        "hasTextRelocations": false,
+        "loadSegments": [
+          {
+            "offset": 0,
+            "virtualAddress": 0,
+            "physicalAddress": 0,
+            "fileSize": 27973984,
+            "memorySize": 27973984,
+            "flags": "RE",
+            "alignment": 16384
+          },
+          {
+            "offset": 27973984,
+            "virtualAddress": 27990368,
+            "physicalAddress": 27990368,
+            "fileSize": 652184,
+            "memorySize": 652960,
+            "flags": "RW",
+            "alignment": 16384
+          },
+          {
+            "offset": 28626168,
+            "virtualAddress": 28658936,
+            "physicalAddress": 28658936,
+            "fileSize": 8664,
+            "memorySize": 83744,
+            "flags": "RW",
+            "alignment": 16384
+          }
+        ],
+        "relroSegments": [
+          {
+            "offset": 27973984,
+            "virtualAddress": 27990368,
+            "physicalAddress": 27990368,
+            "fileSize": 652184,
+            "memorySize": 652960,
+            "flags": "R",
+            "alignment": 1
+          }
+        ],
+        "stackSegments": [
+          {
+            "offset": 0,
+            "virtualAddress": 0,
+            "physicalAddress": 0,
+            "fileSize": 0,
+            "memorySize": 0,
+            "flags": "RW",
+            "alignment": 0
+          }
+        ],
+        "buildId": "b178f5c22304a25ff481e608260312842627e868",
+        "versionDefinitions": [
+          "VERS_1.28.0",
+          "libonnxruntime.so"
+        ],
+        "readelfEvidenceSha256": {
+          "header": "0f65345e826f57b826d078b330500db26f9a14f910dd67ab86ce3a7ee9bda701",
+          "programHeaders": "c21c33fd4cb007f10dfbb2e29eb3fa23a800aa29c73a9414e57850934a3bf285",
+          "dynamic": "9a44460398654ab65de4b1ecd4fc467ce7c7a3eb01701fccc5ccaab4c2e42dad",
+          "symbols": "b82af5fda2deb123e1807631a5129f0943a0f8597ac326b93159a482b1961c55",
+          "versions": "58c3b4f7fd54230b85952ecdf773a3d1869cd9cc168617aad86982d7624d618e",
+          "notes": "a65349f3605a2a9ae6427fbcf75df12cecb267e74932dc4af3cbd40857b5fd2c"
+        },
+        "apkMember": "lib/arm64-v8a/libonnxruntime.so",
+        "ortUndefinedSymbols": []
+      },
+      {
+        "filename": "libonnxruntime4j_jni.so",
+        "bytes": 111648,
+        "sha256": "99db53ca399095cfa17f3f40924b1012a0ff5846c32198e8cef01dd8480f6b45",
+        "elf": {
+          "class": "ELF64",
+          "encoding": "2's complement, little endian",
+          "type": "DYN",
+          "machine": "AArch64"
+        },
+        "soname": null,
+        "needed": [
+          "libc.so",
+          "libdl.so",
+          "libm.so",
+          "libonnxruntime.so"
+        ],
+        "runpath": [],
+        "rpath": [],
+        "hasTextRelocations": false,
+        "loadSegments": [
+          {
+            "offset": 0,
+            "virtualAddress": 0,
+            "physicalAddress": 0,
+            "fileSize": 80544,
+            "memorySize": 80544,
+            "flags": "RE",
+            "alignment": 16384
+          },
+          {
+            "offset": 80544,
+            "virtualAddress": 96928,
+            "physicalAddress": 96928,
+            "fileSize": 832,
+            "memorySize": 1376,
+            "flags": "RW",
+            "alignment": 16384
+          }
+        ],
+        "relroSegments": [
+          {
+            "offset": 80544,
+            "virtualAddress": 96928,
+            "physicalAddress": 96928,
+            "fileSize": 832,
+            "memorySize": 1376,
+            "flags": "R",
+            "alignment": 1
+          }
+        ],
+        "stackSegments": [
+          {
+            "offset": 0,
+            "virtualAddress": 0,
+            "physicalAddress": 0,
+            "fileSize": 0,
+            "memorySize": 0,
+            "flags": "RW",
+            "alignment": 0
+          }
+        ],
+        "buildId": "d693b50f9bde9935640d9adda356a6a0e3367e9c",
+        "versionDefinitions": [],
+        "readelfEvidenceSha256": {
+          "header": "7071b59403694654521ae094a909d79c9c8bbd25d35f9ff5a06440721788fed2",
+          "programHeaders": "7889a3cbdc0aec9fb8f9d43dcd3f1dd6613753ce174c199e0a5bc31c9118a400",
+          "dynamic": "f424af5a7b8afa42ef7daa09c0aaecf20a1ac315d61673069a78198ad6737dc5",
+          "symbols": "30ebfec623594b601e0f705648ae5123ae5c0c595d18ccb4ba9d792108d7d2af",
+          "versions": "0287592031b49b757c741aadfcc89f2ebea24833c2a492b731194b0b6b9fc241",
+          "notes": "2dbb780508b4e662b288b3dcd5c76e46a707515715539cdb25ae8e3d57d6841b"
+        },
+        "apkMember": "lib/arm64-v8a/libonnxruntime4j_jni.so",
+        "ortUndefinedSymbols": [
+          {
+            "name": "OrtGetApiBase",
+            "version": "VERS_1.28.0",
+            "defaultVersion": false,
+            "type": "FUNC",
+            "binding": "GLOBAL",
+            "visibility": "DEFAULT",
+            "versionProvider": "libonnxruntime.so"
+          },
+          {
+            "name": "OrtSessionOptionsAppendExecutionProvider_CPU",
+            "version": "VERS_1.28.0",
+            "defaultVersion": false,
+            "type": "FUNC",
+            "binding": "GLOBAL",
+            "visibility": "DEFAULT",
+            "versionProvider": "libonnxruntime.so"
+          },
+          {
+            "name": "OrtSessionOptionsAppendExecutionProvider_Nnapi",
+            "version": "VERS_1.28.0",
+            "defaultVersion": false,
+            "type": "FUNC",
+            "binding": "GLOBAL",
+            "visibility": "DEFAULT",
+            "versionProvider": "libonnxruntime.so"
+          }
+        ]
+      },
+      {
+        "filename": "libopencv_java4.so",
+        "bytes": 23465088,
+        "sha256": "144bbc9ad0b0bac4ba58f7d53198aead64379e5314f68200968c703d2c1c14ab",
+        "elf": {
+          "class": "ELF64",
+          "encoding": "2's complement, little endian",
+          "type": "DYN",
+          "machine": "AArch64"
+        },
+        "soname": "libopencv_java4.so",
+        "needed": [
+          "libc++_shared.so",
+          "libc.so",
+          "libdl.so",
+          "libjnigraphics.so",
+          "liblog.so",
+          "libm.so",
+          "libmediandk.so",
+          "libz.so"
+        ],
+        "runpath": [],
+        "rpath": [],
+        "hasTextRelocations": false,
+        "loadSegments": [
+          {
+            "offset": 0,
+            "virtualAddress": 0,
+            "physicalAddress": 0,
+            "fileSize": 22731088,
+            "memorySize": 22731088,
+            "flags": "RE",
+            "alignment": 16384
+          },
+          {
+            "offset": 22731088,
+            "virtualAddress": 22747472,
+            "physicalAddress": 22747472,
+            "fileSize": 444736,
+            "memorySize": 448176,
+            "flags": "RW",
+            "alignment": 16384
+          },
+          {
+            "offset": 23175824,
+            "virtualAddress": 23208592,
+            "physicalAddress": 23208592,
+            "fileSize": 287184,
+            "memorySize": 1381392,
+            "flags": "RW",
+            "alignment": 16384
+          }
+        ],
+        "relroSegments": [
+          {
+            "offset": 22731088,
+            "virtualAddress": 22747472,
+            "physicalAddress": 22747472,
+            "fileSize": 444736,
+            "memorySize": 448176,
+            "flags": "R",
+            "alignment": 1
+          }
+        ],
+        "stackSegments": [
+          {
+            "offset": 0,
+            "virtualAddress": 0,
+            "physicalAddress": 0,
+            "fileSize": 0,
+            "memorySize": 0,
+            "flags": "RW",
+            "alignment": 0
+          }
+        ],
+        "buildId": "1aaa9c4d1e0fe8876532bfb8b2faaabd4e8d9b3e",
+        "versionDefinitions": [],
+        "readelfEvidenceSha256": {
+          "header": "0d431baaa088bc52672083d5f0cd53d7f6e8c66d7bfccfd4e1d91f353c9e7437",
+          "programHeaders": "19ffaa271bb905073b34ccbc249710f35e612449a4bd10984b5247db59c9ba01",
+          "dynamic": "51e421c26ede56fe8ebf3bd115382da80a12b53ac48bf3c96cd98871e04c7cfb",
+          "symbols": "5e7862accf3a607568d1f36b79b092e36c6d45e1e6528f3bf4a8338d6f1065f1",
+          "versions": "37b1dfaba61c5f08be48d758caae45945d48940827fe2ac5f4a33dc8bfd32da0",
+          "notes": "707063fd8ad62a287ffeb79c881217d488d70359b56beeebeb6cb83229f909c5"
+        },
+        "apkMember": "lib/arm64-v8a/libopencv_java4.so",
+        "ortUndefinedSymbols": []
+      },
+      {
+        "filename": "librime_jni.so",
+        "bytes": 7458176,
+        "sha256": "b1aa35c250e301119d19473c10b493486e2a80537bcf70501748c294b909d16f",
+        "elf": {
+          "class": "ELF64",
+          "encoding": "2's complement, little endian",
+          "type": "DYN",
+          "machine": "AArch64"
+        },
+        "soname": "librime_jni.so",
+        "needed": [
+          "libc.so",
+          "libdl.so",
+          "liblog.so",
+          "libm.so",
+          "libonnxruntime.so"
+        ],
+        "runpath": [],
+        "rpath": [],
+        "hasTextRelocations": false,
+        "loadSegments": [
+          {
+            "offset": 0,
+            "virtualAddress": 0,
+            "physicalAddress": 0,
+            "fileSize": 7280000,
+            "memorySize": 7280000,
+            "flags": "RE",
+            "alignment": 16384
+          },
+          {
+            "offset": 7280000,
+            "virtualAddress": 7296384,
+            "physicalAddress": 7296384,
+            "fileSize": 171952,
+            "memorySize": 174720,
+            "flags": "RW",
+            "alignment": 16384
+          },
+          {
+            "offset": 7451952,
+            "virtualAddress": 7484720,
+            "physicalAddress": 7484720,
+            "fileSize": 3568,
+            "memorySize": 98952,
+            "flags": "RW",
+            "alignment": 16384
+          }
+        ],
+        "relroSegments": [
+          {
+            "offset": 7280000,
+            "virtualAddress": 7296384,
+            "physicalAddress": 7296384,
+            "fileSize": 171952,
+            "memorySize": 174720,
+            "flags": "R",
+            "alignment": 1
+          }
+        ],
+        "stackSegments": [
+          {
+            "offset": 0,
+            "virtualAddress": 0,
+            "physicalAddress": 0,
+            "fileSize": 0,
+            "memorySize": 0,
+            "flags": "RW",
+            "alignment": 0
+          }
+        ],
+        "buildId": "0c40c621cab2a9cde9c36e657049c1911f9242a8",
+        "versionDefinitions": [],
+        "readelfEvidenceSha256": {
+          "header": "bae120367a89e1ff1c5e2e2fa27ccb46df30b2a5595b4a0cfa2c6318313a9682",
+          "programHeaders": "1259ad32095cdf5339dadca5f8d2822bae1a09beb5909d20871d34a0a68bb8c1",
+          "dynamic": "90b6a888e55362415f17880c67d394ed425f8319722066362458e2de733e1c2c",
+          "symbols": "f3f57197bb91d06b947e5dc0a1f8892817d65d75d306900afa7802e2ecbde370",
+          "versions": "c60c69585251dcc2269972f00cfafbde19ce9a0720e6de48523370f0664640e1",
+          "notes": "d6459b3f5c1a023b6d5a8b7daa29b7ab0e6d235b1b3ae50f83f722522ac05f0f"
+        },
+        "apkMember": "lib/arm64-v8a/librime_jni.so",
+        "ortUndefinedSymbols": [
+          {
+            "name": "OrtGetApiBase",
+            "version": "VERS_1.28.0",
+            "defaultVersion": false,
+            "type": "FUNC",
+            "binding": "GLOBAL",
+            "visibility": "DEFAULT",
+            "versionProvider": "libonnxruntime.so"
+          }
+        ]
+      },
+      {
+        "filename": "libsherpa-onnx-jni.so",
+        "bytes": 24169352,
+        "sha256": "b4a53d915c19cb6d09b1cdc9a8084be54419b647aab9097ffdfb46f30c3c4dd8",
+        "elf": {
+          "class": "ELF64",
+          "encoding": "2's complement, little endian",
+          "type": "DYN",
+          "machine": "AArch64"
+        },
+        "soname": "libsherpa-onnx-jni.so",
+        "needed": [
+          "libandroid.so",
+          "libc.so",
+          "libdl.so",
+          "liblog.so",
+          "libm.so"
+        ],
+        "runpath": [],
+        "rpath": [],
+        "hasTextRelocations": false,
+        "loadSegments": [
+          {
+            "offset": 0,
+            "virtualAddress": 0,
+            "physicalAddress": 0,
+            "fileSize": 23767520,
+            "memorySize": 23767520,
+            "flags": "RE",
+            "alignment": 16384
+          },
+          {
+            "offset": 23767520,
+            "virtualAddress": 23783904,
+            "physicalAddress": 23783904,
+            "fileSize": 395088,
+            "memorySize": 398880,
+            "flags": "RW",
+            "alignment": 16384
+          },
+          {
+            "offset": 24162608,
+            "virtualAddress": 24195376,
+            "physicalAddress": 24195376,
+            "fileSize": 4592,
+            "memorySize": 127784,
+            "flags": "RW",
+            "alignment": 16384
+          }
+        ],
+        "relroSegments": [
+          {
+            "offset": 23767520,
+            "virtualAddress": 23783904,
+            "physicalAddress": 23783904,
+            "fileSize": 395088,
+            "memorySize": 398880,
+            "flags": "R",
+            "alignment": 1
+          }
+        ],
+        "stackSegments": [
+          {
+            "offset": 0,
+            "virtualAddress": 0,
+            "physicalAddress": 0,
+            "fileSize": 0,
+            "memorySize": 0,
+            "flags": "RW",
+            "alignment": 0
+          }
+        ],
+        "buildId": "9e7599ab3ff311770c0180bc4b7c41bb084880aa",
+        "versionDefinitions": [],
+        "readelfEvidenceSha256": {
+          "header": "b51f6cc4cbc85bf4cd3f39a1a46f708105fd7646807a2f0b7d555ceafe22aeb1",
+          "programHeaders": "18710acc587e2ed1cb92688efad3ce4cfd79e6ef4d47e4f02413d4fa3cd0e3e2",
+          "dynamic": "fe9de560f3a505c6b15911d26f893c71a67ae25b42180b23e8099e252018c3ba",
+          "symbols": "7146b8d62793f0609e4dc997439711248e24a9822b29944b083e9a400d26dbe5",
+          "versions": "fbc87af6728a95fa368a917e70232e9112f556efb7068d4fcaccbbddc3756e02",
+          "notes": "166e8031473c646e6eecaf83c5a0a08d58dfafeabb1a9abacac5d7f6e87d6126"
+        },
+        "apkMember": "lib/arm64-v8a/libsherpa-onnx-jni.so",
+        "ortUndefinedSymbols": []
+      },
+      {
+        "filename": "libsurface_util_jni.so",
+        "bytes": 4896,
+        "sha256": "1b8a49ebdf42e18ef9722a5947751fb0dcc2f362805353ca63a4423d1a14e78a",
+        "elf": {
+          "class": "ELF64",
+          "encoding": "2's complement, little endian",
+          "type": "DYN",
+          "machine": "AArch64"
+        },
+        "soname": "libsurface_util_jni.so",
+        "needed": [
+          "libandroid.so",
+          "libc.so",
+          "libdl.so",
+          "libm.so"
+        ],
+        "runpath": [],
+        "rpath": [],
+        "hasTextRelocations": false,
+        "loadSegments": [
+          {
+            "offset": 0,
+            "virtualAddress": 0,
+            "physicalAddress": 0,
+            "fileSize": 2480,
+            "memorySize": 2480,
+            "flags": "RE",
+            "alignment": 16384
+          },
+          {
+            "offset": 2480,
+            "virtualAddress": 18864,
+            "physicalAddress": 18864,
+            "fileSize": 568,
+            "memorySize": 1616,
+            "flags": "RW",
+            "alignment": 16384
+          }
+        ],
+        "relroSegments": [
+          {
+            "offset": 2480,
+            "virtualAddress": 18864,
+            "physicalAddress": 18864,
+            "fileSize": 568,
+            "memorySize": 1616,
+            "flags": "R",
+            "alignment": 1
+          }
+        ],
+        "stackSegments": [
+          {
+            "offset": 0,
+            "virtualAddress": 0,
+            "physicalAddress": 0,
+            "fileSize": 0,
+            "memorySize": 0,
+            "flags": "RW",
+            "alignment": 0
+          }
+        ],
+        "buildId": "f5f94930821587d7247c89c313d3690d4128875a",
+        "versionDefinitions": [
+          "VERS_1.0",
+          "libsurface_util_jni.so"
+        ],
+        "readelfEvidenceSha256": {
+          "header": "1f8cafa16456423d000967fb2ee86ab3e0dd3cddc2c983b42ba4fa2b086b20b8",
+          "programHeaders": "1b8dc8629f19fb2229043f8a2a0067cbad05b664c7c773fac090031e1a967c57",
+          "dynamic": "5026d5d066cf16d9f40f386c8433445d5335906b643b2592b1424fb907e698c9",
+          "symbols": "6908896e94c683164d4345d624581b37ad258ba20a7a56c388b0306a839edf43",
+          "versions": "391947e2df57e2df8d63e2d394c937cc54427699a0540670317dc1aecf203d10",
+          "notes": "50c281bc5c56870f463a2c185ff22aa602d0c37e061941337400e5b5abef045e"
+        },
+        "apkMember": "lib/arm64-v8a/libsurface_util_jni.so",
+        "ortUndefinedSymbols": []
+      }
+    ],
+    "ortExports": [
+      {
+        "name": "OrtGetApiBase",
+        "version": "VERS_1.28.0",
+        "defaultVersion": true,
+        "type": "FUNC",
+        "binding": "GLOBAL",
+        "visibility": "DEFAULT"
+      },
+      {
+        "name": "OrtSessionOptionsAppendExecutionProvider_CPU",
+        "version": "VERS_1.28.0",
+        "defaultVersion": true,
+        "type": "FUNC",
+        "binding": "GLOBAL",
+        "visibility": "DEFAULT"
+      },
+      {
+        "name": "OrtSessionOptionsAppendExecutionProvider_Nnapi",
+        "version": "VERS_1.28.0",
+        "defaultVersion": true,
+        "type": "FUNC",
+        "binding": "GLOBAL",
+        "visibility": "DEFAULT"
+      },
+      {
+        "name": "__emutls_v.ThreadedBufHolder",
+        "version": null,
+        "defaultVersion": false,
+        "type": "OBJECT",
+        "binding": "GLOBAL",
+        "visibility": "DEFAULT"
+      },
+      {
+        "name": "__emutls_v.ThreadedBufSize",
+        "version": null,
+        "defaultVersion": false,
+        "type": "OBJECT",
+        "binding": "GLOBAL",
+        "visibility": "DEFAULT"
+      }
+    ]
+  },
+  "contract": {
+    "soname": "libonnxruntime.so",
+    "elf": {
+      "class": "ELF64",
+      "encoding": "2's complement, little endian",
+      "type": "DYN",
+      "machine": "AArch64"
+    },
+    "neededLibraries": [
+      "libandroid.so",
+      "libc.so",
+      "libdl.so",
+      "liblog.so",
+      "libm.so"
+    ],
+    "requiredExports": [
+      {
+        "name": "OrtGetApiBase",
+        "version": "VERS_1.28.0",
+        "defaultVersion": true,
+        "type": "FUNC",
+        "binding": "GLOBAL",
+        "visibility": "DEFAULT"
+      },
+      {
+        "name": "OrtSessionOptionsAppendExecutionProvider_CPU",
+        "version": "VERS_1.28.0",
+        "defaultVersion": true,
+        "type": "FUNC",
+        "binding": "GLOBAL",
+        "visibility": "DEFAULT"
+      },
+      {
+        "name": "OrtSessionOptionsAppendExecutionProvider_Nnapi",
+        "version": "VERS_1.28.0",
+        "defaultVersion": true,
+        "type": "FUNC",
+        "binding": "GLOBAL",
+        "visibility": "DEFAULT"
+      }
+    ],
+    "requiredVersionDefinitions": [
+      "VERS_1.28.0"
+    ],
+    "minimumLoadAlignmentBytes": 16384,
+    "requireRelro": true,
+    "ortApiVersionForSeparateRuntimeProbe": 28,
+    "providersForSeparateRuntimeProbe": [
+      "CPUExecutionProvider",
+      "NnapiExecutionProvider",
+      "XnnpackExecutionProvider",
+      "WebGpuExecutionProvider"
+    ],
+    "unconsumedObjectExportsAreInformational": true
+  },
+  "limitations": [
+    "Static ELF inspection does not execute the library or verify its API table.",
+    "Provider names and implementation availability require separate runtime/build evidence.",
+    "PT_LOAD alignment is not final APK ZIP alignment or 16 KiB device acceptance.",
+    "This gate does not prove minimum Android API symbol availability, model inference, or absence of a startup crash."
+  ]
+}

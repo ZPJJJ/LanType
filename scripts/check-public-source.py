@@ -11,6 +11,10 @@ MAX_GIT_BLOB = 100 * 1024 * 1024
 ALLOWED_WORKFLOWS = {
     ".github/workflows/offline-ci.yml",
     ".github/workflows/android-device-qa.yml",
+    # Reviewed read-only source collection and bounded native build workflows.
+    # Neither publishes a release, signs an APK, nor receives private keys.
+    ".github/workflows/native-source-supplement.yml",
+    ".github/workflows/native-ort-build.yml",
 }
 DENIED_PARTS = {".gradle", ".cxx", "node_modules", "private-signing", "recovery", "deliverables"}
 DENIED_SUFFIXES = {".jks", ".keystore", ".p12", ".pfx", ".key", ".pem", ".apk", ".aab", ".so", ".onnx", ".tflite", ".hprof", ".xipk"}

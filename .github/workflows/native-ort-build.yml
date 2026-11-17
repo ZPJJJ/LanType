@@ -1,0 +1,188 @@
+name: LanType controlled ORT native build
+
+on:
+  workflow_dispatch:
+    inputs:
+      through:
+        description: Last native stage (no APK signing or release publication)
+        type: choice
+        required: true
+        default: build
+        options:
+          - prepare
+          - configure
+          - build
+
+permissions:
+  contents: read
+
+concurrency:
+  group: lantype-ort-native-build
+  cancel-in-progress: false
+
+jobs:
+  arm64-native:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    defaults:
+      run:
+        shell: bash
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+      LANTYPE_NDK_VERSION: '29.0.14206865'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - name: Check public source and normal build input tests
+        run: |
+          python3 scripts/check-public-source.py
+          python3 scripts/test-ort-native-build.py
+      - name: Require the selected preinstalled toolchain
+        run: |
+          test -d "$ANDROID_HOME/ndk/$LANTYPE_NDK_VERSION"
+          test -f "$ANDROID_HOME/ndk/$LANTYPE_NDK_VERSION/source.properties"
+          cmake --version
+          ninja --version
+          python3 -c 'import packaging; print("Python packaging is available")'
+          cat "$ANDROID_HOME/ndk/$LANTYPE_NDK_VERSION/source.properties"
+      - name: Create a bounded disposable native build volume
+        id: volume
+        run: |
+          # Keep the repository's existing host reserve gate (20 GiB + 5 GiB).
+          python3 scripts/storage_guard.py
+          python3 - <<'PY'
+          import os, shutil
+          from pathlib import Path
+          task_root = Path(os.environ['RUNNER_TEMP'])
+          if shutil.disk_usage(task_root).free < 8 * 1024**3:
+              raise SystemExit('Need 8 GiB free before the bounded build starts')
+          for name in ('lantype-ort-volume.img', 'lantype-ort-work'):
+              if (task_root / name).exists():
+                  raise SystemExit('Preserving an existing native task path: ' + name)
+          PY
+          export LANTYPE_ORT_WORK_ROOT="$RUNNER_TEMP/lantype-ort-work"
+          export LANTYPE_ORT_VOLUME="$RUNNER_TEMP/lantype-ort-volume.img"
+          # The volume hard-caps native data at 4.5 GiB. The separate 512 MiB
+          # reservation for job overhead is checked at named checkpoints;
+          # those checks are not a whole-job filesystem quota or peak monitor.
+          truncate -s 4608M "$LANTYPE_ORT_VOLUME"
+          mkfs.ext4 -q -F -m 0 "$LANTYPE_ORT_VOLUME"
+          mkdir "$LANTYPE_ORT_WORK_ROOT"
+          sudo mount -o loop,nosuid,nodev "$LANTYPE_ORT_VOLUME" "$LANTYPE_ORT_WORK_ROOT"
+          sudo chown "$(id -u):$(id -g)" "$LANTYPE_ORT_WORK_ROOT"
+          printf 'LANTYPE_ORT_WORK_ROOT=%s\nLANTYPE_ORT_VOLUME=%s\n' "$LANTYPE_ORT_WORK_ROOT" "$LANTYPE_ORT_VOLUME" >> "$GITHUB_ENV"
+          findmnt -T "$LANTYPE_ORT_WORK_ROOT"
+          df -B1 "$LANTYPE_ORT_WORK_ROOT"
+          du -sk "$GITHUB_WORKSPACE"
+      - name: Restore and verify pinned source inputs
+        timeout-minutes: 20
+        run: |
+          python3 scripts/check-ort-build-overhead.py --checkpoint before-prepare
+          python3 -u scripts/build-ort-native.py --stage prepare --download \
+            --work-root "$LANTYPE_ORT_WORK_ROOT" --sdk "$ANDROID_HOME" \
+            --ndk "$ANDROID_HOME/ndk/$LANTYPE_NDK_VERSION" --cmake "$(command -v cmake)"
+      - name: Configure full ARM64 providers and audit generated inputs
+        if: ${{ inputs.through != 'prepare' }}
+        timeout-minutes: 20
+        run: |
+          python3 scripts/check-ort-build-overhead.py --checkpoint before-configure
+          python3 -u scripts/build-ort-native.py --stage configure \
+            --work-root "$LANTYPE_ORT_WORK_ROOT" --sdk "$ANDROID_HOME" \
+            --ndk "$ANDROID_HOME/ndk/$LANTYPE_NDK_VERSION" --cmake "$(command -v cmake)"
+      - name: Compile only the shared ONNX Runtime target
+        if: ${{ inputs.through == 'build' }}
+        timeout-minutes: 120
+        run: |
+          python3 scripts/check-ort-build-overhead.py --checkpoint before-build
+          python3 -u scripts/build-ort-native.py --stage build \
+            --work-root "$LANTYPE_ORT_WORK_ROOT" --sdk "$ANDROID_HOME" \
+            --ndk "$ANDROID_HOME/ndk/$LANTYPE_NDK_VERSION" --cmake "$(command -v cmake)"
+      - name: Verify native provenance and the shipped ABI contract
+        id: verify
+        if: ${{ inputs.through == 'build' }}
+        run: |
+          python3 -u scripts/build-ort-native.py --stage verify \
+            --work-root "$LANTYPE_ORT_WORK_ROOT" --sdk "$ANDROID_HOME" \
+            --ndk "$ANDROID_HOME/ndk/$LANTYPE_NDK_VERSION" --cmake "$(command -v cmake)"
+          python3 scripts/verify-ort-abi.py \
+            --library "$LANTYPE_ORT_WORK_ROOT/build/Release/libonnxruntime.so" \
+            --output "$LANTYPE_ORT_WORK_ROOT/receipts/abi.json"
+      - name: Collect the unsigned native candidate and its exact C API headers
+        if: ${{ inputs.through == 'build' && steps.verify.outcome == 'success' }}
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, os, shutil
+          from pathlib import Path
+          root = Path(os.environ['LANTYPE_ORT_WORK_ROOT'])
+          repo = Path(os.environ['GITHUB_WORKSPACE'])
+          out = root / 'candidate'
+          if out.exists():
+              raise SystemExit('Candidate collection must start in a new directory')
+          (out / 'lib/arm64-v8a').mkdir(parents=True)
+          lib = root / 'build/Release/libonnxruntime.so'
+          if lib.stat().st_size > 128 * 1024**2:
+              raise SystemExit('Unexpected native output size; retain evidence for review')
+          os.link(lib, out / 'lib/arm64-v8a/libonnxruntime.so')
+          ort = root / 'src/runtime-onnxruntime'
+          (out / 'include').mkdir()
+          for name in ('onnxruntime_c_api.h', 'onnxruntime_ep_c_api.h', 'onnxruntime_error_code.h'):
+              shutil.copyfile(ort / 'include/onnxruntime/core/session' / name, out / 'include' / name)
+          (out / 'licenses').mkdir()
+          shutil.copyfile(ort / 'LICENSE', out / 'licenses/onnxruntime-LICENSE.txt')
+          shutil.copyfile(root / 'src/onnx-dependency-pytorch_cpuinfo/LICENSE', out / 'licenses/cpuinfo-LICENSE.txt')
+          for source in ('patches/onnxruntime/cpuinfo-4628dc0-pr457-l2-backport.patch',
+                         'patches/onnxruntime/README.md',
+                         'tools/lantype-device-qa/ort-api-smoke.c',
+                         'docs/licensing/ort-shipped-abi.json'):
+              shutil.copyfile(repo / source, out / Path(source).name)
+          shutil.copytree(root / 'receipts', out / 'receipts')
+          files = []
+          for p in sorted(out.rglob('*')):
+              if p.is_file():
+                  with p.open('rb') as stream:
+                      digest = hashlib.file_digest(stream, 'sha256').hexdigest()
+                  files.append({'path': p.relative_to(out).as_posix(), 'bytes': p.stat().st_size, 'sha256': digest})
+          manifest = {'schemaVersion': 1, 'kind': 'unsigned-native-candidate',
+                      'workflowCommit': os.environ['GITHUB_SHA'], 'runId': os.environ['GITHUB_RUN_ID'],
+                      'runtimeVersion': '1.28.0', 'abi': 'arm64-v8a', 'minSdk': 28,
+                      'applicationIntegrated': False, 'androidRuntimeAccepted': False,
+                      'files': files}
+          (out / 'candidate-manifest.json').write_text(json.dumps(manifest, indent=2) + '\n')
+          print(json.dumps({'candidateBytes': sum(e['bytes'] for e in files), 'files': len(files)}))
+          PY
+      - name: Check job overhead after candidate collection
+        if: ${{ inputs.through == 'build' && steps.verify.outcome == 'success' }}
+        run: python3 scripts/check-ort-build-overhead.py --checkpoint after-candidate
+      - name: Preserve the candidate after all static gates succeed
+        id: candidate
+        if: ${{ inputs.through == 'build' && steps.verify.outcome == 'success' }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: lantype-ort-candidate-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ env.LANTYPE_ORT_WORK_ROOT }}/candidate/
+          if-no-files-found: error
+          retention-days: 14
+      - name: Check job overhead before evidence transfer
+        if: ${{ always() && steps.volume.outcome == 'success' }}
+        run: python3 scripts/check-ort-build-overhead.py --checkpoint before-evidence-upload
+      - name: Preserve source, configuration and budget evidence on every outcome
+        id: evidence
+        if: ${{ always() && steps.volume.outcome == 'success' }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: lantype-ort-build-evidence-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ env.LANTYPE_ORT_WORK_ROOT }}/receipts/
+            ${{ env.LANTYPE_ORT_WORK_ROOT }}/logs/
+            ${{ runner.temp }}/lantype-ort-overhead/
+          if-no-files-found: error
+          retention-days: 14
+      - name: Release only this task volume after evidence was saved
+        if: ${{ always() && steps.evidence.outcome == 'success' && (steps.verify.outcome != 'success' || steps.candidate.outcome == 'success') }}
+        run: |
+          df -B1 "$LANTYPE_ORT_WORK_ROOT"
+          sudo umount "$LANTYPE_ORT_WORK_ROOT"
+          rm -- "$LANTYPE_ORT_VOLUME"
+          rmdir -- "$LANTYPE_ORT_WORK_ROOT"
+          df -B1 "$RUNNER_TEMP"
