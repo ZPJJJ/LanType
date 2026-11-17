@@ -1,0 +1,93 @@
+[
+  {
+    "path": "dawn/DEPS",
+    "gitBlob": "d29d347246e8122a00cc3d375a2d4d8bbc2f3078",
+    "url": "https://github.com/google/dawn/blob/ec7b457e5bb1fcec6f59733c4f3dd84d2f885a38/DEPS",
+    "bytes": 30180,
+    "sha256": "89217876b7ecd114030356d09bba838fe34635ef17433debdf47eb149275f38e"
+  },
+  {
+    "path": "dawn/CMakeLists.txt",
+    "gitBlob": "10399f01b94029232a5bdea28a59cfb0a03bfe19",
+    "url": "https://github.com/google/dawn/blob/ec7b457e5bb1fcec6f59733c4f3dd84d2f885a38/CMakeLists.txt",
+    "bytes": 27409,
+    "sha256": "5898d883031c0ad5ecf3a217a181c26def123d27cb05597368d7c659cb41d842"
+  },
+  {
+    "path": "dawn/third_party/CMakeLists.txt",
+    "gitBlob": "f875c22bc9350e7238a67db05170b0c2b5f2c764",
+    "url": "https://github.com/google/dawn/blob/ec7b457e5bb1fcec6f59733c4f3dd84d2f885a38/third_party/CMakeLists.txt",
+    "bytes": 16831,
+    "sha256": "316f7da1a4ca75782faf5193edad8ee8b4d29e20954228aa7f9fe7663b7a22a6"
+  },
+  {
+    "path": "dawn/tools/fetch_dawn_dependencies.py",
+    "gitBlob": "74bc7ce4fd2eea12ed61c9c48f96cc4800018850",
+    "url": "https://github.com/google/dawn/blob/ec7b457e5bb1fcec6f59733c4f3dd84d2f885a38/tools/fetch_dawn_dependencies.py",
+    "bytes": 8414,
+    "sha256": "c5fdf3f7eb99e5b51a20c481a9ae8eaa752f55e8e9b8047c92e2b4880d913312"
+  },
+  {
+    "path": "dawn/src/dawn/native/CMakeLists.txt",
+    "gitBlob": "c96d5a24d98e540f9eddb6706c8217a5772931a3",
+    "url": "https://github.com/google/dawn/blob/ec7b457e5bb1fcec6f59733c4f3dd84d2f885a38/src/dawn/native/CMakeLists.txt",
+    "bytes": 34014,
+    "sha256": "aecc6300d043f8edf56ee4012ecb555ad7dce23e7585a4dbbc4938a4ea2cf5b1"
+  },
+  {
+    "path": "dawn/generator/CMakeLists.txt",
+    "gitBlob": "67febfea5a0f93d772baa4faee990210af3feb9a",
+    "url": "https://github.com/google/dawn/blob/ec7b457e5bb1fcec6f59733c4f3dd84d2f885a38/generator/CMakeLists.txt",
+    "bytes": 9362,
+    "sha256": "b702e86c5beace7a71e3b9a7f61db08c5b3d70e8f796af2ca099e66b8123acdf"
+  },
+  {
+    "path": "dawn/LICENSE",
+    "gitBlob": "5b716b6a05fd1d8b6191bea5723347ffdd13b74b",
+    "url": "https://github.com/google/dawn/blob/ec7b457e5bb1fcec6f59733c4f3dd84d2f885a38/LICENSE",
+    "bytes": 1561,
+    "sha256": "e2908f7576fb12be5bdb8480cddb0be62badb498cadb821d043aeaf01b0b0899"
+  },
+  {
+    "path": "spirv-headers/LICENSE",
+    "gitBlob": "a63e9c620ee123267192113ab0be3814782ba909",
+    "url": "https://github.com/KhronosGroup/SPIRV-Headers/blob/f31ca173eff866369e54d35e53375fadbabd58f4/LICENSE",
+    "bytes": 23503,
+    "sha256": "ea43b1de38a6f90c488800d66dec1ed671e68cda530266bc96951fb5b6307613"
+  },
+  {
+    "path": "spirv-tools/LICENSE",
+    "gitBlob": "d645695673349e3947e8e5ae42332d0ac3164cd7",
+    "url": "https://github.com/KhronosGroup/SPIRV-Tools/blob/cb38b2342beedde25bcff582dc3528a135cf6e67/LICENSE",
+    "bytes": 11358,
+    "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+  },
+  {
+    "path": "spirv-tools/external/CMakeLists.txt",
+    "gitBlob": "eb4e69e58c2fc5a9e30c0f5e3d860ab58fadda1a",
+    "url": "https://github.com/KhronosGroup/SPIRV-Tools/blob/cb38b2342beedde25bcff582dc3528a135cf6e67/external/CMakeLists.txt",
+    "bytes": 8173,
+    "sha256": "c5b11328d54ced5ad055f3060f89ababd9466ac20f5aab6c7d3cd9662230879a"
+  },
+  {
+    "path": "vulkan-headers/LICENSE.md",
+    "gitBlob": "d6a0648b652ade1defb1eb481643d2f8d14828b5",
+    "url": "https://github.com/KhronosGroup/Vulkan-Headers/blob/49f1a381e2aec33ef32adf4a377b5a39ec016ec4/LICENSE.md",
+    "bytes": 458,
+    "sha256": "ac24e5ea920e4318e4d02c4086ae51f53cfb03feed06c18df1019e7ada1ec7bc"
+  },
+  {
+    "path": "vulkan-utility-libraries/LICENSE.md",
+    "gitBlob": "9c0c5d000ba2720b6594a4fc58dc940dd60a57c1",
+    "url": "https://github.com/KhronosGroup/Vulkan-Utility-Libraries/blob/50af38b6cd43afb1462f9ad26b8d015382d11a3d/LICENSE.md",
+    "bytes": 304,
+    "sha256": "69760673abf91cfd0280ae73739a29c078f493804d9016a122b3b189b48ad6e6"
+  },
+  {
+    "path": "vulkan-utility-libraries/CMakeLists.txt",
+    "gitBlob": "9efd3094c950659a3fecc2a10d5f6feffad590cf",
+    "url": "https://github.com/KhronosGroup/Vulkan-Utility-Libraries/blob/50af38b6cd43afb1462f9ad26b8d015382d11a3d/CMakeLists.txt",
+    "bytes": 4127,
+    "sha256": "f3b252667423063e2401bda57d659e74df0f739bb62fef13780983bf163b7e31"
+  }
+]

@@ -31,6 +31,9 @@ def main():
 
 This is an actual source distribution: archives/ contains the complete fixed
 source archives whose SHA-256 values appear in native-sources.lock.json.
+This is the 70-archive base set. The separate Dawn/WebGPU source supplement
+described in docs/licensing/DAWN-SOURCE-SUPPLEMENT.md is also required; the
+earlier exclusion of WebGPU from the shipped ORT binary was incorrect.
 Keep it with the separately distributed LanType application source ZIP, which
 contains the current Java/Kotlin code, JNI wrappers, build scripts and patches.
 

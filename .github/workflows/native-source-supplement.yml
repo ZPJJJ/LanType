@@ -1,0 +1,62 @@
+name: LanType source-only Dawn supplement
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: lantype-native-source-supplement-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  collect-source-only:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    defaults:
+      run:
+        shell: bash
+    env:
+      PYTHONDONTWRITEBYTECODE: '1'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - name: Require the frozen plan and bounded free disk
+        run: |
+          python3 - <<'PY'
+          import os, shutil
+          from pathlib import Path
+          plan = Path('docs/licensing/dawn-source-plan.json')
+          if not plan.is_file():
+              raise SystemExit('Reviewed Dawn source plan is missing')
+          free = shutil.disk_usage(os.environ['RUNNER_TEMP']).free
+          if free < 6 * 1024**3:
+              raise SystemExit('At least 6 GiB free disk is required for the bounded source-only job')
+          print('SOURCE_ONLY_PREFLIGHT freeBytes=' + str(free))
+          PY
+      - name: Collect the seven fixed source archives without executing them
+        timeout-minutes: 27
+        run: |
+          evidence=()
+          if [[ -d docs/licensing/dawn-source-evidence ]]; then
+            evidence=(--evidence-dir docs/licensing/dawn-source-evidence)
+          fi
+          python3 -u scripts/collect-dawn-source-supplement.py \
+            --plan docs/licensing/dawn-source-plan.json \
+            --output "$RUNNER_TEMP/lantype-source-supplement" \
+            "${evidence[@]}"
+      - name: Retain only the source supplement and small review manifests
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: lantype-native-source-supplement-${{ github.run_id }}-${{ github.run_attempt }}
+          retention-days: 7
+          if-no-files-found: warn
+          compression-level: 0
+          path: |
+            ${{ runner.temp }}/lantype-source-supplement/LanType-native-source-webgpu-supplement-v1.zip
+            ${{ runner.temp }}/lantype-source-supplement/collection-receipt.json
+            ${{ runner.temp }}/lantype-source-supplement/native-sources-webgpu.lock.json
+            ${{ runner.temp }}/lantype-source-supplement/SUPPLEMENT-SHA256SUMS.txt

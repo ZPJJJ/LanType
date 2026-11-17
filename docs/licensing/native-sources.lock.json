@@ -977,15 +977,17 @@
     "size": 45634470
   },
   "limitations": [
-    "Binary-identical reproduction of upstream native .so files has not been established. The original fixed commits, build inputs, complete source archives and LanType patch set are supplied.",
-    "Android CPU/NNAPI dependencies are included; unused CUDA/TensorRT/CoreML/DirectML/WebGPU and training tooling are outside this build profile.",
+    "Binary-identical reproduction of upstream native .so files has not been established. This base lock records 70 actual archives; the later Dawn/WebGPU supplement must also be considered when assessing source coverage.",
+    "The shipped ORT ELF includes WebGPU/Dawn and XNNPACK implementations. The earlier exclusion of WebGPU based on application-selected CPU/NNAPI paths was incorrect; see docs/licensing/DAWN-SOURCE-SUPPLEMENT.md. CUDA/TensorRT/CoreML/DirectML and training tooling are not included in this Android source profile.",
     "Android SDK/NDK and JDK/Gradle remain separately obtainable build tools. No signing private key is included or required to build an installable self-signed derivative."
   ],
   "correspondenceStatus": {
     "applicationSources": "included",
     "gplNativeSourceTrees": "included at exact pinned commits with actual archives and patches",
-    "permissiveNativeSourceTrees": "included for retained direct components",
-    "remainingPinEvidenceGap": [],
+    "permissiveNativeSourceTrees": "base direct-component archives retained; Dawn/WebGPU recursive source supplement is pending verification",
+    "remainingPinEvidenceGap": [
+      "Dawn/WebGPU and its required nested source archives were omitted from the original 70-file base set; collection and verification are in progress."
+    ],
     "allNativeComponentsRecompiled": false,
     "fullBinaryIdenticalReproductionEstablished": false,
     "cameraxReplacement": {

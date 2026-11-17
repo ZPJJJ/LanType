@@ -2,6 +2,8 @@
 
 本文件说明 1.1.1 兼容修复批次的构建与交付方式。实际构建、测试、APK 指纹和未验收范围见 [1.1.1 验证报告](validation-1.1.1/VALIDATION.md)；本说明不预先声明安装包或设备验收通过。`docs/validation-1.1.0/` 与 `docs/validation/` 分别保留 1.1.0、1.0.0 的历史材料，不能代替本批验证。
 
+**2026-11-17 来源范围更正：** 实际 ORT 共享库包含 Dawn/WebGPU，原 70 份基础原生源码归档没有包含这部分嵌套来源。补充包正在核验，当前不能把原三份源码包单独称为完整覆盖。APK、旧归档和 tag 不变；状态与后续独立校验方法见 [Dawn 源码补充说明](licensing/DAWN-SOURCE-SUPPLEMENT.md)。
+
 本批修复工具舱复制内容进入普通剪贴板历史的隐私边界、连续录音期间 Whisper 中英语言切换，以及遗留词库恢复中冲突或搬移失败数据被删除的问题。后者保留旧路径中的数据，不自动合并或启用两份数据库；完整范围见 [1.1.1 变更记录](CHANGELOG-1.1.1.zh-CN.md)。SDK、JDK、发行签名、模型、词库、原生库及其运行资源锁沿用 1.1.0。
 
 ## 版本与构建方式
@@ -29,7 +31,7 @@
 - 本批安装包：`LanType-1.1.1-offline-arm64-v8a.apk`。以本批 Release 的实际附件、签名校验和 SHA-256 为准。
 - 本批应用源码：`LanType-1.1.1-source-release.zip`，解压根目录为 `LanType-1.1.1/`，包含经审阅的应用源码、构建脚本、许可证、测试、受许可的生成源与小资源。
 - 运行依赖：复用已发布的 `LanType-1.1.0-runtime-dependencies.zip`，内容与本批资源及原生锁一致，不重新命名为 1.1.1 内容。
-- 对应原生源码：复用已发布的三个 `LanType-1.1.0-native-source-part-*-of-3.zip`，合计 70 份实际固定版本源码归档。三个文件都是普通独立 ZIP，应分别解压到同一目录。
+- 基础原生源码：复用已发布的三个 `LanType-1.1.0-native-source-part-*-of-3.zip`，合计 70 份实际固定版本源码归档。三个文件都是普通独立 ZIP，应分别解压到同一目录。Dawn/WebGPU 的独立补充源包还需一并提供和校验，不能由这 70 份的数量推导完整覆盖。
 
 Git 不存放 ONNX 模型、预编译 `.so`、大第三方树、APK、签名私钥、口令、私人测试照片或历史插件二进制。大文件在配套附件中提供，或由显式开发准备命令校验下载。
 
@@ -196,7 +198,7 @@ python3 scripts/verify-commercial-resources.py --source-zip /path/to/LanType-1.1
 python3 scripts/verify-commercial-resources.py --source-zip /path/to/LanType-1.1.0-runtime-dependencies.zip
 ```
 
-`--source-only` 本批只产出新应用源码 ZIP，仍核对本地资源和原生输入；依赖大文件应先按本说明准备。Release 清单同时列出上节四个复用附件的固定链接、大小与原 SHA-256，不重复生成约 1 GB 的对应原生源码附件。新应用源码与复用依赖应作为一套材料提供。
+`--source-only` 本批只产出新应用源码 ZIP，仍核对本地资源和原生输入；依赖大文件应先按本说明准备。Release 清单同时列出上节四个复用附件的固定链接、大小与原 SHA-256，不重复生成约 1 GB 的基础原生源码附件。新应用源码、复用依赖及后续 Dawn/WebGPU 补充来源应作为一套材料提供；冻结的已发布源码 ZIP 不重打，补正以新附件和说明提供。
 
 每个新附件有 SHA-256/大小回执。应用源码 ZIP 使用经审阅的 `git ls-files`；复用的 runtime ZIP 按资源和 native 锁生成，native ZIP 按源档锁生成。它们都不会递归打包整个工作区。只有运行资源或原生源档锁发生变化时，才需要另行生成并校验相应新附件。
 

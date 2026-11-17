@@ -1,0 +1,42 @@
+[
+  {
+    "path": "jinja2/LICENSE.rst",
+    "url": "https://chromium.googlesource.com/chromium/src/third_party/jinja2/+/c3027d884967773057bf74b957e3fea87e5df4d7/LICENSE.rst?format=TEXT",
+    "gitBlob": "c37cae49ec77ad6ebb25568c1605f1fee5313cfb",
+    "sha256": "3b49dcee4105eb37bac10faf1be260408fe85d252b8e9df2e0979fc1e094437b",
+    "bytes": 1475,
+    "status": "verified"
+  },
+  {
+    "path": "jinja2/README.chromium",
+    "url": "https://chromium.googlesource.com/chromium/src/third_party/jinja2/+/c3027d884967773057bf74b957e3fea87e5df4d7/README.chromium?format=TEXT",
+    "gitBlob": "dad701467a21efa7a4d45737883d0a9a9437c9b8",
+    "sha256": "64d3168a98afa6b4dbb9213791022c126169dd248ed09e08b3a80b4c421d22a7",
+    "bytes": 897,
+    "status": "verified"
+  },
+  {
+    "path": "markupsafe/LICENSE",
+    "url": "https://chromium.googlesource.com/chromium/src/third_party/markupsafe/+/4256084ae14175d38a3ff7d739dca83ae49ccec6/LICENSE?format=TEXT",
+    "gitBlob": "5d2693890dddc34129973f5613afd88767213b24",
+    "sha256": "0bbe88228fd63d20ec097f64e58d5a0a465123ae139140a18d406c60b48824b5",
+    "bytes": 1582,
+    "status": "verified"
+  },
+  {
+    "path": "markupsafe/README.chromium",
+    "url": "https://chromium.googlesource.com/chromium/src/third_party/markupsafe/+/4256084ae14175d38a3ff7d739dca83ae49ccec6/README.chromium?format=TEXT",
+    "gitBlob": "f9f3d1fad5587c693c5d39aacf0951b6cee76400",
+    "sha256": "7146dafeafbfc822c602fc220ca6e056e7516730b54134949563dc3557a9226a",
+    "bytes": 1172,
+    "status": "verified"
+  },
+  {
+    "path": "dawn/third_party/renderdoc/LICENSE.md",
+    "url": "https://dawn.googlesource.com/dawn/+/ec7b457e5bb1fcec6f59733c4f3dd84d2f885a38/third_party/renderdoc/LICENSE.md?format=TEXT",
+    "gitBlob": "bf230fa7131091a775f42d8455681cff1f79ac27",
+    "sha256": "b921912e9e433291f6010631a0dd41cec76c4a877966ecc22ba86151b2e66718",
+    "bytes": 1205,
+    "status": "verified"
+  }
+]

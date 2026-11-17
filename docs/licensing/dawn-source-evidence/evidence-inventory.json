@@ -1,0 +1,203 @@
+{
+  "schemaVersion": 1,
+  "status": "metadata-only-not-source-archive-collection",
+  "capturedUtc": "2026-11-17T15:48:16+00:00",
+  "root": "metadata/",
+  "originalTextFiles": 23,
+  "originalTextBytes": 252077,
+  "records": [
+    {
+      "path": "dawn/DEPS",
+      "gitBlob": "d29d347246e8122a00cc3d375a2d4d8bbc2f3078",
+      "url": "https://github.com/google/dawn/blob/ec7b457e5bb1fcec6f59733c4f3dd84d2f885a38/DEPS",
+      "bytes": 30180,
+      "sha256": "89217876b7ecd114030356d09bba838fe34635ef17433debdf47eb149275f38e",
+      "actualGitBlob": "d29d347246e8122a00cc3d375a2d4d8bbc2f3078"
+    },
+    {
+      "path": "dawn/CMakeLists.txt",
+      "gitBlob": "10399f01b94029232a5bdea28a59cfb0a03bfe19",
+      "url": "https://github.com/google/dawn/blob/ec7b457e5bb1fcec6f59733c4f3dd84d2f885a38/CMakeLists.txt",
+      "bytes": 27409,
+      "sha256": "5898d883031c0ad5ecf3a217a181c26def123d27cb05597368d7c659cb41d842",
+      "actualGitBlob": "10399f01b94029232a5bdea28a59cfb0a03bfe19"
+    },
+    {
+      "path": "dawn/third_party/CMakeLists.txt",
+      "gitBlob": "f875c22bc9350e7238a67db05170b0c2b5f2c764",
+      "url": "https://github.com/google/dawn/blob/ec7b457e5bb1fcec6f59733c4f3dd84d2f885a38/third_party/CMakeLists.txt",
+      "bytes": 16831,
+      "sha256": "316f7da1a4ca75782faf5193edad8ee8b4d29e20954228aa7f9fe7663b7a22a6",
+      "actualGitBlob": "f875c22bc9350e7238a67db05170b0c2b5f2c764"
+    },
+    {
+      "path": "dawn/tools/fetch_dawn_dependencies.py",
+      "gitBlob": "74bc7ce4fd2eea12ed61c9c48f96cc4800018850",
+      "url": "https://github.com/google/dawn/blob/ec7b457e5bb1fcec6f59733c4f3dd84d2f885a38/tools/fetch_dawn_dependencies.py",
+      "bytes": 8414,
+      "sha256": "c5fdf3f7eb99e5b51a20c481a9ae8eaa752f55e8e9b8047c92e2b4880d913312",
+      "actualGitBlob": "74bc7ce4fd2eea12ed61c9c48f96cc4800018850"
+    },
+    {
+      "path": "dawn/src/dawn/native/CMakeLists.txt",
+      "gitBlob": "c96d5a24d98e540f9eddb6706c8217a5772931a3",
+      "url": "https://github.com/google/dawn/blob/ec7b457e5bb1fcec6f59733c4f3dd84d2f885a38/src/dawn/native/CMakeLists.txt",
+      "bytes": 34014,
+      "sha256": "aecc6300d043f8edf56ee4012ecb555ad7dce23e7585a4dbbc4938a4ea2cf5b1",
+      "actualGitBlob": "c96d5a24d98e540f9eddb6706c8217a5772931a3"
+    },
+    {
+      "path": "dawn/generator/CMakeLists.txt",
+      "gitBlob": "67febfea5a0f93d772baa4faee990210af3feb9a",
+      "url": "https://github.com/google/dawn/blob/ec7b457e5bb1fcec6f59733c4f3dd84d2f885a38/generator/CMakeLists.txt",
+      "bytes": 9362,
+      "sha256": "b702e86c5beace7a71e3b9a7f61db08c5b3d70e8f796af2ca099e66b8123acdf",
+      "actualGitBlob": "67febfea5a0f93d772baa4faee990210af3feb9a"
+    },
+    {
+      "path": "dawn/LICENSE",
+      "gitBlob": "5b716b6a05fd1d8b6191bea5723347ffdd13b74b",
+      "url": "https://github.com/google/dawn/blob/ec7b457e5bb1fcec6f59733c4f3dd84d2f885a38/LICENSE",
+      "bytes": 1561,
+      "sha256": "e2908f7576fb12be5bdb8480cddb0be62badb498cadb821d043aeaf01b0b0899",
+      "actualGitBlob": "5b716b6a05fd1d8b6191bea5723347ffdd13b74b"
+    },
+    {
+      "path": "spirv-headers/LICENSE",
+      "gitBlob": "a63e9c620ee123267192113ab0be3814782ba909",
+      "url": "https://github.com/KhronosGroup/SPIRV-Headers/blob/f31ca173eff866369e54d35e53375fadbabd58f4/LICENSE",
+      "bytes": 23503,
+      "sha256": "ea43b1de38a6f90c488800d66dec1ed671e68cda530266bc96951fb5b6307613",
+      "actualGitBlob": "a63e9c620ee123267192113ab0be3814782ba909"
+    },
+    {
+      "path": "spirv-tools/LICENSE",
+      "gitBlob": "d645695673349e3947e8e5ae42332d0ac3164cd7",
+      "url": "https://github.com/KhronosGroup/SPIRV-Tools/blob/cb38b2342beedde25bcff582dc3528a135cf6e67/LICENSE",
+      "bytes": 11358,
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "actualGitBlob": "d645695673349e3947e8e5ae42332d0ac3164cd7"
+    },
+    {
+      "path": "spirv-tools/external/CMakeLists.txt",
+      "gitBlob": "eb4e69e58c2fc5a9e30c0f5e3d860ab58fadda1a",
+      "url": "https://github.com/KhronosGroup/SPIRV-Tools/blob/cb38b2342beedde25bcff582dc3528a135cf6e67/external/CMakeLists.txt",
+      "bytes": 8173,
+      "sha256": "c5b11328d54ced5ad055f3060f89ababd9466ac20f5aab6c7d3cd9662230879a",
+      "actualGitBlob": "eb4e69e58c2fc5a9e30c0f5e3d860ab58fadda1a"
+    },
+    {
+      "path": "vulkan-headers/LICENSE.md",
+      "gitBlob": "d6a0648b652ade1defb1eb481643d2f8d14828b5",
+      "url": "https://github.com/KhronosGroup/Vulkan-Headers/blob/49f1a381e2aec33ef32adf4a377b5a39ec016ec4/LICENSE.md",
+      "bytes": 458,
+      "sha256": "ac24e5ea920e4318e4d02c4086ae51f53cfb03feed06c18df1019e7ada1ec7bc",
+      "actualGitBlob": "d6a0648b652ade1defb1eb481643d2f8d14828b5"
+    },
+    {
+      "path": "vulkan-utility-libraries/LICENSE.md",
+      "gitBlob": "9c0c5d000ba2720b6594a4fc58dc940dd60a57c1",
+      "url": "https://github.com/KhronosGroup/Vulkan-Utility-Libraries/blob/50af38b6cd43afb1462f9ad26b8d015382d11a3d/LICENSE.md",
+      "bytes": 304,
+      "sha256": "69760673abf91cfd0280ae73739a29c078f493804d9016a122b3b189b48ad6e6",
+      "actualGitBlob": "9c0c5d000ba2720b6594a4fc58dc940dd60a57c1"
+    },
+    {
+      "path": "vulkan-utility-libraries/CMakeLists.txt",
+      "gitBlob": "9efd3094c950659a3fecc2a10d5f6feffad590cf",
+      "url": "https://github.com/KhronosGroup/Vulkan-Utility-Libraries/blob/50af38b6cd43afb1462f9ad26b8d015382d11a3d/CMakeLists.txt",
+      "bytes": 4127,
+      "sha256": "f3b252667423063e2401bda57d659e74df0f739bb62fef13780983bf163b7e31",
+      "actualGitBlob": "9efd3094c950659a3fecc2a10d5f6feffad590cf"
+    },
+    {
+      "path": "jinja2/LICENSE.rst",
+      "url": "https://chromium.googlesource.com/chromium/src/third_party/jinja2/+/c3027d884967773057bf74b957e3fea87e5df4d7/LICENSE.rst?format=TEXT",
+      "gitBlob": "c37cae49ec77ad6ebb25568c1605f1fee5313cfb",
+      "sha256": "3b49dcee4105eb37bac10faf1be260408fe85d252b8e9df2e0979fc1e094437b",
+      "bytes": 1475,
+      "status": "verified",
+      "actualGitBlob": "c37cae49ec77ad6ebb25568c1605f1fee5313cfb"
+    },
+    {
+      "path": "jinja2/README.chromium",
+      "url": "https://chromium.googlesource.com/chromium/src/third_party/jinja2/+/c3027d884967773057bf74b957e3fea87e5df4d7/README.chromium?format=TEXT",
+      "gitBlob": "dad701467a21efa7a4d45737883d0a9a9437c9b8",
+      "sha256": "64d3168a98afa6b4dbb9213791022c126169dd248ed09e08b3a80b4c421d22a7",
+      "bytes": 897,
+      "status": "verified",
+      "actualGitBlob": "dad701467a21efa7a4d45737883d0a9a9437c9b8"
+    },
+    {
+      "path": "markupsafe/LICENSE",
+      "url": "https://chromium.googlesource.com/chromium/src/third_party/markupsafe/+/4256084ae14175d38a3ff7d739dca83ae49ccec6/LICENSE?format=TEXT",
+      "gitBlob": "5d2693890dddc34129973f5613afd88767213b24",
+      "sha256": "0bbe88228fd63d20ec097f64e58d5a0a465123ae139140a18d406c60b48824b5",
+      "bytes": 1582,
+      "status": "verified",
+      "actualGitBlob": "5d2693890dddc34129973f5613afd88767213b24"
+    },
+    {
+      "path": "markupsafe/README.chromium",
+      "url": "https://chromium.googlesource.com/chromium/src/third_party/markupsafe/+/4256084ae14175d38a3ff7d739dca83ae49ccec6/README.chromium?format=TEXT",
+      "gitBlob": "f9f3d1fad5587c693c5d39aacf0951b6cee76400",
+      "sha256": "7146dafeafbfc822c602fc220ca6e056e7516730b54134949563dc3557a9226a",
+      "bytes": 1172,
+      "status": "verified",
+      "actualGitBlob": "f9f3d1fad5587c693c5d39aacf0951b6cee76400"
+    },
+    {
+      "path": "dawn/third_party/renderdoc/LICENSE.md",
+      "url": "https://dawn.googlesource.com/dawn/+/ec7b457e5bb1fcec6f59733c4f3dd84d2f885a38/third_party/renderdoc/LICENSE.md?format=TEXT",
+      "gitBlob": "bf230fa7131091a775f42d8455681cff1f79ac27",
+      "sha256": "b921912e9e433291f6010631a0dd41cec76c4a877966ecc22ba86151b2e66718",
+      "bytes": 1205,
+      "status": "verified",
+      "actualGitBlob": "bf230fa7131091a775f42d8455681cff1f79ac27"
+    },
+    {
+      "path": "vulkan-headers/LICENSES/Apache-2.0.txt",
+      "gitBlob": "d645695673349e3947e8e5ae42332d0ac3164cd7",
+      "url": "https://github.com/KhronosGroup/Vulkan-Headers/blob/49f1a381e2aec33ef32adf4a377b5a39ec016ec4/LICENSES/Apache-2.0.txt",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358,
+      "actualGitBlob": "d645695673349e3947e8e5ae42332d0ac3164cd7"
+    },
+    {
+      "path": "vulkan-headers/LICENSES/MIT.txt",
+      "gitBlob": "8495fe9e901b430947d54980af7c77c0bb8a6221",
+      "url": "https://github.com/KhronosGroup/Vulkan-Headers/blob/49f1a381e2aec33ef32adf4a377b5a39ec016ec4/LICENSES/MIT.txt",
+      "sha256": "1ca3502222d967f3be5751c55f6b7ee735b5383909c3b501495f54b216dbf227",
+      "bytes": 1084,
+      "actualGitBlob": "8495fe9e901b430947d54980af7c77c0bb8a6221"
+    },
+    {
+      "path": "vulkan-utility-libraries/LICENSES/Apache-2.0.txt",
+      "gitBlob": "d645695673349e3947e8e5ae42332d0ac3164cd7",
+      "url": "https://github.com/KhronosGroup/Vulkan-Utility-Libraries/blob/50af38b6cd43afb1462f9ad26b8d015382d11a3d/LICENSES/Apache-2.0.txt",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "bytes": 11358,
+      "actualGitBlob": "d645695673349e3947e8e5ae42332d0ac3164cd7"
+    },
+    {
+      "path": "ort/cmake/deps.txt",
+      "url": "https://github.com/microsoft/onnxruntime/blob/da9b5e364c465de65c49d91e696cd6485270757f/cmake/deps.txt",
+      "sourceArchive": "onnxruntime-da9b5e364c465de65c49d91e696cd6485270757f.tar.gz",
+      "sourceArchiveSha256": "bf6f1db69e3bc7d075f97d1bd7271ce7b062b9ba33d8a3ffb82638ad57331f9f",
+      "verification": "Matched exact member bytes from the SHA-256 verified fixed source archive.",
+      "sha256": "894bd3f342b9fa570301f1a62830751e50657ec98a22b210d176b7dbb354ccc2",
+      "bytes": 7279,
+      "actualGitBlob": "d6a5b71221dc8eff011b6d56205aa0ec591a711a"
+    },
+    {
+      "path": "ort/cmake/external/onnxruntime_external_deps.cmake",
+      "url": "https://github.com/microsoft/onnxruntime/blob/da9b5e364c465de65c49d91e696cd6485270757f/cmake/external/onnxruntime_external_deps.cmake",
+      "sourceArchive": "onnxruntime-da9b5e364c465de65c49d91e696cd6485270757f.tar.gz",
+      "sourceArchiveSha256": "bf6f1db69e3bc7d075f97d1bd7271ce7b062b9ba33d8a3ffb82638ad57331f9f",
+      "verification": "Matched exact member bytes from the SHA-256 verified fixed source archive.",
+      "sha256": "317a82dfa35c3b74abb9163047d3962dd32a53514029de6949bf56484ae614d8",
+      "bytes": 38973,
+      "actualGitBlob": "9edea3042dbfbef0e957dfe0ac0c33d4ec8335f3"
+    }
+  ]
+}
