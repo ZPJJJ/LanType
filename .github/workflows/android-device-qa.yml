@@ -1,27 +1,28 @@
 name: LanType signed APK device QA
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/android-device-qa.yml'
-      - 'tools/lantype-device-qa/**'
   workflow_dispatch:
     inputs:
       mode:
         description: Scope of signed APK device QA
         required: true
         type: choice
-        default: upgrade
+        default: fresh-candidate
         options:
-          - upgrade
+          - fresh-candidate
+          - replace-uninitialized
+          - legacy-upgrade
           - candidate-startup
+      candidate_lock:
+        description: Committed repository JSON path; required for fresh-candidate or replace-uninitialized
+        required: false
+        type: string
 
 permissions:
   contents: read
 
 concurrency:
-  group: lantype-device-qa-${{ github.ref }}
+  group: lantype-device-qa
   cancel-in-progress: false
 
 jobs:
@@ -33,7 +34,9 @@ jobs:
         shell: bash
     env:
       ANDROID_SERIAL: emulator-5554
-      QA_MODE: ${{ inputs.mode || 'upgrade' }}
+      QA_MODE: ${{ inputs.mode }}
+      CANDIDATE_LOCK_INPUT: ${{ inputs.candidate_lock }}
+      PYTHONDONTWRITEBYTECODE: '1'
       # API 30's observed ARM-translation startup crash remains separate evidence.
       # API 35 is a comparison target; the actual ARM ABI/bridge gates still apply.
       QA_API_LEVEL: '35'
@@ -41,30 +44,95 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
-      - name: Prepare small evidence directory
+      - name: Validate the explicit lock and reserve bounded product QA storage
         run: |
-          export QA_ROOT="$RUNNER_TEMP/lantype-device-qa"
+          set -euo pipefail
+          # Reuse only the fresh-job environment slot, never an ORT API result.
+          # These paths must be exported in a run step: runner.temp is not valid
+          # in a job-level env expression.
+          export QA_ROOT="$RUNNER_TEMP/lantype-ort-api-work"
+          export QA_VOLUME="$RUNNER_TEMP/lantype-ort-api-volume.img"
+          export QA_RECEIPTS="$RUNNER_TEMP/lantype-ort-api-receipts"
           export ANDROID_AVD_HOME="$QA_ROOT/avd"
-          printf 'QA_ROOT=%s\nANDROID_AVD_HOME=%s\n' "$QA_ROOT" "$ANDROID_AVD_HOME" >> "$GITHUB_ENV"
-          mkdir -p "$QA_ROOT/evidence" "$QA_ROOT/apks" "$QA_ROOT/host" "$ANDROID_AVD_HOME"
+          export ORT_QA_HOST_SDK="$ANDROID_HOME"
+          printf 'QA_ROOT=%s\nQA_VOLUME=%s\nQA_RECEIPTS=%s\nANDROID_AVD_HOME=%s\nORT_QA_HOST_SDK=%s\n' \
+            "$QA_ROOT" "$QA_VOLUME" "$QA_RECEIPTS" "$ANDROID_AVD_HOME" "$ORT_QA_HOST_SDK" >> "$GITHUB_ENV"
+          test ! -e "$QA_ROOT"
+          test ! -e "$QA_VOLUME"
+          mkdir -p "$QA_RECEIPTS"
+          python3 scripts/storage_guard.py > "$QA_RECEIPTS/storage-preflight.txt"
+          test -x "$JAVA_HOME_21_X64/bin/javac"
+          export JAVA_HOME="$JAVA_HOME_21_X64"
+          printf 'JAVA_HOME=%s\n' "$JAVA_HOME" >> "$GITHUB_ENV"
           python3 - <<'PY'
-          import json, os, shutil
-          from pathlib import Path
+          import json, os, re, runpy, shutil, subprocess
+          from pathlib import Path, PurePosixPath
           root = Path(os.environ['QA_ROOT'])
-          free = shutil.disk_usage(root).free
-          (root / 'evidence' / 'disk-preflight.json').write_text(json.dumps({
+          receipts = Path(os.environ['QA_RECEIPTS'])
+          repo = Path(os.environ['GITHUB_WORKSPACE']).resolve()
+          mode = os.environ['QA_MODE']
+          if mode not in {'fresh-candidate', 'replace-uninitialized', 'legacy-upgrade', 'candidate-startup'}:
+              raise SystemExit('Unsupported explicit QA mode')
+          value = os.environ.get('CANDIDATE_LOCK_INPUT', '')
+          if mode in {'fresh-candidate', 'replace-uninitialized'}:
+              if not value:
+                  raise SystemExit('candidate_lock is required for this mode; no default or latest candidate is selected')
+              relative = PurePosixPath(value)
+              if (not re.fullmatch(r'[A-Za-z0-9_./-]+\.json', value) or relative.is_absolute()
+                      or '..' in relative.parts or str(relative) != value):
+                  raise SystemExit('candidate_lock must be a normalized relative repository JSON path')
+              lock_path = repo.joinpath(*relative.parts)
+              if not lock_path.is_file() or lock_path.resolve() != lock_path or not lock_path.resolve().is_relative_to(repo):
+                  raise SystemExit('candidate_lock must name an existing repository file without symlink traversal')
+              tracked = subprocess.run(['git', 'ls-files', '--error-unmatch', '--', value], cwd=repo,
+                                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+              if tracked.returncode:
+                  raise SystemExit('candidate_lock must already be committed in the checked-out repository')
+              helper = runpy.run_path(str(repo / 'tools/lantype-device-qa/fetch-release-apks.py'))
+              lock = helper['load_candidate_lock'](lock_path)
+              shutil.copyfile(lock_path, receipts / 'candidate-lock.json')
+              (receipts / 'candidate-input.json').write_text(json.dumps({
+                  'mode': mode, 'repositoryPath': value, 'candidateLockSha256': helper['file_sha256'](lock_path),
+                  'sourceCommit': os.environ['GITHUB_SHA'], 'candidateFileName': lock['fileName']
+              }, indent=2) + '\n')
+              with open(os.environ['GITHUB_ENV'], 'a') as environment:
+                  environment.write('QA_CANDIDATE_LOCK=' + str(lock_path) + '\n')
+                  environment.write('QA_CANDIDATE_APK=' + str(root / 'apks' / lock['fileName']) + '\n')
+          elif value:
+              raise SystemExit('Historical legacy/startup modes use their fixed APKs; omit candidate_lock')
+          free = shutil.disk_usage(receipts).free
+          (receipts / 'disk-preflight.json').write_text(json.dumps({
               'freeBytes': free, 'requiredFreeBytes': 8 * 1024**3,
-              'scope': 'Reserve room for the official image download/unpack, APKs and fresh guest before starting.'
+              'workVolumeCapacityBytes': 4608 * 1024**2, 'outsideCheckpointLimitBytes': 512 * 1024**2,
+              'wholeTaskHardQuota': False,
+              'scope': 'Host free-space precondition plus bounded work volume and measured outside-volume checkpoints.'
           }, indent=2) + '\n')
           if free < 8 * 1024**3:
               raise SystemExit('Insufficient free disk for this device QA run')
           PY
-      - name: Download and verify fixed public release APKs without credentials
+          fallocate -l 4608M "$QA_VOLUME"
+          mkfs.ext4 -q -F -m 0 "$QA_VOLUME"
+          mkdir "$QA_ROOT"
+          sudo mount -o loop,nodev,nosuid "$QA_VOLUME" "$QA_ROOT"
+          sudo chown "$(id -u):$(id -g)" "$QA_ROOT"
+          mkdir -p "$QA_ROOT"/{evidence,apks,host,tmp,cache,android-user,avd,sdk}
+          fallocate -l 8M "$QA_ROOT/evidence-reserve.bin"
+          printf 'ANDROID_HOME=%s\nANDROID_SDK_ROOT=%s\nTMPDIR=%s\nTMP=%s\nTEMP=%s\nXDG_CACHE_HOME=%s\nANDROID_USER_HOME=%s\nANDROID_EMULATOR_HOME=%s\nJAVA_TOOL_OPTIONS=-Djava.io.tmpdir=%s\n' \
+            "$QA_ROOT/sdk" "$QA_ROOT/sdk" "$QA_ROOT/tmp" "$QA_ROOT/tmp" "$QA_ROOT/tmp" \
+            "$QA_ROOT/cache" "$QA_ROOT/android-user" "$QA_ROOT/android-user" "$QA_ROOT/tmp" >> "$GITHUB_ENV"
+          python3 scripts/run-product-qa-env.py --stage budget --label product-initialized
+      - name: Download the explicit locked or historical fixed APK inputs without credentials
         timeout-minutes: 6
-        run: >-
-          python3 tools/lantype-device-qa/fetch-release-apks.py
-          --output "$QA_ROOT/apks"
-          --receipt "$QA_ROOT/evidence/release-apks.json"
+        run: |
+          fetch_mode="$QA_MODE"
+          # The historical startup driver remains bound to unchanged 1.1.1.
+          if [[ "$fetch_mode" == candidate-startup ]]; then fetch_mode=legacy-upgrade; fi
+          args=(--mode "$fetch_mode" --output "$QA_ROOT/apks" --receipt "$QA_ROOT/evidence/release-apks.json")
+          if [[ "$QA_MODE" == fresh-candidate || "$QA_MODE" == replace-uninitialized ]]; then
+            args+=(--candidate-lock "$QA_CANDIDATE_LOCK")
+          fi
+          python3 scripts/run-product-qa-env.py --stage execute --label download-apks --timeout 330 -- \
+            python3 tools/lantype-device-qa/fetch-release-apks.py "${args[@]}"
       - name: Require KVM on this hosted runner
         run: |
           set -x
@@ -83,140 +151,88 @@ jobs:
           test -r /dev/kvm
           test -w /dev/kvm
           lscpu > "$QA_ROOT/evidence/runner-cpu.txt"
-      - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
-        with:
-          distribution: temurin
-          java-version: '21'
-      - uses: android-actions/setup-android@be39fa834029ff78f1a44aa3bb0819b8fc2bd8fd # v4
-      - name: Install the emulator host loader dependency
-        timeout-minutes: 3
-        # Even with -no-audio, the official emulator links libpulse.so.0.
-        # This is a build-runner library; it adds no permission to the app.
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y --no-install-recommends libpulse0
-          dpkg-query -W libpulse0 > "$QA_ROOT/evidence/emulator-host-libs.txt"
-      - name: Install official SDK emulator and comparison Google APIs image
-        timeout-minutes: 8
-        run: |
-          sdkmanager 'platform-tools' 'emulator' "system-images;android-${QA_API_LEVEL};google_apis;x86_64" 'platforms;android-36' 'build-tools;36.0.0'
-          "$ANDROID_HOME/emulator/emulator" -version > "$QA_ROOT/evidence/emulator-version.txt" 2>&1
-          "$ANDROID_HOME/emulator/emulator" -accel-check 2>&1 | tee "$QA_ROOT/evidence/accel-check.txt"
-          cp "$ANDROID_HOME/system-images/android-${QA_API_LEVEL}/google_apis/x86_64/source.properties" "$QA_ROOT/evidence/system-image.txt"
+      - name: Reuse installed SDK tools and prepare only missing tools inside the work volume
+        timeout-minutes: 10
+        # Shared preparation uses installed JDK/SDK inputs, a small SDK overlay,
+        # and volume-local loader download/extraction; no global apt install.
+        run: python3 scripts/run-product-qa-env.py --stage tools
       - name: Build the disposable native editor host without Gradle
         timeout-minutes: 3
         run: >-
+          python3 scripts/run-product-qa-env.py --stage execute --label build-editor-host --timeout 150 --
           python3 tools/lantype-device-qa/build-editor-host.py
-          --sdk "$ANDROID_HOME" --jdk "$JAVA_HOME" --output "$QA_ROOT/host"
-          > "$QA_ROOT/evidence/host-build.txt" 2>&1
+          --sdk "$QA_ROOT/sdk" --jdk "$JAVA_HOME" --output "$QA_ROOT/host"
+      - name: Prepare the official API 35 image and one fresh AVD inside the work volume
+        timeout-minutes: 12
+        run: python3 scripts/run-product-qa-env.py --stage image
       - name: Start a fresh accelerated guest and require an unlocked Android user
-        timeout-minutes: 8
-        run: |
-          printf 'no\n' | avdmanager create avd --force --name "lantype-api${QA_API_LEVEL}" --package "system-images;android-${QA_API_LEVEL};google_apis;x86_64" --device pixel_2
-          "$ANDROID_HOME/emulator/emulator" -avd "lantype-api${QA_API_LEVEL}" -port 5554 \
-            -accel on -cores 4 -memory 3072 -gpu swiftshader \
-            -no-window -no-audio -no-boot-anim -no-snapshot -wipe-data \
-            > "$QA_ROOT/evidence/emulator.log" 2>&1 &
-          echo "$!" > "$QA_ROOT/emulator.pid"
-          timeout 120 adb -s "$ANDROID_SERIAL" wait-for-device
-          deadline=$((SECONDS + 300))
-          ready=false
-          while (( SECONDS < deadline )); do
-            kill -0 "$(cat "$QA_ROOT/emulator.pid")"
-            boot=$(timeout 10 adb -s "$ANDROID_SERIAL" shell getprop sys.boot_completed 2>/dev/null | tr -d '\r' || true)
-            timeout 10 adb -s "$ANDROID_SERIAL" shell dumpsys user > "$QA_ROOT/evidence/boot-users.txt" 2>&1 || true
-            if [[ "$boot" == 1 ]] && grep -q 'RUNNING_UNLOCKED' "$QA_ROOT/evidence/boot-users.txt"; then
-              ready=true
-              break
-            fi
-            sleep 3
-          done
-          "$ready" || { echo 'Android framework did not reach boot-complete and RUNNING_UNLOCKED'; exit 1; }
-          adb -s "$ANDROID_SERIAL" shell getprop > "$QA_ROOT/evidence/guest-properties.txt"
-          abis=$(adb -s "$ANDROID_SERIAL" shell getprop ro.product.cpu.abilist | tr -d '\r')
-          bridge=$(adb -s "$ANDROID_SERIAL" shell getprop ro.dalvik.vm.native.bridge | tr -d '\r')
-          [[ ",$abis," == *,arm64-v8a,* ]]
-          [[ -n "$bridge" && "$bridge" != 0 ]]
-          adb -s "$ANDROID_SERIAL" logcat -d -b all -t 5000 > "$QA_ROOT/evidence/pre-product-logcat.txt"
-          if grep -Eq 'WATCHDOG KILLING SYSTEM PROCESS|FATAL EXCEPTION IN SYSTEM PROCESS' "$QA_ROOT/evidence/pre-product-logcat.txt"; then
-            echo 'Android framework failed before product installation'
-            exit 1
-          fi
+        timeout-minutes: 9
+        run: python3 scripts/run-product-qa-env.py --stage boot
       - name: Check only the signed candidate installation and first startup
         if: ${{ env.QA_MODE == 'candidate-startup' }}
         timeout-minutes: 8
         # This separate mode does not install the old APK or claim an upgrade,
         # input, onboarding completion, or clipboard-privacy result.
         run: |
-          python3 -u tools/lantype-device-qa/run-candidate-startup.py \
+          python3 scripts/run-product-qa-env.py --stage execute --label historical-startup --timeout 450 -- \
+            python3 -u tools/lantype-device-qa/run-candidate-startup.py \
             --candidate-apk "$QA_ROOT/apks/LanType-1.1.1-offline-arm64-v8a.apk" \
             --host-apk "$QA_ROOT/host/lantype-editor-host.apk" \
             --startup-timeout 120 \
-            --output "$QA_ROOT/evidence/candidate-startup" \
-            2>&1 | tee "$QA_ROOT/evidence/candidate-startup-console.txt"
-      - name: Smoke test the real signed APKs and direct upgrade
-        if: ${{ env.QA_MODE == 'upgrade' }}
+            --output "$QA_ROOT/evidence/candidate-startup"
+      - name: Run the selected signed product functional checks
+        id: core_smoke
+        if: ${{ env.QA_MODE != 'candidate-startup' }}
         timeout-minutes: 15
         # The driver must disable guest networking BEFORE its first product launch.
         # ARM translation is functional evidence, not physical ARM/16 KiB validation.
         run: |
-          python3 -u tools/lantype-device-qa/run-device-smoke.py \
-            --old-apk "$QA_ROOT/apks/LanType-1.1.0-offline-arm64-v8a.apk" \
-            --new-apk "$QA_ROOT/apks/LanType-1.1.1-offline-arm64-v8a.apk" \
-            --host-apk "$QA_ROOT/host/lantype-editor-host.apk" \
-            --output "$QA_ROOT/evidence/smoke" \
-            2>&1 | tee "$QA_ROOT/evidence/smoke-console.txt"
+          args=(--mode "$QA_MODE" --host-apk "$QA_ROOT/host/lantype-editor-host.apk" --output "$QA_ROOT/evidence/smoke")
+          case "$QA_MODE" in
+            fresh-candidate)
+              args+=(--candidate-lock "$QA_CANDIDATE_LOCK" --new-apk "$QA_CANDIDATE_APK")
+              ;;
+            replace-uninitialized)
+              args+=(--candidate-lock "$QA_CANDIDATE_LOCK" --new-apk "$QA_CANDIDATE_APK"
+                     --old-apk "$QA_ROOT/apks/LanType-1.1.1-offline-arm64-v8a.apk")
+              ;;
+            legacy-upgrade)
+              args+=(--old-apk "$QA_ROOT/apks/LanType-1.1.0-offline-arm64-v8a.apk"
+                     --new-apk "$QA_ROOT/apks/LanType-1.1.1-offline-arm64-v8a.apk")
+              ;;
+            *) echo 'Unsupported functional QA mode'; exit 1 ;;
+          esac
+          python3 scripts/run-product-qa-env.py --stage execute --label product-core --timeout 840 -- \
+            python3 -u tools/lantype-device-qa/run-device-smoke.py "${args[@]}"
       - name: Verify private clipboard copies across a real product process restart
-        if: ${{ env.QA_MODE == 'upgrade' }}
+        if: ${{ success() && env.QA_MODE != 'candidate-startup' && steps.core_smoke.outcome == 'success' }}
         timeout-minutes: 5
         # Separate evidence: a core pass does not imply clipboard-extension pass.
         run: |
-          python3 -u tools/lantype-device-qa/run-clipboard-smoke.py \
+          python3 scripts/run-product-qa-env.py --stage execute --label product-clipboard --timeout 285 -- \
+            python3 -u tools/lantype-device-qa/run-clipboard-smoke.py \
             --core-report "$QA_ROOT/evidence/smoke/result.json" \
-            --output "$QA_ROOT/evidence/clipboard" \
-            2>&1 | tee "$QA_ROOT/evidence/clipboard-console.txt"
+            --output "$QA_ROOT/evidence/clipboard"
       - name: Preserve final guest diagnostics and stop only this emulator
         if: always()
-        timeout-minutes: 2
-        run: |
-          mkdir -p "$QA_ROOT/evidence"
-          if [[ -f "$QA_ROOT/emulator.pid" ]]; then
-            timeout 15 adb -s "$ANDROID_SERIAL" logcat -d -b all -t 5000 > "$QA_ROOT/evidence/final-logcat.txt" 2>&1 || true
-            timeout 10 adb -s "$ANDROID_SERIAL" shell dumpsys user > "$QA_ROOT/evidence/final-users.txt" 2>&1 || true
-            # Native-bridge crashes may have only anonymous frames in logcat.
-            # Keep the shell-visible tombstone/exit records before guest teardown.
-            timeout 10 adb -s "$ANDROID_SERIAL" shell dumpsys dropbox --print data_app_native_crash > "$QA_ROOT/evidence/native-app-dropbox.txt" 2>&1 || true
-            timeout 10 adb -s "$ANDROID_SERIAL" shell dumpsys dropbox --print SYSTEM_TOMBSTONE > "$QA_ROOT/evidence/native-system-tombstones.txt" 2>&1 || true
-            timeout 10 adb -s "$ANDROID_SERIAL" shell dumpsys activity exit-info app.lantype.keyboard > "$QA_ROOT/evidence/product-exit-info.txt" 2>&1 || true
-            timeout 15 adb -s "$ANDROID_SERIAL" emu kill > "$QA_ROOT/evidence/emulator-stop.txt" 2>&1 || true
-            pid=$(cat "$QA_ROOT/emulator.pid")
-            if kill -0 "$pid" 2>/dev/null; then kill "$pid" || true; fi
-          fi
-          python3 - <<'PY'
-          import os
-          from pathlib import Path
-          evidence = Path(os.environ['QA_ROOT']) / 'evidence'
-          limit = 2 * 1024 * 1024
-          for path in evidence.rglob('*'):
-              if path.is_file() and path.suffix in {'.txt', '.log'} and path.stat().st_size > limit:
-                  original_size = path.stat().st_size
-                  with path.open('rb') as stream:
-                      stream.seek(-limit, 2)
-                      tail = stream.read()
-                  notice = f'[CI retained the last {limit} bytes of a {original_size}-byte log.]\n'
-                  path.write_bytes(notice.encode() + tail)
-          PY
-      - name: Retain only small QA evidence for seven days
+        timeout-minutes: 3
+        run: python3 scripts/run-product-qa-env.py --stage collect
+      - name: Record the final outside-volume storage checkpoint
+        if: always()
+        run: python3 scripts/run-product-qa-env.py --stage budget --label before-product-evidence-upload
+      - name: Retain product QA evidence for seven days
+        id: evidence
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
-          name: lantype-signed-apk-device-qa-${{ github.run_id }}-${{ github.run_attempt }}
+          name: lantype-signed-apk-device-qa-${{ inputs.mode }}-${{ github.run_id }}-${{ github.run_attempt }}
           retention-days: 7
           if-no-files-found: warn
           path: |
-            ${{ runner.temp }}/lantype-device-qa/evidence/**/*.json
-            ${{ runner.temp }}/lantype-device-qa/evidence/**/*.jsonl
-            ${{ runner.temp }}/lantype-device-qa/evidence/**/*.xml
-            ${{ runner.temp }}/lantype-device-qa/evidence/**/*.png
-            ${{ runner.temp }}/lantype-device-qa/evidence/**/*.txt
-            ${{ runner.temp }}/lantype-device-qa/evidence/**/*.log
+            ${{ env.QA_ROOT }}/evidence/
+            ${{ env.QA_RECEIPTS }}/
+      - name: Release the owned volume only after successful evidence upload
+        if: ${{ always() && steps.evidence.outcome == 'success' }}
+        run: |
+          if mountpoint -q "$QA_ROOT"; then sudo umount "$QA_ROOT"; fi
+          if [[ -f "$QA_VOLUME" ]] && ! mountpoint -q "$QA_ROOT"; then rm -- "$QA_VOLUME"; fi

@@ -1,15 +1,19 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: GPL-3.0-or-later
-"""Exercise unchanged release APKs on one explicitly selected disposable Android.
+"""Exercise fixed releases or a locked signed candidate on disposable Android.
 
 Only standard adb commands are used. Every touch is derived from a newly dumped
 UI hierarchy; missing/ambiguous accessibility nodes are evidence, not permission
 to guess a coordinate. This script does not clear app data or seed private files.
+The legacy upgrade remains the default. Candidate modes separately cover a fresh
+install with same-candidate data retention, or replacement of uninitialized 1.1.1;
+neither mode claims migration of initialized old-version user data.
 """
 from __future__ import annotations
 
 import argparse
 import hashlib
+import importlib.util
 import json
 import os
 from pathlib import Path
@@ -30,6 +34,10 @@ SAVED = (
 )
 WIZARD_TITLE = "澜语 · 中文 / English (US)"
 BOUNDS = re.compile(r"^\[(\d+),(\d+)\]\[(\d+),(\d+)\]$")
+RELEASE_SPEC = importlib.util.spec_from_file_location(
+    "lantype_release_inputs", Path(__file__).with_name("fetch-release-apks.py"))
+RELEASES = importlib.util.module_from_spec(RELEASE_SPEC)
+RELEASE_SPEC.loader.exec_module(RELEASES)
 
 
 class SmokeFailure(RuntimeError):
@@ -38,6 +46,17 @@ class SmokeFailure(RuntimeError):
 
 def utc() -> str:
     return datetime.now(timezone.utc).isoformat()
+
+
+def require_release_certificate(signature: str) -> str:
+    """Accept one original release signer using the observed SDK 36/37 labels."""
+    counts = re.findall(r"^Number of signers: (\d+)\s*$", signature, re.M)
+    lines = [line.strip() for line in signature.splitlines() if "certificate SHA-256 digest:" in line]
+    match = re.fullmatch(r"(?:Signer #1|V3\.0 Signer:) certificate SHA-256 digest: ([0-9a-fA-F]{64})",
+                         lines[0]) if len(lines) == 1 else None
+    if counts != ["1"] or match is None or match[1].lower() != RELEASES.CERT_SHA256:
+        raise SmokeFailure("APK signer does not match the established single LanType release certificate")
+    return match[1].lower()
 
 
 def slug(value: str) -> str:
@@ -143,6 +162,16 @@ def qwerty_key(root: ET.Element, package: str, letter: str) -> ET.Element:
 class Smoke:
     def __init__(self, args):
         self.args = args
+        self.mode = getattr(args, "mode", "legacy-upgrade")
+        self.candidate_lock = None
+        if self.mode != "legacy-upgrade":
+            lock_path = getattr(args, "candidate_lock", None)
+            if lock_path is None:
+                raise SmokeFailure("--candidate-lock is required; no latest APK is selected")
+            try:
+                self.candidate_lock = RELEASES.load_candidate_lock(lock_path)
+            except RELEASES.DownloadError as error:
+                raise SmokeFailure(str(error)) from error
         self.output = args.output.resolve()
         self.output.mkdir(parents=True, exist_ok=True)
         if (self.output / "result.json").exists():
@@ -175,6 +204,16 @@ class Smoke:
                 "Tool-cabin private copy/cut, clipboard history and process-restart privacy (not run by this core smoke)",
             ],
         }
+        if self.mode != "legacy-upgrade":
+            self.report.update(mode=self.mode,
+                scope=("Fresh signed candidate functionality followed by same-candidate reinstall and retention of data created by that candidate."
+                       if self.mode == "fresh-candidate" else
+                       "Replace fixed installed 1.1.1 without launching or initializing it, then initialize and exercise the signed candidate."),
+                candidate_lock={"path": str(args.candidate_lock.resolve()),
+                                "sha256": RELEASES.file_sha256(args.candidate_lock), "identity": self.candidate_lock},
+                old_user_data_migration_tested=False,
+                same_candidate_data_retention_tested=False)
+            self.report["not_covered"].append("Migration of initialized old-version user data; no old user fixture is created in these modes")
         self.save()
 
     def save(self):
@@ -343,6 +382,23 @@ class Smoke:
             result["ime"] = ime_from_manifest(tree, info[1])
         return result
 
+    def verify_release_apk(self, info, expected, role):
+        pairs = {"package": "package", "version_code": "versionCode", "version_name": "versionName",
+                 "sha256": "sha256", "bytes": "size"}
+        if any(info[key] != expected[field] for key, field in pairs.items()):
+            raise SmokeFailure(role + " APK differs from its fixed signed identity")
+        if Path(info["path"]).name != expected.get("fileName", expected.get("name")):
+            raise SmokeFailure(role + " APK filename differs from its fixed identity")
+        signer = shutil.which("apksigner") or str(Path(self.aapt).with_name("apksigner"))
+        signature = self.command([signer, "verify", "--verbose", "--print-certs", info["path"]])
+        evidence = role + "-signature.txt"
+        (self.output / evidence).write_text(signature)
+        certificate = require_release_certificate(signature)
+        if certificate != expected["certificateSha256"]:
+            raise SmokeFailure(role + " certificate differs from the explicit lock")
+        info.update(certificate_sha256=certificate, signature_evidence=evidence)
+        return info
+
     def environment(self):
         devices = self.command([self.adb_path, "devices", "-l"])
         ready = [line.split()[0] for line in devices.splitlines()[1:]
@@ -368,14 +424,28 @@ class Smoke:
         if not user_zero or "RUNNING_UNLOCKED" not in user_zero[0]:
             raise SmokeFailure("Android user 0 has not reached RUNNING_UNLOCKED")
         self.device_authorized = True
-        old, new, host = self.apk(self.args.old_apk, ime=True), self.apk(self.args.new_apk, ime=True), self.apk(self.args.host_apk)
-        if old["package"] != new["package"] or old["ime"] != new["ime"] or new["version_code"] <= old["version_code"]:
-            raise SmokeFailure("APK pair must have the same package/IME and an increasing versionCode")
-        if host["package"] != "app.lantype.testhost" or host["package"] == old["package"]:
+        if self.mode == "legacy-upgrade":
+            old, new, host = self.apk(self.args.old_apk, ime=True), self.apk(self.args.new_apk, ime=True), self.apk(self.args.host_apk)
+            if old["package"] != new["package"] or old["ime"] != new["ime"] or new["version_code"] <= old["version_code"]:
+                raise SmokeFailure("APK pair must have the same package/IME and an increasing versionCode")
+        else:
+            abis = props["ro.product.cpu.abilist"].split(",")
+            if props["ro.build.version.sdk"] != "35" or "arm64-v8a" not in abis or "x86_64" not in abis or props["ro.dalvik.vm.native.bridge"] in ("", "0"):
+                raise SmokeFailure("Candidate modes require the API 35 x86_64 emulator with its actual ARM64 native bridge")
+            new = self.verify_release_apk(self.apk(self.args.new_apk, ime=True), self.candidate_lock, "candidate")
+            host = self.apk(self.args.host_apk)
+            old = None
+            if self.mode == "replace-uninitialized":
+                old = self.verify_release_apk(self.apk(self.args.old_apk, ime=True), RELEASES.BASELINE_1_1_1, "uninitialized-baseline")
+                if old["package"] != new["package"] or old["ime"] != new["ime"] or new["version_code"] <= old["version_code"]:
+                    raise SmokeFailure("The locked candidate must replace fixed 1.1.1 with the same package/IME and a greater versionCode")
+        if host["package"] != "app.lantype.testhost" or host["package"] == new["package"]:
             raise SmokeFailure("Expected the separate LanType synthetic editor host")
         self.old, self.new, self.host = old, new, host
-        self.package, self.host_package, self.ime = old["package"], host["package"], old["ime"]
-        self.report["apks"] = {"old": old, "new": new, "host": host}
+        self.package, self.host_package, self.ime = new["package"], host["package"], new["ime"]
+        self.report["apks"] = {"new": new, "host": host}
+        if old is not None:
+            self.report["apks"]["old"] = old
         return result
 
     def network(self):
@@ -407,8 +477,9 @@ class Smoke:
             raise SmokeFailure(f"Installed package version differs from APK: {info['package']}")
         return {"version_code": int(code[1]), "version_name": name[1].strip()}
 
-    def install(self, info):
-        output = self.adb("install", "--streaming", "--no-incremental", "-r", info["path"], timeout=420)
+    def install(self, info, *, replace=True):
+        flags = ("-r",) if replace else ()
+        output = self.adb("install", "--streaming", "--no-incremental", *flags, info["path"], timeout=420)
         if "Success" not in output:
             raise SmokeFailure(f"Streaming install did not report success: {output}")
         return self.installed_version(info)
@@ -420,6 +491,49 @@ class Smoke:
         host = self.install(self.host)
         self.snapshot("baseline-installed")
         return {"old": old, "host": host}
+
+    def package_state(self, name):
+        dump = self.adb("shell", "dumpsys", "package", self.package)
+        (self.output / (slug(name) + "-package.txt")).write_text(dump)
+        fields = {}
+        for field in ("userId", "dataDir", "ceDataInode", "firstInstallTime", "lastUpdateTime", "versionCode", "versionName"):
+            match = re.search(r"\b" + field + r"=([^\n]+)", dump)
+            if match:
+                fields[field] = match[1].strip()
+        return fields
+
+    def require_same_installation(self, before, after):
+        # UID/path/time corroborate package replacement; they do not prove old
+        # private-data migration. The visible new-version fixture is separate.
+        fields = ("userId", "dataDir", "firstInstallTime")
+        if any(not before.get(key) or before[key] != after.get(key) for key in fields):
+            raise SmokeFailure("Package replacement did not retain its public installation identity")
+
+    def candidate_install(self):
+        for info in (self.new, self.host):
+            if "package:" in self.adb("shell", "pm", "path", info["package"], check=False):
+                raise SmokeFailure("Candidate modes require a fresh guest; existing packages will not be cleared")
+        if self.mode == "fresh-candidate":
+            installed = self.install(self.new, replace=False)
+            detail = {"candidate": installed, "candidate_was_first_product_apk": True}
+        else:
+            # Do not call launch(), onboarding(), select_ime() or create any
+            # old-version fixture between these two installations.
+            baseline = self.install(self.old, replace=False)
+            before = self.package_state("uninitialized-baseline-installed")
+            if self.adb("shell", "pidof", self.package, check=False).strip():
+                raise SmokeFailure("Fixed baseline unexpectedly has a running process before replacement")
+            installed = self.install(self.new, replace=True)
+            after = self.package_state("uninitialized-baseline-replaced")
+            self.require_same_installation(before, after)
+            detail = {"baseline": baseline, "candidate": installed,
+                      "old_app_launched_by_qa": False, "old_onboarding_completed_by_qa": False,
+                      "old_user_fixture_created": False, "old_user_data_migration_tested": False,
+                      "before": before, "after": after,
+                      "scope": "Package replacement of an installed, uninitialized baseline; candidate setup still runs for the first time"}
+        detail["host"] = self.install(self.host, replace=False)
+        self.snapshot("candidate-mode-installed-before-first-launch")
+        return detail
 
     def launch(self, package):
         resolved = self.adb("shell", "cmd", "package", "resolve-activity", "--brief", "-a",
@@ -532,10 +646,10 @@ class Smoke:
         self.close_cabin()
         return {"explicitly_saved_template_source": CS_TEMPLATE}
 
-    def upgrade(self):
+    def upgrade(self, *, evidence_name="upgraded-product-launch"):
         version = self.install(self.new)
         self.launch(self.package)
-        root = self.snapshot("upgraded-product-launch")
+        root = self.snapshot(evidence_name)
         if not any(node.get("package") == self.package for node in root.iter("node")):
             raise SmokeFailure("Upgraded product activity has no accessible UI")
         if any(WIZARD_TITLE in labels(node) for node in root.iter("node")):
@@ -546,9 +660,19 @@ class Smoke:
         return {"installed": version, "setup_wizard_reappeared": False, "selected_ime": selected,
                 "installation": "adb install --streaming --no-incremental -r; no uninstall or clear-data"}
 
-    def restore_fixture(self):
+    def same_candidate_reinstall(self):
+        self.installed_version(self.new)
+        before = self.package_state("same-candidate-before-reinstall")
+        result = self.upgrade(evidence_name="same-candidate-reinstalled-launch")
+        after = self.package_state("same-candidate-after-reinstall")
+        self.require_same_installation(before, after)
+        return {**result, "replacement_kind": "same-version-same-APK-reinstall",
+                "candidate_sha256": self.new["sha256"], "before": before, "after": after,
+                "old_user_data_migration_tested": False}
+
+    def restore_fixture(self, *, evidence_prefix="upgraded"):
         self.cabin()
-        self.tap("upgraded-template-mode", ("动态模板", "Templates"))
+        self.tap(evidence_prefix + "-template-mode", ("动态模板", "Templates"))
         self.tap("different-lua-preset", ("Lua",))
         self.expect_text("lua-source-before-load", LUA_TEMPLATE)
         self.tap("load-saved-template", ("我的模板", "My template"), scroll="down")
@@ -569,6 +693,8 @@ class Smoke:
         return {"source": "2.5 MiB → B", "preview": "2621440 B", "host_before_insert": "", "host_after_insert": "2621440 B"}
 
     def run(self):
+        if self.mode != "legacy-upgrade":
+            return self.run_candidate()
         env = self.case("environment-and-apk-identities", self.environment)
         offline = self.case("disable-network-before-product", self.network, requires=env)
         installed = self.case("fresh-baseline-streaming-install", self.baseline_install, requires=offline)
@@ -596,16 +722,55 @@ class Smoke:
                           "report": str(self.output / "result.json")}, ensure_ascii=False), flush=True)
         return 1 if failed else 0
 
+    def run_candidate(self):
+        env = self.case("candidate-environment-and-locked-identities", self.environment)
+        offline = self.case("disable-network-before-product", self.network, requires=env)
+        install_name = "fresh-candidate-install" if self.mode == "fresh-candidate" else "replace-installed-uninitialized-1-1-1"
+        installed = self.case(install_name, self.candidate_install, requires=offline)
+        ready = self.case("candidate-first-launch-rime-and-ime-setup", self.onboarding, requires=installed)
+        self.case("candidate-chinese-commit", self.chinese, requires=ready)
+        self.case("candidate-us-english-commit", self.english, requires=ready)
+        self.case("candidate-tool-cabin-units-preview-insert", self.units, requires=ready)
+        if self.mode == "fresh-candidate":
+            saved = self.case("candidate-save-new-template-fixture", self.save_fixture, requires=ready)
+            reinstalled = self.case("same-candidate-reinstall-retains-setup", self.same_candidate_reinstall, requires=ready)
+            retained = self.case("same-candidate-load-new-template-fixture",
+                lambda: self.restore_fixture(evidence_prefix="same-candidate"), requires=reinstalled and saved)
+            self.report["same_candidate_data_retention_tested"] = self.report["cases"][-1]["status"] in ("passed", "failed")
+            self.report["same_candidate_data_retention_passed"] = retained
+            self.case("reinstalled-candidate-chinese-commit", self.chinese, requires=reinstalled)
+            self.case("reinstalled-candidate-us-english-commit", self.english, requires=reinstalled)
+        self.report["cases"].append({"name": "private-clipboard-close-and-process-restart", "required": False,
+            "status": "not_run", "reason": "The separate clipboard driver must pass on this installed candidate; core success does not imply clipboard acceptance", "evidence": []})
+        failed = [case for case in self.report["cases"] if case["required"] and case["status"] != "passed"]
+        self.report.update(status="failed" if failed else "core_passed", finished_utc=utc())
+        self.report["counts"] = {status: sum(case["status"] == status for case in self.report["cases"])
+                                 for status in ("passed", "failed", "blocked", "not_run")}
+        self.save()
+        print(json.dumps({"mode": self.mode, "status": self.report["status"], "counts": self.report["counts"],
+                          "old_user_data_migration_tested": False, "report": str(self.output / "result.json")}, ensure_ascii=False), flush=True)
+        return 1 if failed else 0
+
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--old-apk", type=Path, required=True)
+    parser.add_argument("--mode", choices=RELEASES.MODES, default="legacy-upgrade")
+    parser.add_argument("--candidate-lock", type=Path, help="Required explicit signed-candidate identity for either new mode")
+    parser.add_argument("--old-apk", type=Path)
     parser.add_argument("--new-apk", type=Path, required=True)
     parser.add_argument("--host-apk", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True, help="New evidence directory; existing result.json is never overwritten")
     parser.add_argument("--serial", help="emulator-* only; defaults to ANDROID_SERIAL or emulator-5554")
     parser.add_argument("--ready-timeout", type=int, default=300, help="Maximum seconds to await real first-run Rime preparation")
     args = parser.parse_args()
+    if args.mode != "legacy-upgrade" and args.candidate_lock is None:
+        parser.error("--candidate-lock is required for " + args.mode + "; no latest APK is selected")
+    if args.mode == "legacy-upgrade" and args.candidate_lock is not None:
+        parser.error("--candidate-lock is not used by the unchanged legacy-upgrade inputs")
+    if args.mode in ("legacy-upgrade", "replace-uninitialized") and args.old_apk is None:
+        parser.error("--old-apk is required for " + args.mode)
+    if args.mode == "fresh-candidate" and args.old_apk is not None:
+        parser.error("fresh-candidate has no old APK; use a fresh guest and omit --old-apk")
     if args.ready_timeout < 30:
         parser.error("--ready-timeout must be at least 30 seconds")
     try:

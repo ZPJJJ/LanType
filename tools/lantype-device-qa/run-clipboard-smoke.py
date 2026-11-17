@@ -66,14 +66,26 @@ class ClipboardSmoke(CORE.Smoke):
         self.core_report_path = args.core_report.resolve()
         self.core_report = core_report
         apks = core_report["apks"]
+        mode = core_report.get("mode", "legacy-upgrade")
+        if mode not in CORE.RELEASES.MODES:
+            raise EvidenceBlocked("Clipboard extension requires a recognized functional core mode")
+        expected_roles = {"new", "host"} if mode == "fresh-candidate" else {"old", "new", "host"}
+        if set(apks) != expected_roles:
+            raise EvidenceBlocked("Core APK roles do not match its installation mode")
+        lock_path = None
+        if mode != "legacy-upgrade":
+            lock = core_report.get("candidate_lock", {})
+            lock_path = Path(lock.get("path", ""))
+            if not lock_path.is_file() or CORE.RELEASES.file_sha256(lock_path) != lock.get("sha256"):
+                raise EvidenceBlocked("The explicit candidate lock differs from the passed core receipt")
         serial = args.serial or os.environ.get("ANDROID_SERIAL") or "emulator-5554"
         if serial != core_report.get("environment", {}).get("serial"):
             raise EvidenceBlocked("Clipboard extension must use the exact core-smoke emulator")
-        super().__init__(SimpleNamespace(output=args.output, serial=serial,
-            old_apk=Path(apks["old"]["path"]), new_apk=Path(apks["new"]["path"]),
-            host_apk=Path(apks["host"]["path"]), ready_timeout=30))
+        super().__init__(SimpleNamespace(output=args.output, serial=serial, mode=mode, candidate_lock=lock_path,
+            old_apk=Path(apks["old"]["path"]) if "old" in apks else None,
+            new_apk=Path(apks["new"]["path"]), host_apk=Path(apks["host"]["path"]), ready_timeout=30))
         self.report.update(scope="Explicit synthetic clipboard copies on the unchanged installed release; optional extension, separate from core results.",
-            core_report=str(self.core_report_path), deadline_seconds=args.deadline_seconds,
+            core_report=str(self.core_report_path), core_mode=mode, deadline_seconds=args.deadline_seconds,
             clipboard_observations=[], not_covered=["Cut (not run)", "Physical ARM64/16 KiB/performance acceptance", "Arbitrary private database enumeration"])
         self.save()
 
@@ -145,9 +157,13 @@ class ClipboardSmoke(CORE.Smoke):
 
     def ready(self):
         result = super().environment()
-        for key in ("old", "new", "host"):
-            if self.report["apks"][key]["sha256"] != self.core_report["apks"][key]["sha256"]:
-                raise EvidenceBlocked("An APK input differs from the passed core receipt")
+        if set(self.report["apks"]) != set(self.core_report["apks"]):
+            raise EvidenceBlocked("APK roles changed after the core smoke")
+        for key in self.core_report["apks"]:
+            current, expected = self.report["apks"][key], self.core_report["apks"][key]
+            fields = ("sha256", "bytes", "package", "version_code", "version_name", "ime", "certificate_sha256")
+            if any(current.get(field) != expected.get(field) for field in fields):
+                raise EvidenceBlocked("An APK identity differs from the passed core receipt")
         self.installed_version(self.new)
         self.installed_version(self.host)
         current = self.adb("shell", "settings", "get", "secure", "default_input_method").strip()
@@ -329,8 +345,9 @@ def main():
         parser.error("--deadline-seconds must be 30..280 (hard budget below five minutes)")
     try:
         report = json.loads(args.core_report.read_text())
-        if report.get("status") != "core_passed" or not all(
-                case.get("status") == "passed" for case in report.get("cases", []) if case.get("required")):
+        required = [case for case in report.get("cases", []) if case.get("required")]
+        if report.get("status") != "core_passed" or not required or not all(
+                case.get("status") == "passed" for case in required):
             raise EvidenceBlocked("A completed successful core report is required")
         return ClipboardSmoke(args, report).run()
     except (OSError, KeyError, ValueError, CORE.SmokeFailure) as error:
