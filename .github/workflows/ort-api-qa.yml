@@ -36,9 +36,6 @@ jobs:
       run:
         shell: bash
     env:
-      QA_ROOT: ${{ runner.temp }}/lantype-ort-api-work
-      QA_VOLUME: ${{ runner.temp }}/lantype-ort-api-volume.img
-      QA_RECEIPTS: ${{ runner.temp }}/lantype-ort-api-receipts
       CANDIDATE_RUN_ID: ${{ inputs.candidate_run_id }}
       CANDIDATE_HEAD: ${{ inputs.candidate_head }}
       CANDIDATE_ARTIFACT_ID: ${{ inputs.candidate_artifact_id }}
@@ -53,6 +50,10 @@ jobs:
       - name: Reserve bounded work storage and reuse installed tools
         run: |
           set -euo pipefail
+          export QA_ROOT="$RUNNER_TEMP/lantype-ort-api-work"
+          export QA_VOLUME="$RUNNER_TEMP/lantype-ort-api-volume.img"
+          export QA_RECEIPTS="$RUNNER_TEMP/lantype-ort-api-receipts"
+          printf 'QA_ROOT=%s\nQA_VOLUME=%s\nQA_RECEIPTS=%s\n' "$QA_ROOT" "$QA_VOLUME" "$QA_RECEIPTS" >> "$GITHUB_ENV"
           test "$GITHUB_REPOSITORY" = ZPJJJ/LanType
           test ! -e "$QA_ROOT"
           test ! -e "$QA_VOLUME"
