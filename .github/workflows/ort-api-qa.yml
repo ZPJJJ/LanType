@@ -31,7 +31,7 @@ concurrency:
 jobs:
   positive-api:
     runs-on: ubuntu-24.04
-    timeout-minutes: 35
+    timeout-minutes: 45
     defaults:
       run:
         shell: bash
@@ -47,7 +47,7 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Reserve bounded work storage and reuse installed tools
+      - name: Reserve bounded work storage
         run: |
           set -euo pipefail
           export QA_ROOT="$RUNNER_TEMP/lantype-ort-api-work"
@@ -59,12 +59,11 @@ jobs:
           test ! -e "$QA_VOLUME"
           mkdir -p "$QA_RECEIPTS"
           python3 scripts/storage_guard.py > "$QA_RECEIPTS/storage-preflight.txt"
-          test -x "$ANDROID_HOME/ndk/29.0.14206865/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android28-clang"
-          test -x "$ANDROID_HOME/build-tools/36.0.0/aapt2"
-          test -f "$ANDROID_HOME/platforms/android-36/android.jar"
-          test -x "$ANDROID_HOME/emulator/emulator"
-          test -x "$JAVA_HOME_21_X64/bin/javac"
-          printf 'ORT_QA_HOST_SDK=%s\nJAVA_HOME=%s\n' "$ANDROID_HOME" "$JAVA_HOME_21_X64" >> "$GITHUB_ENV"
+          # Named tool diagnostics and any permitted SDK installation run below,
+          # only after the bounded volume exists. NDK/JDK are never downloaded.
+          export ORT_QA_HOST_SDK="${ANDROID_HOME:-/missing-host-sdk}"
+          export JAVA_HOME="${JAVA_HOME_21_X64:-/missing-jdk-21}"
+          printf 'ORT_QA_HOST_SDK=%s\nJAVA_HOME=%s\n' "$ORT_QA_HOST_SDK" "$JAVA_HOME" >> "$GITHUB_ENV"
           # 4.5 GiB filesystem capacity plus a 512 MiB measured overhead allowance.
           # The overhead gate is a checkpoint assertion, not a whole-job hard quota.
           fallocate -l 4608M "$QA_VOLUME"
@@ -77,6 +76,12 @@ jobs:
           printf 'TMPDIR=%s\nXDG_CACHE_HOME=%s\nANDROID_USER_HOME=%s\nANDROID_AVD_HOME=%s\nANDROID_EMULATOR_HOME=%s\nJAVA_TOOL_OPTIONS=-Djava.io.tmpdir=%s\n' \
             "$QA_ROOT/tmp" "$QA_ROOT/cache" "$QA_ROOT/android-user" "$QA_ROOT/avd" "$QA_ROOT/android-user" "$QA_ROOT/tmp" >> "$GITHUB_ENV"
           python3 scripts/run-ort-api-qa.py --stage budget --checkpoint initialized
+
+      - name: Inventory installed tools and prepare the bounded SDK overlay
+        timeout-minutes: 10
+        # Reuse NDK 29/JDK 21 and installed tool payloads. Only missing official
+        # build-tools 36/platform 36/emulator packages may be added to the volume.
+        run: python3 scripts/run-ort-api-qa.py --stage tools
 
       - name: Bind the candidate to its completed native workflow and immutable artifact
         env:
@@ -115,8 +120,8 @@ jobs:
 
       - name: Prepare the official API 35 image inside the bounded volume
         timeout-minutes: 12
-        # No NDK, build-tools or complete SDK copy/download. Existing licenses and
-        # tool libraries are reused; only the official comparison image is added.
+        # Reuse the tools-stage SDK overlay; only the official comparison image
+        # is added here. No global SDK package or host APT installation is used.
         run: python3 scripts/run-ort-api-qa.py --stage image
 
       - name: Run the unchanged positive C probe through Android instrumentation JNI

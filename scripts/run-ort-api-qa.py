@@ -36,6 +36,7 @@ AVD = "lantype-ort-api35"
 IMAGE = "system-images;android-35;google_apis;x86_64"
 NDK = "29.0.14206865"
 MIB = 1024**2
+WORK_RESERVE = 256 * MIB
 LIMITATIONS = [
     "Only ordinary loading, C API 28, reported provider names and environment lifecycle are checked.",
     "Provider inference, models, keyboard input and product integration are not tested.",
@@ -182,6 +183,33 @@ def save(path, value):
     path.write_text(json.dumps(value, indent=2, sort_keys=True) + "\n")
 
 
+def tool_component(directory, executables=(), files=(), *, metadata="source.properties",
+                   revision_key="Pkg.Revision", expected_revision=None):
+    """Read a named tool inventory without executing a compiler or SDK tool."""
+    directory = Path(directory)
+    record = {"directory": str(directory), "resolvedDirectory": str(directory.resolve()),
+              "checks": [], "errors": []}
+    for relative, executable in [(name, True) for name in executables] + [(name, False) for name in files]:
+        path = directory / relative
+        usable = path.is_file() and (not executable or os.access(path, os.X_OK))
+        record["checks"].append({"path": str(path), "executableRequired": executable, "usable": usable})
+        if not usable:
+            record["errors"].append("Missing " + ("executable: " if executable else "file: ") + str(path))
+    path = directory / metadata
+    try:
+        require(path.stat().st_size <= MIB, "Tool metadata is unexpectedly large: " + str(path))
+        properties = dict(line.split("=", 1) for line in path.read_text().splitlines()
+                          if "=" in line and not line.lstrip().startswith("#"))
+        properties = {key.strip(): value.strip().strip('"') for key, value in properties.items()}
+        record.update(metadataSha256=digest(path), revision=properties.get(revision_key))
+        if not record["revision"] or expected_revision is not None and record["revision"] != expected_revision:
+            record["errors"].append(f"Unexpected {revision_key} in {path}: {record['revision']!r}; expected {expected_revision!r}")
+    except (OSError, ValueError) as error:
+        record["errors"].append(str(error))
+    record["usable"] = not record["errors"]
+    return record
+
+
 class Driver:
     def __init__(self):
         self.root = Path(os.environ["QA_ROOT"])
@@ -193,15 +221,166 @@ class Driver:
         self.evidence = self.root / "evidence"
         self.candidate = self.root / "candidate"
         self.build = self.root / "build"
-        self.sdk = Path(os.environ.get("ORT_QA_HOST_SDK", os.environ.get("ANDROID_HOME", "/missing-sdk")))
+        self.host_sdk = Path(os.environ.get("ORT_QA_HOST_SDK", os.environ.get("ANDROID_HOME", "/missing-sdk")))
+        self.sdk = self.root / "sdk"
+        self.tools_marker = self.root / "sdk-tools-ready.json"
         self.jdk = Path(os.environ.get("JAVA_HOME", "/missing-jdk"))
         self.serial = os.environ.get("ANDROID_SERIAL", "emulator-5554")
         require(self.serial == "emulator-5554", "This workflow accepts only its owned hosted emulator")
         self.env = {**os.environ, "PATH": str(self.jdk / "bin") + os.pathsep + os.environ.get("PATH", ""),
-                    "LC_ALL": "C", "PYTHONDONTWRITEBYTECODE": "1"}
+                    "LC_ALL": "C", "PYTHONDONTWRITEBYTECODE": "1", "JAVA_HOME": str(self.jdk),
+                    "ANDROID_HOME": str(self.sdk), "ANDROID_SDK_ROOT": str(self.sdk),
+                    "ANDROID_USER_HOME": str(self.root / "android-user"),
+                    "ANDROID_EMULATOR_HOME": str(self.root / "android-user"),
+                    "ANDROID_AVD_HOME": str(self.root / "avd"),
+                    "XDG_CACHE_HOME": str(self.root / "cache"),
+                    **{key: str(self.root / "tmp") for key in ("TMPDIR", "TMP", "TEMP")}}
+        self.env["JAVA_TOOL_OPTIONS"] = (self.env.get("JAVA_TOOL_OPTIONS", "") +
+                                          " -Djava.io.tmpdir=" + str(self.root / "tmp")).strip()
         for key in ("GH_TOKEN", "GITHUB_TOKEN"):
             self.env.pop(key, None)  # Native/tool subprocesses never need a GitHub token.
         self.counter = 0
+
+    def tool_inventory(self, sdk):
+        sdk = Path(sdk)
+        components = {
+            "jdk21": tool_component(self.jdk, ("bin/java", "bin/javac", "bin/keytool"),
+                                    metadata="release", revision_key="JAVA_VERSION"),
+            "ndk29": tool_component(sdk / "ndk" / NDK,
+                tuple("toolchains/llvm/prebuilt/linux-x86_64/bin/" + name for name in
+                      ("aarch64-linux-android28-clang", "llvm-readelf")), expected_revision=NDK),
+            "commandLineTools": tool_component(sdk / "cmdline-tools/latest", ("bin/sdkmanager", "bin/avdmanager")),
+            "platformTools": tool_component(sdk / "platform-tools", ("adb",)),
+            "buildTools36": tool_component(sdk / "build-tools/36.0.0", ("aapt", "aapt2", "d8", "zipalign", "apksigner"),
+                                           ("lib/d8.jar", "lib/apksigner.jar"), expected_revision="36.0.0"),
+            "platform36": tool_component(sdk / "platforms/android-36", files=("android.jar",),
+                                         revision_key="AndroidVersion.ApiLevel", expected_revision="36"),
+            "emulator": tool_component(sdk / "emulator", ("emulator",)),
+        }
+        java = components["jdk21"]
+        if not re.fullmatch(r"21(?:[.+-].*)?", java.get("revision") or ""):
+            java["errors"].append("A preinstalled JDK 21 is required; no JDK download is permitted")
+            java["usable"] = False
+        commands = components["commandLineTools"]
+        if not (sdk / "cmdline-tools/latest/lib").is_dir():
+            commands["errors"].append("Missing preinstalled command-line tool libraries")
+            commands["usable"] = False
+        license_dir = sdk / "licenses"
+        licenses = sorted(path for path in license_dir.glob("*") if path.is_file())
+        license_ok = bool(licenses) and sum(path.stat().st_size for path in licenses) <= MIB
+        components["licenses"] = {"directory": str(license_dir), "usable": license_ok,
+            "files": [{"name": path.name, "sha256": digest(path)} for path in licenses] if license_ok else [],
+            "errors": [] if license_ok else ["Missing or unexpectedly large preaccepted SDK licenses: " + str(license_dir)]}
+        return {"schemaVersion": 1, "sdk": str(sdk), "hostSdk": str(self.host_sdk),
+                "jdk": str(self.jdk), "components": components}
+
+    def require_tools(self):
+        require(self.tools_marker.is_file() and not self.tools_marker.is_symlink(),
+                "SDK overlay is not ready; run --stage tools before build/image/run")
+        require(self.tools_marker.stat().st_size <= MIB, "SDK overlay marker is unexpectedly large")
+        marker = json.loads(self.tools_marker.read_text())
+        inventory = self.tool_inventory(self.sdk)
+        require(marker.get("schemaVersion") == 1 and marker.get("inventory") == inventory and
+                all(row["usable"] for row in inventory["components"].values()),
+                "SDK overlay/tool identity changed after preparation; inspect sdk-tools-ready.json")
+        return inventory
+
+    def capture_ndk_inputs(self):
+        """Keep actual installed notices and static C++ archive identities only."""
+        ndk = self.host_sdk / "ndk" / NDK
+        toolchain = ndk / "toolchains/llvm/prebuilt/linux-x86_64"
+        output = self.evidence / "ndk-source-inputs"
+        notices = [ndk / "source.properties", *sorted(set([ndk / "NOTICE", ndk / "NOTICE.toolchain",
+                                                          *toolchain.glob("NOTICE*")]))]
+        copied, rows = 0, []
+        for path in notices:
+            row = {"path": str(path), "present": path.is_file(), "copied": False}
+            if path.is_file():
+                require(path.resolve().is_relative_to(ndk.resolve()), "NDK notice points outside its installed NDK")
+                size = path.stat().st_size
+                row.update(bytes=size, sha256=digest(path))
+                if copied + size <= 4 * MIB:
+                    target = output / path.relative_to(ndk)
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copy2(path, target)
+                    copied += size
+                    row.update(copied=True, evidencePath=str(target.relative_to(self.evidence)))
+                else:
+                    row["reason"] = "Notice copies exceed the 4 MiB evidence allowance; identity retained only"
+                    print(row["reason"] + ": " + str(path), flush=True)
+            rows.append(row)
+        library_root = toolchain / "sysroot/usr/lib/aarch64-linux-android"
+        archives = []
+        for name in ("libc++_static.a", "libc++abi.a"):
+            matches = sorted(library_root.rglob(name)) if library_root.is_dir() else []
+            require(len(matches) <= 64, "Unexpectedly many NDK static archive matches")
+            if not matches:
+                archives.append({"name": name, "present": False})
+            for path in matches:
+                require(path.is_file() and path.resolve().is_relative_to(ndk.resolve()),
+                        "Unexpected NDK static archive path: " + str(path))
+                archives.append({"name": name, "path": str(path), "present": True,
+                                 "bytes": path.stat().st_size, "sha256": digest(path), "copied": False})
+        save(self.evidence / "ndk-source-inputs.json", {"schemaVersion": 1, "ndkRevision": NDK,
+             "ndkRoot": str(ndk), "noticeCopyLimitBytes": 4 * MIB, "copiedNoticeBytes": copied,
+             "notices": rows, "staticArchiveSearchRoot": str(library_root), "staticArchives": archives,
+             "scope": "Installed NDK metadata/notices and AArch64 static archive identity; not a complete source distribution."})
+
+    def tools(self):
+        self.budget("before-tools")
+        before = self.tool_inventory(self.host_sdk)
+        save(self.receipts / "tool-inventory-before.json", before)
+        print(json.dumps(before), flush=True)
+        fixed = ("jdk21", "ndk29", "commandLineTools", "platformTools", "licenses")
+        failures = {name: before["components"][name]["errors"] for name in fixed
+                    if not before["components"][name]["usable"]}
+        require(not failures, "Required preinstalled tools unavailable (automatic replacement forbidden): " + json.dumps(failures))
+        self.capture_ndk_inputs()
+        if self.tools_marker.exists():
+            self.require_tools()
+            self.budget("tools-rechecked")
+            return
+        require(not self.sdk.is_symlink() and (not self.sdk.exists() or not any(self.sdk.iterdir())),
+                "Incomplete or unknown SDK overlay; preserve evidence and use a fresh bounded work volume")
+        self.sdk.mkdir(exist_ok=True)
+        # Only launchers and small metadata are copied; the installed tool jars
+        # and NDK/platform-tools payloads are reused. Licenses are small copies,
+        # so a package manager can never write through them into the host SDK.
+        original = self.host_sdk / "cmdline-tools/latest"
+        overlay = self.sdk / "cmdline-tools/latest"
+        (overlay / "bin").mkdir(parents=True)
+        for name in ("sdkmanager", "avdmanager"):
+            shutil.copy2(original / "bin" / name, overlay / "bin" / name)
+        for name in ("source.properties", "package.xml", "NOTICE.txt"):
+            if (original / name).is_file():
+                shutil.copy2(original / name, overlay / name)
+        (overlay / "lib").symlink_to(original / "lib", target_is_directory=True)
+        (self.sdk / "licenses").mkdir()
+        for row in before["components"]["licenses"]["files"]:
+            shutil.copy2(self.host_sdk / "licenses" / row["name"], self.sdk / "licenses" / row["name"])
+        (self.sdk / "ndk").mkdir()
+        for relative in ("ndk/" + NDK, "platform-tools"):
+            (self.sdk / relative).symlink_to(self.host_sdk / relative, target_is_directory=True)
+        selected = {}
+        for name, relative, package in (("buildTools36", "build-tools/36.0.0", "build-tools;36.0.0"),
+                ("platform36", "platforms/android-36", "platforms;android-36"), ("emulator", "emulator", "emulator")):
+            if before["components"][name]["usable"]:
+                (self.sdk / relative).parent.mkdir(parents=True, exist_ok=True)
+                (self.sdk / relative).symlink_to(self.host_sdk / relative, target_is_directory=True)
+                selected[name] = "preinstalled-link"
+            else:
+                self.run("sdk-install-" + name, [overlay / "bin/sdkmanager", "--sdk_root=" + str(self.sdk),
+                         "--channel=0", "--verbose", package], timeout=420)
+                selected[name] = "official-sdkmanager-stable-channel"
+        after = self.tool_inventory(self.sdk)
+        save(self.receipts / "tool-inventory-after.json", after)
+        failures = {name: row["errors"] for name, row in after["components"].items() if not row["usable"]}
+        require(not failures, "Prepared SDK tools are incomplete: " + json.dumps(failures))
+        require(self.tool_inventory(self.host_sdk) == before, "Preinstalled SDK/JDK metadata changed during overlay preparation")
+        self.budget("after-tools")
+        save(self.tools_marker, {"schemaVersion": 1, "inventory": after, "selectedComponents": selected,
+                                "allowedDownloads": ["build-tools;36.0.0", "platforms;android-36", "emulator"]})
+        shutil.copy2(self.tools_marker, self.evidence / "sdk-tools-ready.json")
 
     def parameters(self):
         values = {key: os.environ[key] for key in ("CANDIDATE_RUN_ID", "CANDIDATE_HEAD",
@@ -265,10 +444,13 @@ class Driver:
                 process.stdin.write(input_text.encode())
                 process.stdin.close()
             timed_out = False
+            budget_stop = False
             while process.poll() is None:
-                peak = max(peak, self.volume_usage()["usedBytes"])
-                if time.monotonic() - started > timeout:
-                    timed_out = True
+                usage = self.volume_usage()
+                peak = max(peak, usage["usedBytes"])
+                timed_out = time.monotonic() - started > timeout
+                budget_stop = usage["availableBytes"] <= WORK_RESERVE and os.environ.get("ORT_QA_STAGE") != "collect"
+                if timed_out or budget_stop:
                     os.killpg(process.pid, signal.SIGTERM)
                     try:
                         process.wait(timeout=5)
@@ -279,6 +461,7 @@ class Driver:
             code = process.wait()
         peak = max(peak, self.volume_usage()["usedBytes"])
         record = {"command": command, "exitCode": code, "timedOut": timed_out,
+                  "storageReserveStop": budget_stop, "workVolumeReserveBytes": WORK_RESERVE,
                   "stdout": out_path.name, "stderr": err_path.name,
                   "elapsedSeconds": round(time.monotonic() - started, 3),
                   "observedPeakWorkVolumeUsedBytes": peak, "samplingSeconds": 0.25,
@@ -287,6 +470,7 @@ class Driver:
         with (self.receipts / "commands.jsonl").open("a") as stream:
             stream.write(json.dumps(record) + "\n")
         print(json.dumps({key: record[key] for key in ("command", "exitCode", "timedOut", "observedPeakWorkVolumeUsedBytes")}), flush=True)
+        require(not budget_stop, "Command stopped with less than 256 MiB work-volume reserve; see " + prefix)
         require(not check or (code == 0 and not timed_out), "Command failed; see " + prefix)
         if code == 0 and not timed_out and copy_stdout_to is not None:
             shutil.copyfile(out_path, copy_stdout_to)  # Preserve original probe bytes.
@@ -371,6 +555,7 @@ class Driver:
         return identity
 
     def build_apk(self):
+        self.require_tools()
         self.budget("before-build")
         identity = self.verify_candidate()
         source = self.evidence / "test-app-source"
@@ -428,23 +613,10 @@ class Driver:
         self.budget("after-build")
 
     def image(self):
+        self.require_tools()
         self.budget("before-image")
-        sdk = self.root / "sdk"
-        # AvdManager canonicalizes its launcher directory to locate the SDK.
-        # Copy only its tiny launcher/metadata; share the installed jar directory.
-        original = self.sdk / "cmdline-tools/latest"
+        sdk = self.sdk
         overlay = sdk / "cmdline-tools/latest"
-        (overlay / "bin").mkdir(parents=True)
-        for name in ("sdkmanager", "avdmanager"):
-            shutil.copy2(original / "bin" / name, overlay / "bin" / name)
-        for name in ("source.properties", "package.xml"):
-            if (original / name).is_file():
-                shutil.copy2(original / name, overlay / name)
-        (overlay / "lib").symlink_to(original / "lib", target_is_directory=True)
-        for name in ("licenses", "platform-tools", "platforms", "build-tools", "emulator"):
-            require((self.sdk / name).is_dir(), "Required preinstalled SDK directory missing: " + name)
-            (sdk / name).symlink_to(self.sdk / name, target_is_directory=True)
-        self.env.update(ANDROID_HOME=str(sdk), ANDROID_SDK_ROOT=str(sdk))
         # Do not install host packages outside the accounted work volume.
         loader = self.root / "host-libs"
         loader.mkdir()
@@ -475,6 +647,7 @@ class Driver:
         self.budget("after-image")
 
     def run_guest(self):
+        self.require_tools()
         self.budget("before-guest")
         require(not (self.root / "emulator.pid").exists(), "Emulator has already been started")
         devices, _ = self.run("adb-devices-before", [self.sdk / "platform-tools/adb", "devices"])
@@ -605,7 +778,7 @@ class Driver:
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--stage", required=True, choices=("budget", "identity", "build", "image", "run", "collect"))
+    parser.add_argument("--stage", required=True, choices=("budget", "tools", "identity", "build", "image", "run", "collect"))
     parser.add_argument("--checkpoint", default="manual")
     args = parser.parse_args()
     os.environ["ORT_QA_STAGE"] = args.stage
@@ -616,7 +789,7 @@ def main():
             driver.budget(args.checkpoint)
         else:
             require(args.stage == "collect" or os.path.ismount(driver.root), "Work root must be the bounded volume")
-            {"identity": driver.identity, "build": driver.build_apk, "image": driver.image,
+            {"tools": driver.tools, "identity": driver.identity, "build": driver.build_apk, "image": driver.image,
              "run": driver.run_guest, "collect": driver.collect}[args.stage]()
         return 0
     except (OSError, ValueError, KeyError, TypeError, subprocess.SubprocessError) as error:
