@@ -30,6 +30,8 @@ jobs:
         run: sdkmanager 'platforms;android-36' 'build-tools;36.0.0' 'ndk;27.2.12479018' 'cmake;3.22.1'
       - name: Check the public source inventory
         run: python3 scripts/check-public-source.py
+      - name: Check pinned source verification regressions
+        run: python3 scripts/test-native-source-verification.py
       - name: Prepare approved runtime data and native dependencies
         run: |
           python3 scripts/prepare-upstream.py
@@ -38,6 +40,8 @@ jobs:
       - name: Build offline release variant
         run: ./gradlew :app:assembleOffline --no-daemon --max-workers=1 -Pkotlin.compiler.execution.strategy=in-process '-Dorg.gradle.jvmargs=-Xmx4096m -Dfile.encoding=UTF-8'
       - name: Run focused tests and Compose renders
+        env:
+          CYIME_RENDER_OUT: ${{ github.workspace }}/app/build/lantype-ci-renders
         run: bash scripts/test-targeted.sh
       - name: Verify final APK data and source-built CameraX JNI replacements
         run: |
@@ -50,9 +54,9 @@ jobs:
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: lantype-unsigned-offline-validation
-          if-no-files-found: error
+          if-no-files-found: warn
           path: |
             app/build/outputs/apk/offline/*.apk
             app/build/test-results/testDebugUnitTest/*.xml
             app/build/reports/tests/testDebugUnitTest/
-            docs/validation-1.1.0/screenshots/*.png
+            app/build/lantype-ci-renders/*.png

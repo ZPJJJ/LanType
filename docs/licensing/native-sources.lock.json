@@ -809,7 +809,14 @@
       "flatRoot": true,
       "installPath": "vendor/native-sources/android-libcxx",
       "license": "Apache-2.0 WITH LLVM-exception AND legacy notices in LICENSE.TXT",
-      "binaryEvidence": "libc++_shared.so contains Android r522817/r522817c Clang 18.0.1/18.0.3 LLVM revision d8003a456d14a3deb8054cdaa529ffbf02d9b262"
+      "binaryEvidence": "libc++_shared.so contains Android r522817/r522817c Clang 18.0.1/18.0.3 LLVM revision d8003a456d14a3deb8054cdaa529ffbf02d9b262",
+      "gitiles_content": {
+        "format": "gitiles-tar-members-v1",
+        "memberCount": 12331,
+        "regularFileCount": 10264,
+        "regularFileBytes": 49399001,
+        "sha256": "c85f60145b94766a70063b93c87d7626de8f49960d288b8684ad40e93fb0a57b"
+      }
     },
     {
       "id": "android-libcxxabi",
@@ -824,7 +831,14 @@
       "flatRoot": true,
       "installPath": "vendor/native-sources/android-libcxxabi",
       "license": "Apache-2.0 WITH LLVM-exception AND legacy notices in LICENSE.TXT",
-      "binaryEvidence": "libc++_shared.so contains Android r522817/r522817c Clang 18.0.1/18.0.3 LLVM revision d8003a456d14a3deb8054cdaa529ffbf02d9b262"
+      "binaryEvidence": "libc++_shared.so contains Android r522817/r522817c Clang 18.0.1/18.0.3 LLVM revision d8003a456d14a3deb8054cdaa529ffbf02d9b262",
+      "gitiles_content": {
+        "format": "gitiles-tar-members-v1",
+        "memberCount": 168,
+        "regularFileCount": 150,
+        "regularFileBytes": 6505690,
+        "sha256": "363ecb53f4d48bc093b3db17b1f4331f259f4bf7be591010a93cc2351f27d7e6"
+      }
     },
     {
       "id": "androidx-camera-core",
@@ -840,7 +854,14 @@
       "archive_sha256": "34feb7305c4642908e1d10039b05109b1253bd71cc584e0613901596468dabe0",
       "flatRoot": true,
       "installPath": "vendor/native-sources/androidx-camera-core",
-      "license": "Apache-2.0 (CameraX static libyuv also retains BSD-3-Clause)"
+      "license": "Apache-2.0 (CameraX static libyuv also retains BSD-3-Clause)",
+      "gitiles_content": {
+        "format": "gitiles-tar-members-v1",
+        "memberCount": 713,
+        "regularFileCount": 639,
+        "regularFileBytes": 6164784,
+        "sha256": "54350513ed5690e6acb4e6d08611d90514de18057cd44665f9fc39dbb09c934a"
+      }
     },
     {
       "id": "androidx-graphics-path",
@@ -856,7 +877,14 @@
       "archive_sha256": "a08e16efb328f0a3677983c083d500f95145c476ff41dd11fc537d1b95130b0d",
       "flatRoot": true,
       "installPath": "vendor/native-sources/androidx-graphics-path",
-      "license": "Apache-2.0 (CameraX static libyuv also retains BSD-3-Clause)"
+      "license": "Apache-2.0 (CameraX static libyuv also retains BSD-3-Clause)",
+      "gitiles_content": {
+        "format": "gitiles-tar-members-v1",
+        "memberCount": 45,
+        "regularFileCount": 29,
+        "regularFileBytes": 128092,
+        "sha256": "a470b9337327980151e67d98e12424251c4dd5736f7ab72a0dbeead1747312e8"
+      }
     },
     {
       "id": "androidx-libyuv-wrapper",
@@ -872,7 +900,14 @@
       "archive_sha256": "3b20bdee21f6b92fa03ba5aa5e1c50637534c4fe8c90a17f92e04362233c8ea2",
       "flatRoot": true,
       "installPath": "vendor/native-sources/androidx-libyuv-wrapper",
-      "license": "Apache-2.0 (CameraX static libyuv also retains BSD-3-Clause)"
+      "license": "Apache-2.0 (CameraX static libyuv also retains BSD-3-Clause)",
+      "gitiles_content": {
+        "format": "gitiles-tar-members-v1",
+        "memberCount": 3,
+        "regularFileCount": 3,
+        "regularFileBytes": 3080,
+        "sha256": "56996e5bd9e7211310b7aef632056b47b9d3ece9959c03ae9b680dba41e73be8"
+      }
     },
     {
       "id": "androidx-camera-core-maven-sources",
@@ -914,7 +949,14 @@
       "flatRoot": true,
       "installPath": "vendor/native-sources/lantype-libyuv",
       "license": "BSD-3-Clause",
-      "selection": "Explicit LanType rebuild input; not represented as the unknown Google CameraX AAR build pin."
+      "selection": "Explicit LanType rebuild input; not represented as the unknown Google CameraX AAR build pin.",
+      "gitiles_content": {
+        "format": "gitiles-tar-members-v1",
+        "memberCount": 212,
+        "regularFileCount": 194,
+        "regularFileBytes": 5185155,
+        "sha256": "490682d89b121a3ca71cab81726b897b288da4ddd2179c53761f12ec11c5dd83"
+      }
     }
   ],
   "buildTools": {

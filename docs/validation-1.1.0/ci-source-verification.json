@@ -1,0 +1,186 @@
+{
+  "schemaVersion": 1,
+  "createdAtUtc": "2026-11-17T06:32:39.058170+00:00",
+  "basedOnLocalCommit": "8c69112fa83b51e75b41bda17bd51a907338efa0",
+  "remoteFailedRun": "https://github.com/ZPJJJ/LanType/actions/runs/44012376086",
+  "remoteFailedJob": 133802188022,
+  "issue": "Gitiles +archive regenerates tar and PAX mtime; whole archive SHA changes without member-content changes.",
+  "scope": "Six exact android.googlesource.com Gitiles +archive commit entries only; other archives retain whole-file SHA verification.",
+  "originalArchiveShaPinsPreserved": 70,
+  "ignoredMemberMetadata": [
+    "mtime",
+    "pax.mtime"
+  ],
+  "strictFields": [
+    "path set",
+    "type",
+    "mode",
+    "uid",
+    "gid",
+    "uname",
+    "gname",
+    "linkname",
+    "size",
+    "device numbers",
+    "all non-mtime member/global PAX fields",
+    "regular-file SHA-256"
+  ],
+  "realArchives": [
+    {
+      "id": "android-libcxx",
+      "commit": "d8003a456d14a3deb8054cdaa529ffbf02d9b262",
+      "sourceUrl": "https://android.googlesource.com/toolchain/llvm-project/+archive/d8003a456d14a3deb8054cdaa529ffbf02d9b262/libcxx.tar.gz",
+      "originalArchiveSha256": "1e96eb8009ddc1be4b6615357f6f941319f70221b90a71857e689379d25ee005",
+      "originalVerification": "archive-sha256",
+      "freshArchiveSize": 7122978,
+      "freshArchiveSha256": "54d8c2f1085eacdc5cc4c6f4bb900bae6f99bcfb898869fd1113e563c6a26a79",
+      "freshVerification": "gitiles-tar-members-v1",
+      "canonicalMemberIdentity": {
+        "format": "gitiles-tar-members-v1",
+        "memberCount": 12331,
+        "regularFileCount": 10264,
+        "regularFileBytes": 49399001,
+        "sha256": "c85f60145b94766a70063b93c87d7626de8f49960d288b8684ad40e93fb0a57b"
+      },
+      "originalAndFreshMemberIdentityEqual": true
+    },
+    {
+      "id": "android-libcxxabi",
+      "commit": "d8003a456d14a3deb8054cdaa529ffbf02d9b262",
+      "sourceUrl": "https://android.googlesource.com/toolchain/llvm-project/+archive/d8003a456d14a3deb8054cdaa529ffbf02d9b262/libcxxabi.tar.gz",
+      "originalArchiveSha256": "989d5cc3f9871ab23c886ae8a1e954322cdc7df95cb0c2cbceaef152f8e1d606",
+      "originalVerification": "archive-sha256",
+      "freshArchiveSize": 799410,
+      "freshArchiveSha256": "d20cd8211e1a2cc4d281ff98474cb53414614c94b3f8a491373269c3ac0acfdb",
+      "freshVerification": "gitiles-tar-members-v1",
+      "canonicalMemberIdentity": {
+        "format": "gitiles-tar-members-v1",
+        "memberCount": 168,
+        "regularFileCount": 150,
+        "regularFileBytes": 6505690,
+        "sha256": "363ecb53f4d48bc093b3db17b1f4331f259f4bf7be591010a93cc2351f27d7e6"
+      },
+      "originalAndFreshMemberIdentityEqual": true
+    },
+    {
+      "id": "androidx-camera-core",
+      "commit": "9046f07948c1e7a89aaec581463730f4d666611b",
+      "sourceUrl": "https://android.googlesource.com/platform/frameworks/support/+archive/9046f07948c1e7a89aaec581463730f4d666611b/camera/camera-core.tar.gz",
+      "originalArchiveSha256": "34feb7305c4642908e1d10039b05109b1253bd71cc584e0613901596468dabe0",
+      "originalVerification": "archive-sha256",
+      "freshArchiveSize": 912578,
+      "freshArchiveSha256": "d2e92cc7cfc705ba31dc29f2832ffe70546a0d4122b7bdc09f06c4bda4511650",
+      "freshVerification": "gitiles-tar-members-v1",
+      "canonicalMemberIdentity": {
+        "format": "gitiles-tar-members-v1",
+        "memberCount": 713,
+        "regularFileCount": 639,
+        "regularFileBytes": 6164784,
+        "sha256": "54350513ed5690e6acb4e6d08611d90514de18057cd44665f9fc39dbb09c934a"
+      },
+      "originalAndFreshMemberIdentityEqual": true
+    },
+    {
+      "id": "androidx-graphics-path",
+      "commit": "8a05a22af450d589ef911d772a001a49dcb05b71",
+      "sourceUrl": "https://android.googlesource.com/platform/frameworks/support/+archive/8a05a22af450d589ef911d772a001a49dcb05b71/graphics/graphics-path.tar.gz",
+      "originalArchiveSha256": "a08e16efb328f0a3677983c083d500f95145c476ff41dd11fc537d1b95130b0d",
+      "originalVerification": "archive-sha256",
+      "freshArchiveSize": 24333,
+      "freshArchiveSha256": "1636910ae37a0a0d221afdf237a3ba2c9eb82c5d63203fb48781913e9cca346e",
+      "freshVerification": "gitiles-tar-members-v1",
+      "canonicalMemberIdentity": {
+        "format": "gitiles-tar-members-v1",
+        "memberCount": 45,
+        "regularFileCount": 29,
+        "regularFileBytes": 128092,
+        "sha256": "a470b9337327980151e67d98e12424251c4dd5736f7ab72a0dbeead1747312e8"
+      },
+      "originalAndFreshMemberIdentityEqual": true
+    },
+    {
+      "id": "androidx-libyuv-wrapper",
+      "commit": "9046f07948c1e7a89aaec581463730f4d666611b",
+      "sourceUrl": "https://android.googlesource.com/platform/frameworks/support/+archive/9046f07948c1e7a89aaec581463730f4d666611b/external/libyuv.tar.gz",
+      "originalArchiveSha256": "3b20bdee21f6b92fa03ba5aa5e1c50637534c4fe8c90a17f92e04362233c8ea2",
+      "originalVerification": "archive-sha256",
+      "freshArchiveSize": 1781,
+      "freshArchiveSha256": "7d47149c2035f8373773aae422fc5b0a7dd0403ee20cc4019a9c23735e07416a",
+      "freshVerification": "gitiles-tar-members-v1",
+      "canonicalMemberIdentity": {
+        "format": "gitiles-tar-members-v1",
+        "memberCount": 3,
+        "regularFileCount": 3,
+        "regularFileBytes": 3080,
+        "sha256": "56996e5bd9e7211310b7aef632056b47b9d3ece9959c03ae9b680dba41e73be8"
+      },
+      "originalAndFreshMemberIdentityEqual": true
+    },
+    {
+      "id": "lantype-camerax-libyuv",
+      "commit": "741c38751c436f60c583110f617340b7f3322d94",
+      "sourceUrl": "https://android.googlesource.com/platform/external/libyuv/+archive/741c38751c436f60c583110f617340b7f3322d94.tar.gz",
+      "originalArchiveSha256": "6bc6ff60c3e4a3924bac1726177e8eee0dccff7f1e8b2e2fb7e23162a9631392",
+      "originalVerification": "archive-sha256",
+      "freshArchiveSize": 578262,
+      "freshArchiveSha256": "2489e0314467fbd68b0b477c7a8b2fa368b6f88ec6466b76ffcb09dbbd711f38",
+      "freshVerification": "gitiles-tar-members-v1",
+      "canonicalMemberIdentity": {
+        "format": "gitiles-tar-members-v1",
+        "memberCount": 212,
+        "regularFileCount": 194,
+        "regularFileBytes": 5185155,
+        "sha256": "490682d89b121a3ca71cab81726b897b288da4ddd2179c53761f12ec11c5dd83"
+      },
+      "originalAndFreshMemberIdentityEqual": true
+    }
+  ],
+  "realArchiveMutationChecks": [
+    {
+      "mutation": "source-byte-change",
+      "basedOn": "androidx-camera-core",
+      "target": "src/main/cpp/image_processing_util_jni.cc",
+      "rejected": true,
+      "reason": "Gitiles source member identity mismatch: androidx-camera-core"
+    },
+    {
+      "mutation": "added-path",
+      "basedOn": "androidx-camera-core",
+      "target": "src/main/cpp/image_processing_util_jni.cc",
+      "rejected": true,
+      "reason": "Gitiles archive contains added members."
+    },
+    {
+      "mutation": "removed-path",
+      "basedOn": "androidx-camera-core",
+      "target": "src/main/cpp/image_processing_util_jni.cc",
+      "rejected": true,
+      "reason": "Gitiles source member identity mismatch: androidx-camera-core"
+    },
+    {
+      "mutation": "renamed-path",
+      "basedOn": "androidx-camera-core",
+      "target": "src/main/cpp/image_processing_util_jni.cc",
+      "rejected": true,
+      "reason": "Gitiles source member identity mismatch: androidx-camera-core"
+    },
+    {
+      "mutation": "mode-change",
+      "basedOn": "androidx-camera-core",
+      "target": "src/main/cpp/image_processing_util_jni.cc",
+      "rejected": true,
+      "reason": "Gitiles source member identity mismatch: androidx-camera-core"
+    }
+  ],
+  "syntheticRegressionTests": {
+    "tests": 12,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "command": "python3 scripts/test-native-source-verification.py"
+  },
+  "remoteCiRerun": false,
+  "apkRebuilt": false,
+  "existingReleaseAssetsChanged": false,
+  "pass": true
+}

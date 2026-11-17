@@ -1,0 +1,17 @@
+test_added_removed_renamed_and_duplicate_paths_are_rejected (__main__.GitilesSourceVerificationTest.test_added_removed_renamed_and_duplicate_paths_are_rejected) ... ok
+test_corrupt_archive_is_rejected (__main__.GitilesSourceVerificationTest.test_corrupt_archive_is_rejected) ... ok
+test_mtime_only_drift_uses_exact_member_identity (__main__.GitilesSourceVerificationTest.test_mtime_only_drift_uses_exact_member_identity) ... ok
+test_non_mtime_pax_fields_are_rejected (__main__.GitilesSourceVerificationTest.test_non_mtime_pax_fields_are_rejected) ... ok
+test_other_archive_types_retain_exact_hash_rule (__main__.GitilesSourceVerificationTest.test_other_archive_types_retain_exact_hash_rule) ... ok
+test_owner_metadata_changes_are_rejected (__main__.GitilesSourceVerificationTest.test_owner_metadata_changes_are_rejected) ... ok
+test_reviewed_original_still_uses_archive_sha256 (__main__.GitilesSourceVerificationTest.test_reviewed_original_still_uses_archive_sha256) ... ok
+test_same_length_source_byte_change_is_rejected (__main__.GitilesSourceVerificationTest.test_same_length_source_byte_change_is_rejected) ... ok
+test_symlink_and_hardlink_targets_are_rejected (__main__.GitilesSourceVerificationTest.test_symlink_and_hardlink_targets_are_rejected) ... ok
+test_type_and_mode_changes_are_rejected (__main__.GitilesSourceVerificationTest.test_type_and_mode_changes_are_rejected) ... ok
+test_unpinned_host_commit_or_unapproved_format_cannot_fallback (__main__.GitilesSourceVerificationTest.test_unpinned_host_commit_or_unapproved_format_cannot_fallback) ... ok
+test_verified_gitiles_cache_needs_no_network (__main__.GitilesSourceVerificationTest.test_verified_gitiles_cache_needs_no_network) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.027s
+
+OK
