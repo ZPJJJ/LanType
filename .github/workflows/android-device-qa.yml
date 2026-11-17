@@ -7,6 +7,15 @@ on:
       - '.github/workflows/android-device-qa.yml'
       - 'tools/lantype-device-qa/**'
   workflow_dispatch:
+    inputs:
+      mode:
+        description: Scope of signed APK device QA
+        required: true
+        type: choice
+        default: upgrade
+        options:
+          - upgrade
+          - candidate-startup
 
 permissions:
   contents: read
@@ -24,6 +33,7 @@ jobs:
         shell: bash
     env:
       ANDROID_SERIAL: emulator-5554
+      QA_MODE: ${{ inputs.mode || 'upgrade' }}
       # API 30's observed ARM-translation startup crash remains separate evidence.
       # API 35 is a comparison target; the actual ARM ABI/bridge gates still apply.
       QA_API_LEVEL: '35'
@@ -132,7 +142,20 @@ jobs:
             echo 'Android framework failed before product installation'
             exit 1
           fi
+      - name: Check only the signed candidate installation and first startup
+        if: ${{ env.QA_MODE == 'candidate-startup' }}
+        timeout-minutes: 8
+        # This separate mode does not install the old APK or claim an upgrade,
+        # input, onboarding completion, or clipboard-privacy result.
+        run: |
+          python3 -u tools/lantype-device-qa/run-candidate-startup.py \
+            --candidate-apk "$QA_ROOT/apks/LanType-1.1.1-offline-arm64-v8a.apk" \
+            --host-apk "$QA_ROOT/host/lantype-editor-host.apk" \
+            --startup-timeout 120 \
+            --output "$QA_ROOT/evidence/candidate-startup" \
+            2>&1 | tee "$QA_ROOT/evidence/candidate-startup-console.txt"
       - name: Smoke test the real signed APKs and direct upgrade
+        if: ${{ env.QA_MODE == 'upgrade' }}
         timeout-minutes: 15
         # The driver must disable guest networking BEFORE its first product launch.
         # ARM translation is functional evidence, not physical ARM/16 KiB validation.
@@ -144,6 +167,7 @@ jobs:
             --output "$QA_ROOT/evidence/smoke" \
             2>&1 | tee "$QA_ROOT/evidence/smoke-console.txt"
       - name: Verify private clipboard copies across a real product process restart
+        if: ${{ env.QA_MODE == 'upgrade' }}
         timeout-minutes: 5
         # Separate evidence: a core pass does not imply clipboard-extension pass.
         run: |
