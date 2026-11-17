@@ -44,6 +44,32 @@ CPUINFO_PATCH = "patches/onnxruntime/cpuinfo-4628dc0-pr457-l2-backport.patch"
 CPUINFO_PATCH_SHA = "6281246ef5bafdae6f64a9b1c4bbd64ddcd6b0b65a8150c9bd0343e3cfdf998b"
 CPUINFO_BEFORE = "daaf6633d55c983e9b517d748d1fdf3df580c6c8bef03e4fd3811ba47f175e4f"
 CPUINFO_AFTER = "94a7bd19139090a0568e173f80dea5e42ea1326d04e3eddf46554f5243e5229c"
+# The seven original ORT Dawn patches use GNU patch's default maximum fuzz 2.
+# These exact before/after identities were checked, in order, against the
+# locked Dawn archive; they keep contextual fuzz from accepting another file.
+DAWN_PATCH_TARGETS = {
+    "dawn-1": ("third_party/emdawnwebgpu/pkg/webgpu/src/webgpu.cpp",
+               "4473a7d401dc3f73298c2a4256cccf00fa99c01b108aa0b20e36c3ce2a172677",
+               "c92fe981b7e5e344f2222c8bf7b42d57934331e25bf0d8b3218ada206f5ebacd"),
+    "dawn-2": ("src/tint/CMakeLists.txt",
+               "649084e2eab11044de97cfb480104b43a03232b2eae56a20d64fca7fb547b56a",
+               "21130a04f2a8bca2c293587826b4f9a18f38688a2307b6f6eb5b55f83393cb47"),
+    "dawn-3": ("third_party/emdawnwebgpu/pkg/webgpu/src/library_webgpu.js",
+               "54b3bb8228f8eeafb514f0aad6a72abf8b68ca23864d17897962d51219565897",
+               "25c26d17b01e027935481c09c8a9ba29b9aa091444e0e3279a67db50d89835ab"),
+    "dawn-4": ("third_party/emdawnwebgpu/pkg/webgpu/src/library_webgpu.js",
+               "25c26d17b01e027935481c09c8a9ba29b9aa091444e0e3279a67db50d89835ab",
+               "eb17c62ecb80e3b1c1b533b28394c8602d98c6cfcb5b853fef0a4ab0ac9a3685"),
+    "dawn-5": ("third_party/CMakeLists.txt",
+               "316f7da1a4ca75782faf5193edad8ee8b4d29e20954228aa7f9fe7663b7a22a6",
+               "45181fdf8d092fc07218ccd8c83fd3bbc77f75493f5d275634d89f93f16862ee"),
+    "dawn-6": ("third_party/emdawnwebgpu/pkg/webgpu/src/webgpu.cpp",
+               "c92fe981b7e5e344f2222c8bf7b42d57934331e25bf0d8b3218ada206f5ebacd",
+               "f44d107a978dcd61f0189d0ff41e2f2c49fa190e426a1b4eb1754d0218ba48d7"),
+    "dawn-7": ("src/emdawnwebgpu/CMakeLists.txt",
+               "7164e1167e66ef1749f5dbb91ad49e0ffd8b70d2ed67c69c6d3da4b6ca9faab9",
+               "44c523a51dd57187a1b6221ad0f18c18a2dabcfadcb59da7b9cae67f8e942aeb"),
+}
 SUPPLEMENT_SHA = "6eabae67a60bdb0f3eaab9858f58b1f712edb9f85bb4c5cf75d800e7f530691d"
 SUPPLEMENT_BYTES = 105554498
 SUPPLEMENT_NAME = "LanType-native-source-webgpu-supplement-v1"
@@ -554,7 +580,17 @@ class Builder:
         verify_file(path, sha256=expected_sha)
         if any(item["id"] == identity for item in self.state["patches"]):
             return
-        args = [str(self.patch), "--batch", "--binary", "--ignore-whitespace", "--fuzz=0", "--no-backup-if-mismatch", "-p1", "-i", str(path)]
+        dawn_target = DAWN_PATCH_TARGETS.get(identity)
+        fuzz_limit = 2 if dawn_target else 0
+        target_evidence = None
+        if dawn_target:
+            target, before, after = dawn_target
+            observed = verify_file(destination / target)["sha256"]
+            require(observed in (before, after), "Dawn patch target identity changed: " + identity)
+            target_evidence = {"path": target, "expectedBeforeSha256": before,
+                               "observedBeforeSha256": observed, "expectedAfterSha256": after}
+        args = [str(self.patch), "--batch", "--binary", "--ignore-whitespace", "--fuzz=" + str(fuzz_limit),
+                "--no-backup-if-mismatch", "-p1", "-i", str(path)]
         status, _ = self.command(args + ["--forward", "--dry-run"], identity + "-check", cwd=destination, timeout=60, allow_failure=True)
         if status == 0:
             self.command(args + ["--forward"], identity, cwd=destination, timeout=60)
@@ -563,7 +599,10 @@ class Builder:
             status, _ = self.command(args + ["--reverse", "--dry-run"], identity + "-already-applied", cwd=destination, timeout=60, allow_failure=True)
             require(status == 0, "Patch does not apply cleanly in either direction: " + identity)
             mode = "recovered-after-interruption"
-        self.state["patches"].append({"id": identity, "sha256": expected_sha, "path": str(path), "mode": mode})
+        if dawn_target:
+            verify_file(destination / dawn_target[0], sha256=dawn_target[2])
+        self.state["patches"].append({"id": identity, "sha256": expected_sha, "path": str(path), "mode": mode,
+                                      "maximumContextFuzz": fuzz_limit, "targetIdentity": target_evidence})
         self.save()
 
     def prepare(self):

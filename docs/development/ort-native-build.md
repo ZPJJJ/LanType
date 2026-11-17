@@ -36,6 +36,8 @@ Dawn 的七份源档从已发布的独立补充 ZIP 取得。先校验整个 ZIP
 
 `onnxruntime_CUSTOM_DAWN_SRC_PATH` 会跳过 ORT 默认的自动补丁分支，因此构建器按照锁中的 `applyOrder`，对独立 Dawn 树应用七个固定 ORT 补丁，每份都先核对大小/摘要依据中的 SHA-256。Dawn 使用锁定的 SPIRV-Headers、SPIRV-Tools、Vulkan-Headers、Vulkan-Utility-Libraries、Jinja2 和 MarkupSafe 路径，并复用 ORT 的 Abseil。Vulkan/SPIR-V writer 保持开启；其他依赖仍由固定 ORT CMake 应用其已有补丁。
 
+首次云端准备 [run 44162919449](https://github.com/ZPJJJ/LanType/actions/runs/44162919449) 揭示了一个构建脚本差异：固定 Dawn 的上下文已变动，上游 GNU patch 默认允许的上下文容错不可省略。七个 Dawn 补丁现在显式使用上游默认的最大 `fuzz=2`，并逐步强校验实际目标文件的修改前后 SHA-256；补丁输出保留实际 fuzz 和行偏移。对固定源码的文件级检查确认七步均可应用。cpuinfo 补丁仍要求 `fuzz=0` 及原有前后 SHA-256。该检查只证明源码准备，不代表编译或 Android 运行通过。
+
 ## 空间控制
 
 调用者必须提供独占的新文件系统挂载根，容量上限 **4608 MiB（4.5 GiB）**。普通目录、绑定到同一设备的目录、过大文件系统和非 Linux 环境会在执行阶段前被拒绝。脚本不会自行安装 NDK/CMake、挂载卷或清空未知目录。
