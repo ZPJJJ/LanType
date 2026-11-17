@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "baselineRevision": "60903e8",
+  "status": "reproduced-before-fix",
+  "scope": "Temporary-directory JVM filesystem probe, no Android application or native Rime execution",
+  "productionSources": [
+    {
+      "path": "app/src/main/java/com/kingzcheung/xime/rime/RimeConfigHelper.kt",
+      "sha256BeforeFix": "0f6cf60d641e17a5f9ee86ce2226daac956148ca0dfe4079d2c044aaddd36e8a",
+      "methods": [
+        "migrateOldStructure",
+        "migrateOldMarketDir"
+      ],
+      "adaptation": "Method bodies extracted unchanged; visibility changed from private to public; Android Context/logging and SchemaManager directory getter replaced with filesystem-only stubs."
+    },
+    {
+      "path": "app/src/main/java/com/kingzcheung/xime/settings/BackupRestoreTransaction.kt",
+      "sha256": "ef8fc93a7fa1f932a1862da079285d805ba8b0cbd39a99935ae8dce1870248fa",
+      "adaptation": "Unchanged production source. BackupManager constants/irrelevant allowlist branches stubbed; preferences validate only the fixture {} metadata."
+    }
+  ],
+  "compiler": {
+    "name": "Kotlin JVM compiler embeddable",
+    "version": "2.3.20",
+    "heapLimitMiB": 256
+  },
+  "execution": {
+    "entryPoint": "com.kingzcheung.xime.settings.ProbeKt",
+    "exitCode": 0,
+    "assertedCases": 3,
+    "stdout": "{\"cases\":3,\"legacyRestoreConflictDataLost\":true,\"noConflictMigratedPreserved\":true,\"marketConflictDataLost\":true,\"androidOrNativeRun\":false}"
+  },
+  "cases": [
+    {
+      "name": "restored_legacy_userdb_conflicts_with_flat_userdb",
+      "setup": [
+        "Existing rime/rime_ice.userdb/CURRENT and rime/default.custom.yaml",
+        "Backup entries: _xime_backup/settings.json, user/rime_ice.userdb/CURRENT, user/rime_ice.userdb/000001.ldb, user/default.custom.yaml"
+      ],
+      "operations": [
+        "Production BackupRestoreTransaction.restore",
+        "Extracted original migrateOldStructure"
+      ],
+      "observed": {
+        "restoreAccepted": true,
+        "legacyFilePresentAfterRestore": true,
+        "currentFlatFilesPreserved": true,
+        "legacyUserDirectoryDeleted": true,
+        "restoredPersonalDatabaseFileLost": true
+      }
+    },
+    {
+      "name": "legacy_userdb_without_destination_conflict",
+      "setup": [
+        "No flat user database",
+        "Backup entries under user/rime_ice.userdb/"
+      ],
+      "operations": [
+        "Production BackupRestoreTransaction.restore",
+        "Extracted original migrateOldStructure"
+      ],
+      "observed": {
+        "restoreAccepted": true,
+        "legacyDatabaseMovedToFlatLayout": true,
+        "personalFileBytesPreserved": true,
+        "emptyLegacyDirectoryRemoved": true
+      }
+    },
+    {
+      "name": "legacy_market_package_conflicts_with_current_package",
+      "setup": [
+        "Existing market/custom/active.schema.yaml",
+        "Legacy rime/market/custom/personal.dict.yaml"
+      ],
+      "operations": [
+        "Extracted original migrateOldMarketDir"
+      ],
+      "observed": {
+        "currentPackagePreserved": true,
+        "legacyMarketDirectoryDeleted": true,
+        "legacyPersonalDictionaryLost": true
+      }
+    }
+  ],
+  "limitations": [
+    "This proves the legacy-restore/conflict branch; an ordinary 1.1.0 flat-layout upgrade does not itself create user/shared directories.",
+    "No actual historical user backup, valid LevelDB database, Android AssetManager, Binder, microphone, or native model is used.",
+    "The independent host compiler is not the Android Gradle compiler, and this result is not device acceptance."
+  ],
+  "hostProbeSource": "package com.kingzcheung.xime.settings\nimport java.io.File\nimport java.util.zip.ZipEntry\nimport java.util.zip.ZipOutputStream\n\nclass Context(val filesDir: File)\nobject Log { fun i(tag: String, text: String) {} }\nobject FileLogger { fun w(tag: String, text: String) {} }\nobject SchemaManager { fun getMarketDir(context: Context) = File(context.filesDir, \"market\") }\nobject BackupManager {\n const val META_PREFIX = \"_xime_backup/\"\n const val CELLS_DIR = \"cells\"\n val SETTINGS_PREFS = emptySet<String>()\n val PARTIAL_PREFS = emptyMap<String, Set<String>>()\n fun isFilesEntry(path: String, personal: Boolean) = false\n fun isCellEntry(path: String) = false\n}\nobject OriginalMigration {\n const val TAG = \"MigrationHost\"\n fun migrateOldStructure(context: Context, rimeDir: File) {\n        val oldSharedDir = File(context.filesDir, \"rime/shared\")\n        val oldUserDir = File(context.filesDir, \"rime/user\")\n        \n        if (!oldSharedDir.exists() && !oldUserDir.exists()) return\n        \n        Log.i(TAG, \"Migrating old rime directory structure to single rime/ dir...\")\n        \n        if (!rimeDir.exists()) rimeDir.mkdirs()\n        \n        // 迁移 user 数据（用户配置、build 产物、userdb）\n        if (oldUserDir.exists()) {\n            oldUserDir.listFiles()?.forEach { file ->\n                val target = File(rimeDir, file.name)\n                if (!target.exists()) {\n                    file.renameTo(target)\n                }\n            }\n        }\n        \n        // 迁移 shared 数据（方案文件）\n        if (oldSharedDir.exists()) {\n            oldSharedDir.listFiles()?.forEach { file ->\n                val target = File(rimeDir, file.name)\n                if (!target.exists()) {\n                    file.renameTo(target)\n                }\n            }\n        }\n        \n        // 删除旧目录\n        oldSharedDir.deleteRecursively()\n        oldUserDir.deleteRecursively()\n        \n        Log.i(TAG, \"Migration complete\")\n    }\n\nfun migrateOldMarketDir(context: Context) {\n        val oldMarket = File(context.filesDir, \"rime/market\")\n        if (!oldMarket.exists()) return\n\n        val newMarket = SchemaManager.getMarketDir(context)\n        if (!newMarket.exists()) {\n            // 新位置不存在，直接重命名\n            if (oldMarket.renameTo(newMarket)) {\n                Log.i(TAG, \"Migrated rime/market/ -> market/\")\n            } else {\n                FileLogger.w(TAG, \"Failed to rename rime/market/ to market/\")\n            }\n        } else {\n            // 新位置已存在，逐项合并\n            oldMarket.listFiles()?.forEach { sub ->\n                val target = File(newMarket, sub.name)\n                if (!target.exists()) {\n                    sub.renameTo(target)\n                }\n            }\n            oldMarket.deleteRecursively()\n            Log.i(TAG, \"Merged rime/market/ into market/\")\n        }\n    }\n}\nfun write(root: File, name: String, content: String) = File(root,name).apply { parentFile.mkdirs(); writeText(content) }\nfun backup(vararg entries: Pair<String,String>): ByteArray {\n val buffer=java.io.ByteArrayOutputStream()\n ZipOutputStream(buffer).use { zip ->\n  for((name,text) in entries) { zip.putNextEntry(ZipEntry(name)); zip.write(text.toByteArray()); zip.closeEntry() }\n }\n return buffer.toByteArray()\n}\nfun restore(root:File, archive:ByteArray) = BackupRestoreTransaction.restore(root, object:BackupPreferenceStore {\n override fun validate(json:ByteArray) { check(json.toString(Charsets.UTF_8)==\"{}\") }\n override fun snapshot(name:String) = \"{}\".toByteArray()\n override fun restore(name:String,json:ByteArray,replace:Boolean) {}\n},archive)\nfun main() {\n val base=kotlin.io.path.createTempDirectory(\"lantype-migration-probe-\").toFile()\n try {\n  val conflict=File(base,\"conflict\").apply{mkdirs()}\n  write(conflict,\"rime/rime_ice.userdb/CURRENT\",\"current-flat-database\")\n  write(conflict,\"rime/default.custom.yaml\",\"current-flat-settings\")\n  check(restore(conflict,backup(\"_xime_backup/settings.json\" to \"{}\",\n      \"user/rime_ice.userdb/CURRENT\" to \"restored-legacy-database\",\n      \"user/rime_ice.userdb/000001.ldb\" to \"legacy-personal-word-data\",\n      \"user/default.custom.yaml\" to \"restored-legacy-settings\")).isSuccess)\n  check(File(conflict,\"rime/user/rime_ice.userdb/000001.ldb\").readText()==\"legacy-personal-word-data\")\n  OriginalMigration.migrateOldStructure(Context(conflict),File(conflict,\"rime\"))\n  check(File(conflict,\"rime/rime_ice.userdb/CURRENT\").readText()==\"current-flat-database\")\n  check(File(conflict,\"rime/default.custom.yaml\").readText()==\"current-flat-settings\")\n  check(!File(conflict,\"rime/user\").exists())\n  check(!File(conflict,\"rime/rime_ice.userdb/000001.ldb\").exists())\n\n  val fresh=File(base,\"fresh\").apply{mkdirs()}\n  check(restore(fresh,backup(\"_xime_backup/settings.json\" to \"{}\",\n      \"user/rime_ice.userdb/CURRENT\" to \"legacy-database\",\n      \"user/rime_ice.userdb/000001.ldb\" to \"legacy-personal-word-data\")).isSuccess)\n  OriginalMigration.migrateOldStructure(Context(fresh),File(fresh,\"rime\"))\n  check(File(fresh,\"rime/rime_ice.userdb/000001.ldb\").readText()==\"legacy-personal-word-data\")\n  check(!File(fresh,\"rime/user\").exists())\n\n  val market=File(base,\"market-conflict\").apply{mkdirs()}\n  write(market,\"market/custom/active.schema.yaml\",\"current\")\n  write(market,\"rime/market/custom/personal.dict.yaml\",\"legacy-market-personal-words\")\n  OriginalMigration.migrateOldMarketDir(Context(market))\n  check(File(market,\"market/custom/active.schema.yaml\").readText()==\"current\")\n  check(!File(market,\"market/custom/personal.dict.yaml\").exists())\n  check(!File(market,\"rime/market\").exists())\n  println(\"{\\\"cases\\\":3,\\\"legacyRestoreConflictDataLost\\\":true,\\\"noConflictMigratedPreserved\\\":true,\\\"marketConflictDataLost\\\":true,\\\"androidOrNativeRun\\\":false}\")\n } finally { base.deleteRecursively() }\n}\n"
+}

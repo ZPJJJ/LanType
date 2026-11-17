@@ -1011,31 +1011,15 @@ object RimeConfigHelper {
         
         if (!rimeDir.exists()) rimeDir.mkdirs()
         
-        // 迁移 user 数据（用户配置、build 产物、userdb）
-        if (oldUserDir.exists()) {
-            oldUserDir.listFiles()?.forEach { file ->
-                val target = File(rimeDir, file.name)
-                if (!target.exists()) {
-                    file.renameTo(target)
-                }
-            }
+        // User data keeps priority. Never merge LevelDB files or discard a source
+        // directory merely because its target already exists or a rename failed.
+        val userComplete = LegacyRimeDirectoryMigration.moveMissingEntries(oldUserDir, rimeDir)
+        val sharedComplete = LegacyRimeDirectoryMigration.moveMissingEntries(oldSharedDir, rimeDir)
+        if (userComplete && sharedComplete) {
+            Log.i(TAG, "Migration complete")
+        } else {
+            FileLogger.w(TAG, "Partial Rime migration; conflicting or unmoved data retained in rime/user or rime/shared")
         }
-        
-        // 迁移 shared 数据（方案文件）
-        if (oldSharedDir.exists()) {
-            oldSharedDir.listFiles()?.forEach { file ->
-                val target = File(rimeDir, file.name)
-                if (!target.exists()) {
-                    file.renameTo(target)
-                }
-            }
-        }
-        
-        // 删除旧目录
-        oldSharedDir.deleteRecursively()
-        oldUserDir.deleteRecursively()
-        
-        Log.i(TAG, "Migration complete")
     }
 
     /** 迁移旧版 market 目录（rime/market/ → market/）。 */
@@ -1044,23 +1028,10 @@ object RimeConfigHelper {
         if (!oldMarket.exists()) return
 
         val newMarket = SchemaManager.getMarketDir(context)
-        if (!newMarket.exists()) {
-            // 新位置不存在，直接重命名
-            if (oldMarket.renameTo(newMarket)) {
-                Log.i(TAG, "Migrated rime/market/ -> market/")
-            } else {
-                FileLogger.w(TAG, "Failed to rename rime/market/ to market/")
-            }
+        if (LegacyRimeDirectoryMigration.moveMissingEntries(oldMarket, newMarket)) {
+            Log.i(TAG, "Migrated rime/market/ -> market/")
         } else {
-            // 新位置已存在，逐项合并
-            oldMarket.listFiles()?.forEach { sub ->
-                val target = File(newMarket, sub.name)
-                if (!target.exists()) {
-                    sub.renameTo(target)
-                }
-            }
-            oldMarket.deleteRecursively()
-            Log.i(TAG, "Merged rime/market/ into market/")
+            FileLogger.w(TAG, "Partial market migration; conflicting or unmoved data retained in rime/market")
         }
     }
 
