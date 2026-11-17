@@ -24,14 +24,15 @@ jobs:
         shell: bash
     env:
       ANDROID_SERIAL: emulator-5554
-      ANDROID_AVD_HOME: ${{ runner.temp }}/lantype-device-qa/avd
-      QA_ROOT: ${{ runner.temp }}/lantype-device-qa
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
       - name: Prepare small evidence directory
         run: |
+          export QA_ROOT="$RUNNER_TEMP/lantype-device-qa"
+          export ANDROID_AVD_HOME="$QA_ROOT/avd"
+          printf 'QA_ROOT=%s\nANDROID_AVD_HOME=%s\n' "$QA_ROOT" "$ANDROID_AVD_HOME" >> "$GITHUB_ENV"
           mkdir -p "$QA_ROOT/evidence" "$QA_ROOT/apks" "$QA_ROOT/host" "$ANDROID_AVD_HOME"
           python3 - <<'PY'
           import json, os, shutil
