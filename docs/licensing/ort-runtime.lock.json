@@ -1,0 +1,60 @@
+{
+  "abi": "arm64-v8a",
+  "kind": "lantype-ort-runtime-lock",
+  "library": {
+    "bytes": 29568744,
+    "sha256": "ae250081faa6cd742f6edade2a23bf29a96ba690fa19a01e3bd192548cf89f1e"
+  },
+  "originalAar": {
+    "bytes": 45634470,
+    "sha256": "f351a0638696f54b35184290dbc001d66daae17281ad0b548d2c70347d53b8a9"
+  },
+  "ortVersion": "1.28.0",
+  "schemaVersion": 1,
+  "status": "accepted",
+  "outputs": {
+    "fullAar": {
+      "bytes": 120716721,
+      "sha256": "de572de0c790119e7085144070fc5580e7857c2eba68998aba287f59ad98abc0"
+    },
+    "companionAar": {
+      "bytes": 91147839,
+      "sha256": "eb70f3c6932b75b20e71ab3e9808385120b7b5bf3c0345d61b689af504fe4562"
+    },
+    "library": {
+      "bytes": 29568744,
+      "sha256": "ae250081faa6cd742f6edade2a23bf29a96ba690fa19a01e3bd192548cf89f1e"
+    }
+  },
+  "acceptanceEvidence": {
+    "staticAbiReceiptSha256": "d28c2890dbed469701f916c297c681e6bb3f5dec128a9986bb7cc85bdc555e7f",
+    "androidApiReceiptSha256": "097cd558327c1b6bac8a5bac1b097423f30b1f12d4ddbe8cbfe6a26389eac11e",
+    "scope": "static-abi-and-positive-load-api-environment-only",
+    "positiveApiRunId": 44232550186,
+    "positiveApiWorkflowConclusion": "failure",
+    "positiveApiWorkflowFailurePhase": "cleanup",
+    "followupRunId": 44235315243,
+    "followupWorkflowConclusion": "failure",
+    "followupProbeExecuted": false,
+    "limitations": [
+      "Provider/model inference was not tested, including GPU inference.",
+      "LanType product APK, Chinese/English input and product integration were not tested.",
+      "No physical ARM64 or 16 KiB runtime acceptance is claimed.",
+      "Run 6 and run 7 workflows both concluded failure; only run 6 positive JNI/API evidence is accepted.",
+      "This packaging/restoration operation executes no native or SDK code."
+    ]
+  },
+  "distribution": {
+    "archiveUrl": "https://github.com/ZPJJJ/LanType/releases/download/ort-runtime-1.28.0-r1/LanType-ORT-1.28.0-r1-runtime.zip",
+    "archive": {
+      "bytes": 97731603,
+      "sha256": "e03422b48b8a36f7a83cc8a458ec7c97c744d34139f219ee95cb28093e2d9d09"
+    },
+    "root": "LanType-ORT-1.28.0-r1"
+  },
+  "componentManifest": {
+    "bytes": 174810,
+    "sha256": "3db53612cd63bdb905bfb77cf435e343b4fdb5cb35783fa771e01354be47f000"
+  },
+  "publicationStatusAtPreparation": "draft-not-published"
+}

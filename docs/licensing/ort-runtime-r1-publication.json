@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "kind": "lantype-ort-component-publication",
+  "repository": "ZPJJJ/LanType",
+  "release": {
+    "id": 449527123,
+    "tag": "ort-runtime-1.28.0-r1",
+    "url": "https://github.com/ZPJJJ/LanType/releases/tag/ort-runtime-1.28.0-r1",
+    "publishedAt": "2026-11-18T04:33:36Z",
+    "draft": false,
+    "prerelease": true,
+    "tagCommit": "b5c46a43eeb48b574e067ff8a12316baea0fc938"
+  },
+  "assets": [
+    {
+      "id": 761907317,
+      "name": "accepted-verify-receipt.json",
+      "bytes": 822,
+      "sha256": "f38dfb0c868c71dbb1a6544579e50bc2654713b7d76f840bbecdfad04a8421c5",
+      "url": "https://github.com/ZPJJJ/LanType/releases/download/ort-runtime-1.28.0-r1/accepted-verify-receipt.json",
+      "state": "uploaded"
+    },
+    {
+      "id": 761904810,
+      "name": "LanType-ORT-1.28.0-r1-runtime.zip",
+      "bytes": 97731603,
+      "sha256": "e03422b48b8a36f7a83cc8a458ec7c97c744d34139f219ee95cb28093e2d9d09",
+      "url": "https://github.com/ZPJJJ/LanType/releases/download/ort-runtime-1.28.0-r1/LanType-ORT-1.28.0-r1-runtime.zip",
+      "state": "uploaded"
+    },
+    {
+      "id": 761905088,
+      "name": "ort-runtime-r1-accepted.lock.json",
+      "bytes": 2313,
+      "sha256": "e751086cb82c90bb631bfdebf45f78e2f7462fcccf52373ca9141f45f0bf207b",
+      "url": "https://github.com/ZPJJJ/LanType/releases/download/ort-runtime-1.28.0-r1/ort-runtime-r1-accepted.lock.json",
+      "state": "uploaded"
+    },
+    {
+      "id": 761907184,
+      "name": "restore-receipt.json",
+      "bytes": 1082,
+      "sha256": "bc4bd6856fa5653358fedbac1a503f853b6a6a7ee95bd1afce0ee02d2abe591c",
+      "url": "https://github.com/ZPJJJ/LanType/releases/download/ort-runtime-1.28.0-r1/restore-receipt.json",
+      "state": "uploaded"
+    },
+    {
+      "id": 761907342,
+      "name": "SHA256SUMS.txt",
+      "bytes": 382,
+      "sha256": "0347459411a4d75be5dcafa46e265628f60641b4f08edc4cb9441cd364aae120",
+      "url": "https://github.com/ZPJJJ/LanType/releases/download/ort-runtime-1.28.0-r1/SHA256SUMS.txt",
+      "state": "uploaded"
+    }
+  ],
+  "acceptedLock": {
+    "repositoryPath": "docs/licensing/ort-runtime.lock.json",
+    "bytes": 2313,
+    "sha256": "e751086cb82c90bb631bfdebf45f78e2f7462fcccf52373ca9141f45f0bf207b",
+    "preparationStatusFieldIsHistorical": true
+  },
+  "componentManifest": {
+    "bytes": 174810,
+    "sha256": "3db53612cd63bdb905bfb77cf435e343b4fdb5cb35783fa771e01354be47f000"
+  },
+  "scope": "static ABI and positive Android load/API/environment only; application integration and device behavior await product verification",
+  "nativeRun": 44164186969,
+  "positiveApiRun": 44232550186,
+  "positiveApiWorkflowConclusion": "failure",
+  "positiveApiFailurePhase": "cleanup",
+  "followupRun": 44235315243,
+  "followupProbeExecuted": false,
+  "unauthenticatedAvailability": {
+    "zipHeadStatus": 200,
+    "zipContentLength": 97731603,
+    "lockGetStatus": 200,
+    "lockBytes": 2313,
+    "lockSha256": "e751086cb82c90bb631bfdebf45f78e2f7462fcccf52373ca9141f45f0bf207b",
+    "authorizationHeaderSent": false,
+    "finalHost": "release-assets.githubusercontent.com"
+  }
+}

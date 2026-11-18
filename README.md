@@ -4,18 +4,19 @@
 
 LanType 基于 [CyIME 1.15.94](https://github.com/Cyletix/CyIME/tree/6f97a555ced063c0bcad73c600fe420f5e4b2536) 和 Rime 开发，保留上游版权和各组件许可，是独立发行版。普通输入、随包语音、单字手写、图片识字及工具舱在手机上运行。应用不申请 `INTERNET` 权限，开发电脑仍可下载公开 SDK、构建依赖和经过校验的资源。
 
-当前开发分支目标：**1.1.2 / versionCode 4**，应用 ID：`app.lantype.keyboard`。支持目标为 **Android 9 及以上、ARM64**。本批接入独立重建的 ORT 原生候选，并补齐构建和许可材料；当前没有已验收的 1.1.2 APK。实际进度见 [1.1.2 验证记录](docs/development/lantype-1.1.2-validation.md)。已发布的 [1.1.1 验证记录](docs/validation-1.1.1/VALIDATION.md) 和 [1.1.0 验收记录](docs/validation-1.1.0/VALIDATION.md) 保留历史证据。
+当前开发分支目标：**1.1.2 / versionCode 4**，应用 ID：`app.lantype.keyboard`。支持目标为 **Android 9 及以上、ARM64**。本批正在接入已公开的独立重建 ORT 组件，并补齐构建和许可材料；当前没有已验收的 1.1.2 APK。实际进度见 [1.1.2 验证记录](docs/development/lantype-1.1.2-validation.md)。已发布的 [1.1.1 验证记录](docs/validation-1.1.1/VALIDATION.md) 和 [1.1.0 验收记录](docs/validation-1.1.0/VALIDATION.md) 保留历史证据。
 
 **发行状态：开发候选，已有旧版启动阻塞，尚不具备稳定收费发行条件。** 已发布 **1.1.1** 的源码 CI 有 187 个 JUnit 用例通过；该签名 APK 在 Android 15 的 ARM64 转译模拟器上完成身份、断网和安装检查，但首次启动在 ONNX Runtime 动态库初始化阶段发生原生崩溃。旧版 1.1.0 的 Android 11/15 对照也失败。旧版结果、原始证据与商用门槛见 [发布后验证补充](docs/validation-1.1.1/POST-RELEASE.md)。新候选的输入、升级、模型与物理 ARM64 验收仍待实际执行。
 
 ## 1.1.2 当前进度
 
-- [独立 ORT 构建](https://github.com/ZPJJJ/LanType/actions/runs/44164186969) 已成功，10 项静态 ABI 检查通过；新库仍是待 Android 运行验证的候选。
+- [独立 ORT 构建](https://github.com/ZPJJJ/LanType/actions/runs/44164186969) 已成功，10 项静态 ABI 检查通过；[第六次普通 Android API 检查](https://github.com/ZPJJJ/LanType/actions/runs/44232550186) 已实际通过同一新库的加载、C API 28、provider 枚举及环境创建/释放。
 - 默认预编译与可选源码模式的接入代码已准备，NDK 统一固定为 29；最终包要求保留其余 11 个原生库的字节身份。
 - 17 份 NDK、Dawn 和补丁通知已提交，完整资源检查覆盖 396 个 assets 和 11 个 raw；原有 379 条资产记录保持不变。
-- [第五次 API 环境准备](https://github.com/ZPJJJ/LanType/actions/runs/44177101937) 已通过工具、音频加载依赖和 KVM 检查，但官方镜像解包触及现有磁盘预算。镜像流式校验与稀疏解包入口已准备；模拟器启动要求与原 5 GiB 总预算存在冲突；用户已于 2026-11-18 批准仅对云端 Android QA 使用 16 GiB，相关[预算配置](docs/qa/ANDROID-QA-STORAGE-PROPOSAL.md) 已应用，实际运行结果待记录。
+- 第六次检查使用 API 35 x86_64、ARM64 转译和 4 KiB 页大小的模拟器；API 结果为 `passed`，但最后工作卷卸载失败，整个 workflow 仍为 `failure`。[第七次运行](https://github.com/ZPJJJ/LanType/actions/runs/44235315243) 停在主机 ADB 登记，未启动 guest、未执行 API probe；[后续诊断修复](https://github.com/ZPJJJ/LanType/commit/b5c46a43eeb48b574e067ff8a12316baea0fc938) 已提交，尚未取得新运行结果。
+- 用户于 2026-11-18 批准的[云端 Android QA 专用 16 GiB 预算](docs/qa/ANDROID-QA-STORAGE-PROPOSAL.md) 已用于上述实际运行；独立原生和应用整包构建仍受原 5 GiB 预算约束。
 
-新组件、accepted 锁、1.1.2 整包和签名发行尚待完成。详见 [本批变更](docs/CHANGELOG-1.1.2.zh-CN.md) 和 [组件来源](docs/licensing/ORT-RUNTIME-1.28.0-r1.md)。
+[ORT 1.28.0-r1 组件](https://github.com/ZPJJJ/LanType/releases/tag/ort-runtime-1.28.0-r1) 已于 2026-11-18 作为构建依赖预发布，固定 ZIP、三份输出和 [accepted 锁](docs/licensing/ort-runtime.lock.json) 的身份见[公开发行记录](docs/licensing/ort-runtime-r1-publication.json)。接受范围为静态 ABI 与普通 API 加载/环境生命周期；1.1.2 整包和签名发行仍待完成，模型推理、输入法功能、真实 ARM64 手机或 16 KiB 系统均未因此验收。详见 [本批变更](docs/CHANGELOG-1.1.2.zh-CN.md) 和 [组件来源](docs/licensing/ORT-RUNTIME-1.28.0-r1.md)。
 
 ## 已发布 1.1.1 的修复
 
@@ -85,7 +86,7 @@ python3 scripts/build-camerax-native.py --verify-only
 python3 scripts/verify-commercial-resources.py
 ```
 
-**当前开发分支还缺已验收的 ORT 组件发行和 `docs/licensing/ort-runtime.lock.json`，不能仅执行上述准备就生成合格的 1.1.2 安装包。** 真实 Android API 验证完成后，再按 [完整构建流程](docs/LANTYPE-BUILD-AND-SOURCES.md) 恢复被锁定的新组件并执行 `:app:assembleOffline`。构建入口主动拒绝缺失或未接受的运行锁。
+ORT 组件与 `docs/licensing/ort-runtime.lock.json` 已公开。完成上述基础准备后，再按 [完整构建流程](docs/LANTYPE-BUILD-AND-SOURCES.md) 恢复固定的新组件并执行 `:app:assembleOffline`。构建入口核对 accepted 锁与三份输出；构建成功后的安装包还需完成产品验证。
 
 应用代码自行编译；Rime 等引擎复用经固定 SHA-256 校验的上游原生库和 Sherpa Java 绑定。CameraX 的两个 JNI 库使用固定的公开模块源码与 libyuv 源码重新构建，最终 APK 必须通过替换产物的字节校验。原生提取脚本不恢复上游 APK 的旧词库或模型。所需大文件不直接塞入 Git 历史，发行资源归档和固定来源用于恢复它们。
 

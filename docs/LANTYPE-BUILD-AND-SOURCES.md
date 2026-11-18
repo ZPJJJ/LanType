@@ -1,6 +1,6 @@
 # LanType 1.1.2 构建、资源与对应源码（工作稿）
 
-本文件描述 `1.1.2 / versionCode 4` 的构建与发行准备。**当前没有本批已验收的 APK 或已公开的新 ORT component ZIP；不能据本文宣布首启问题已修好或稳定收费版已经可用。** 已完成的原生构建、环境准备失败、待补发行身份及设备验收分别记录在 [1.1.2 验证工作稿](development/lantype-1.1.2-validation.md)。
+本文件描述 `1.1.2 / versionCode 4` 的构建与发行准备。**新 ORT 已取得一次普通 Android API 通过结果，组件 ZIP 与 accepted 锁已公开；当前没有本批已验收的 APK，不能据本文宣布应用首启问题已修好或稳定收费版已经可用。** 原生构建、API 检查、workflow 失败、组件发行身份及待完成的设备验收分别记录在 [1.1.2 验证工作稿](development/lantype-1.1.2-validation.md)。
 
 已有 [1.1.1 变更记录](CHANGELOG-1.1.1.zh-CN.md)、[1.1.1 验证记录](validation-1.1.1/VALIDATION.md)、旧 APK、源码 ZIP、附件和标签保留原样。本批变更见 [1.1.2 变更工作稿](CHANGELOG-1.1.2.zh-CN.md)，旧测试结果不作为本批通过记录。
 
@@ -14,7 +14,11 @@ ae250081faa6cd742f6edade2a23bf29a96ba690fa19a01e3bd192548cf89f1e
 
 静态 ABI 检查及 AAR 成员比较的身份和范围见 [ORT 1.28.0-r1 组件说明](licensing/ORT-RUNTIME-1.28.0-r1.md)。这些结果不等于 Android 正常初始化、模型推理或输入法功能通过。
 
-[普通 API QA 第五次运行 44177101937](https://github.com/ZPJJJ/LanType/actions/runs/44177101937) 已通过宿主音频加载依赖和 KVM 检查，随后官方 API 35 镜像解包触及工作卷的 256 MiB 保留线；**没有进入候选的原生 API 正向检查**。流式校验、分段读取和稀疏解包入口已准备并完成静态审阅，尚未执行。模拟器启动还需超出现有 5 GiB 总预算的空间，[云端 QA 专用 16 GiB 预算](qa/ANDROID-QA-STORAGE-PROPOSAL.md) 已于 2026-11-18 获用户批准并应用；实际新运行结果待登记。新组件 ZIP、accepted 锁、整包 CI、签名 APK 和产品设备验证仍待完成。
+[普通 API QA 第六次运行 44232550186](https://github.com/ZPJJJ/LanType/actions/runs/44232550186) 在 API 35 x86_64、ARM64 bridge、4 KiB 页大小的 guest 中，通过上述同一 ELF 的 `dlopen`、C API 28、四种 provider 枚举及 `CreateEnv` / 释放。`result.json` 为 `passed`，SHA-256 `097cd558327c1b6bac8a5bac1b097423f30b1f12d4ddbe8cbfe6a26389eac11e`；最后普通卸载工作卷因 `target is busy` 退出 32，因此 **整个 workflow 为 failure**。这份通过结果只覆盖 API 加载和环境生命周期。
+
+[第七次运行 44235315243](https://github.com/ZPJJJ/LanType/actions/runs/44235315243) 在主机 ADB 进程登记阶段失败，未启动 guest，也未执行 probe；没有新增原生通过或失败结论。[修复提交 b5c46a43](https://github.com/ZPJJJ/LanType/commit/b5c46a43eeb48b574e067ff8a12316baea0fc938) 增加有界身份等待和具体诊断，区分已登记进程与无权读取的其他进程，尚未取得实际运行结果。
+
+第五次运行的空间失败保留在验证记录中。[云端 QA 专用 16 GiB 预算](qa/ANDROID-QA-STORAGE-PROPOSAL.md) 已于 2026-11-18 获用户批准，并用于第六、七次运行；官方镜像准备及 guest 启动已在第六次实际完成。独立原生和 offline 整包构建仍受原 5 GiB 预算约束。新组件 ZIP 与 accepted 锁已作为固定构建输入公开；整包 CI、签名 APK 和产品设备验证仍待完成。
 
 ## 运行离线与开发联网
 
@@ -49,7 +53,7 @@ ae250081faa6cd742f6edade2a23bf29a96ba690fa19a01e3bd192548cf89f1e
 |---|---|
 | 本批应用源码 | 计划交付 `LanType-1.1.2-source-release.zip`；尚待最终源码清单和实际打包回执 |
 | 已公开 `LanType-1.1.0-runtime-dependencies.zip` | 只恢复当前合同继续复用的 **399 个旧输入**，不覆盖新源码或控制文件 |
-| 新 ORT component ZIP | 尚未发布；真实外层 ZIP 身份和公开资产 URL 待写入 `docs/licensing/ort-runtime.lock.json`，不得使用假锁或 latest 下载 |
+| 新 ORT component ZIP | 已在 [ort-runtime-1.28.0-r1](https://github.com/ZPJJJ/LanType/releases/tag/ort-runtime-1.28.0-r1) 预发布；[accepted 锁](licensing/ort-runtime.lock.json) 固定外层 ZIP、三输出和有限范围的验收引用 |
 | 三份基础原生源码 ZIP | 已公开，共 70 份固定源档，分别解压；需要与 Dawn 补充、项目补丁和当前构建器一起提供 |
 | Dawn/WebGPU 源码补充 ZIP | 已公开，补充 7 份源档及原始通知；见 [来源补充说明](licensing/DAWN-SOURCE-SUPPLEMENT.md) |
 | 本批 Git 内 17 份新增通知 | NDK 29 三份、Dawn 原始许可/通知 13 份、项目补丁归属一份；已在提交 `1e7daacdaeac91983a436e1a2614ede02f725125` 公开，396 assets / 11 raw 检查通过；最终新 APK 随包核验仍待构建 |
@@ -58,7 +62,7 @@ ae250081faa6cd742f6edade2a23bf29a96ba690fa19a01e3bd192548cf89f1e
 
 [restore-base-runtime.py](../scripts/restore-base-runtime.py) 只恢复旧集合并校验当前合同；旧 ZIP 内的根 LICENSE、清单及三份旧锁不覆盖本批文件。不要将旧 runtime 根目录整体复制到新源码目录。新增通知也不能靠重新恢复旧 ZIP 补齐。
 
-### 已公开复用附件的固定身份
+### 已公开附件的固定身份
 
 | 附件 | 字节数 | SHA-256 |
 |---|---:|---|
@@ -67,8 +71,9 @@ ae250081faa6cd742f6edade2a23bf29a96ba690fa19a01e3bd192548cf89f1e
 | [基础源码 2 / 3](https://github.com/ZPJJJ/LanType/releases/download/v1.1.0-rc1/LanType-1.1.0-native-source-part-2-of-3.zip) | 339,828,069 | `1ef3f166b8992957e5518b451de50def7db42d1443a1dc32811c3a7fc46c9eec` |
 | [基础源码 3 / 3](https://github.com/ZPJJJ/LanType/releases/download/v1.1.0-rc1/LanType-1.1.0-native-source-part-3-of-3.zip) | 339,828,348 | `7f3b2a772532ba5ff65086efd289ac214577d498974d2253a6e4078547b8b4f7` |
 | [Dawn/WebGPU 补充](https://github.com/ZPJJJ/LanType/releases/download/v1.1.1-rc1/LanType-native-source-webgpu-supplement-v1.zip) | 105,554,498 | `6eabae67a60bdb0f3eaab9858f58b1f712edb9f85bb4c5cf75d800e7f530691d` |
+| [ORT 1.28.0-r1 运行组件](https://github.com/ZPJJJ/LanType/releases/download/ort-runtime-1.28.0-r1/LanType-ORT-1.28.0-r1-runtime.zip) | 97,731,603 | `e03422b48b8a36f7a83cc8a458ec7c97c744d34139f219ee95cb28093e2d9d09` |
 
-公开身份与来源范围见 [Dawn 发布回执](licensing/dawn-source-publication.json) 和 [ORT 组件说明的来源索引](licensing/ORT-RUNTIME-1.28.0-r1.md)。上表没有新 ORT component ZIP；候选 ELF 或 AAR 的摘要不能当作尚未生成的外层 ZIP 摘要。
+公开身份与来源范围见 [Dawn 发布回执](licensing/dawn-source-publication.json)、[ORT 发布回执](licensing/ort-runtime-r1-publication.json)及 [ORT 组件说明](licensing/ORT-RUNTIME-1.28.0-r1.md)。ORT release ID 为 `449527123`，公开时间为 `2026-11-18T04:33:36Z`，`prerelease: true`、`draft: false`；运行 ZIP 的 asset ID 为 `761904810`。仓库 accepted 锁与公开附件为同一份 2,313 字节文件，SHA-256 `e751086cb82c90bb631bfdebf45f78e2f7462fcccf52373ca9141f45f0bf207b`。组件的接受范围不包括应用整包、模型推理或实体设备验收。
 
 ## 默认整包构建
 
@@ -87,7 +92,7 @@ python3 scripts/verify-commercial-resources.py
 
 已有已校验旧 ZIP 时，把第一条恢复命令的 `--download` 改为 `--archive /absolute/path/LanType-1.1.0-runtime-dependencies.zip`。已有全部本地输入时，可单独执行 `restore-base-runtime.py --verify-only`。当前 Git 提供的新增通知也必须存在，资源检查通过后才能进入打包。
 
-**以下 ORT 步骤须等真实组件附件和 accepted 锁完成后再使用。当前工作稿不提供一个可以绕过此条件的候选下载地址。**
+以下命令读取仓库已登记的 accepted 锁，从固定公开附件恢复 ORT；锁中的准备阶段状态字段保留历史原义，实际公开身份由上述发布回执记录。恢复器仍要求精确大小和摘要，不选择 latest。
 
 ```bash
 python3 scripts/restore-ort-runtime.py --download \
@@ -139,7 +144,7 @@ for stage in configure build verify; do
 done
 ```
 
-输出是 `build/Release/libonnxruntime.so`，实际来源与命令分别在工作卷 `receipts/`、`logs/` 和 `src/` 中。该入口构建原生候选，**不会自行接受新库、改写运行锁、集成应用或签名发布**。本次成功 run 的候选也还需要普通 Android API 与应用层验证。
+输出是 `build/Release/libonnxruntime.so`，实际来源与命令分别在工作卷 `receipts/`、`logs/` 和 `src/` 中。该入口构建原生候选，**不会自行接受新库、改写运行锁、集成应用或签名发布**。原始候选 manifest 保留当时的未接受标记；第六次普通 Android API 通过另以实际回执登记，应用层验证仍待完成。
 
 ### 可选 Rime/JNI 源码模式
 
@@ -206,8 +211,8 @@ python3 scripts/verify-commercial-resources.py \
   --source-zip /absolute/path/LanType-1.1.2-source-release.zip
 ```
 
-`--source-only` 仍核验本地运行输入和 accepted ORT。源码 ZIP 使用经审阅的 Git 文件清单；发行清单同时链接旧基础运行 ZIP、三份基础源码 ZIP、Dawn 补充和新 ORT component ZIP。旧基础 ZIP 本来没有新增 17 份通知，不能把它单独当作一套完整 1.1.2 运行材料。所有新附件的实际大小、SHA、公开资产身份与源码提交由发行者在打包和发布后登记；冻结的旧附件不重写。
+`--source-only` 仍核验本地运行输入和 accepted ORT。源码 ZIP 使用经审阅的 Git 文件清单；发行清单同时链接旧基础运行 ZIP、三份基础源码 ZIP、Dawn 补充和已公开 ORT component ZIP。旧基础 ZIP 本来没有新增 17 份通知，不能把它单独当作一套完整 1.1.2 运行材料。本批应用 APK、源码 ZIP 及其附件的实际大小、SHA、公开资产身份与源码提交仍须在真实打包和发布后登记；冻结的旧附件不重写。
 
 [offline-ci.yml](../.github/workflows/offline-ci.yml) 只有 `contents: read`，构建 unsigned APK，不接收正式签名材料或发布 Release。它复制含 `.git` 的源码到 4608 MiB 工作卷，重用预装 JDK/SDK/NDK，将 Gradle、Java 缓存和所有新增构建文件放入卷内；以 256 MiB 空间保留量和命令超时停止自己的进程组。卷外 512 MiB 使用分配块计量检查点，**不是整个 job 的连续硬配额**。实际 stdout/stderr、观测峰值、APK、测试与图像先上传，成功后才清理自有卷。
 
-完整来源和固定输入提高可重建性；本批仍未宣称独立机器能生成逐字节相同 APK。商业发行继续遵循 [商用方案](COMMERCIAL-PLAN.zh-CN.md)，目前保留免费预发布/开发候选状态；普通 API、新包功能、真实 ARM64 与 16 KiB 验收以及对应来源和渠道准备完成前，不宣布稳定收费首发。
+完整来源和固定输入提高可重建性；本批仍未宣称独立机器能生成逐字节相同 APK。商业发行继续遵循 [商用方案](COMMERCIAL-PLAN.zh-CN.md)，目前保留免费预发布/开发候选状态；新包功能、真实 ARM64 与 16 KiB 验收以及对应来源和渠道准备完成前，不宣布稳定收费首发。
