@@ -131,13 +131,35 @@ Sherpa JNI 内静态链接的另一份 ORT 未替换；本批不以动态 ORT �
 
 本地已按该提交的相同源码树制作一份源码快照，3,215 个跟踪文件及其清单核对通过；该快照仅对应本次失败运行。后续流水线修复会产生新提交，最终发行的源码包须绑定实际成功构建的提交，不能将这份历史快照冒充后续 APK 的最终来源。
 
+## 整包 CI 第十九次：缓存已回收，后续 mapping 阶段仍触及保留线
+
+[offline build #19](https://github.com/ZPJJJ/LanType/actions/runs/44242764644) 使用公开提交 `98bcbd2118560dfbd1224eef4cafe6f456059ee8`、源码树 `9dd02c1979a6c83997b7639bebe8e5d88b1abd26`，build job 为 `134594361037`。输入准备和两组 Python 来源/归档回归（12 项与 5 项）通过。两份 ZIP 缓存经核验后实际删除：文件逻辑大小合计 237,028,957 字节，文件系统实际释放 237,035,520 字节；已恢复资源和组件输入完整保留。
+
+`assemble-offline` 执行 462.845 秒后因空间保护停止，`storageReserveStop: true`、`timedOut: false`、退出码 `143`。工作卷采样已用峰值为 4,545,748,992 字节，停止后可用 107,503,616 字节，低于 256 MiB 保留线。最后可见任务是 `:app:produceOfflineComposeMapping` 与 `:app:reportOfflineComposeMappingErrors`；任务名称不能证明另有 Compose 编译错误。保留的 `mapping.prt` 为 15,699,330 字节，是中间证据，不是 APK。
+
+| 失败时的目录 | 已分配字节 |
+|---|---:|
+| `source/app/build/intermediates/merged_native_libs` | 293,613,568 |
+| `source/app/build/intermediates/stripped_native_libs` | 293,523,456 |
+| `source/app/build/intermediates/mapping` | 351,838,208 |
+| `gradle-user/caches/9.5.0/transforms` | 1,573,351,424 |
+| 两模块 `build/kotlin` 合计 | 14,733,312 |
+
+本次没有最终 APK、JUnit XML 或 Compose PNG；依赖构建成功的测试 job 被跳过，最终 APK 门禁未执行。诊断收集、artifact 上传和普通工作卷卸载成功，整个 workflow 为 `failure`。artifact `14400961092`（`lantype-unsigned-offline-build`）为 30,386,052 字节，SHA-256 `e4c1df7b15661336d0e5a6f2923ac7cab860a1238f6500c3bfe9256b8d410acc`，44 个文件；该名称不能作为 APK 已产出的证明。原始回执、日志和 mapping 文件不改写，采样峰值也不冒充整个任务连续实测峰值。
+
+### 后续最小修复：在原生库合并前落实已有 ARM64 范围
+
+现有 `splits.abi` 已只生成 `arm64-v8a` APK，但依赖 AAR 含其他 ABI。经核对 [AGP 9.1 API](https://developer.android.com/reference/tools/gradle-api/9.1/com/android/build/api/dsl/JniLibsPackaging) 和 [9.1.0 官方 sources.jar](https://dl.google.com/dl/android/maven2/com/android/tools/build/gradle/9.1.0/gradle-9.1.0-sources.jar)（3,802,564 字节，SHA-256 `48d1ba4f8096c9bff57a684c7dcb00044e94fbf3a7f1b605f1941da788de3709`），`MergeNativeLibsTask` 在写入合并目录前执行排除规则，`StripDebugSymbolsTask` 再读取这个目录；`pickFirst` 的匹配优先于排除。
+
+因此仅在 `app/build.gradle.kts` 增加 `lib/armeabi-v7a/**`、`lib/x86/**`、`lib/x86_64/**` 排除规则，并将现有三个 `pickFirst` 限定到原来的 ARM64 库路径。ARM64 输入、12 库最终 SHA 门禁、CameraX 门禁、所有词库/模型、27 类定向测试、R8 和资源压缩保持原要求。未关闭 Kotlin 增量编译：其已观测缓存远小于缺口。每 job 仍受原 4608 MiB 工作卷、512 MiB 卷外检查点和 256 MiB 保留量限制；实际节省量及后续完整打包是否容纳得下须由新运行记录证明。
+
 ## 整包与签名的待填记录
 
 | 验证项 | 当前状态 / 后续须登记的实际材料 |
 |---|---|
 | 新 ORT component ZIP | 已预发布；真实 ZIP、462 文件清单及公开资产身份见上节 |
 | accepted 运行锁 | 已公开并登记同字节仓库锁；只接受固定组件输入的静态 ABI 与普通 API 范围 |
-| unsigned offline 整包 CI | #18 在 R8 阶段因存储保留线停止，未产出 APK；实际身份和失败证据见上节，后续构建待完成 |
+| unsigned offline 整包 CI | #19 已回收两份缓存，后续 mapping 阶段仍因存储保留线停止，未产出 APK；实际身份和失败证据见上节，后续构建待完成 |
 | 完整定向 JUnit 与 Compose 渲染 | 待本批实际 XML 统计和 PNG；不沿用旧版通过数 |
 | 12 库最终门禁 | 待新 APK 原生回执，包含主 ORT 与其他 11 库身份 |
 | 商业资源与 17 份通知随包检查 | 待最终 APK 资源回执 |

@@ -206,6 +206,9 @@ android {
     packaging {
         jniLibs {
             useLegacyPackaging = true
+            // The ABI split below ships only ARM64. Filter other AAR ABIs before
+            // merge/strip too, so their copies do not fill the bounded CI volume.
+            excludes.addAll(listOf("lib/armeabi-v7a/**", "lib/x86/**", "lib/x86_64/**"))
             // This edition ships Chinese/US-English resources and its reviewed
             // offline engines. These unused optional engines are not distributed.
             excludes.addAll(listOf("**/libCyAzooKey.so", "**/libcytranslate.so",
@@ -216,9 +219,10 @@ android {
             keepDebugSymbols.add("**/libonnxruntime.so")
             // Project JNI inputs precede dependency AAR JNI inputs. The final APK
             // verifier must also prove these bytes equal camerax-rebuilt.lock.json.
-            pickFirsts.add("**/libimage_processing_util_jni.so")
-            pickFirsts.add("**/libsurface_util_jni.so")
-            pickFirsts.add("**/libc++_shared.so")
+            // AGP evaluates pickFirst before excludes; keep it ARM64-specific.
+            pickFirsts.add("lib/arm64-v8a/libimage_processing_util_jni.so")
+            pickFirsts.add("lib/arm64-v8a/libsurface_util_jni.so")
+            pickFirsts.add("lib/arm64-v8a/libc++_shared.so")
         }
     }
     // 九键长句重排已停用（t9_pinyin.schema.yaml），两种包都不再带这个模型；源文件只留给电脑回放对照。
