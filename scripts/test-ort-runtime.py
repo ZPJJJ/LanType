@@ -106,6 +106,62 @@ class RuntimeArchiveTests(unittest.TestCase):
         with self.assertRaisesRegex(runtime.RuntimePackageError, "changed=\\['classes.jar'\\]"):
             runtime.verify_aars(full, altered, runtime.file_identity(self.library))
 
+    def test_generated_kotlin_module_names_are_accepted_only_in_apk_mode(self):
+        # Names observed in the real offline APK, not generalized colon paths.
+        names = ("META-INF/LanType:app_offline.kotlin_module",
+                 "META-INF/LanType:plugin-core_release.kotlin_module")
+        path = self.directory / "kotlin-metadata.apk"
+        with zipfile.ZipFile(path, "x") as archive:
+            for name in names:
+                archive.writestr(runtime.canonical_info(name), b"metadata fixture")
+        with zipfile.ZipFile(path) as archive:
+            self.assertEqual(set(runtime.archive_index(archive, apk=True)), set(names))
+            for options in ({}, {"canonical": True}, {"apk": True, "canonical": True}):
+                with self.subTest(options=options), self.assertRaisesRegex(
+                        runtime.RuntimePackageError, "Unsafe ZIP member name"):
+                    runtime.archive_index(archive, **options)
+
+    def test_apk_metadata_allowance_does_not_allow_other_colon_or_unsafe_paths(self):
+        names = ("C:/outside", "C:relative", "META-INF/../outside",
+                 "META-INF//LanType:app_offline.kotlin_module",
+                 "META-INF\\LanType:app_offline.kotlin_module",
+                 "assets/LanType:app_offline.kotlin_module",
+                 "lib/arm64-v8a/lib:onnxruntime.so",
+                 "META-INF/LanType:app_offline.txt",
+                 "META-INF/Other:app_offline.kotlin_module",
+                 "META-INF/LanType:app_offline.kotlin_module:stream",
+                 "META-INF/LanType:app_offline.kotlin_module/",
+                 "META-INF/LanType:app_offline.kotlin_module\n")
+        for number, name in enumerate(names):
+            path = self.directory / f"unsafe-apk-{number}.zip"
+            with zipfile.ZipFile(path, "x") as archive:
+                archive.writestr(name, b"")
+            with zipfile.ZipFile(path) as archive, self.subTest(name=name), \
+                    self.assertRaisesRegex(runtime.RuntimePackageError, "Unsafe ZIP member name"):
+                runtime.archive_index(archive, apk=True)
+
+    def test_allowed_apk_metadata_still_rejects_symlinks(self):
+        path = self.directory / "metadata-symlink.apk"
+        info = zipfile.ZipInfo("META-INF/LanType:app_offline.kotlin_module")
+        info.create_system = 3
+        info.external_attr = (stat.S_IFLNK | 0o777) << 16
+        with zipfile.ZipFile(path, "x") as archive:
+            archive.writestr(info, b"../outside")
+        with zipfile.ZipFile(path) as archive, self.assertRaisesRegex(
+                runtime.RuntimePackageError, "Nonregular ZIP member"):
+            runtime.archive_index(archive, apk=True)
+
+    def test_allowed_apk_metadata_still_rejects_duplicate_members(self):
+        path = self.directory / "metadata-duplicate.apk"
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore", UserWarning)
+            with zipfile.ZipFile(path, "x") as archive:
+                for _ in range(2):
+                    archive.writestr("META-INF/LanType:app_offline.kotlin_module", b"metadata")
+        with zipfile.ZipFile(path) as archive, self.assertRaisesRegex(
+                runtime.RuntimePackageError, "Duplicate ZIP member"):
+            runtime.archive_index(archive, apk=True)
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

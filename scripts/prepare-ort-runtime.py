@@ -34,6 +34,13 @@ ORIGINAL_AAR = {"bytes": 45634470,
 MEMBER = "jni/arm64-v8a/libonnxruntime.so"
 BRIDGE = "jni/arm64-v8a/libonnxruntime4j_jni.so"
 REQUIRED_MEMBERS = {MEMBER, BRIDGE, "classes.jar", "AndroidManifest.xml"}
+# These two metadata names are emitted by this application's offline build.
+# APK verification only reads members; AAR/source handling keeps its stricter
+# portable path rules. Do not permit arbitrary colon paths or native entries.
+APK_KOTLIN_MODULES = frozenset({
+    "META-INF/LanType:app_offline.kotlin_module",
+    "META-INF/LanType:plugin-core_release.kotlin_module",
+})
 OUTPUTS = {
     "fullAar": "onnxruntime-android-1.28.0-lantype-r1.aar",
     "companionAar": "onnxruntime-android-1.28.0-lantype-r1-cmake.aar",
@@ -162,8 +169,9 @@ def archive_index(archive, *, canonical=False, apk=False):
     for info in entries:
         name = info.filename
         parts = name.rstrip("/").split("/")
+        apk_kotlin_metadata = apk and not canonical and name in APK_KOTLIN_MODULES
         require(info.orig_filename == name and name and not name.startswith("/")
-                and "\\" not in name and ":" not in name
+                and "\\" not in name and (":" not in name or apk_kotlin_metadata)
                 and all(part not in ("", ".", "..") for part in parts)
                 and not any(ord(char) < 32 or ord(char) == 127 for char in name),
                 f"Unsafe ZIP member name: {name!r}")
