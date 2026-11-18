@@ -1,8 +1,8 @@
 # 云端 offline-ci 8 GiB 预算调整提案
 
-状态：**仅供审阅，尚未应用，未获执行授权，没有触发第 20 次运行。**
+状态：**2026-11-18 用户在收到本方案后要求生成 1.1.2 APK，现按该方案实施。预算补丁已应用，实际构建和测试结果仍待运行回执确认。**
 
-可审查的远端基础为 [5e25abe0f8e6ff89043136985c8fd2fa2cf35726](https://github.com/ZPJJJ/LanType/commit/5e25abe0f8e6ff89043136985c8fd2fa2cf35726)，源码树 `3ec7a2546616fce5c3ff1e166af3ff513c93e429`。该提交已独立发布早期非 ARM64 ABI 过滤；没有新构建结果，以下节省仍是估计。补丁已在此基础再次通过只读 `git apply --check`，active workflow 仍保持原 5 GiB 规则。
+可审查的远端基础为 [5e25abe0f8e6ff89043136985c8fd2fa2cf35726](https://github.com/ZPJJJ/LanType/commit/5e25abe0f8e6ff89043136985c8fd2fa2cf35726)，源码树 `3ec7a2546616fce5c3ff1e166af3ff513c93e429`。该提交已独立发布早期非 ARM64 ABI 过滤；没有新构建结果，以下节省仍是估计。下文保留提案时的证据与估计。补丁已在此基础通过只读 `git apply --check`，其三个实现文件现已应用；没有由此推导 APK 或测试通过。
 
 ## 为什么提出
 
@@ -61,7 +61,7 @@
 
 补丁及说明路径：
 
-- [offline-ci-8gib.proposal.patch](offline-ci-8gib.proposal.patch)：未应用的完整补丁，11,700 字节，SHA-256 `de36483f0f21119c47aeeeb33f4784efca85c431ebcfe0e27e5f57ff12f437a1`。
+- [offline-ci-8gib.proposal.patch](offline-ci-8gib.proposal.patch)：保留原字节的完整提案补丁，11,700 字节，SHA-256 `de36483f0f21119c47aeeeb33f4784efca85c431ebcfe0e27e5f57ff12f437a1`。
 - 基础树、补丁前后 SHA、原始回执 SHA、轻量检查结果和未执行状态另存完整回执；原始构建证据见上面的运行链接。
 
-实施前需要取得本次 app CI 从 5 GiB 到 8 GiB 的明确授权；现有 16 GiB 授权只适用于 Android QA，不能自动用于 APK/测试构建。批准后仍须以新的真实运行记录确认 APK 与测试分别完成，不能把本提案当作成功回执。
+本次生成请求按已展示的 app CI 8 GiB 范围执行；此前 Android QA 的 16 GiB 范围独立保留。仍须以新的真实运行记录确认 APK 与测试分别完成，不能把本方案或静态检查当作成功回执。

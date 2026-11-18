@@ -26,17 +26,19 @@ CACHE = runtime.ROOT / ".gradle/ort-runtime-archives"
 RELEASE_PATH = r"/ZPJJJ/LanType/releases/download/[A-Za-z0-9][A-Za-z0-9._-]*/[A-Za-z0-9][A-Za-z0-9._-]*\.zip"
 
 
-def storage_reserve(bounded_root, directory, archive=None):
+def storage_reserve(bounded_root, directory, archive=None, bounded_limit_mib=4608):
     """Use a smaller reserve only inside an explicitly bounded, separate CI mount."""
+    runtime.require(bounded_limit_mib in (4608, 7680), "Unsupported bounded work limit")
     if bounded_root is None:
+        runtime.require(bounded_limit_mib == 4608, "A larger CI limit requires --bounded-work-root")
         return 5 * runtime.GIB
     root = bounded_root.absolute()
     runtime.require(root.is_dir() and not root.is_symlink() and root.resolve() == root,
                     "Bounded work root must be an existing, non-symlink absolute directory")
     runtime.require(os.path.ismount(root) and root.stat().st_dev != root.parent.stat().st_dev,
                     "Bounded work root must be a separate mounted filesystem")
-    runtime.require(0 < shutil.disk_usage(root).total <= 4608 * 1024 * 1024,
-                    "Bounded work filesystem exceeds the 4.5 GiB limit")
+    runtime.require(0 < shutil.disk_usage(root).total <= bounded_limit_mib * 1024 * 1024,
+                    f"Bounded work filesystem exceeds the explicit {bounded_limit_mib} MiB limit")
     for label, path in (("source checkout", runtime.ROOT), ("download cache", CACHE),
                         ("output directory", directory), ("input archive", archive)):
         if path is None:
@@ -123,8 +125,8 @@ def obtain(url, expected, archive, download, reserve_bytes):
             temporary.unlink()
 
 
-def restore(lock, directory, archive=None, download=False, bounded_root=None):
-    reserve_bytes = storage_reserve(bounded_root, directory, archive)
+def restore(lock, directory, archive=None, download=False, bounded_root=None, bounded_limit_mib=4608):
+    reserve_bytes = storage_reserve(bounded_root, directory, archive, bounded_limit_mib)
     if directory.exists() or directory.is_symlink():
         return {"alreadyPresent": True, **runtime.verify_bundle(directory, lock)}
     url, root, expected = distribution(lock)
@@ -167,13 +169,17 @@ def main():
     inputs.add_argument("--download", action="store_true", help="Explicitly allow downloading the pinned public release ZIP")
     parser.add_argument("--output-dir", type=Path, default=runtime.DEFAULT_OUTPUT, help="Default: vendor/ort-runtime")
     parser.add_argument("--bounded-work-root", type=Path,
-                        help="Explicit CI mount, at most 4.5 GiB, containing checkout, cache and outputs; reserves 256 MiB")
+                        help="Explicit CI mount containing checkout, cache and outputs; reserves 256 MiB")
+    parser.add_argument("--bounded-work-limit-mib", type=int, choices=(4608, 7680), default=4608,
+                        help="CI mount maximum: default 4608 MiB; hosted offline-ci explicitly selects 7680 MiB")
     args = parser.parse_args()
     lock, digest = runtime.load_lock(args.lock, accepted=True)
-    result = restore(lock, args.output_dir, args.archive, args.download, args.bounded_work_root)
+    result = restore(lock, args.output_dir, args.archive, args.download, args.bounded_work_root,
+                     args.bounded_work_limit_mib)
     print(json.dumps({"ok": True, "kind": "lantype-ort-runtime-restore-receipt", "lockSha256": digest,
                       "outputDirectory": str(args.output_dir.resolve()), "nativeCodeExecuted": False,
                       "boundedWorkRoot": str(args.bounded_work_root.absolute()) if args.bounded_work_root else None,
+                      "boundedWorkLimitBytes": args.bounded_work_limit_mib * 1024**2 if args.bounded_work_root else None,
                       "storageReserveBytes": 256 * 1024 * 1024 if args.bounded_work_root else 5 * runtime.GIB,
                       "runtimeAcceptancePerformed": False, **result}, indent=2, sort_keys=True))
 

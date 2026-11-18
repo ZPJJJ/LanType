@@ -44,13 +44,39 @@ jobs:
           test ! -e "$LANTYPE_OFFLINE_VOLUME"
           test ! -e "$LANTYPE_OFFLINE_RECEIPTS"
           mkdir "$LANTYPE_OFFLINE_RECEIPTS"
-          # Keep the existing real-host 20 GiB floor plus 5 GiB headroom gate.
+          # Keep the original local storage guard unchanged, then reserve the
+          # hosted app-job budget on the actual filesystem that holds its volume.
           python3 scripts/storage_guard.py > "$LANTYPE_OFFLINE_RECEIPTS/storage-preflight.txt"
+          python3 - <<'PYHOST'
+          import json, os, shutil
+          from pathlib import Path
+          temporary = Path(os.environ['RUNNER_TEMP'])
+          volume_parent = Path(os.environ['LANTYPE_OFFLINE_VOLUME']).parent
+          if volume_parent != temporary:
+              raise SystemExit('Offline volume must be created directly in RUNNER_TEMP')
+          free = shutil.disk_usage(volume_parent).free
+          required_free = 28 * 1024**3
+          preflight = {
+              'schemaVersion': 1, 'filesystemPath': str(volume_parent),
+              'freeBytes': free, 'requiredFreeBytes': required_free,
+              'hostReserveBytes': 20 * 1024**3, 'taskBudgetBytes': 8 * 1024**3,
+              'workVolumeCapacityBytes': 7680 * 1024**2,
+              'outsideCheckpointLimitBytes': 512 * 1024**2,
+              'wholeTaskHardQuota': False, 'passed': free >= required_free,
+              'scope': 'Hosted offline-ci APK or targeted-test job only; the original storage guard is unchanged.'
+          }
+          destination = Path(os.environ['LANTYPE_OFFLINE_RECEIPTS']) / 'host-budget-preflight.json'
+          with destination.open('x', encoding='utf-8') as output:
+              output.write(json.dumps(preflight, indent=2, sort_keys=True) + '\n')
+          print(json.dumps(preflight, sort_keys=True))
+          if not preflight['passed']:
+              raise SystemExit('Offline CI requires 28 GiB free: 20 GiB host reserve plus 8 GiB task budget')
+          PYHOST
           python3 -c 'import sys; assert sys.version_info[:2] == (3, 12), "Preinstalled Python 3.12 is required"'
           test -x "$JAVA_HOME_21_X64/bin/javac"
           export JAVA_HOME="$JAVA_HOME_21_X64"
           printf 'JAVA_HOME=%s\n' "$JAVA_HOME" >> "$GITHUB_ENV"
-          fallocate -l 4608M "$LANTYPE_OFFLINE_VOLUME"
+          fallocate -l 7680M "$LANTYPE_OFFLINE_VOLUME"
           mkfs.ext4 -q -F -m 0 "$LANTYPE_OFFLINE_VOLUME"
           mkdir "$LANTYPE_OFFLINE_WORK_ROOT"
           sudo mount -o loop,nodev,nosuid "$LANTYPE_OFFLINE_VOLUME" "$LANTYPE_OFFLINE_WORK_ROOT"
@@ -90,6 +116,7 @@ jobs:
               python3 scripts/build-camerax-native.py --verify-only
               python3 scripts/verify-commercial-resources.py
               python3 scripts/restore-ort-runtime.py --download --bounded-work-root "$LANTYPE_OFFLINE_WORK_ROOT" \
+                --bounded-work-limit-mib 7680 \
                 > app/build/reports/lantype-native/ort-restoration.json
             '
       - name: Reclaim only the two verified runtime download archives
@@ -176,13 +203,39 @@ jobs:
           test ! -e "$LANTYPE_OFFLINE_VOLUME"
           test ! -e "$LANTYPE_OFFLINE_RECEIPTS"
           mkdir "$LANTYPE_OFFLINE_RECEIPTS"
-          # Keep the existing real-host 20 GiB floor plus 5 GiB headroom gate.
+          # Keep the original local storage guard unchanged, then reserve the
+          # hosted app-job budget on the actual filesystem that holds its volume.
           python3 scripts/storage_guard.py > "$LANTYPE_OFFLINE_RECEIPTS/storage-preflight.txt"
+          python3 - <<'PYHOST'
+          import json, os, shutil
+          from pathlib import Path
+          temporary = Path(os.environ['RUNNER_TEMP'])
+          volume_parent = Path(os.environ['LANTYPE_OFFLINE_VOLUME']).parent
+          if volume_parent != temporary:
+              raise SystemExit('Offline volume must be created directly in RUNNER_TEMP')
+          free = shutil.disk_usage(volume_parent).free
+          required_free = 28 * 1024**3
+          preflight = {
+              'schemaVersion': 1, 'filesystemPath': str(volume_parent),
+              'freeBytes': free, 'requiredFreeBytes': required_free,
+              'hostReserveBytes': 20 * 1024**3, 'taskBudgetBytes': 8 * 1024**3,
+              'workVolumeCapacityBytes': 7680 * 1024**2,
+              'outsideCheckpointLimitBytes': 512 * 1024**2,
+              'wholeTaskHardQuota': False, 'passed': free >= required_free,
+              'scope': 'Hosted offline-ci APK or targeted-test job only; the original storage guard is unchanged.'
+          }
+          destination = Path(os.environ['LANTYPE_OFFLINE_RECEIPTS']) / 'host-budget-preflight.json'
+          with destination.open('x', encoding='utf-8') as output:
+              output.write(json.dumps(preflight, indent=2, sort_keys=True) + '\n')
+          print(json.dumps(preflight, sort_keys=True))
+          if not preflight['passed']:
+              raise SystemExit('Offline CI requires 28 GiB free: 20 GiB host reserve plus 8 GiB task budget')
+          PYHOST
           python3 -c 'import sys; assert sys.version_info[:2] == (3, 12), "Preinstalled Python 3.12 is required"'
           test -x "$JAVA_HOME_21_X64/bin/javac"
           export JAVA_HOME="$JAVA_HOME_21_X64"
           printf 'JAVA_HOME=%s\n' "$JAVA_HOME" >> "$GITHUB_ENV"
-          fallocate -l 4608M "$LANTYPE_OFFLINE_VOLUME"
+          fallocate -l 7680M "$LANTYPE_OFFLINE_VOLUME"
           mkfs.ext4 -q -F -m 0 "$LANTYPE_OFFLINE_VOLUME"
           mkdir "$LANTYPE_OFFLINE_WORK_ROOT"
           sudo mount -o loop,nodev,nosuid "$LANTYPE_OFFLINE_VOLUME" "$LANTYPE_OFFLINE_WORK_ROOT"
@@ -222,6 +275,7 @@ jobs:
               python3 scripts/build-camerax-native.py --verify-only
               python3 scripts/verify-commercial-resources.py
               python3 scripts/restore-ort-runtime.py --download --bounded-work-root "$LANTYPE_OFFLINE_WORK_ROOT" \
+                --bounded-work-limit-mib 7680 \
                 > app/build/reports/lantype-native/ort-restoration.json
             '
       - name: Reclaim only the two verified runtime download archives

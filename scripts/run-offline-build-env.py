@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run the existing APK build inside its dedicated 4608 MiB work volume.
+"""Run the existing APK build inside its dedicated 7680 MiB work volume.
 
 Only the allocation measurement is shared with native-build QA. This wrapper
 does not build a native probe or reuse a QA acceptance result. The remaining
@@ -27,7 +27,7 @@ import sys
 import time
 
 MIB = 1024**2
-CAPACITY = 4608 * MIB
+CAPACITY = 7680 * MIB
 OUTSIDE_LIMIT = 512 * MIB
 WORK_RESERVE = 256 * MIB
 NDK = "29.0.14206865"
@@ -276,7 +276,7 @@ class Driver:
         require(os.path.ismount(self.root) and self.root.stat().st_dev != self.temporary.stat().st_dev,
                 "Work root must be its independent mounted filesystem")
         require(stat.S_ISREG(self.volume.lstat().st_mode) and self.volume.stat().st_size == CAPACITY,
-                "The owned volume image must be exactly 4608 MiB")
+                "The owned volume image must be exactly 7680 MiB")
         info = os.statvfs(self.root)
         require(0 < info.f_blocks * info.f_frsize <= CAPACITY, "Mounted filesystem exceeds the work-volume limit")
         return filesystem_usage(self.root)
