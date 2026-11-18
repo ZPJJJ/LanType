@@ -215,8 +215,10 @@ android {
                 "**/libhandwriting_jni.so", "**/libcylm.so"))
             // Each mode has exactly one ORT source: the full local AAR, or the
             // source-native IMPORTED target paired with the companion AAR.
-            // Preserve the accepted ELF bytes for the final APK hash gate.
+            // Preserve both the accepted ELF and unchanged official JNI bridge
+            // bytes; stripping the bridge would break the shipped ABI identity.
             keepDebugSymbols.add("**/libonnxruntime.so")
+            keepDebugSymbols.add("**/libonnxruntime4j_jni.so")
             // Project JNI inputs precede dependency AAR JNI inputs. The final APK
             // verifier must also prove these bytes equal camerax-rebuilt.lock.json.
             // AGP evaluates pickFirst before excludes; keep it ARM64-specific.

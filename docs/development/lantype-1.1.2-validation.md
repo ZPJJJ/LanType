@@ -2,7 +2,7 @@
 
 ## 结论和使用范围
 
-本页记录 `1.1.2 / versionCode 4` 的证据与未完成项。**独立 ORT 原生构建、静态检查及第六次普通 Android API 正向检查已通过，组件和 accepted 锁已作为构建输入公开；第六次 workflow 因清理失败而整体失败，第七次在主机 ADB 登记阶段失败。应用整包和真实设备验收仍待完成。** 本页不是应用发布批准单，也不是“输入法首启故障已修好”的声明。
+本页记录 `1.1.2 / versionCode 4` 的证据与未完成项。**独立 ORT 原生构建、静态检查及第六次普通 Android API 正向检查已通过，组件和 accepted 锁已作为构建输入公开；第六次 workflow 因清理失败而整体失败，第七次在主机 ADB 登记阶段失败。整包 #20 已成功编译 APK，但最终内容门禁失败；签名发行、完整定向测试和真实设备验收仍待完成。** 本页不是应用发布批准单，也不是“输入法首启故障已修好”的声明。
 
 本批材料随 `development/1.1.2-runtime` 开发分支保存，主分支保留既有发行状态；开发分支同步不构成稳定版发布或收费发行验收。
 
@@ -153,13 +153,25 @@ Sherpa JNI 内静态链接的另一份 ORT 未替换；本批不以动态 ORT �
 
 因此仅在 `app/build.gradle.kts` 增加 `lib/armeabi-v7a/**`、`lib/x86/**`、`lib/x86_64/**` 排除规则，并将现有三个 `pickFirst` 限定到原来的 ARM64 库路径。ARM64 输入、12 库最终 SHA 门禁、CameraX 门禁、所有词库/模型、27 类定向测试、R8 和资源压缩保持原要求。未关闭 Kotlin 增量编译：其已观测缓存远小于缺口。每 job 仍受原 4608 MiB 工作卷、512 MiB 卷外检查点和 256 MiB 保留量限制；实际节省量及后续完整打包是否容纳得下须由新运行记录证明。
 
+## 整包 CI 第二十次：编译成功，发现两处最终打包校验问题
+
+[offline build #20](https://github.com/ZPJJJ/LanType/actions/runs/44309785862) 的公开提交为 `a0a827aa0a9c3068c24add718b3c37098f58c99c`，源码树为 `20db597c500789f2c6df8b673219f06b16ecca17`，build job 为 `134820639359`。7680 MiB 工作卷与 ARM64 合并过滤实际完成本轮编译：`assemble-offline` 用时 671.552 秒，退出码 `0`，`timedOut=false`、`storageReserveStop=false`。工作卷采样已用峰值 4,846,706,688 字节，完成后空闲 2,961,940,480 字节；这不是整个任务连续测量的峰值。
+
+本轮首次得到未签名 `LanType-1.1.2-offline-arm64-v8a.apk`：180,598,459 字节，SHA-256 `68472eb28398bd5aaeda7fef001a88930b014d379fd59a769f515d4a463068d5`。但后续 `verify-apk` 退出码 `1`，因此整个 job/workflow 为 failure，依赖它的测试 job 被跳过，没有本轮 JUnit 或 Compose 渲染成绩。诊断收集、artifact 上传和普通卸载全部成功。artifact `14430103648` 为 388,454,295 字节，SHA-256 `701fc83352c14ff270d004ddcbd6883e89e78ae0397d6e1e87811b0022ebe927`，51 个文件；本地下载摘要与公开回执一致。
+
+第一处失败是 ZIP 检查误拒实际 Kotlin 元数据 `META-INF/LanType:app_offline.kotlin_module`；同包还有 `META-INF/LanType:plugin-core_release.kotlin_module`。检查器现仅在读取 APK、非 canonical 模式下允许这两个完整名称；AAR/source 路径规则、其他冒号路径、目录穿越、符号链接、重复成员及体积门禁保留。新增四项 ZIP 数据回归与原五项合计 9 项通过。这不是原生代码执行，也没有放宽库摘要合同。
+
+对实际 APK 独立逐库比较后，12 个 ARM64 库的名单正确，11 个大小/SHA 匹配（包括新主 ORT）；唯一差异是 `libonnxruntime4j_jni.so`：APK 为 83,224 字节 / `88fc443979767e45dbc26d4a4df6892c63adc326604e90b7033a4a970ea3845b`，固定 AAR 输入与旧基线均为 111,648 字节 / `99db53ca399095cfa17f3f40924b1012a0ff5846c32198e8cef01dd8480f6b45`。元数据修复后的检查器仍正确拒绝这份 APK。现对官方 JNI bridge 增加与主 ORT 相同的 `keepDebugSymbols` 规则，以保留其原字节；没有替换库、修改基线或接受新的摘要，实际结果须由后续完整构建证明。
+
+本次未签名 APK 的独立资源检查通过：396 个 assets、11 个 raw、两份 CameraX JNI、17 份新增通知以及 4 个生成资源符合合同。该资源通过结果不能覆盖上述原生失败或尚未执行的产品测试。对应 #20 的 3,217 文件源码快照已冻结为历史材料，最终发行源码仍须对应实际接受并签名的构建。
+
 ## 整包与签名的待填记录
 
 | 验证项 | 当前状态 / 后续须登记的实际材料 |
 |---|---|
 | 新 ORT component ZIP | 已预发布；真实 ZIP、462 文件清单及公开资产身份见上节 |
 | accepted 运行锁 | 已公开并登记同字节仓库锁；只接受固定组件输入的静态 ABI 与普通 API 范围 |
-| unsigned offline 整包 CI | #19 已回收两份缓存，后续 mapping 阶段仍因存储保留线停止，未产出 APK；实际身份和失败证据见上节，后续构建待完成 |
+| unsigned offline 整包 CI | #20 编译成功，最终门禁发现 Kotlin 元数据误拒及 JNI bridge 字节变化；已分别修正验证器与保留规则，后续完整构建待完成 |
 | 完整定向 JUnit 与 Compose 渲染 | 待本批实际 XML 统计和 PNG；不沿用旧版通过数 |
 | 12 库最终门禁 | 待新 APK 原生回执，包含主 ORT 与其他 11 库身份 |
 | 商业资源与 17 份通知随包检查 | 待最终 APK 资源回执 |
