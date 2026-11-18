@@ -14,7 +14,7 @@ ae250081faa6cd742f6edade2a23bf29a96ba690fa19a01e3bd192548cf89f1e
 
 静态 ABI 检查及 AAR 成员比较的身份和范围见 [ORT 1.28.0-r1 组件说明](licensing/ORT-RUNTIME-1.28.0-r1.md)。这些结果不等于 Android 正常初始化、模型推理或输入法功能通过。
 
-[普通 API QA 第五次运行 44177101937](https://github.com/ZPJJJ/LanType/actions/runs/44177101937) 已通过宿主音频加载依赖和 KVM 检查，随后官方 API 35 镜像解包触及工作卷的 256 MiB 保留线；**没有进入候选的原生 API 正向检查**。流式校验、分段读取和稀疏解包入口已准备并完成静态审阅，尚未执行。模拟器启动还需超出现有 5 GiB 总预算的空间，[云端 QA 存储提案](qa/ANDROID-QA-STORAGE-PROPOSAL.md) 尚未启用。新组件 ZIP、accepted 锁、整包 CI、签名 APK 和产品设备验证仍待完成。
+[普通 API QA 第五次运行 44177101937](https://github.com/ZPJJJ/LanType/actions/runs/44177101937) 已通过宿主音频加载依赖和 KVM 检查，随后官方 API 35 镜像解包触及工作卷的 256 MiB 保留线；**没有进入候选的原生 API 正向检查**。流式校验、分段读取和稀疏解包入口已准备并完成静态审阅，尚未执行。模拟器启动还需超出现有 5 GiB 总预算的空间，[云端 QA 专用 16 GiB 预算](qa/ANDROID-QA-STORAGE-PROPOSAL.md) 已于 2026-11-18 获用户批准并应用；实际新运行结果待登记。新组件 ZIP、accepted 锁、整包 CI、签名 APK 和产品设备验证仍待完成。
 
 ## 运行离线与开发联网
 

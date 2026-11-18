@@ -32,7 +32,7 @@
 
 ## 当前验收边界
 
-[普通 API QA 第五次运行 44177101937](https://github.com/ZPJJJ/LanType/actions/runs/44177101937) 已通过音频加载依赖和 KVM 检查，官方镜像解包触及磁盘保留线而停止，尚未进入候选的原生 API 正向检查。已准备保持镜像原字节的流式校验/分段稀疏解包入口；这不能消除模拟器本身的启动空间要求。[云端 QA 存储提案](qa/ANDROID-QA-STORAGE-PROPOSAL.md) 目前未启用，后续新 API 运行待登记。
+[普通 API QA 第五次运行 44177101937](https://github.com/ZPJJJ/LanType/actions/runs/44177101937) 已通过音频加载依赖和 KVM 检查，官方镜像解包触及磁盘保留线而停止，尚未进入候选的原生 API 正向检查。已准备保持镜像原字节的流式校验/分段稀疏解包入口；这不能消除模拟器本身的启动空间要求。[云端 QA 专用 16 GiB 预算](qa/ANDROID-QA-STORAGE-PROPOSAL.md) 已于 2026-11-18 获用户批准并应用，后续新 API 运行待登记。
 
 本批 unsigned 整包、完整测试和渲染、同签名 APK 身份、fresh candidate 的中英文输入/工具/剪贴板、未初始化旧包替换、候选自身重装数据保留均待实际回执。未初始化旧 APK 的 `install -r` 替换不等于旧用户数据迁移。
 

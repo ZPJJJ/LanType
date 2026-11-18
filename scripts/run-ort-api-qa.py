@@ -8,8 +8,10 @@ This is not a product APK, a standalone ARM executable test, an inference test,
 or physical-device acceptance. There are no mock files, signal handlers,
 sanitizers, fault injection, or host-native execution in this driver.
 
-Heavy writes stay on the workflow's 4608 MiB filesystem. A separate 512 MiB
-outside-volume checkpoint assertion is not a continuous whole-job hard quota.
+Heavy writes stay on the QA workflow's 15872 MiB (15.5 GiB) filesystem. A
+separate 512 MiB outside-volume checkpoint completes the 16 GiB QA allowance;
+it is not a continuous whole-job hard quota. Fresh-guest checkpoints require
+at least 7680 MiB actually available before starting the owned emulator.
 """
 from __future__ import annotations
 
@@ -417,16 +419,18 @@ class Driver:
         require(re.fullmatch(r"[a-z0-9-]+", checkpoint), "Invalid checkpoint")
         self.receipts.mkdir(parents=True, exist_ok=True)
         result = {"schemaVersion": 1, "checkpoint": checkpoint,
-                  "workVolumeCapacityBytes": 4608 * MIB, "overheadLimitBytes": 512 * MIB,
+                  "workVolumeCapacityBytes": 15872 * MIB, "overheadLimitBytes": 512 * MIB,
                   "wholeTaskHardQuota": False, "continuousWholeTaskPeakMeasured": False,
                   "enforcement": "bounded-work-volume-plus-outside-volume-checkpoints",
                   "allocationMethod": "lstat.st_blocks * 512; global (device,inode) dedup; no symlink traversal"}
+        if checkpoint in ("before-guest", "before-product-boot"):
+            result["requiredGuestAvailableBytes"] = 7680 * MIB
         try:
             temporary = Path(os.environ["RUNNER_TEMP"])
             volume = Path(os.environ["QA_VOLUME"])
             require(volume == temporary / "lantype-ort-api-volume.img", "Unexpected volume image")
             require(stat.S_ISREG(volume.lstat().st_mode), "Volume image must be a regular file")
-            require(volume.stat().st_size == 4608 * MIB, "Unexpected work-volume image size")
+            require(volume.stat().st_size == 15872 * MIB, "Unexpected QA work-volume image size")
             require(os.path.ismount(self.root), "Work root is not its bounded mounted volume")
             require(self.root.stat().st_dev != temporary.stat().st_dev, "Work root is on host filesystem")
             module = runpy.run_path(str(REPO / "scripts/check-ort-build-overhead.py"))
@@ -437,11 +441,19 @@ class Driver:
             measured = module["measure"](roots, {volume, self.root})
             result.update(outsideVolume=measured, volume=self.volume_usage(), receiptAllowanceBytes=65536)
             result["passed"] = measured["allocatedBytes"] + 65536 <= 512 * MIB
+            if "requiredGuestAvailableBytes" in result:
+                available = result["volume"]["availableBytes"]
+                result["guestAvailablePassed"] = available >= result["requiredGuestAvailableBytes"]
+                result["passed"] = result["passed"] and result["guestAvailablePassed"]
+                if not result["guestAvailablePassed"]:
+                    result["error"] = ("Fresh API 35 guest requires at least 7680 MiB available on the work volume; "
+                                       f"found {available} bytes")
         except (OSError, ValueError, KeyError) as error:
             result.update(passed=False, error=str(error))
         save(self.receipts / ("storage-" + checkpoint + ".json"), result)
         print(json.dumps(result), flush=True)
-        require(result["passed"], "Storage checkpoint failed: " + checkpoint)
+        require(result["passed"], "Storage checkpoint failed: " + checkpoint +
+                (": " + result["error"] if "error" in result else ""))
         return result
 
     def run(self, label, command, *, timeout=120, check=True, input_text=None, cwd=None, copy_stdout_to=None):
@@ -716,7 +728,7 @@ class Driver:
             if "=" in line and not line.startswith("#"):
                 key, value = line.split("=", 1)
                 config[key.strip()] = value.strip()
-        config.update({"image.sysdir.1": str(image_root) + "/", "disk.dataPartition.size": "2G",
+        config.update({"image.sysdir.1": str(image_root) + "/", "disk.dataPartition.size": "6G",
                        "hw.sdCard": "no", "fastboot.forceColdBoot": "yes", "fastboot.forceFastBoot": "no"})
         config_path.write_text("".join(key + "=" + value + "\n" for key, value in sorted(config.items())))
         shutil.copy2(config_path, self.evidence / "avd-config.ini")

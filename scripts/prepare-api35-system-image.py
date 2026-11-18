@@ -4,6 +4,9 @@
 The first download verifies Google's archive size/SHA-1 and records SHA-256 for
 each 8 MiB block. ZipFile then reads HTTP ranges, accepting only those same
 verified blocks. Zero blocks become sparse extents without changing file bytes.
+The independent QA work filesystem is limited to 15872 MiB (15.5 GiB), with
+a 256 MiB runtime reserve. The workflow measures its separate 512 MiB overhead
+allowance at checkpoints; this helper does not enforce a whole-job hard quota.
 No license is accepted, no emulator starts, and no Android test runs here.
 """
 from __future__ import annotations
@@ -219,7 +222,7 @@ def prepare(lock_path, work_root, sdk, evidence):
     work_root = work_root.absolute()
     require(work_root.resolve() == work_root and os.path.ismount(work_root) and
             work_root.stat().st_dev != work_root.parent.stat().st_dev and
-            0 < shutil.disk_usage(work_root).total <= 4608 * MIB, "Expected an independent work mount of at most 4.5 GiB")
+            0 < shutil.disk_usage(work_root).total <= 15872 * MIB, "Expected an independent QA work mount of at most 15.5 GiB")
     require(sdk.absolute() == work_root / "sdk" and sdk.resolve() == sdk.absolute() and sdk.is_dir(), "Unexpected SDK overlay")
     require(evidence.absolute().resolve() == evidence.absolute() and evidence.is_dir() and
             evidence.absolute().is_relative_to(work_root / "evidence"), "Evidence must stay in the work volume")

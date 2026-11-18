@@ -24,8 +24,9 @@ permissions:
   contents: read
   actions: read
 
+# Serialize the two Android QA workflows on fresh hosted runners.
 concurrency:
-  group: lantype-ort-positive-api-qa
+  group: lantype-android-qa
   cancel-in-progress: false
 
 jobs:
@@ -59,14 +60,38 @@ jobs:
           test ! -e "$QA_VOLUME"
           mkdir -p "$QA_RECEIPTS"
           python3 scripts/storage_guard.py > "$QA_RECEIPTS/storage-preflight.txt"
+          python3 - <<'PY'
+          import json, os, shutil
+          from pathlib import Path
+          temporary = Path(os.environ['RUNNER_TEMP'])
+          volume_parent = Path(os.environ['QA_VOLUME']).parent
+          if volume_parent != temporary:
+              raise SystemExit('QA volume must be created directly in RUNNER_TEMP')
+          free = shutil.disk_usage(volume_parent).free
+          required_free = 36 * 1024**3
+          preflight = {
+              'schemaVersion': 1, 'filesystemPath': str(volume_parent),
+              'freeBytes': free, 'requiredFreeBytes': required_free,
+              'hostReserveBytes': 20 * 1024**3, 'taskBudgetBytes': 16 * 1024**3,
+              'workVolumeCapacityBytes': 15872 * 1024**2,
+              'outsideCheckpointLimitBytes': 512 * 1024**2,
+              'wholeTaskHardQuota': False, 'passed': free >= required_free,
+              'scope': 'Host free-space precondition plus bounded work volume and measured outside-volume checkpoints.'
+          }
+          (Path(os.environ['QA_RECEIPTS']) / 'disk-preflight.json').write_text(
+              json.dumps(preflight, indent=2) + '\n')
+          print(json.dumps(preflight), flush=True)
+          if not preflight['passed']:
+              raise SystemExit(f'Android QA requires at least 36 GiB free on {volume_parent}; found {free} bytes')
+          PY
           # Named tool diagnostics and any permitted SDK installation run below,
           # only after the bounded volume exists. NDK/JDK are never downloaded.
           export ORT_QA_HOST_SDK="${ANDROID_HOME:-/missing-host-sdk}"
           export JAVA_HOME="${JAVA_HOME_21_X64:-/missing-jdk-21}"
           printf 'ORT_QA_HOST_SDK=%s\nJAVA_HOME=%s\n' "$ORT_QA_HOST_SDK" "$JAVA_HOME" >> "$GITHUB_ENV"
-          # 4.5 GiB filesystem capacity plus a 512 MiB measured overhead allowance.
+          # QA only: 15.5 GiB filesystem capacity plus a 512 MiB measured overhead allowance.
           # The overhead gate is a checkpoint assertion, not a whole-job hard quota.
-          fallocate -l 4608M "$QA_VOLUME"
+          fallocate -l 15872M "$QA_VOLUME"
           mkfs.ext4 -q -F -m 0 "$QA_VOLUME"
           mkdir "$QA_ROOT"
           sudo mount -o loop,nodev,nosuid "$QA_VOLUME" "$QA_ROOT"

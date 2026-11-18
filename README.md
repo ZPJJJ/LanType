@@ -13,7 +13,7 @@ LanType 基于 [CyIME 1.15.94](https://github.com/Cyletix/CyIME/tree/6f97a555ced
 - [独立 ORT 构建](https://github.com/ZPJJJ/LanType/actions/runs/44164186969) 已成功，10 项静态 ABI 检查通过；新库仍是待 Android 运行验证的候选。
 - 默认预编译与可选源码模式的接入代码已准备，NDK 统一固定为 29；最终包要求保留其余 11 个原生库的字节身份。
 - 17 份 NDK、Dawn 和补丁通知已提交，完整资源检查覆盖 396 个 assets 和 11 个 raw；原有 379 条资产记录保持不变。
-- [第五次 API 环境准备](https://github.com/ZPJJJ/LanType/actions/runs/44177101937) 已通过工具、音频加载依赖和 KVM 检查，但官方镜像解包触及现有磁盘预算。镜像流式校验与稀疏解包入口已准备；模拟器启动要求与 5 GiB 总预算存在冲突，[云端 QA 存储提案](docs/qa/ANDROID-QA-STORAGE-PROPOSAL.md) 尚未启用。
+- [第五次 API 环境准备](https://github.com/ZPJJJ/LanType/actions/runs/44177101937) 已通过工具、音频加载依赖和 KVM 检查，但官方镜像解包触及现有磁盘预算。镜像流式校验与稀疏解包入口已准备；模拟器启动要求与原 5 GiB 总预算存在冲突；用户已于 2026-11-18 批准仅对云端 Android QA 使用 16 GiB，相关[预算配置](docs/qa/ANDROID-QA-STORAGE-PROPOSAL.md) 已应用，实际运行结果待记录。
 
 新组件、accepted 锁、1.1.2 整包和签名发行尚待完成。详见 [本批变更](docs/CHANGELOG-1.1.2.zh-CN.md) 和 [组件来源](docs/licensing/ORT-RUNTIME-1.28.0-r1.md)。
 
