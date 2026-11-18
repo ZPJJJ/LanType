@@ -228,8 +228,9 @@ jobs:
             --core-report "$QA_ROOT/evidence/smoke/result.json" \
             --output "$QA_ROOT/evidence/clipboard"
       - name: Preserve final guest diagnostics and stop only this emulator
+        id: collect
         if: always()
-        timeout-minutes: 3
+        timeout-minutes: 4
         run: python3 scripts/run-product-qa-env.py --stage collect
       - name: Record the final outside-volume storage checkpoint
         if: always()
@@ -246,7 +247,7 @@ jobs:
             ${{ env.QA_ROOT }}/evidence/
             ${{ env.QA_RECEIPTS }}/
       - name: Release the owned volume only after successful evidence upload
-        if: ${{ always() && steps.evidence.outcome == 'success' }}
+        if: ${{ always() && steps.evidence.outcome == 'success' && steps.collect.outcome == 'success' }}
         run: |
           if mountpoint -q "$QA_ROOT"; then sudo umount "$QA_ROOT"; fi
           if [[ -f "$QA_VOLUME" ]] && ! mountpoint -q "$QA_ROOT"; then rm -- "$QA_VOLUME"; fi

@@ -27,23 +27,14 @@ PRODUCT = "app.lantype.keyboard"
 
 
 def owned_emulator(driver):
-    record = driver.root / "emulator.pid"
-    if not record.is_file():
-        return False
-    pid = int(record.read_text().strip())
-    command = Path("/proc") / str(pid) / "cmdline"
-    if not command.exists():
-        return False
-    arguments = command.read_bytes().split(b"\0")
-    SHARED.require(b"-avd" in arguments and SHARED.AVD.encode() in arguments and os.getpgid(pid) == pid,
-                   "Refusing to use an unrelated emulator process")
-    return True
+    return driver.owned_process("emulator", ["-avd", SHARED.AVD]) is not None
 
 
 def boot(driver):
     driver.budget("before-product-boot")
     driver.require_tools()
     SHARED.require(not (driver.root / "emulator.pid").exists(), "This job already started its one emulator")
+    driver.start_adb_server()
     devices, _ = driver.run("adb-devices-before", [driver.sdk / "platform-tools/adb", "devices"])
     SHARED.require(not re.search(r"^" + re.escape(driver.serial) + r"\s", devices, re.M), "Emulator serial already belongs to another process")
     command = [str(driver.sdk / "emulator/emulator"), "-avd", SHARED.AVD, "-port", "5554",
@@ -52,7 +43,7 @@ def boot(driver):
     with (driver.evidence / "emulator.stdout.txt").open("wb") as out, (driver.evidence / "emulator.stderr.txt").open("wb") as err:
         process = subprocess.Popen(command, stdout=out, stderr=err, env=driver.env,
                                    cwd=driver.root, start_new_session=True)
-    (driver.root / "emulator.pid").write_text(str(process.pid) + "\n")
+    driver.remember_process("emulator", process)
     SHARED.save(driver.evidence / "emulator-command.json", {"command": command, "pid": process.pid, "productQa": True})
     driver.adb("wait-for-device", "wait-for-device", timeout=120)
     deadline = time.monotonic() + 300
@@ -79,7 +70,7 @@ def boot(driver):
                                   "logcat", "-b", "all", "-v", "threadtime"],
                                  stdout=out, stderr=subprocess.STDOUT, env=driver.env,
                                  cwd=driver.root, start_new_session=True)
-    (driver.root / "logcat.pid").write_text(str(logcat.pid) + "\n")
+    driver.remember_process("logcat", logcat)
     driver.budget("after-product-boot")
 
 
@@ -118,12 +109,11 @@ def collect(driver):
                 except (OSError, ValueError) as error:
                     errors.append(label + ": " + str(error))
     finally:
-        # Never issue a broad kill or adb emu kill against just a serial name.
-        for name, tokens in (("logcat", ["-s", driver.serial, "logcat"]), ("emulator", ["-avd", SHARED.AVD])):
-            try:
-                driver.stop_owned_process(name, tokens)
-            except (OSError, ValueError) as error:
-                errors.append("stop-" + name + ": " + str(error))
+        # Diagnose first; then stop only identities recorded for this fresh job.
+        try:
+            driver.stop_guest_processes()
+        except (OSError, ValueError) as error:
+            errors.append("stop-guest-processes: " + str(error))
         SHARED.save(driver.receipts / "product-collection.json", {"diagnosticErrors": errors,
                     "productPackage": PRODUCT, "positiveApiAcceptanceReused": False})
     driver.budget("after-product-collection")

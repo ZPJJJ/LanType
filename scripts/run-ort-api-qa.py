@@ -22,8 +22,10 @@ import os
 from pathlib import Path, PurePosixPath
 import re
 import runpy
+import select
 import shutil
 import signal
+import socket
 import stat
 import subprocess
 import sys
@@ -40,6 +42,7 @@ IMAGE = "system-images;android-35;google_apis;x86_64"
 NDK = "29.0.14206865"
 MIB = 1024**2
 WORK_RESERVE = 256 * MIB
+PROCESS_OWNER_ENV = "LANTYPE_QA_PROCESS_OWNER"
 # Ubuntu 24.04 libsndfile1's non-libc dependency closure, plus PulseAudio.
 # https://packages.ubuntu.com/noble/libsndfile1 (FLAC/Vorbis also require libogg0).
 # The hosted runner's libc6 stays in place; these are downloaded/extracted only.
@@ -193,6 +196,33 @@ def save(path, value):
     path.write_text(json.dumps(value, indent=2, sort_keys=True) + "\n")
 
 
+def process_identity(pid, proc_root=Path("/proc")):
+    """Read only the identity needed to stop an explicitly owned Linux process."""
+    path = proc_root / str(pid)
+    try:
+        fields = (path / "stat").read_text().rsplit(")", 1)[1].split()
+        if fields[0] in ("Z", "X"):
+            return None  # An exited process no longer holds the work mount.
+        owner_prefix = (PROCESS_OWNER_ENV + "=").encode()
+        owner = next((item[len(owner_prefix):].decode() for item in (path / "environ").read_bytes().split(b"\0")
+                      if item.startswith(owner_prefix)), None)
+        result = {"pid": pid, "uid": path.stat().st_uid, "startTicks": int(fields[19]),
+                  "parentPid": int(fields[1]), "processGroup": int(fields[2]), "session": int(fields[3]),
+                  "exe": str(Path(os.readlink(path / "exe")).resolve()), "owner": owner,
+                  "arguments": [item.decode(errors="replace") for item in (path / "cmdline").read_bytes().split(b"\0") if item]}
+        again = (path / "stat").read_text().rsplit(")", 1)[1].split()
+        require(int(again[19]) == result["startTicks"], "Process identity changed while reading /proc")
+        return None if again[0] in ("Z", "X") else result
+    except (FileNotFoundError, ProcessLookupError):
+        if path.exists():
+            try:
+                fields = (path / "stat").read_text().rsplit(")", 1)[1].split()
+            except (FileNotFoundError, ProcessLookupError):
+                return None
+            require(fields[0] in ("Z", "X"), "Cannot identify a live process safely: " + str(pid))
+        return None
+
+
 def tool_component(directory, executables=(), files=(), *, metadata="source.properties",
                    revision_key="Pkg.Revision", expected_revision=None):
     """Read a named tool inventory without executing a compiler or SDK tool."""
@@ -237,12 +267,17 @@ class Driver:
         self.jdk = Path(os.environ.get("JAVA_HOME", "/missing-jdk"))
         self.serial = os.environ.get("ANDROID_SERIAL", "emulator-5554")
         require(self.serial == "emulator-5554", "This workflow accepts only its owned hosted emulator")
+        run_id, attempt = os.environ["GITHUB_RUN_ID"], os.environ["GITHUB_RUN_ATTEMPT"]
+        require(re.fullmatch(r"[1-9][0-9]*", run_id) and re.fullmatch(r"[1-9][0-9]*", attempt),
+                "A hosted workflow run identity is required for process ownership")
+        self.process_owner = run_id + ":" + attempt + ":" + str(self.root)
         self.env = {**os.environ, "PATH": str(self.jdk / "bin") + os.pathsep + os.environ.get("PATH", ""),
                     "LC_ALL": "C", "PYTHONDONTWRITEBYTECODE": "1", "JAVA_HOME": str(self.jdk),
                     "ANDROID_HOME": str(self.sdk), "ANDROID_SDK_ROOT": str(self.sdk),
                     "ANDROID_USER_HOME": str(self.root / "android-user"),
                     "ANDROID_EMULATOR_HOME": str(self.root / "android-user"),
                     "ANDROID_AVD_HOME": str(self.root / "avd"),
+                    PROCESS_OWNER_ENV: self.process_owner, "ADB_SERVER_SOCKET": "tcp:127.0.0.1:5037",
                     "XDG_CACHE_HOME": str(self.root / "cache"),
                     **{key: str(self.root / "tmp") for key in ("TMPDIR", "TMP", "TEMP")}}
         self.env["JAVA_TOOL_OPTIONS"] = (self.env.get("JAVA_TOOL_OPTIONS", "") +
@@ -506,6 +541,62 @@ class Driver:
     def adb(self, label, *arguments, **kwargs):
         return self.run(label, [self.sdk / "platform-tools/adb", "-s", self.serial, *arguments], **kwargs)
 
+    def remember_process(self, name, process):
+        record = process_identity(process.pid)
+        require(record is not None and record["uid"] == os.getuid() and record["owner"] == self.process_owner,
+                "Cannot record the newly started " + name + " process")
+        save(self.receipts / ("owned-" + name + ".json"), record)
+        (self.root / (name + ".pid")).write_text(str(process.pid) + "\n")
+        return record
+
+    def process_executables(self, name):
+        relatives = ("emulator/emulator", "emulator/qemu/linux-x86_64/qemu-system-x86_64",
+                     "emulator/qemu/linux-x86_64/qemu-system-x86_64-headless") if name == "emulator" else (
+            ("emulator/netsimd",) if name == "netsimd" else ("platform-tools/adb",))
+        return {str((self.sdk / relative).resolve()) for relative in relatives}
+
+    def validate_process(self, record, name, required_tokens=()):
+        require(record["uid"] == os.getuid() and record["owner"] == self.process_owner,
+                "Stored process does not belong to this QA run: " + name)
+        current = process_identity(record["pid"])
+        if current is None:
+            return None
+        require(all(current[key] == record[key] for key in ("pid", "uid", "startTicks", "owner")) and
+                current["exe"] in self.process_executables(name) and
+                all(token in current["arguments"] for token in required_tokens),
+                "Refusing to stop a changed or unrelated " + name + " process")
+        return current
+
+    def owned_process(self, name, required_tokens=()):
+        path = self.receipts / ("owned-" + name + ".json")
+        if not path.is_file():
+            require(not (self.root / (name + ".pid")).exists(), "Missing ownership receipt for " + name)
+            return None
+        return self.validate_process(json.loads(path.read_text()), name, required_tokens)
+
+    def start_adb_server(self):
+        require(not (self.receipts / "owned-adb-server.json").exists(), "ADB server was already started by this job")
+        # Refuse an occupied default port; never kill or reuse another server.
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as reserved:
+            reserved.bind(("127.0.0.1", 5037))
+        # AOSP client/commandline.cpp explicitly supports 'server nodaemon'.
+        command = [str(self.sdk / "platform-tools/adb"), "-L", "tcp:127.0.0.1:5037", "server", "nodaemon"]
+        with (self.evidence / "adb-server.stdout.txt").open("wb") as out, (self.evidence / "adb-server.stderr.txt").open("wb") as err:
+            process = subprocess.Popen(command, stdout=out, stderr=err, stdin=subprocess.DEVNULL,
+                                       env=self.env, cwd=self.root, start_new_session=True)
+        self.remember_process("adb-server", process)
+        deadline = time.monotonic() + 15
+        while time.monotonic() < deadline:
+            require(process.poll() is None, "Owned foreground ADB server exited before readiness")
+            try:
+                with socket.create_connection(("127.0.0.1", 5037), timeout=0.2):
+                    require(self.owned_process("adb-server", ["server", "nodaemon"]) is not None,
+                            "Owned ADB server disappeared before readiness")
+                    return
+            except (ConnectionRefusedError, TimeoutError):
+                time.sleep(0.1)
+        raise ValueError("Owned foreground ADB server did not become ready")
+
     def identity(self):
         values = self.parameters()
         token = os.environ.get("GH_TOKEN")
@@ -738,6 +829,7 @@ class Driver:
         self.require_tools()
         self.budget("before-guest")
         require(not (self.root / "emulator.pid").exists(), "Emulator has already been started")
+        self.start_adb_server()
         devices, _ = self.run("adb-devices-before", [self.sdk / "platform-tools/adb", "devices"])
         require(not re.search(r"^" + re.escape(self.serial) + r"\s", devices, re.M), "Selected emulator serial already exists")
         self.env.update(ANDROID_HOME=str(self.root / "sdk"), ANDROID_SDK_ROOT=str(self.root / "sdk"),
@@ -748,7 +840,7 @@ class Driver:
                    "-no-boot-anim", "-no-snapshot", "-wipe-data", "-no-metrics"]
         with (self.evidence / "emulator.stdout.txt").open("wb") as out, (self.evidence / "emulator.stderr.txt").open("wb") as err:
             process = subprocess.Popen(command, stdout=out, stderr=err, env=self.env, cwd=self.root, start_new_session=True)
-        (self.root / "emulator.pid").write_text(str(process.pid) + "\n")
+        self.remember_process("emulator", process)
         save(self.evidence / "emulator-command.json", {"command": command, "pid": process.pid})
         self.adb("wait-for-device", "wait-for-device", timeout=120)
         deadline = time.monotonic() + 300
@@ -795,7 +887,7 @@ class Driver:
         with (self.evidence / "test-live-logcat.txt").open("wb") as out:
             logcat = subprocess.Popen([str(self.sdk / "platform-tools/adb"), "-s", self.serial, "logcat", "-b", "all", "-v", "threadtime"],
                                       stdout=out, stderr=subprocess.STDOUT, env=self.env, cwd=self.root, start_new_session=True)
-        (self.root / "logcat.pid").write_text(str(logcat.pid) + "\n")
+        self.remember_process("logcat", logcat)
         instrument, code = self.adb("instrument-positive-api", "shell", "am", "instrument", "-w", "-r", "--abi", "arm64-v8a",
                                     PACKAGE + "/.Runner", timeout=240, check=False)
         self.read_app_files()
@@ -823,44 +915,108 @@ class Driver:
             self.adb("run-as-" + remote.replace(".", "-"), "exec-out", "run-as", PACKAGE, "cat", "files/" + remote,
                      check=False, timeout=15, copy_stdout_to=self.evidence / local)
 
+    def stop_process(self, record, name, required_tokens=(), timeout=10):
+        if self.validate_process(record, name, required_tokens) is None:
+            return {"name": name, "pid": record["pid"], "alreadyExited": True}
+        try:
+            descriptor = os.pidfd_open(record["pid"])
+        except ProcessLookupError:
+            return {"name": name, "pid": record["pid"], "alreadyExited": True}
+        try:
+            # Recheck after opening the pidfd: a reused PID must never receive a signal.
+            if self.validate_process(record, name, required_tokens) is None:
+                return {"name": name, "pid": record["pid"], "alreadyExited": True}
+            try:
+                signal.pidfd_send_signal(descriptor, signal.SIGTERM)
+            except ProcessLookupError:
+                return {"name": name, "pid": record["pid"], "alreadyExited": True}
+            ready, _, _ = select.select([descriptor], [], [], timeout)
+            require(ready, "Owned " + name + " did not exit after SIGTERM; preserving the work volume")
+        finally:
+            os.close(descriptor)
+        return {"name": name, "pid": record["pid"], "terminated": True, "signal": "SIGTERM"}
+
     def stop_owned_process(self, name, required_tokens):
-        pid_path = self.root / (name + ".pid")
-        if not pid_path.is_file():
-            return
-        pid = int(pid_path.read_text().strip())
-        proc = Path("/proc") / str(pid) / "cmdline"
-        if not proc.exists():
-            return
-        arguments = proc.read_bytes().split(b"\0")
-        require(all(token.encode() in arguments for token in required_tokens), "Refusing to stop unrelated " + name + " PID")
-        require(os.getpgid(pid) == pid, "Owned process group identity changed")
-        os.killpg(pid, signal.SIGTERM)
-        deadline = time.monotonic() + 5
-        while proc.exists() and time.monotonic() < deadline:
-            time.sleep(0.1)
-        if proc.exists():
-            os.killpg(pid, signal.SIGKILL)
+        current = self.owned_process(name, required_tokens)
+        if current is None:
+            return {"name": name, "alreadyExited": True}
+        return self.stop_process(current, name, required_tokens, timeout=25 if name == "emulator" else 10)
+
+    def owned_daemons(self):
+        """Bind detached helpers by UID, exact SDK executable, run owner and launch time."""
+        anchors = {}
+        for name in ("adb-server", "emulator"):
+            path = self.receipts / ("owned-" + name + ".json")
+            if path.is_file():
+                anchors[name] = json.loads(path.read_text())
+        found = []
+        for path in Path("/proc").iterdir():
+            if not path.name.isdigit():
+                continue
+            try:
+                if path.stat().st_uid != os.getuid():
+                    continue
+                executable = str(Path(os.readlink(path / "exe")).resolve())
+                name = "netsimd" if executable in self.process_executables("netsimd") else "adb-server"
+                if executable not in self.process_executables(name):
+                    continue
+                record = process_identity(int(path.name))
+            except (FileNotFoundError, ProcessLookupError):
+                continue
+            if record is None or record["owner"] != self.process_owner:
+                continue
+            anchor = anchors.get("emulator" if name == "netsimd" else "adb-server")
+            require(anchor is not None and anchor["owner"] == self.process_owner and
+                    record["startTicks"] >= anchor["startTicks"], "Helper launch ownership is not established")
+            if name == "adb-server" and (record["pid"] == anchor["pid"] or "server" not in record["arguments"]):
+                continue
+            found.append({"name": name, "identity": record})
+        return found
+
+    def stop_guest_processes(self):
+        errors, stopped, helpers = [], [], []
+        try:
+            helpers = self.owned_daemons()  # Before the emulator can reparent its helpers.
+        except (OSError, ValueError, KeyError) as error:
+            errors.append("identify-helpers: " + str(error))
+        for name, tokens in (("logcat", ["-s", self.serial, "logcat"]), ("emulator", ["-avd", AVD])):
+            try:
+                stopped.append(self.stop_owned_process(name, tokens))
+            except (OSError, ValueError, KeyError) as error:
+                errors.append("stop-" + name + ": " + str(error))
+        for item in helpers:
+            try:
+                stopped.append(self.stop_process(item["identity"], item["name"]))
+            except (OSError, ValueError, KeyError) as error:
+                errors.append("stop-" + item["name"] + ": " + str(error))
+        try:
+            stopped.append(self.stop_owned_process("adb-server", ["server", "nodaemon"]))
+            require(not self.owned_daemons(), "Owned detached helpers remain after shutdown")
+        except (OSError, ValueError, KeyError) as error:
+            errors.append("stop-adb-or-helpers: " + str(error))
+        save(self.receipts / "guest-process-cleanup.json", {"owner": self.process_owner, "helpers": helpers,
+             "stopped": stopped, "errors": errors, "passed": not errors, "signalsLimitedToOwnedPids": True})
+        require(not errors, "Guest process cleanup failed; preserving the work volume: " + "; ".join(errors))
 
     def collect(self):
         if not os.path.ismount(self.root):
             return
         (self.root / "evidence-reserve.bin").unlink(missing_ok=True)
-        if (self.root / "emulator.pid").is_file():
-            # All reads concern this fresh disposable test guest/package.
-            for label, command in (("final-logcat", ["logcat", "-d", "-b", "all"]),
-                 ("final-users", ["shell", "dumpsys", "user"]),
-                 ("test-exit-info", ["shell", "dumpsys", "activity", "exit-info", PACKAGE]),
-                 ("native-app-dropbox", ["shell", "dumpsys", "dropbox", "--print", "data_app_native_crash"]),
-                 ("native-system-tombstone", ["shell", "dumpsys", "dropbox", "--print", "SYSTEM_TOMBSTONE"])):
-                try:
-                    self.adb(label, *command, timeout=15, check=False)
-                except (OSError, ValueError) as error:
-                    print("Diagnostic unavailable: " + str(error), file=sys.stderr)
-            try:
+        try:
+            if self.owned_process("emulator", ["-avd", AVD]) is not None:
+                # All reads concern this fresh disposable test guest/package.
+                for label, command in (("final-logcat", ["logcat", "-d", "-b", "all"]),
+                     ("final-users", ["shell", "dumpsys", "user"]),
+                     ("test-exit-info", ["shell", "dumpsys", "activity", "exit-info", PACKAGE]),
+                     ("native-app-dropbox", ["shell", "dumpsys", "dropbox", "--print", "data_app_native_crash"]),
+                     ("native-system-tombstone", ["shell", "dumpsys", "dropbox", "--print", "SYSTEM_TOMBSTONE"])):
+                    try:
+                        self.adb(label, *command, timeout=15, check=False)
+                    except (OSError, ValueError) as error:
+                        print("Diagnostic unavailable: " + str(error), file=sys.stderr)
                 self.read_app_files()
-            finally:
-                self.stop_owned_process("logcat", ["-s", self.serial, "logcat"])
-                self.stop_owned_process("emulator", ["-avd", AVD])
+        finally:
+            self.stop_guest_processes()
         self.budget("after-collection")
 
 
@@ -889,7 +1045,9 @@ def main():
                 if os.path.ismount(driver.root):
                     (driver.root / "evidence-reserve.bin").unlink(missing_ok=True)
                     failure["volumeAfterFailure"] = driver.volume_usage()
-                    save(driver.evidence / "result.json", failure)
+                    # Cleanup has its own failure receipt; retain the original API result bytes.
+                    if args.stage != "collect":
+                        save(driver.evidence / "result.json", failure)
             except OSError as write_error:
                 print("Could not save all failure evidence: " + str(write_error), file=sys.stderr)
         print(json.dumps(failure), file=sys.stderr)
