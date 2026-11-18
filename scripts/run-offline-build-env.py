@@ -11,6 +11,8 @@ unchanged, including for storage_guard.py's host free-space preflight.
 from __future__ import annotations
 
 import argparse
+import ast
+from contextlib import contextmanager, ExitStack
 import hashlib
 import json
 import os
@@ -40,6 +42,155 @@ def require(condition, message):
 
 def save(path, value):
     path.write_text(json.dumps(value, indent=2, sort_keys=True) + "\n")
+
+
+@contextmanager
+def owned_parent(root, path):
+    """Open only real, current-user directories on this owned filesystem."""
+    require(root.is_absolute() and root == root.resolve(strict=True), "Work root traverses a symlink")
+    require(path.is_absolute() and path.is_relative_to(root) and path != root,
+            "Owned path is outside the work root: " + str(path))
+    relative = path.relative_to(root)
+    require(all(part not in ("", ".", "..") for part in relative.parts), "Unsafe owned path")
+    flags = os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW
+    descriptor = os.open(root, flags)
+    device = os.fstat(descriptor).st_dev
+    try:
+        for part in relative.parts[:-1]:
+            require(os.fstat(descriptor).st_uid == os.getuid(), "Owned parent has a different owner")
+            child = os.open(part, flags, dir_fd=descriptor)
+            os.close(descriptor)
+            descriptor = child
+            require(os.fstat(descriptor).st_dev == device, "Owned path crosses a filesystem")
+        require(os.fstat(descriptor).st_uid == os.getuid(), "Owned parent has a different owner")
+        yield descriptor, device
+    finally:
+        os.close(descriptor)
+
+
+def read_owned(root, path, limit=4 * MIB):
+    with owned_parent(root, path) as (parent, device):
+        descriptor = os.open(path.name, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK, dir_fd=parent)
+        with os.fdopen(descriptor, "rb") as stream:
+            info = os.fstat(stream.fileno())
+            require(stat.S_ISREG(info.st_mode) and info.st_dev == device and info.st_uid == os.getuid()
+                    and info.st_size <= limit, "Invalid or oversized owned input: " + str(path))
+            return stream.read(limit + 1)
+
+
+def pinned_identity(value):
+    require(isinstance(value, dict) and set(value) == {"bytes", "sha256"}, "Invalid archive identity")
+    require(type(value["bytes"]) is int and 0 < value["bytes"] < CAPACITY
+            and isinstance(value["sha256"], str) and re.fullmatch(r"[0-9a-f]{64}", value["sha256"]),
+            "Invalid archive size or SHA-256")
+    return value
+
+
+def filesystem_usage(path):
+    info = os.statvfs(path)
+    return {"capacityBytes": info.f_blocks * info.f_frsize,
+            "usedBytes": (info.f_blocks - info.f_bfree) * info.f_frsize,
+            "availableBytes": info.f_bavail * info.f_frsize}
+
+
+def prune_runtime_archives(root, source, receipt_path):
+    """Pure file operation; the CLI checks the independent bounded mount first.
+
+    All receipts, pins and both cache entries are checked before either unlink.
+    No caller-supplied path, glob, directory removal or output pruning is used.
+    """
+    require(source == root / "source", "Unexpected source directory")
+    source_text = read_owned(root, source / "scripts/restore-base-runtime.py", MIB)
+    assignments = [node.value for node in ast.parse(source_text).body
+                   if isinstance(node, ast.Assign) and any(isinstance(target, ast.Name)
+                       and target.id == "ARCHIVE" for target in node.targets)]
+    require(len(assignments) == 1, "Expected one literal base ARCHIVE pin")
+    base_pin = pinned_identity(ast.literal_eval(assignments[0]))
+    lock_bytes = read_owned(root, source / "docs/licensing/ort-runtime.lock.json", MIB)
+    lock = json.loads(lock_bytes)
+    require(lock.get("kind") == "lantype-ort-runtime-lock" and lock.get("status") == "accepted"
+            and lock.get("ortVersion") == "1.28.0" and lock.get("abi") == "arm64-v8a",
+            "An accepted fixed ORT lock is required before cache pruning")
+    ort_pin = pinned_identity(lock["distribution"]["archive"])
+    reports = source / "app/build/reports/lantype-native"
+    base_bytes = read_owned(root, reports / "base-restoration.json")
+    ort_bytes = read_owned(root, reports / "ort-restoration.json")
+    base, ort = json.loads(base_bytes), json.loads(ort_bytes)
+    require(base.get("kind") == "lantype-base-runtime-receipt" and base.get("ok") is True
+            and type(base.get("verifiedFiles")) is int and base["verifiedFiles"] > 0,
+            "Base restoration did not succeed")
+    require(ort.get("kind") == "lantype-ort-runtime-restore-receipt" and ort.get("ok") is True
+            and ort.get("lockSha256") == hashlib.sha256(lock_bytes).hexdigest()
+            and ort.get("outputs") == lock.get("outputs")
+            and ort.get("boundedWorkRoot") == str(root)
+            and ort.get("outputDirectory") == str(source / "vendor/ort-runtime")
+            and ort.get("storageReserveBytes") == WORK_RESERVE, "ORT restoration did not succeed for this lock and volume")
+    lock_names = ("resources.lock.json", "native-prebuilt.lock.json", "camerax-rebuilt.lock.json")
+    actual_locks = {name: hashlib.sha256(read_owned(root, source / "docs/licensing" / name)).hexdigest()
+                    for name in lock_names}
+    require(base.get("lockSha256") == actual_locks, "Base source locks changed since restoration")
+    for label, row, pin in (("base", base, base_pin), ("ort", ort, ort_pin)):
+        require("archive" not in row or row["archive"] == pin, label + " restoration used another archive")
+    require(base.get("archiveVerified") is not True or base.get("archive") == base_pin,
+            "Base archive verification has no matching identity")
+    require(ort.get("alreadyPresent") is True or ort.get("archive") == ort_pin,
+            "ORT download restoration has no matching archive identity")
+    entries = (("base", source / ".gradle/base-runtime-archives" / (base_pin["sha256"] + ".zip"), base_pin,
+                base.get("downloadPerformed") is True),
+               ("ort", source / ".gradle/ort-runtime-archives" / (ort_pin["sha256"] + ".zip"), ort_pin,
+                ort.get("alreadyPresent") is not True))
+    row = {"schemaVersion": 1, "kind": "lantype-runtime-cache-prune", "ok": False,
+           "scope": "Only two fixed downloadable cache ZIP names; inputs, outputs and evidence are retained.",
+           "baseScriptSha256": hashlib.sha256(source_text).hexdigest(),
+           "acceptedLockSha256": hashlib.sha256(lock_bytes).hexdigest(),
+           "restoreReceiptSha256": {"base": hashlib.sha256(base_bytes).hexdigest(),
+                                    "ort": hashlib.sha256(ort_bytes).hexdigest()},
+           "volumeBefore": filesystem_usage(root), "files": []}
+    receipt_stream = None
+    try:
+        with ExitStack() as stack:
+            opened = []
+            for label, path, pin, required in entries:
+                item = {"name": label, "path": str(path), **pin, "disposition": "pending"}
+                row["files"].append(item)
+                try:
+                    parent, device = stack.enter_context(owned_parent(root, path))
+                    descriptor = os.open(path.name, os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK, dir_fd=parent)
+                except FileNotFoundError:
+                    require(not required, "A ZIP used by this restoration disappeared: " + str(path))
+                    item["disposition"] = "already-absent"
+                    continue
+                stream = stack.enter_context(os.fdopen(descriptor, "rb"))
+                info = os.fstat(stream.fileno())
+                require(stat.S_ISREG(info.st_mode) and info.st_dev == device and info.st_uid == os.getuid()
+                        and info.st_size == pin["bytes"], "Invalid cache file type, owner, device or size: " + str(path))
+                digest = hashlib.file_digest(stream, "sha256").hexdigest()
+                require(digest == pin["sha256"], "Cache ZIP SHA-256 mismatch: " + str(path))
+                item.update(allocatedBytes=info.st_blocks * 512, device=info.st_dev, inode=info.st_ino,
+                            hardLinkCount=info.st_nlink)
+                opened.append((parent, path, info, item))
+            # Both entries have now passed. Recheck both names before any unlink;
+            # retained descriptors also prevent a different parent being followed.
+            for parent, path, info, _ in opened:
+                current = os.stat(path.name, dir_fd=parent, follow_symlinks=False)
+                require((current.st_dev, current.st_ino, current.st_size, current.st_mtime_ns, current.st_ctime_ns)
+                        == (info.st_dev, info.st_ino, info.st_size, info.st_mtime_ns, info.st_ctime_ns),
+                        "Validated cache entry changed before removal: " + str(path))
+            receipt_stream = receipt_path.open("x", encoding="utf-8")
+            for parent, path, _, item in opened:
+                os.unlink(path.name, dir_fd=parent)
+                item["disposition"] = "removed"
+        # All handles are closed before measuring the actually reclaimed blocks.
+        row["ok"] = True
+    finally:
+        if receipt_stream is not None:
+            row["volumeAfter"] = filesystem_usage(root)
+            row["removedFileBytes"] = sum(item["bytes"] for item in row["files"] if item["disposition"] == "removed")
+            row["observedFreedFilesystemBytes"] = row["volumeBefore"]["usedBytes"] - row["volumeAfter"]["usedBytes"]
+            with receipt_stream:
+                json.dump(row, receipt_stream, indent=2, sort_keys=True)
+                receipt_stream.write("\n")
+    return row
 
 
 def properties(path):
@@ -128,9 +279,62 @@ class Driver:
                 "The owned volume image must be exactly 4608 MiB")
         info = os.statvfs(self.root)
         require(0 < info.f_blocks * info.f_frsize <= CAPACITY, "Mounted filesystem exceeds the work-volume limit")
-        return {"capacityBytes": info.f_blocks * info.f_frsize,
-                "usedBytes": (info.f_blocks - info.f_bfree) * info.f_frsize,
-                "availableBytes": info.f_bavail * info.f_frsize}
+        return filesystem_usage(self.root)
+
+    def allocation(self, label, *, final=False):
+        """Report named job directories and at most two child levels, never host tools."""
+        require(re.fullmatch(r"[a-z0-9-]+", label), "Invalid allocation label")
+        directories = [(name, self.root / name) for name in
+                       ("source", "sdk", "gradle-user", "java-user", "android-user", "tmp", "cache", "evidence")
+                       if (self.root / name).is_dir() and not (self.root / name).is_symlink()]
+        row = {"volume": self.volume_usage(), "allocatedDirectories": MEASURE["measure"](directories, set()),
+               "scope": "Allocated local bytes only; linked installed SDK/JDK inputs are not copied or charged again.",
+               "detailScope": "Named directories and two child levels; groups overlap and must not be summed.",
+               "detailLimits": {"groups": 64, "childrenPerGroup": 64}, "details": []}
+        targets = ("source/.gradle", "source/app/build", "source/plugin-core/build", "source/vendor",
+                   "gradle-user/caches", "gradle-user/wrapper", "java-user/.m2", "java-user/.robolectric")
+        for relative in targets:
+            target = self.root / relative
+            if not target.exists() or target.is_symlink():
+                continue
+            require(target.is_dir() and target == target.resolve() and target.stat().st_dev == self.root.stat().st_dev,
+                    "Allocation target left the owned volume")
+            first = sorted(target.iterdir())
+            parents = [(target, first)]
+            parents += [(child, sorted(child.iterdir())) for child in first[:64]
+                        if child.is_dir() and not child.is_symlink() and child.stat().st_dev == self.root.stat().st_dev]
+            for parent, children in parents:
+                if len(row["details"]) >= 64:
+                    row["detailGroupsTruncated"] = True
+                    break
+                selected = [(str(child.relative_to(self.root)), child) for child in children[:64]
+                            if not child.is_symlink() and (child.is_dir() or child.is_file())]
+                row["details"].append({"directory": str(parent.relative_to(self.root)),
+                    "childrenSeen": len(children), "childrenBeyondLimit": max(0, len(children) - 64),
+                    "symlinksSkipped": sum(child.is_symlink() for child in children[:64]),
+                    "measurement": MEASURE["measure"](selected, set())})
+        destination = self.receipts / ("final-work-volume-allocation.json" if final else "allocation-" + label + ".json")
+        with destination.open("x", encoding="utf-8") as stream:
+            json.dump(row, stream, indent=2, sort_keys=True)
+            stream.write("\n")
+
+    def prune_archives(self):
+        self.budget("before-archive-prune")
+        require(not self.active.exists() and (self.evidence / "sdk-overlay.json").is_file(),
+                "Prepare the environment and finish restoration before archive pruning")
+        history = self.receipts / "commands.jsonl"
+        require(history.is_file() and not history.is_symlink() and history.stat().st_size <= 4 * MIB,
+                "Missing command receipts")
+        restores = [json.loads(line) for line in history.read_text().splitlines()]
+        restores = [row for row in restores if row.get("label") == "restore-runtime"]
+        require(len(restores) == 1 and restores[0].get("exitCode") == 0
+                and restores[0].get("timedOut") is False and restores[0].get("storageReserveStop") is False,
+                "The complete runtime restoration command must have succeeded")
+        row = prune_runtime_archives(self.root, self.source, self.receipts / "runtime-archive-prune.json")
+        print(json.dumps({"archivePruneSucceeded": row["ok"], "removedFileBytes": row["removedFileBytes"],
+                          "observedFreedFilesystemBytes": row["observedFreedFilesystemBytes"]}), flush=True)
+        self.budget("after-archive-prune")
+        self.allocation("after-archive-prune")
 
     def budget(self, label, *, collecting=False):
         require(re.fullmatch(r"[a-z0-9-]+", label), "Invalid checkpoint label")
@@ -297,14 +501,8 @@ class Driver:
                 stop_group(pid)
             self.active.unlink()
         (self.root / "evidence-reserve.bin").unlink(missing_ok=True)
-        # Only scan our directories, not ext4's root-owned lost+found. The
-        # statvfs volume total above still includes all filesystem allocation.
-        directories = [(name, self.root / name) for name in
-                       ("source", "sdk", "gradle-user", "java-user", "android-user", "tmp", "cache", "evidence")
-                       if (self.root / name).is_dir() and not (self.root / name).is_symlink()]
-        save(self.receipts / "final-work-volume-allocation.json", {
-            "volume": self.volume_usage(), "allocatedDirectories": MEASURE["measure"](directories, set()),
-            "scope": "Allocated local bytes only; installed SDK/JDK inputs linked from outside this volume are not copied or charged again."})
+        # Never traverse ext4's root-owned lost+found or linked host SDK tools.
+        self.allocation("final", final=True)
         self.budget("before-evidence-upload", collecting=True)
 
 
@@ -314,7 +512,7 @@ def interrupted(signum, frame):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--stage", required=True, choices=("prepare", "execute", "budget", "collect"))
+    parser.add_argument("--stage", required=True, choices=("prepare", "execute", "budget", "prune-runtime-archives", "collect"))
     parser.add_argument("--label", default="initialized")
     parser.add_argument("--timeout", type=int, default=120)
     parser.add_argument("command", nargs=argparse.REMAINDER)
@@ -333,11 +531,15 @@ def main():
             try:
                 driver.run(args.label, command, args.timeout)
             finally:
+                if args.label in ("assemble-offline", "tests-and-renders"):
+                    driver.allocation(args.label)
                 driver.budget("after-" + args.label)
         elif args.stage == "budget":
             driver.budget(args.label)
         elif args.stage == "prepare":
             driver.prepare()
+        elif args.stage == "prune-runtime-archives":
+            driver.prune_archives()
         else:
             driver.collect()
         return 0
