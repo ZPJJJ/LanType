@@ -542,9 +542,37 @@ class Driver:
         return self.run(label, [self.sdk / "platform-tools/adb", "-s", self.serial, *arguments], **kwargs)
 
     def remember_process(self, name, process):
-        record = process_identity(process.pid)
-        require(record is not None and record["uid"] == os.getuid() and record["owner"] == self.process_owner,
-                "Cannot record the newly started " + name + " process")
+        # Popen returning is not application readiness. Keep the same ownership
+        # gate, allowing a short interval for the new exec identity to settle.
+        deadline, attempts, observations = time.monotonic() + 2, 0, []
+        executables = self.process_executables(name)
+        while True:
+            attempts += 1
+            record, read_error = None, None
+            try:
+                record = process_identity(process.pid)
+            except (OSError, ValueError) as error:
+                read_error = {"type": type(error).__name__, "errno": getattr(error, "errno", None)}
+            return_code = process.poll()
+            observed = {"identityIsNone": record is None, "returnCode": return_code,
+                        "observedUid": record["uid"] if record else None,
+                        "uidMatches": record is not None and record["uid"] == os.getuid(),
+                        "ownerPresent": record is not None and record["owner"] is not None,
+                        "ownerMatches": record is not None and record["owner"] == self.process_owner,
+                        "observedExecutable": record["exe"] if record else None,
+                        "executableMatches": record is not None and record["exe"] in executables,
+                        "readError": read_error}
+            if not observations or observations[-1] != observed:
+                observations.append(observed)
+            registered = return_code is None and observed["uidMatches"] and observed["ownerMatches"] and observed["executableMatches"]
+            if registered or return_code is not None or time.monotonic() >= deadline:
+                break
+            time.sleep(0.05)
+        # No environment dump or unrelated process arguments enter this receipt.
+        save(self.receipts / ("process-registration-" + name + ".json"), {
+            "name": name, "pid": process.pid, "expectedUid": os.getuid(), "attempts": attempts,
+            "registered": registered, "observations": observations})
+        require(registered, "Cannot record newly started " + name + " PID " + str(process.pid) + ": " + json.dumps(observed))
         save(self.receipts / ("owned-" + name + ".json"), record)
         (self.root / (name + ".pid")).write_text(str(process.pid) + "\n")
         return record
@@ -942,13 +970,15 @@ class Driver:
             return {"name": name, "alreadyExited": True}
         return self.stop_process(current, name, required_tokens, timeout=25 if name == "emulator" else 10)
 
-    def owned_daemons(self):
+    def owned_daemons(self, skipped=None, known_pids=()):
         """Bind detached helpers by UID, exact SDK executable, run owner and launch time."""
         anchors = {}
-        for name in ("adb-server", "emulator"):
+        registered_pids = set(known_pids)
+        for name in ("adb-server", "emulator", "logcat"):
             path = self.receipts / ("owned-" + name + ".json")
             if path.is_file():
                 anchors[name] = json.loads(path.read_text())
+                registered_pids.add(anchors[name]["pid"])
         found = []
         for path in Path("/proc").iterdir():
             if not path.name.isdigit():
@@ -963,6 +993,13 @@ class Driver:
                 record = process_identity(int(path.name))
             except (FileNotFoundError, ProcessLookupError):
                 continue
+            except PermissionError:
+                if int(path.name) in registered_pids:
+                    raise  # An already-owned identity must remain verifiable.
+                entry = {"pid": int(path.name), "reason": "permission-denied-unregistered-process"}
+                if skipped is not None and entry not in skipped:
+                    skipped.append(entry)
+                continue  # Do not probe further or signal an unrelated protected process.
             if record is None or record["owner"] != self.process_owner:
                 continue
             anchor = anchors.get("emulator" if name == "netsimd" else "adb-server")
@@ -974,9 +1011,9 @@ class Driver:
         return found
 
     def stop_guest_processes(self):
-        errors, stopped, helpers = [], [], []
+        errors, stopped, helpers, skipped = [], [], [], []
         try:
-            helpers = self.owned_daemons()  # Before the emulator can reparent its helpers.
+            helpers = self.owned_daemons(skipped)  # Before the emulator can reparent its helpers.
         except (OSError, ValueError, KeyError) as error:
             errors.append("identify-helpers: " + str(error))
         for name, tokens in (("logcat", ["-s", self.serial, "logcat"]), ("emulator", ["-avd", AVD])):
@@ -991,11 +1028,13 @@ class Driver:
                 errors.append("stop-" + item["name"] + ": " + str(error))
         try:
             stopped.append(self.stop_owned_process("adb-server", ["server", "nodaemon"]))
-            require(not self.owned_daemons(), "Owned detached helpers remain after shutdown")
+            require(not self.owned_daemons(skipped, known_pids={item["identity"]["pid"] for item in helpers}),
+                    "Owned detached helpers remain after shutdown")
         except (OSError, ValueError, KeyError) as error:
             errors.append("stop-adb-or-helpers: " + str(error))
         save(self.receipts / "guest-process-cleanup.json", {"owner": self.process_owner, "helpers": helpers,
-             "stopped": stopped, "errors": errors, "passed": not errors, "signalsLimitedToOwnedPids": True})
+             "stopped": stopped, "errors": errors, "passed": not errors, "signalsLimitedToOwnedPids": True,
+             "skippedUnregisteredProcesses": skipped})
         require(not errors, "Guest process cleanup failed; preserving the work volume: " + "; ".join(errors))
 
     def collect(self):
