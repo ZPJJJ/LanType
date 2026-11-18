@@ -4,11 +4,13 @@
 
 本文件区分已实现的软件、尚需完成的发行步骤和待验证的商业假设。构建结果、APK 大小、测试数量以同版本验收记录为准；这里不将编译成功等同于真机验收或商店审核通过。
 
-## 当前发行与商用准备状态（1.1.1 后续更新）
+## 当前发行与商用准备状态（1.1.1 历史与 1.1.2 进度）
 
 2026-11-17 后续记录：实际发行的 **1.1.1 签名 APK** 已在 Android 15 / API 35 的 KVM x86_64 模拟器、ARM64 native bridge 环境中首启发生 ONNX Runtime 初始化阶段的 native 崩溃，见 [run 44117540529](https://github.com/ZPJJJ/LanType/actions/runs/44117540529)。该结果针对新版自身。源码 CI 的 187 个 JUnit 用例通过不能代替 Android 运行验收；物理 ARM64 设备仍未验收。当前继续按免费预发布候选版管理，**尚不具备启动稳定版付费发行的条件**。
 
 Dawn / WebGPU 的 7 份补充源码现已收集、核验并公开发布，13 份许可/通知副本与原始归档成员一致，详见 [原生源码补充说明](licensing/DAWN-SOURCE-SUPPLEMENT.md)。补齐已知来源漏项不改变已签名 APK，也不等于修复首启故障；原供应商完整构建参数与原生逐字节复现仍未建立。故障修复和设备复验完成后，才能重新评估稳定收费发行。
+
+2026-11-18 进度：新 ORT 在 [API run #6（44232550186）](https://github.com/ZPJJJ/LanType/actions/runs/44232550186) 的 API 35 x86_64 / ARM64 bridge 环境中通过普通加载、C API 28、provider 名称枚举及环境创建/释放检查；**该 workflow 最终因资源清理失败而整体失败**。[API run #7（44235315243）](https://github.com/ZPJJJ/LanType/actions/runs/44235315243) 在宿主 ADB 准备阶段失败，未执行 API 检查。上述记录不覆盖输入法整包、模型推理或用户数据保留；**1.1.2 整包、物理 ARM64 与 16 KiB 环境仍未验收**，销售主体、渠道审核与收款/售后准备仍待完成，继续按预发布管理。
 
 下文保留原产品化批次的商业方案：一次购买官方稳定发行版与支持、GPL 源码及再分发权益、19 元 / 29 元 / 4.99 美元价格实验和无联网激活设计均不变。建议价格仍不是已上线商品或成交记录。
 
@@ -89,16 +91,18 @@ Google Play 定价规则：https://support.google.com/googleplay/android-develop
 
 Google Play 当前需关注：
 
-- 开发者注册一次性 25 美元，并完成身份和设备验证；不要自动替用户购买或提交身份材料。
+- 开发者注册一次性 25 美元；身份验证要求依个人或组织账户类型而定，个人账户另须通过 Play Console 手机应用验证 Android 设备访问权限。不要自动替用户购买或提交身份材料。
 - 2023-11-13 后创建的个人开发者账户，须有至少 12 名测试者连续加入封闭测试至少 14 天，之后才能申请生产访问（production access）；满足人数和时长条件不等于获准生产发布。
+- 付费应用的封闭测试和公开测试要求测试者购买，内部测试可免费安装。内部测试或 GitHub 免费试用不替代上述适用账户的 12 人连续 14 天封闭测试要求，应提前向测试者说明费用安排。
 - 自 2026-08-31 起，新手机应用和更新需 target API 36；清单中的最终值必须在构建后检查。
 - 键盘不使用短信读取作为核心功能；本版已将短信验证码路径调整为手动复制粘贴。还需按实际包填写权限、数据安全和隐私政策，而非照抄“零数据”口号。
 - 截至 2026-11-18（中国标准时间）核对，Google 官方指南要求 Google Play 上面向 Android 15 / API 35 及以上的应用支持 64 位设备的 16 KB 内存页，并注明自 2027-02-01 起，不支持的应用更新将无法发布。该日期描述更新限制，不据此推断新应用获得延期。原生库的 16 KiB 兼容性、发行 AAB 和商店体积限制仍须在上架构建环节验证；静态对齐或独立 APK 可用不等于 16 KiB 环境运行通过或 Play 已可接收。
 
-官方依据：
+官方依据（核对日期：2026-11-18，中国标准时间）：
 
 - https://support.google.com/googleplay/android-developer/answer/6112435
 - https://support.google.com/googleplay/android-developer/answer/14151465
+- https://support.google.com/googleplay/android-developer/answer/9845334
 - https://support.google.com/googleplay/android-developer/answer/11926878
 - https://support.google.com/googleplay/android-developer/answer/10208820
 - https://developer.android.com/guide/practices/page-sizes
